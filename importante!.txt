@@ -1,0 +1,4 @@
+para que les corra laravel tienen que entrar en la carpeta solidariApp 
+(la que tiene el codigo), abrir una linea de comandos y poner "composer update"
+esto es para que instale las dependencias
+desp de eso van a poder usar "php artisan serve" para iniciar el servidor
