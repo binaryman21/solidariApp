@@ -15,6 +15,6 @@ use Illuminate\Support\Facades\Route;
 
 
 
-Route::get('/provincia', 'App\Http\Controllers\ProvinciaController@listarProvincias')->name('provincia');
+Route::get('/', function(){return "hola";})->name('provincia');
 
 
