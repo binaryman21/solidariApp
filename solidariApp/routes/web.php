@@ -18,3 +18,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function(){return "hola";})->name('provincia');
 
 
+Route::get('/', function(){return "holaFlaviooooooooooooooooooooooooo";})->name('provincia');
+
+
+
