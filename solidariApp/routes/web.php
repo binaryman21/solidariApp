@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\ProvinciaController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -12,13 +12,11 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+Route::get('/', function(){return view('UIPrincipal');})->name('UIPrincipal');
+Route::get('/listarProvincias', 'App\Http\Controllers\ProvinciaController@listarProvincias')->name('provincia');
+Route::get('/listarTiposOrganizaciones', 'App\Http\Controllers\ProvinciaController@listarTipoOrganizaciones')->name('provincia');
 
 
-
-Route::get('/', function(){return "hola";})->name('provincia');
-
-
-Route::get('/', function(){return "holaFlaviooooooooooooooooooooooooo";})->name('provincia');
 
 
 
