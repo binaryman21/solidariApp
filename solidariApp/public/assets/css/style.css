@@ -2,3 +2,48 @@
     /* height: 180px;  */
     height:  100%;
 }
+
+:root {
+    --alimentos-color: #FFF1DB;
+    --ropa-color: #C7C6F5;
+    --limpieza-color: #A5E1E9;
+    --varios-color: #F5B4B4;
+}
+
+body {
+    background-color: #e5e5e5;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='36' height='72' viewBox='0 0 36 72'%3E%3Cg fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.4'%3E%3Cpath d='M2 6h12L8 18 2 6zm18 36h12l-6 12-6-12z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+}
+
+.container{
+    background-color: white;
+}
+.imgPerfilCol{
+    height: 100px;
+}
+.imgNecesidad{
+    height: 80px;
+}
+
+p {
+    margin-bottom: 0;
+}
+
+.card {
+    margin-top: 10px;
+}
+
+.alimentos {
+    background-color: var(--alimentos-color);
+}
+
+.ropa {
+    background-color: var(--ropa-color);
+}
+.limpieza {
+    background-color: var(--limpieza-color);
+}
+
+.varios {
+    background-color: var(--varios-color);
+}

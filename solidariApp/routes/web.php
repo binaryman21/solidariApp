@@ -13,6 +13,7 @@ use App\Http\Controllers\ProvinciaController;
 |
 */
 Route::get('/', function(){return view('UIPrincipal');})->name('UIPrincipal');
+Route::get('/colaborador', function(){return view('UIPerfilColaborador');})->name('UIColaborador');
 Route::get('/listarProvincias', 'App\Http\Controllers\ProvinciaController@listarProvincias')->name('provincia');
 Route::get('/listarTiposOrganizaciones', 'App\Http\Controllers\ProvinciaController@listarTipoOrganizaciones')->name('provincia');
 
