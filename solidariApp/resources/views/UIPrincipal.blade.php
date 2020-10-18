@@ -34,7 +34,7 @@ crossorigin=""/>
                   <div class = "d-flex flex-column rounded p-4" style = "background-color:#C3E4DF;width:100%;height:100%;">
                     <h5>¿Quieres ayudar?</h5>
                     <p>Al registrarte como colaborador podrás ayudar a una organización con diferentes recursos</p>
-                    <button class = "btn btn-light" data-toggle="modal" data-target="#exampleModal">Registrarme como colaborador</button>
+                    <button class = "btn btn-light" data-toggle="modal" data-target="#modalColaborador">Registrarme como colaborador</button>
                   </div>
 
                 </div>
@@ -57,6 +57,7 @@ crossorigin=""></script>
 <script type="text/javascript" src="{{URL::asset('assets/js/app.js')}}"></script>
 
 @include("UIPrincipalRegistroGoogle")
+@include("UIPrincipalRegistroColaborador")
 
 @endsection
 
