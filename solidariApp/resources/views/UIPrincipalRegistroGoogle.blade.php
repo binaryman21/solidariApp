@@ -26,7 +26,7 @@
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-outline-primary" data-dismiss="modal">Cancelar</button>
-            <button type="button" class="btn btn-primary">Crear cuenta</button>
+            <button type="button" class="btn btn-primary" data-toggle="modal" id="btnCrearCuenta">Crear cuenta</button>
           </div>
         </form>
     </div>

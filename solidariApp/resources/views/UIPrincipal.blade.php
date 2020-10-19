@@ -30,7 +30,7 @@
                     <div class = "d-flex flex-column rounded p-4" style = "background-color:#C3E4DF;width:100%;height:100%;">
                         <h5>¿Quieres ayudar?</h5>
                         <p>Al registrarte como colaborador podrás ayudar a una organización con diferentes recursos</p>
-                        <button class = "btn btn-light" data-toggle="modal" data-target="#modalRegistrarse">Registrarme como colaborador</button>
+                        <button class = "btn btn-light" data-toggle="modal" data-target="#modalRegistrarse" id="btnRegistrarseComoOrganizacion">Registrarme como colaborador</button>
                     </div>
 
                     </div>
@@ -38,7 +38,7 @@
                         <div class = "d-flex flex-column rounded  p-4" style = "background-color:#B4CAE2;width:100%;height:100%;">
                         <h5>¿Necesitas ayuda?</h5>
                         <p>Al registrarte como organización serás visible en el mapa del sitio y los colaboradores podrán ayudarte con recursos que necesites</p>
-                        <button class = "btn btn-light" data-toggle="modal" data-target="#modalRegistrarse">Registrarme como organizacion</button>
+                        <button class = "btn btn-light" data-toggle="modal" data-target="#modalRegistrarse" id="btnRegistrarseComoColaborador">Registrarme como organizacion</button>
                         </div>
                     </div>
                 </div>
@@ -60,4 +60,6 @@
     integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
     crossorigin=""></script>
     <script type="text/javascript" src="{{URL::asset('assets/js/app.js')}}"></script>
+    <!-- JS -->
+    <script type="text/javascript" src="{{URL::asset('assets/js/UIPrincipal.js')}}"></script>
 @endsection
