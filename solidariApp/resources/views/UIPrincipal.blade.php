@@ -45,7 +45,6 @@
             </div>
         </div>
     </div>
-
     @include("UIPrincipalRegistroGoogle")
     @include("UIPrincipalRegistroColaborador")
     @include("UIPrincipalRegistroOrganizacion")
@@ -63,14 +62,13 @@
     <script type="text/javascript" src="{{URL::asset('assets/js/app.js')}}"></script>
     <!-- JS -->
     <script type="text/javascript" src="{{URL::asset('assets/js/UIPrincipal.js')}}"></script>
-
+@endsection
 
 @section('script')
 <script src="https://apis.google.com/js/platform.js" async defer></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 <script>
-
               axios.post('/registrarColaborador',JSON.stringify
               (
 {
