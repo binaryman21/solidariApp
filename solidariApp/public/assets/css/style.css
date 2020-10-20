@@ -1,4 +1,4 @@
-#mapa { 
+#mapa {
     /* height: 180px;  */
     height:  100%;
 }
@@ -57,4 +57,13 @@ p {
 .agregarNecesidad{
     color: yellowgreen;
     font-size: 2em;
+}
+.rounded-left-0{
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0
+}
+
+.rounded-right-0{
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0
 }

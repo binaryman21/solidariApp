@@ -1,4 +1,4 @@
-@extends("plantilla")
+@extends("layouts.master")
 
 @section("contenido")
 
