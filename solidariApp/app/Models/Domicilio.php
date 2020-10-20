@@ -10,4 +10,5 @@ class Domicilio extends Model
     use HasFactory;
     protected $table = 'domicilio';
     protected $primaryKey = 'idDomicilio';
+    public $timestamps = false;
 }

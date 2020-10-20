@@ -10,4 +10,5 @@ class TipoTelefono extends Model
     use HasFactory;
     protected $table = 'tipoTelefono';
     protected $primaryKey = 'idTipoTelefono';
+    public $timestamps = false;
 }

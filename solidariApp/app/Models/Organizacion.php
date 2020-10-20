@@ -10,4 +10,5 @@ class Organizacion extends Model
     use HasFactory;
     protected $table = 'organizacion';
     protected $primaryKey = 'idUsuario';
+    public $timestamps = false;
 }
