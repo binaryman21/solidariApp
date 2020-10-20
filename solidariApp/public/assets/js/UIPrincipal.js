@@ -13,14 +13,14 @@ $( document ).ready(function() {
 Registrase pero se reemplaza el target del boton por el modal de alta de Organizacion*/ 
 function mostrarRegistrarseComoOrganizacion(){
     let btnCrearCuenta = document.getElementById("btnCrearCuenta");
-    btnCrearCuenta.dataset.target = "#modalColaborador";
+    btnCrearCuenta.dataset.target = "#modalOrganizacion";
 }
 
 /*Cuando se hace click en Registrase como Colaborador, se muestra el modal de 
 Registrase pero se reemplaza el target del boton por el modal de alta de Colaborador*/ 
 function mostrarRegistrarseComoColaborador(){
     let btnCrearCuenta = document.getElementById("btnCrearCuenta");
-    btnCrearCuenta.dataset.target = "#modalOrganizacion";
+    btnCrearCuenta.dataset.target = "#modalColaborador";
 }
 
 
