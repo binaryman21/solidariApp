@@ -73,3 +73,7 @@
       </div>
     </div>
   </div>
+
+
+<!-- JS validaciones-->
+<script type="text/javascript" src="{{URL::asset('assets/js/PrincipalRegistroColaborador.js')}}"></script>
