@@ -8,6 +8,8 @@
     --ropa-color: #C7C6F5;
     --limpieza-color: #A5E1E9;
     --varios-color: #F5B4B4;
+    --servicios-color: #C8D2D9;
+    --dinero-color: #A6E9A5;
 }
 
 body {
@@ -18,7 +20,7 @@ body {
 .container{
     background-color: white;
 }
-.imgPerfilCol{
+.imgPerfilCol,.imgPerfilOrg{
     height: 100px;
 }
 .imgNecesidad{
@@ -36,14 +38,23 @@ p {
 .alimentos {
     background-color: var(--alimentos-color);
 }
-
 .ropa {
     background-color: var(--ropa-color);
 }
 .limpieza {
     background-color: var(--limpieza-color);
 }
-
 .varios {
     background-color: var(--varios-color);
+}
+.servicios {
+    background-color: var(--servicios-color);
+}
+.dinero {
+    background-color: var(--dinero-color);
+}
+
+.agregarNecesidad{
+    color: yellowgreen;
+    font-size: 2em;
 }
