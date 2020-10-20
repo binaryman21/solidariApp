@@ -5,16 +5,15 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Colaborador extends Model
+class TipoLink extends Model
 {
     use HasFactory;
-    protected $table = 'colaborador';
-    protected $primaryKey = 'idUsuario';
+    protected $table = 'tipoLink';
+    protected $primaryKey = 'idTipoLink';
     public $timestamps = false;
-    static function registrarColaborador()
-    {
 
+    public static function listarTipoLinks()
+    {
+        return TipoLink::All();
     }
 }
-
-

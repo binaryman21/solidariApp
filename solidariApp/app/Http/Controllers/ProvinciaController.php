@@ -10,9 +10,18 @@ class ProvinciaController extends Controller
     {
         $p = new Provincia;
         $provincias = $p->listarProvincias();
-        
+
         return response()->json([
             'provincias' => $provincias
+        ]);
+    }
+
+    public function listarLocalidades($idProvincia)
+    {
+        $p = new Provincia;
+        $localidades = $p->listarLocalidades($idProvincia);
+        return response()->json([
+            'localidades' => $localidades
         ]);
     }
 }
