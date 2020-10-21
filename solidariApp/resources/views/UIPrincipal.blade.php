@@ -11,15 +11,34 @@
     crossorigin=""/>
 @endsection
 @section("contenido")
-    <div class = "container">
-        <div class = "row">
-            <div class="col-xl-3 col-lg-3 col-md-3 col-sm-12 col-xs-12 p-2">
-            <input class = "form-control" type="text">
-            <div class = "shadow mt-2" style = "height: 500px;width: 100%;">
+    <div class="container-fluid px-sm-3 px-lg-5">
+        <div class="row bg-white rounded justify-content-lg-center">
+            <div class="col-xs-12 col-sm-4 col-lg-3 p-0 p-md-2">
+            <input class="form-control my-2 rounded" type="text">
+            <div id="listaNecesidades" class="px-lg-2 pb-2">
             </div>
             </div>
-            <div class="col-xl-9 col-lg-9 col-md-9 col-sm-12 col-xs-12">
-            <h4>Mapa de las organizaciones</h4>
+            <div class="col">
+                <div class="row px-2 pt-3 justify-content-between align-items-center">
+                    <div class="col-12 col-lg-5">
+                        <h6 class="mb-0">Mapa de las organizaciones</h6>
+                        <small class="text-muted">Organizaciones en el radio de tu ubicacion</small>
+                    </div>
+                    <div class="col-9 col-lg-5">
+                        <input type="text" id="ubicacion" class="form-control form-control-sm" placeholder="Mi ubicacion">
+                    </div>
+                    <div class="col-3 col-lg-2">
+                        <select class="custom-select border-0" id="rangoDeVisualizacion">
+                            <option value="5" selected="">5 KM</option>
+                            <option value="10">10 KM</option>
+                            <option value="15">15 KM</option>
+                            <option value="20">20 KM</option>
+                            <option value="25">25 KM</option>
+                            <option value="30">30 KM</option>
+                            <option value="35">35 KM</option>
+                        </select>
+                    </div>
+                </div>
                 <div class="row p-2" style = "height:400px;">
                 <div class = "d-flex flex-column rounded p-2" style = "width:100%;height:100%;">
                     <div id="mapa"></div>
@@ -27,17 +46,17 @@
                 </div>
                 <div class="row p-2">
                     <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-xs-12 rounded p-2" >
-                    <div class = "d-flex flex-column rounded p-4" style = "background-color:#C3E4DF;width:100%;height:100%;">
+                    <div class = "d-flex flex-column rounded justify-content-between p-4" style = "background-color:#C3E4DF;width:100%;height:100%;">
                         <h5>¿Quieres ayudar?</h5>
-                        <p>Al registrarte como colaborador podrás ayudar a una organización con diferentes recursos</p>
+                        <p class="mb-4">Al registrarte como colaborador podrás ayudar a una organización con diferentes recursos</p>
                         <button class = "btn btn-light" data-toggle="modal" data-target="#modalRegistrarse" id="btnRegistrarseComoOrganizacion">Registrarme como colaborador</button>
                     </div>
 
                     </div>
                     <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-xs-12 p-2">
-                        <div class = "d-flex flex-column rounded  p-4" style = "background-color:#B4CAE2;width:100%;height:100%;">
+                        <div class = "d-flex flex-column rounded justify-content-between p-4" style = "background-color:#B4CAE2;width:100%;height:100%;">
                         <h5>¿Necesitas ayuda?</h5>
-                        <p>Al registrarte como organización serás visible en el mapa del sitio y los colaboradores podrán ayudarte con recursos que necesites</p>
+                        <p class="mb-4">Al registrarte como organización serás visible en el mapa del sitio y los colaboradores podrán ayudarte con recursos que necesites</p>
                         <button class = "btn btn-light" data-toggle="modal" data-target="#modalRegistrarse" id="btnRegistrarseComoColaborador">Registrarme como organizacion</button>
                         </div>
                     </div>

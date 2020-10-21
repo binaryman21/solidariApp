@@ -14,7 +14,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm mb-4 bg-white px-5">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light shadow-sm mb-md-4 bg-white px-5">
         <a class="navbar-brand" href="{{url('/')}}">SolidariAPP</a>
         <button class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
@@ -31,7 +31,7 @@
               <a class="nav-link" href="{{url('/acerca')}}">Acerca de</a>
             </li>
           </ul>
-          <button class="btn btn-outline-primary my-2 my-sm-0 px-5">Igresar</button>
+          <button class="btn btn-outline-primary my-2 my-sm-0 px-5">Ingresar</button>
         </div>
     </nav>
     @yield("contenido")

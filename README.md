@@ -49,7 +49,7 @@ Dirigete a: http://127.0.0.1:8000/
 - Dario Lalanne @bynariman21
 - Flavio Segade
 - Giuliano Rizzi @giulianorizzi
-- Kevin Zelada
+- Kevin Zelada @kevingzelada
 - Juan Salomon @EsJuanSalomon
 
 ##### Profesores

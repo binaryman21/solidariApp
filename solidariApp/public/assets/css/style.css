@@ -58,12 +58,14 @@ p {
     color: yellowgreen;
     font-size: 2em;
 }
-.rounded-left-0{
-    border-top-left-radius: 0;
-    border-bottom-left-radius: 0
+
+#listaNecesidades{
+
+    overflow-y: scroll;
+    min-height: 635px;
+    max-height: 768px;
 }
 
-.rounded-right-0{
-    border-top-right-radius: 0;
-    border-bottom-right-radius: 0
+div.g-signin2 > .abcRioButtonLightBlue{
+    width: 100% !important;
 }
