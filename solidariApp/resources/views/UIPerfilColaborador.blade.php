@@ -14,7 +14,7 @@
                 </p>
             </div>
             <div class="col-md-2">
-                <button class="btn btn-block btn-danger" type="button">Reportar</button>
+                <button class="btn btn-block btn-danger" type="button" data-toggle="modal" href="#modalReportar">Reportar</button>
                 <button class="btn btn-block btn-primary" type="button" data-toggle="modal" href="#modalCalificar">Calificar</button>
             </div>
         </div>
@@ -177,6 +177,7 @@
 </div> <!-- container -->
 
 @include("UIModalCalificar")
+@include("UIModalReportar")
 
 <!-- Scripts -->
 <script type="text/javascript" src="{{URL::asset('assets/js/colaborador.js')}}"></script>

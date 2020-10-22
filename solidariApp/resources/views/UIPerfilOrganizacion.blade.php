@@ -17,7 +17,7 @@
                     </p>
                 </div>
                 <div class="col-md-2">
-                <button class="btn btn-block btn-danger" type="button">Reportar</button>
+                <button class="btn btn-block btn-danger" type="button" data-toggle="modal" href="#modalReportar">Reportar</button>
                 <button class="btn btn-block btn-success" type="button">Subscribirse</button>
                 <button class="btn btn-block btn-primary" type="button" data-toggle="modal" href="#modalCalificar">Calificar</button>
             </div>
@@ -266,6 +266,7 @@
     </div> <!-- container -->
 
     @include("UIModalCalificar")
+    @include("UIModalReportar")
 
 
 <!-- scripts -->

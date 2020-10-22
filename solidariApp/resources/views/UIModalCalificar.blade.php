@@ -8,8 +8,8 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="modal-body text-center">
-                <form action="">
+            <form action="">
+                 <div class="modal-body text-center">
                     <p>¿Se concreto la ayuda?</p>
                     <div class="form-check form-check-inline">
                         <input class="form-check-input" type="radio" name="radioConcretoAyuda" id="siConcreto" value="true" checked>
@@ -34,14 +34,14 @@
                     </div>
                     <div class="form-group mt-4">
                         <label for="textoComentarios">Comentarios</label>
-                        <textarea class="form-control" id="textoComentarios" rows="5"></textarea>
-                        </div>
-                </form>
-            </div>
-            <div class="modal-footer justify-content-between">
-                <button type="button" class="btn btn-lg btn-outline-danger">Ayuda</button>
-                <button type="submit" class="btn btn-lg btn-primary">Calificar</button>
-            </div>
+                        <textarea class="form-control" id="textoComentarios" rows="5" required></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer justify-content-between">
+                    <button type="button" class="btn btn-lg btn-outline-danger" data-toggle="modal" href="#modalReportar" data-dismiss="modal">Ayuda</button>
+                    <button type="submit" class="btn btn-lg btn-primary">Calificar</button>
+                </div>
+            </form>
         </div>
     </div>
 </div>
