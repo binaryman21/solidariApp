@@ -92,8 +92,7 @@
         </div>
     </div>
     @include("UIPrincipalRegistroGoogle")
-    @include("UIPrincipalRegistroColaborador")
-    @include("UIPrincipalRegistroOrganizacion")
+    @include("UIPrincipalRegistro")
 @endsection
 
 @section('scripts')

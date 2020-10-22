@@ -1,5 +1,5 @@
  <!-- Modal -->
- <div class="modal fade" tabindex="-1" data-backdrop="static" role="dialog" id = "modalRegistro">
+ <div class="modal fade" tabindex="-1" data-backdrop="static" role="dialog" id ="modalRegistroColOrg">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header bg-primary text-white">
@@ -10,27 +10,31 @@
         </div>
         <form action="">
             <div class="modal-body">
-                <div class="form-group">
-                    <label for="nombre">Nombre de la organizacion</label>
-                    <input type="text" id="nombreOrg" class="form-control" placeholder="Nombre" required>
-                    <span class="error text-danger errorNombre"> </span>
+                <div class="exclusivoCol">
+                    <div class="form-group">
+                        <label for="nombre">Nombre</label>
+                        <input type="text" id="nombre" class="form-control" placeholder="Nombre" required>
+                        <span class="error text-danger errorNombre"> </span>
+                    </div>
+                    <div class="form-group">
+                        <label for="apellido">Apellido</label>
+                        <input type="text" id="apellido" class="form-control" placeholder="Apellido" required>
+                        <span class="error text-danger errorApellido"> </span>
+                    </div>
                 </div>
-                <div class="form-group">
-                    <label for="nombre">Nombre</label>
-                    <input type="text" id="nombre" class="form-control" placeholder="Nombre" required>
-                    <span class="error text-danger errorNombre"> </span>
-                </div>
-                <div class="form-group">
-                    <label for="apellido">Apellido</label>
-                    <input type="text" id="apellido" class="form-control" placeholder="Apellido" required>
-                    <span class="error text-danger errorApellido"> </span>
-                </div>
-                <div class="form-group mb-3">
-                    <label for="tipoOrg">Tipo organizacion</label>
-                    <select id="tipoOrg" class="form-control" required>
-                        <option value="-1" selected disabled>-- Elige el tipo de org --</option>
-                    </select>
-                    <span class="error text-danger errorLocalidad"> </span>
+                <div class="exclusivoOrg">
+                    <div class="form-group">
+                        <label for="nombre">Nombre de la organizacion</label>
+                        <input type="text" id="nombreOrg" class="form-control" placeholder="Nombre" required>
+                        <span class="error text-danger errorNombre"> </span>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label for="tipoOrg">Tipo organizacion</label>
+                        <select id="tipoOrg" class="form-control" required>
+                            <option value="-1" selected disabled>-- Elige el tipo de org --</option>
+                        </select>
+                        <span class="error text-danger errorTipoOrg"> </span>
+                    </div>
                 </div>
                 <label for="codArea">Telefono</label>
                 <div class="form-row">
