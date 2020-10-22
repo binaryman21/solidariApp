@@ -17,6 +17,7 @@ Route::get('/', function(){return view('UIPrincipal');})->name('UIPrincipal');
 Route::get('/colaborador', function(){return view('UIPerfilColaborador');})->name('UIColaborador');
 Route::get('/organizacion', function(){return view('UIPerfilOrganizacion');})->name('UIOrganizacion');
 Route::get('/administrador', function(){return view('UIPerfilAdministrador');})->name('UIAdministracion');
+Route::get('/administrador/reportes', function(){return view('UIReporteDenuncias');})->name('UIReporteDenuncias');
 Route::get('/listarProvincias', 'App\Http\Controllers\ProvinciaController@listarProvincias')->name('provincia');
 Route::get('/listarTiposOrganizaciones', 'App\Http\Controllers\ProvinciaController@listarTipoOrganizaciones')->name('provincia');
 
