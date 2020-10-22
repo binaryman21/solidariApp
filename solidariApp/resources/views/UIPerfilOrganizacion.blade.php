@@ -58,6 +58,9 @@
                             <input type="text" id="fechaUsuario" class="form-control" value="07/02/2020" disabled required>
                             <span class="error text-danger errorFechaUsuario"> </span>
                         </div>
+                        <div class="d-flex opciones justify-content-between">
+                            <a href="#" class="text-primary"  data-toggle="modal" data-target="#modalCambiarPass">Cambiar clave</a>
+                        </div>
                     </form>
                 </div>
             </div>
@@ -69,8 +72,8 @@
             <form class="form-inline">
                 <div class="busqueda">
                     <input class="form-control mr-sm-2" type="search" placeholder="Buscar" aria-label="Search">
-                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Buscar</button> 
-                </div> 
+                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Buscar</button>
+                </div>
             </form>
             <a href="#">
                 <i class="fas fa-plus-circle agregarNecesidad"></i>
@@ -258,7 +261,7 @@
         </div>
 
     </div> <!-- container -->
-
+    @include("UICambiarPass")
 <!-- scripts -->
 <script type="text/javascript" src="{{URL::asset('assets/js/organizacion.js')}}"></script>
 @endsection

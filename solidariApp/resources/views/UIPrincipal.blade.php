@@ -16,8 +16,35 @@
             <div class="col-xs-12 col-sm-4 col-lg-3 p-0 p-md-2">
             <input class="form-control my-2 rounded" type="text">
             <div id="listaNecesidades" class="px-lg-2 pb-2">
+                <div class="card necesidad ropa">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <p class="font-weight-bold">Ropa</p>
+                                <p>Necesito camperas.</p>
+                                <p>Cantidad: no definida</p>
+                                <p>Fecha limite: no definida</p>
+                            </div>
+                            <div class = "col-md-6 d-flex flex-row align-items-end justify-content-end"><button class = "btn btn-primary">Me interesa</button></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card necesidad dinero">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <p class="font-weight-bold">Dinero</p>
+                                <p>Necesito dinero</p>
+                                <p>Cantidad: 10000</p>
+                                <p>Fecha limite: no definida</p>
+                            </div>
+                            <div class = "col-md-6 d-flex flex-row align-items-end justify-content-end"><button class = "btn btn-primary">Me interesa</button></div>
+                        </div>
+                    </div>
+                </div>
             </div>
-            </div>
+        </div>
             <div class="col">
                 <div class="row px-2 pt-3 justify-content-between align-items-center">
                     <div class="col-12 col-lg-5">

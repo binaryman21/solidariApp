@@ -18,7 +18,7 @@
                 <button class="btn btn-block btn-danger" type="button">Darme de baja</button>
             </div>
         </div>
-        
+
     </div>
 
     <div class="row">
@@ -76,9 +76,9 @@
                     </div>
                 </form>
                 <div class="d-flex opciones justify-content-between">
-                    <a href="#" class="text-secondary">Editar datos</a>     
-                    <a href="#" class="text-danger">Darme de baja</a>     
-                    <a href="#" class="text-primary">Cambiar clave</a>     
+                    <!--<a href="#" class="text-secondary">Editar datos</a>
+                    <a href="#" class="text-danger">Darme de baja</a>-->
+                    <a href="#" class="text-primary"  data-toggle="modal" data-target="#modalCambiarPass">Cambiar clave</a>
                 </div>
             </div>
         </div>
@@ -175,7 +175,7 @@
     </div>
 
 </div> <!-- container -->
-
+@include("UICambiarPass")
 <!-- Scripts -->
 <script type="text/javascript" src="{{URL::asset('assets/js/colaborador.js')}}"></script>
 @endsection
