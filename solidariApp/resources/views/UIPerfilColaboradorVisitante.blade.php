@@ -14,8 +14,8 @@
                 </p>
             </div>
             <div class="col-md-2">
-                <button class="btn btn-block btn-primary" type="button">Editar datos</button>
-                <button class="btn btn-block btn-danger" type="button">Darme de baja</button>
+                <button class="btn btn-block btn-danger" type="button" data-toggle="modal" href="#modalReportar">Reportar</button>
+                <button class="btn btn-block btn-primary" type="button" data-toggle="modal" href="#modalCalificar">Calificar</button>
             </div>
         </div>
         
@@ -75,11 +75,6 @@
                         <span class="error text-danger errorFechaUsuario"> </span>
                     </div>
                 </form>
-                <div class="d-flex opciones justify-content-between">
-                    <a href="#" class="text-secondary">Editar datos</a>     
-                    <a href="#" class="text-danger">Darme de baja</a>     
-                    <a href="#" class="text-primary">Cambiar clave</a>     
-                </div>
             </div>
         </div>
     </div>
@@ -167,14 +162,10 @@
     </div> <!--row -->
 </div>
 
-    <div class="alert alert-success mt-4" role="alert">
-        <h4 class="alert-heading">Ayuda a las organizaciones para obtener nuevas insignias</h4>
-        <p>Aww yeah, you successfully read this important alert message. This example text is going to run a bit longer so that you can see how spacing within an alert works with this kind of content.</p>
-        <hr>
-        <p class="mb-0">¡Segui ayudando!</p>
-    </div>
-
 </div> <!-- container -->
+
+@include("UIModalCalificar")
+@include("UIModalReportar")
 
 <!-- Scripts -->
 <script type="text/javascript" src="{{URL::asset('assets/js/colaborador.js')}}"></script>

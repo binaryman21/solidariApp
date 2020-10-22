@@ -17,9 +17,10 @@
                     </p>
                 </div>
                 <div class="col-md-2">
-                    <button class="btn btn-block btn-primary" type="button">Editar datos</button>
-                    <button class="btn btn-block btn-danger" type="button">Darme de baja</button>
-                </div>
+                <button class="btn btn-block btn-danger" type="button" data-toggle="modal" href="#modalReportar">Reportar</button>
+                <button class="btn btn-block btn-success" type="button" data-toggle="modal" href="#modalSubscribirse">Subscribirse</button>
+                <button class="btn btn-block btn-primary" type="button" data-toggle="modal" href="#modalCalificar">Calificar</button>
+            </div>
             </div>
         </div>
 
@@ -72,9 +73,6 @@
                     <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Buscar</button> 
                 </div> 
             </form>
-            <a href="#">
-                <i class="fas fa-plus-circle agregarNecesidad"></i>
-            </a>
         </nav>
         <div class="necesidades">
             <div class="row">
@@ -89,11 +87,11 @@
                                     <p>Fecha limite: no definida</p>
                                 </div>
                                 <div class="col-md-6 text-right d-flex flex-column justify-content-between">
-                                    <p class="editarNecesidad">
-                                        <a href="#"><i class="far fa-edit"></i></a>
-                                    </p>
                                     <p class="ayudasRecibidas">
                                         <a href="#"><span class="nroAyudas">5</span><i class="fas fa-user-friends"></i></a>
+                                    </p>
+                                    <p class="verDetalle">
+                                        <a href="#">Ver detalle</a>
                                     </p>
                                     <p class="estado">
                                         <i class="fas fa-spinner"></i>
@@ -114,11 +112,11 @@
                                     <p>Fecha limite: no definida</p>
                                 </div>
                                 <div class="col-md-6 text-right d-flex flex-column justify-content-between">
-                                    <p class="editarNecesidad">
-                                        <a href="#"><i class="far fa-edit"></i></a>
-                                    </p>
                                     <p class="ayudasRecibidas">
                                         <a href="#"><span class="nroAyudas">1</span><i class="fas fa-user-friends"></i></a>
+                                    </p>
+                                    <p class="verDetalle">
+                                        <a href="#">Ver detalle</a>
                                     </p>
                                     <p class="estado">
                                         <i class="fas fa-check-circle"></i>
@@ -141,11 +139,11 @@
                                     <p>Fecha limite: 23/09/2020</p>
                                 </div>
                                 <div class="col-md-6 text-right d-flex flex-column justify-content-between">
-                                    <p class="editarNecesidad">
-                                        <a href="#"><i class="far fa-edit"></i></a>
-                                    </p>
                                     <p class="ayudasRecibidas">
                                         <a href="#"><span class="nroAyudas">1</span><i class="fas fa-user-friends"></i></a>
+                                    </p>
+                                    <p class="verDetalle">
+                                        <a href="#">Ver detalle</a>
                                     </p>
                                     <p class="estado">
                                         <i class="fas fa-spinner"></i>
@@ -166,11 +164,11 @@
                                     <p>Fecha limite: no definida</p>
                                 </div>
                                 <div class="col-md-6 text-right d-flex flex-column justify-content-between">
-                                    <p class="editarNecesidad">
-                                        <a href="#"><i class="far fa-edit"></i></a>
-                                    </p>
                                     <p class="ayudasRecibidas">
                                         <a href="#"><span class="nroAyudas">0</span><i class="fas fa-user-friends"></i></a>
+                                    </p>
+                                    <p class="verDetalle">
+                                        <a href="#">Ver detalle</a>
                                     </p>
                                     <p class="estado">
                                         <i class="far fa-sticky-note"></i>
@@ -193,11 +191,11 @@
                                     <p>Fecha limite: 01/12/2020</p>
                                 </div>
                                 <div class="col-md-6 text-right d-flex flex-column justify-content-between">
-                                    <p class="editarNecesidad">
-                                        <a href="#"><i class="far fa-edit"></i></a>
-                                    </p>
                                     <p class="ayudasRecibidas">
                                         <a href="#"><span class="nroAyudas">2</span><i class="fas fa-user-friends"></i></a>
+                                    </p>
+                                    <p class="verDetalle">
+                                        <a href="#">Ver detalle</a>
                                     </p>
                                     <p class="estado">
                                         <i class="fas fa-check-circle"></i>
@@ -218,11 +216,11 @@
                                     <p>Fecha limite: no definida</p>
                                 </div>
                                 <div class="col-md-6 text-right d-flex flex-column justify-content-between">
-                                    <p class="editarNecesidad">
-                                        <a href="#"><i class="far fa-edit"></i></a>
-                                    </p>
                                     <p class="ayudasRecibidas">
                                         <a href="#"><span class="nroAyudas">5</span><i class="fas fa-user-friends"></i></a>
+                                    </p>
+                                    <p class="verDetalle">
+                                        <a href="#">Ver detalle</a>
                                     </p>
                                     <p class="estado">
                                         <i class="fas fa-spinner"></i>
@@ -258,6 +256,11 @@
         </div>
 
     </div> <!-- container -->
+
+    @include("UIModalCalificar")
+    @include("UIModalReportar")
+    @include("UIModalSubscribirse")
+
 
 <!-- scripts -->
 <script type="text/javascript" src="{{URL::asset('assets/js/organizacion.js')}}"></script>
