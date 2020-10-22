@@ -8,12 +8,17 @@
             <div class="col-md-2">
                 <img class="rounded-circle imgPerfilCol" src="{{URL::asset('assets/img/user.png')}}" alt="imagen de usuario">
             </div>
-            <div class="col-md-10 align-self-center">
+            <div class="col-md-8 align-self-center">
                 <p class="lead">
                     Nombre del colaborador
                 </p>
             </div>
+            <div class="col-md-2">
+                <button class="btn btn-block btn-danger" type="button">Reportar</button>
+                <button class="btn btn-block btn-primary" type="button" data-toggle="modal" href="#modalCalificar">Calificar</button>
+            </div>
         </div>
+        
     </div>
 
     <div class="row">
@@ -167,10 +172,11 @@
         <p>Aww yeah, you successfully read this important alert message. This example text is going to run a bit longer so that you can see how spacing within an alert works with this kind of content.</p>
         <hr>
         <p class="mb-0">¡Segui ayudando!</p>
-        </div>
+    </div>
 
 </div> <!-- container -->
 
+@include("UIModalCalificar")
 
 <!-- Scripts -->
 <script type="text/javascript" src="{{URL::asset('assets/js/colaborador.js')}}"></script>

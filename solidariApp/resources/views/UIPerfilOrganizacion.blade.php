@@ -8,7 +8,7 @@
                 <div class="col-md-2">
                     <img class="rounded-circle imgPerfilOrg" src="{{URL::asset('assets/img/user.png')}}" alt="imagen de usuario">
                 </div>
-                <div class="col-md-10 align-self-center">
+                <div class="col-md-8 align-self-center">
                     <p class="lead">
                         Nombre de la organizacion
                     </p>
@@ -16,6 +16,11 @@
                         Tipo de organizacion
                     </p>
                 </div>
+                <div class="col-md-2">
+                <button class="btn btn-block btn-danger" type="button">Reportar</button>
+                <button class="btn btn-block btn-success" type="button">Subscribirse</button>
+                <button class="btn btn-block btn-primary" type="button" data-toggle="modal" href="#modalCalificar">Calificar</button>
+            </div>
             </div>
         </div>
 
@@ -259,6 +264,9 @@
         </div>
 
     </div> <!-- container -->
+
+    @include("UIModalCalificar")
+
 
 <!-- scripts -->
 <script type="text/javascript" src="{{URL::asset('assets/js/organizacion.js')}}"></script>
