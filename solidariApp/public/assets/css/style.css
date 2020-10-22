@@ -54,16 +54,25 @@ p {
     background-color: var(--dinero-color);
 }
 
+i {
+    font-size: 1.5em;
+}
+
 .agregarNecesidad{
     color: yellowgreen;
     font-size: 2em;
 }
+.detalleOrganizacion{
+    background-color:#EEEEEE;
+}
+.cardOrganizacion{
+    border: 1px solid #E6E6E6;
+}
+.listaNecesidades{
 
-#listaNecesidades{
-
-    overflow-y: scroll;
-    min-height: 635px;
+    min-height: 200px;
     max-height: 768px;
+
 }
 
 div.g-signin2 > .abcRioButtonLightBlue{

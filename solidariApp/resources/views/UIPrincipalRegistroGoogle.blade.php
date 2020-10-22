@@ -26,7 +26,7 @@
                 </div>
               </div>
             <button type="button" class="btn btn-primary btn-block my-4" data-toggle="modal" id="btnCrearCuenta"
-            data-target="#modalOrganizacion">Crear cuenta</button>
+            data-target="#modalRegistroColOrg">Crear cuenta</button>
             <div class="text-center">- o -</div>
             <div class="g-signin2 mt-5" data-onsuccess="onSignIn" data-theme="light">
             </div>
