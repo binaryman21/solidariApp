@@ -1,6 +1,7 @@
 @extends("layouts.master")
 @section('title', 'SolidariAPP - Menu Administrador')
 @section("meta")
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 @endsection
 @section("contenido")
 <div class="container p-2">
@@ -28,17 +29,17 @@
                                 <h5 class="card-title">ABM Categorias</h5>
                                 <p class="card-text">Permite realizar el Alta, Baja y Modificacion de Categorias de las Necesidades.</p>
                                 <br>
-                                <a data-toggle="modal" href="#modalABMCategorias" class="btn btn-primary">ABM Categorias</a>
+                                <a data-toggle="modal" href="#modalABMCategorias" class="btn btn-primary" id="btnABMCategorias">ABM Categorias</a>
                             </div>
                         </div>
                     </div>
                     <div class="col-sm-6">
                         <div class="card">
                             <div class="card-body">
-                                <h5 class="card-title">Special title treatment</h5>
-                                <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+                                <h5 class="card-title">Visualizar reporte de denuncias</h5>
+                                <p class="card-text">Permite Visualizar todos los reportes con posibilidad de confirmarlos.</p>
                                 <br>
-                                <a href="#" class="btn btn-primary">Go somewhere</a>
+                                <a href="{{url('administrador/reportes')}}" class="btn btn-primary">Ver Reporte</a>
                             </div>
                         </div>
                     </div>
@@ -59,6 +60,7 @@
 </div>
 
 @include("UIPerfilAdministradorABMCategorias")
+{{-- @include("UIReporteDenuncias") --}}
 @endsection
 
 @section('scripts')
