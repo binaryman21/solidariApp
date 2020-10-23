@@ -41,7 +41,7 @@
                             <div class="alert alert-secondary" role="alert">
                                 <div class="row align-items-center">
                                     <div class="col-md-2">
-                                        <img class="rounded-circle imgPerfilOrg" style="height: 50px;"src="./user.png" alt="imagen de usuario">
+                                        <img class="rounded-circle imgPerfilOrg" style="height: 50px;"src="{{URL::asset('assets/img/user.png')}}" alt="imagen de usuario">
                                     </div>
                                     <div class="col-md-3">
                                         <p class="lead">
@@ -61,7 +61,7 @@
                             <div class="alert alert-secondary" role="alert">
                                 <div class="row align-items-center">
                                     <div class="col-md-2">
-                                        <img class="rounded-circle imgPerfilOrg" style="height: 50px;"src="./user.png" alt="imagen de usuario">
+                                        <img class="rounded-circle imgPerfilOrg" style="height: 50px;"src="{{URL::asset('assets/img/user.png')}}" alt="imagen de usuario">
                                     </div>
                                     <div class="col-md-3">
                                         <p class="lead">
@@ -81,7 +81,7 @@
                             <div class="alert alert-secondary" role="alert">
                                 <div class="row align-items-center">
                                     <div class="col-md-2">
-                                        <img class="rounded-circle imgPerfilOrg" style="height: 50px;"src="./user.png" alt="imagen de usuario">
+                                        <img class="rounded-circle imgPerfilOrg" style="height: 50px;"src="{{URL::asset('assets/img/user.png')}}" alt="imagen de usuario">
                                     </div>
                                     <div class="col-md-3">
                                         <p class="lead">
@@ -101,7 +101,7 @@
                             <div class="alert alert-secondary" role="alert">
                                 <div class="row align-items-center">
                                     <div class="col-md-2">
-                                        <img class="rounded-circle imgPerfilOrg" style="height: 50px;"src="./user.png" alt="imagen de usuario">
+                                        <img class="rounded-circle imgPerfilOrg" style="height: 50px;"src="{{URL::asset('assets/img/user.png')}}" alt="imagen de usuario">
                                     </div>
                                     <div class="col-md-3">
                                         <p class="lead">
@@ -121,7 +121,7 @@
                             <div class="alert alert-secondary" role="alert">
                                 <div class="row align-items-center">
                                     <div class="col-md-2">
-                                        <img class="rounded-circle imgPerfilOrg" style="height: 50px;"src="./user.png" alt="imagen de usuario">
+                                        <img class="rounded-circle imgPerfilOrg" style="height: 50px;"src="{{URL::asset('assets/img/user.png')}}" alt="imagen de usuario">
                                     </div>
                                     <div class="col-md-3">
                                         <p class="lead">

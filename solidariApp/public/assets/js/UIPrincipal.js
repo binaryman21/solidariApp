@@ -6,6 +6,7 @@ $( document ).ready(function() {
     btnRegistrarseComoColaborador.addEventListener('click', mostrarRegistrarseComoOrganizacion);
     btnRegistrarseComoOrganizacion.addEventListener('click', mostrarRegistrarseComoColaborador);
     agregarPaginacionListaOrganizaciones();
+    agregarPaginacionUsuarios();
 });
 
 
@@ -45,6 +46,32 @@ function agregarPaginacionListaOrganizaciones(){
         let primerItem = pagActual * filasMostradas;
         let ultimoItem = primerItem + filasMostradas;
         $( organizacion ).css('opacity','0.0').hide().slice(primerItem, ultimoItem).
+            css('display','block').animate({opacity:1}, 300);
+    });
+}
+
+function agregarPaginacionUsuarios(){
+    $('.usuarios').after('<div id="navUsuarios"></div>');
+    let usuario = document.querySelectorAll('.usuario')
+    let filasMostradas = 2;
+    let filasTotales = usuario.length;
+
+    let numPaginas = filasTotales/filasMostradas;
+    for(i = 0; i < numPaginas; i++) {
+        let numPag = i + 1;
+        $('#navUsuarios').append('<a href="#" class="closeLink" rel="' + i + '">' + numPag + '</a> ');
+    }
+
+    $( usuario ).hide();
+    $( usuario ).slice(0, filasMostradas).show();
+    $('#navUsuarios a:first').addClass('active');
+    $('#navUsuarios a').bind('click', function(){
+        $('#navUsuarios a').removeClass('active');
+        $(this).addClass('active');
+        let pagActual = $(this).attr('rel');
+        let primerItem = pagActual * filasMostradas;
+        let ultimoItem = primerItem + filasMostradas;
+        $( usuario ).css('opacity','0.0').hide().slice(primerItem, ultimoItem).
             css('display','block').animate({opacity:1}, 300);
     });
 }

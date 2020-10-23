@@ -39,7 +39,7 @@
                                         <p class="font-weight-bold">Ropa</p>
                                         <p>Necesito camperas.</p>
                                     </div>
-                                    <div class = "col-md-6 d-flex flex-row align-items-end justify-content-end"><button class = "btn btn-primary">Me interesa</button></div>
+                                    <div class = "col-md-6 d-flex flex-row align-items-end justify-content-end"><button class = "btn btn-primary" data-toggle="modal" data-target="#modalDetalleNecesidad">Me interesa</button></div>
                                 </div>
                             </div>
                         </div>
@@ -51,7 +51,7 @@
                                         <p class="font-weight-bold">Dinero</p>
                                         <p>Necesito dinero</p>
                                     </div>
-                                    <div class = "col-md-6 d-flex flex-row align-items-end justify-content-end"><button class = "btn btn-primary">Me interesa</button></div>
+                                    <div class = "col-md-6 d-flex flex-row align-items-end justify-content-end"><button class = "btn btn-primary" data-toggle="modal" data-target="#modalDetalleNecesidad">Me interesa</button></div>
                                 </div>
                             </div>
                         </div>
@@ -82,7 +82,7 @@
                                         <p class="font-weight-bold">Ropa</p>
                                         <p>Necesito camperas.</p>
                                     </div>
-                                    <div class = "col-md-6 d-flex flex-row align-items-end justify-content-end"><button class = "btn btn-primary">Me interesa</button></div>
+                                    <div class = "col-md-6 d-flex flex-row align-items-end justify-content-end"><button class = "btn btn-primary" data-toggle="modal" data-target="#modalDetalleNecesidad">Me interesa</button></div>
                                 </div>
                             </div>
                         </div>
@@ -94,7 +94,7 @@
                                         <p class="font-weight-bold">Dinero</p>
                                         <p>Necesito dinero</p>
                                     </div>
-                                    <div class = "col-md-6 d-flex flex-row align-items-end justify-content-end"><button class = "btn btn-primary">Me interesa</button></div>
+                                    <div class = "col-md-6 d-flex flex-row align-items-end justify-content-end"><button class = "btn btn-primary" data-toggle="modal" data-target="#modalDetalleNecesidad">Me interesa</button></div>
                                 </div>
                             </div>
                         </div>
@@ -151,6 +151,7 @@
     </div>
     @include("UIPrincipalRegistroGoogle")
     @include("UIPrincipalRegistro")
+    @include("UIDetalleNecesidad")
 @endsection
 
 @section('scripts')

@@ -41,29 +41,32 @@
                     <div class="col-mb-6 w-50 mb-3">
                         <input type="text" class="form-control" id="codArea" placeholder="Cod. Area" required>
                         <span class="error text-danger errorCodArea"> </span>
-                    </div><div class="col-mb-6 w-50 mb-3">
+                    </div>
+                    <div class="col-mb-6 w-50 mb-3">
                         <input type="text" class="form-control" id="nroTelefono" placeholder="Numero" required>
                         <span class="error text-danger errorNroTelefono"></span>
                     </div>
                 </div>
-                <label for="calle">Direccion</label><div class="form-row">
-                <div class="col-9 col-md-6 mb-3">
-                    <input type="text" class="form-control" id="calle" placeholder="Calle" required>
-                    <span class="error text-danger errorCalle"> </span>
+                <label for="calle">Direccion</label>
+                <div class="form-row">
+                    <div class="col-9 col-md-6 mb-3">
+                        <input type="text" class="form-control" id="calle" placeholder="Calle" required>
+                        <span class="error text-danger errorCalle"> </span>
+                    </div>
+                    <div class="col-3 col-md-2 mb-3">
+                        <input type="text" class="form-control" id="nro" placeholder="Nro" required>
+                        <span class="error text-danger errorNro"> </span>
+                    </div>
+                    <div class="col-6 col-md-2 mb-3">
+                        <input type="text" class="form-control" id="piso" placeholder="Piso" required>
+                        <span class="error text-danger errorPiso"> </span>
+                    </div>
+                    <div class="col-6 col-md-2 mb-3">
+                        <input type="text" class="form-control" id="depto" placeholder="Depto" required>
+                        <span class="error text-danger errorDepto"> </span>
+                    </div>
                 </div>
-                <div class="col-3 col-md-2 mb-3">
-                    <input type="text" class="form-control" id="nro" placeholder="Nro" required>
-                    <span class="error text-danger errorNro"> </span>
-                </div>
-                <div class="col-6 col-md-2 mb-3">
-                    <input type="text" class="form-control" id="piso" placeholder="Piso" required>
-                    <span class="error text-danger errorPiso"> </span>
-                </div>
-                <div class="col-6 col-md-2 mb-3">
-                    <input type="text" class="form-control" id="depto" placeholder="Depto" required>
-                    <span class="error text-danger errorDepto"> </span>
-                </div>
-                </div><div class="form-row">
+                <div class="form-row">
                     <div class="col-md-6 mb-3">
                         <select id="localidad" class="form-control" required>
                             <option value="-1" selected disabled>-- Seleccione una localidad --</option>
@@ -83,6 +86,7 @@
                 </div>
             </div>
         </form>
+      </div>
       </div>
     </div>
   </div>
