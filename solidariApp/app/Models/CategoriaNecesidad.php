@@ -8,7 +8,12 @@ use Illuminate\Database\Eloquent\Model;
 class CategoriaNecesidad extends Model
 {
     use HasFactory;
-    public $timestamps = false;
     protected $table = 'categoriaNecesidad';
-    protected $primaryKey = 'idCategoriaNecesidad';
+    protected $primaryKey = 'idCategoria';
+    public $timestamps = false;
+
+    public static function listarCategoriasNecesidad()
+    {
+        return CategoriaNecesidad::All();
+    }
 }
