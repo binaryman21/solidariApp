@@ -1,6 +1,7 @@
 @extends("layouts.master")
 @section('title', 'SolidariAPP - Menu Administrador')
 @section("meta")
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 @endsection
 @section("contenido")
 <div class="container p-2">
@@ -28,7 +29,7 @@
                                 <h5 class="card-title">ABM Categorias</h5>
                                 <p class="card-text">Permite realizar el Alta, Baja y Modificacion de Categorias de las Necesidades.</p>
                                 <br>
-                                <a data-toggle="modal" href="#modalABMCategorias" class="btn btn-primary">ABM Categorias</a>
+                                <a data-toggle="modal" href="#modalABMCategorias" class="btn btn-primary" id="btnABMCategorias">ABM Categorias</a>
                             </div>
                         </div>
                     </div>

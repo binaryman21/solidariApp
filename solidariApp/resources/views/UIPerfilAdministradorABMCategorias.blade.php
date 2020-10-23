@@ -13,23 +13,23 @@
                      <div class="form-group mb-3">
                          <label for="seleccionCategoria">Selecciona la categoria</label>
                          <select id="seleccionCategoria" class="form-control" required>
-                             <option value="0" selected>Nueva Categoria</option>
-                             <option value="1" selected>Categoria Existente 1</option>
+                             <option value="0" selected class="font-weight-bold">Nueva Categoria</option>
+                            <!--Las categorias se rellenan por-->
                          </select>
-                         <span class="error text-danger errorLocalidad"> </span>
+                         <span class="error text-danger" id="errorCategoria"> </span>
                      </div>
-                     <label for="codArea">ID</label>
+                     <label for="idCategoria">ID</label>
                      <div class="form-row">
                          <div class="col-mb-6 w-50 mb-3">
-                             <input type="text" class="form-control" id="idCategoria" placeholder="ID" required>
-                             <span class="error text-danger errorCodArea"> </span>
+                             <input type="text" class="form-control" id="idCategoria" placeholder="ID" readonly>
+                             <span class="error text-danger" id="errorID"> </span>
                          </div>
                      </div>
-                     <label for="calle">Nombre de la Categoria</label>
+                     <label for="nombreCategoria">Nombre de la Categoria</label>
                      <div class="form-row">
                          <div class="col-9 col-md-6 mb-3">
                              <input type="text" class="form-control" id="nombreCategoria" placeholder="Nombre de la Categoria" required>
-                             <span class="error text-danger errorCalle"> </span>
+                             <span class="error text-danger" id="errorNombre"> </span>
                          </div>
                      </div>
 
