@@ -31,7 +31,7 @@ Ejemplo del mismo disponible en [laravel/.env.example](https://github.com/larave
 
 `$ php artisan serve`
 
-Dirigete a: http://127.0.0.1:8000/
+Dirigete a: http://localhost:8000/
 
 ---
 
