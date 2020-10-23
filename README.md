@@ -47,7 +47,7 @@ Dirigete a: http://localhost:8000/
 ##### Autores - Grupo II
 
 - Dario Lalanne @bynariman21
-- Flavio Segade
+- Flavio Segade @flavio-segade
 - Giuliano Rizzi @giulianorizzi
 - Kevin Zelada @kevingzelada
 - Juan Salomon @EsJuanSalomon
