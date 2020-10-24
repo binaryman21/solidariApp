@@ -24,9 +24,10 @@
                 <div>Descripción:</div><br>
                 <span class="spnDescripcionDenuncia">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Mollitia et at quaerat repellendus magni corrupti nulla doloremque aperiam atque eum!</span>
                 <div class="modal-footer">
-                    <button class="btn btn-danger">Confirmar denuncia</button>
+                    <button class="btn btn-danger" id="btnConfirmarDenuncia">Confirmar denuncia</button>
                 </div>
             </div>
         </div>
     </div>
 </div>
+
