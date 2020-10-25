@@ -17,7 +17,21 @@ Route::get('/', function(){return view('UIPrincipal');})->name('UIPrincipal');
 Route::get('/colaborador', function(){return view('UIPerfilColaborador');})->name('UIColaborador');
 Route::get('/colaborador/visitante', function(){return view('UIPerfilColaboradorVisitante');})->name('UIColaboradorVisitante');
 Route::get('/organizacion/visitante', function(){return view('UIPerfilOrganizacionVisitante');})->name('UIOrganizacionVisitante');
-Route::get('/organizacion', function(){return view('UIPerfilOrganizacion');})->name('UIOrganizacion');
+
+Route::get('/organizacion', function()
+{
+    session_start();
+    if(!isset($_SESSION['usuario']))
+    {
+        return redirect('/');
+    }
+    else
+    {
+        return view('UIPerfilOrganizacion');
+    }
+
+})->name('UIOrganizacion');
+
 Route::get('/administrador', function(){return view('UIPerfilAdministrador');})->name('UIAdministracion');
 Route::get('/listarProvincias', 'App\Http\Controllers\ProvinciaController@listarProvincias')->name('provincia');
 Route::get('/listarTiposOrganizaciones', 'App\Http\Controllers\ProvinciaController@listarTipoOrganizaciones')->name('provincia');
@@ -29,7 +43,11 @@ Route::get('/listarTipoLinks', 'App\Http\Controllers\TipoLinkController@listarTi
 
 Route::post('/registrarColaborador', 'App\Http\Controllers\ColaboradorController@registrarColaborador')->name('registrarColaborador');
 Route::post('/registrarOrganizacion', 'App\Http\Controllers\OrganizacionController@registrarOrganizacion')->name('registrarOrganizacion');
-
+Route::post('/login', 'App\Http\Controllers\UsuarioController@login')->name('login');
+Route::post('/logOut', 'App\Http\Controllers\UsuarioController@logout')->name('logout');
+Route::post('/isLoggedIn', 'App\Http\Controllers\UsuarioController@isLoggedIn')->name('isLoggedIn');
+Route::post('/registrarUsuario', 'App\Http\Controllers\UsuarioController@registrarUsuario')->name('registrarUsuario');
+Route::post('/registrarNecesidad', 'App\Http\Controllers\NecesidadController@registrarNecesidad')->name('registrarNecesidad');
 
 
 

@@ -11,6 +11,7 @@
     crossorigin=""/>
 @endsection
 @section("contenido")
+
     <div class="container-fluid px-sm-3 px-lg-5">
         <div class="row bg-white rounded justify-content-lg-center">
             <div class="col-xs-12 col-sm-4 col-lg-3 p-0 p-md-2">
@@ -129,12 +130,12 @@
                     <div id="mapa"></div>
                 </div>
                 </div>
-                <div class="row p-2">
+                <div class="row p-2" id = "botonesRegistro">
                     <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-xs-12 rounded p-2" >
                     <div class = "d-flex flex-column rounded justify-content-between p-4" style = "background-color:#C3E4DF;width:100%;height:100%;">
                         <h5>¿Quieres ayudar?</h5>
                         <p class="mb-4">Al registrarte como colaborador podrás ayudar a una organización con diferentes recursos</p>
-                        <button class = "btn btn-light" data-toggle="modal" data-target="#modalRegistrarse" id="btnRegistrarseComoOrganizacion">Registrarme como colaborador</button>
+                        <button class = "btn btn-light" data-toggle="modal" data-target="#modalLogin" id="btnRegistrarseComoOrganizacion">Registrarme como colaborador</button>
                     </div>
 
                     </div>
@@ -142,15 +143,17 @@
                         <div class = "d-flex flex-column rounded justify-content-between p-4" style = "background-color:#B4CAE2;width:100%;height:100%;">
                         <h5>¿Necesitas ayuda?</h5>
                         <p class="mb-4">Al registrarte como organización serás visible en el mapa del sitio y los colaboradores podrán ayudarte con recursos que necesites</p>
-                        <button class = "btn btn-light" data-toggle="modal" data-target="#modalRegistrarse" id="btnRegistrarseComoColaborador">Registrarme como organizacion</button>
+                        <button class = "btn btn-light" data-toggle="modal" data-target="#modalLogin" id="btnRegistrarseComoColaborador">Registrarme como organizacion</button>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+
     @include("UIPrincipalRegistroGoogle")
     @include("UIPrincipalRegistro")
+    @include("UIPrincipalResultadoRegistro")
 @endsection
 
 @section('scripts')
@@ -165,58 +168,15 @@
     <script type="text/javascript" src="{{URL::asset('assets/js/app.js')}}"></script>
     <!-- JS -->
     <script type="text/javascript" src="{{URL::asset('assets/js/UIPrincipal.js')}}"></script>
-@endsection
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 
-@section('script')
-<script src="https://apis.google.com/js/platform.js" async defer></script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 <script>
-              axios.post('/registrarColaborador',JSON.stringify
-              (
-{
-    idUsuario:0,
-    claveUsuario:"asdasdasd",
-    emailUsuario:"a@a.com",
-    tokenGoogle:"123123",
-    urlFotoPerfilUsuario:"asd",
-    rol:{idRolUsuario:0,nombreRolUsuario:""},
-    estado:{idEstadoUsuario:0,nombreEstadoUsuario:""},
-    nombreColaborador:"pepe",
-    apellidoColaborador:"pepepepepe",
-    telefonos:
-    [
-        {idTelefono:0,codAreaTelefono:"123",numeroTelefono:"123123",tipoTelefono:{idTipoTelefono:1,nombeTipoTelefono:""}}
-    ],
-    domicilios:
-    [
-        {idDomicilio:0,calle:"asss",numero:"123",piso:"1",depto:"1",latitud:"11",longitud:"11",localidad:{idLocalidad:1,nombreLocalidad:""}}
-    ],
-    links:
-    [
-        {idLink:0,urlLink:"",tipoLink:{idTipoLink:1,nombreTipoLink:""}}
-    ]
-}))
-                .then((response)=>{
-
-                alert(response.data.message);
-
-                });
-
-  function onSignIn(googleUser) {
-    // Useful data for your client-side scripts:
-    var profile = googleUser.getBasicProfile();
-    console.log("ID: " + profile.getId()); // Don't send this directly to your server!
-    console.log('Full Name: ' + profile.getName());
-    console.log('Given Name: ' + profile.getGivenName());
-    console.log('Family Name: ' + profile.getFamilyName());
-    console.log("Image URL: " + profile.getImageUrl());
-    console.log("Email: " + profile.getEmail());
-
-    // The ID token you need to pass to your backend:
-    var id_token = googleUser.getAuthResponse().id_token;
-    console.log("ID Token: " + id_token);
+  function signOut() {
+    var auth2 = gapi.auth2.getAuthInstance();
+    auth2.signOut().then(function () {
+      console.log('User signed out.');
+    });
   }
 </script>
-
 @endsection
+
