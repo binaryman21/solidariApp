@@ -2,6 +2,7 @@
 
 @section("contenido")
 @parent
+
     <div class="container p-2">
         <div class="jumbotron">
             <div class="row align-middle">

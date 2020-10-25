@@ -41,7 +41,7 @@ class ColaboradorController extends Controller
                 $telefono = new Telefono;
                 $telefono->codAreaTelefono = $telefonoActual->codAreaTelefono;
                 $telefono->numeroTelefono = $telefonoActual->numeroTelefono;
-                $telefono->idTipoTelefono = $telefonoActual->tipoTelefono->idTipoTelefono;
+                $telefono->esCelular = $telefonoActual->esCelular;
                 $telefono->idUsuario = $usuario->idUsuario;
                 $telefono->save();
             }
@@ -75,12 +75,14 @@ class ColaboradorController extends Controller
         catch (\Exception $e)
         {
             return response()->json([
+                'resultado' => 0,
                 'message' => $e->getMessage()
             ]);
         }
 
         return response()->json([
-            'message' => "Registro exitoso"
+            'resultado' => 1,
+            'message' => "registro exitoso!"
 
         ]);
     }
