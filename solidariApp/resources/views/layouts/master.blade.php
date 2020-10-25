@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
@@ -30,8 +31,22 @@
             <li class="nav-item px-3">
               <a class="nav-link" href="{{url('/acerca')}}">Acerca de</a>
             </li>
-          </ul>
-          <button class="btn btn-outline-primary my-2 my-sm-0 px-5">Ingresar</button>
+
+
+          <button class="btn btn-outline-primary my-2 my-sm-0 px-5" data-toggle="modal" data-target="#modalLogin"  id = "btnIngresar">Ingresar</button>
+
+          <li class="nav-item dropdown oculto" id = "dropDownUsuario">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <img id = "imgPerfil" src="" alt="" class = "rounded-circle" width = "32px">
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <a id = "#btnVerMiPerfil" class="dropdown-item" href="{{url('/organizacion')}}">Mi perfil</a>
+              <div class="dropdown-divider"></div>
+              <a id = "btnCerrarSesion" class="dropdown-item" href="#">Salir</a>
+            </div>
+          </li>
+        </ul>
+
         </div>
     </nav>
     @yield("contenido")

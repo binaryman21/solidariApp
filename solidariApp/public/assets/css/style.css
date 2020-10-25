@@ -78,3 +78,18 @@ i {
 div.g-signin2 > .abcRioButtonLightBlue{
     width: 100% !important;
 }
+
+.oculto{
+    display: none;
+}
+
+.inputError{
+    border-color:red;
+    color:red;
+}
+
+.inputError:focus{
+    border-color:red;
+    color:red;
+}
+
