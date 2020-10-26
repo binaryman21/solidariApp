@@ -58,3 +58,39 @@ function mostrarComo ( tipoUsuario ){
     $("#btnLogin").html("Crear cuenta");
     limpiarCamposRegistro();
 }
+
+function listarTiposOrganizaciones()
+{
+    axios.get('/listarTipoOrganizaciones')
+      .then((response)=>{
+        let tiposOrganizaciones = response.data.tipoOrganizaciones;
+        $.each(tiposOrganizaciones, function (indexInArray, tipoOrganizacion) {
+            $("#selectTipoOrganizacion").append("<option value = '" + tipoOrganizacion.idTipoOrganizacion + "'>" + tipoOrganizacion.nombreTipoOrganizacion +"</option");
+        });
+
+      });
+}
+
+function listarProvincias()
+{
+    axios.get('/listarProvincias')
+      .then((response)=>{
+        let provincias = response.data.provincias;
+        $.each(provincias, function (indexInArray, provincia) {
+            $("#selectProvincia").append("<option value = '" + provincia.idProvincia + "'>" + provincia.nombreProvincia +"</option");
+        });
+
+      });
+}
+
+function listarLocalidades(idProvincia)
+{
+    axios.get('/listarLocalidades/' + idProvincia)
+      .then((response)=>{
+        let localidades = response.data.localidades;
+        $.each(localidades, function (indexInArray, localidad) {
+            $("#selectLocalidad").append("<option value = '" + localidad.idLocalidad + "'>" + localidad.nombreLocalidad +"</option");
+        });
+
+      });
+}
