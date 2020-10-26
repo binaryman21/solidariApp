@@ -1,0 +1,60 @@
+function limpiarCamposRegistro(){
+    $('#formularioRegistroDatos')[0].reset();
+    $('#formRegistroGoogle')[0].reset();
+    // Email
+    $('#emailUsuario').removeClass('is-invalid is-valid');
+    $('.errorEmail').fadeOut();
+    // Pass
+    $('#claveUsuario').removeClass('is-invalid is-valid');
+    $('.errorPass').fadeOut();
+    // Nombre organizacion
+    $('#nombreOrganizacion').removeClass('is-invalid is-valid');
+    $('.errorNombreOrg').fadeOut();
+    // Nombre colaborador
+    $('#nombreColaborador').removeClass('is-invalid is-valid');
+    $('.errorNombre').fadeOut();
+    // Apellido colaborador
+    $('#apellidoColaborador').removeClass('is-invalid is-valid');
+    $('.errorApellido').fadeOut();
+    // Codigo de area
+    $('#codArea').removeClass('is-invalid is-valid');
+    $('.errorCodArea').fadeOut();
+    // Numero de telefono
+    $('#numeroTelefono').removeClass('is-invalid is-valid');
+    $('.errorNroTelefono').fadeOut();
+    // Calle
+    $('#calle').removeClass('is-invalid is-valid');
+    $('.errorCalle').fadeOut();
+    // Nro
+    $('#numero').removeClass('is-invalid is-valid');
+    $('.errorNro').fadeOut();
+    // Localidad
+    $('#selectLocalidad').removeClass('is-invalid is-valid');
+    $('.errorLocalidad').fadeOut();
+    // Provincia
+    $('#selectProvincia').removeClass('is-invalid is-valid');
+    $('.errorProvincia').fadeOut();
+    // Tipo de organizacion
+    $('#selectTipoOrganizacion').removeClass('is-invalid is-valid');
+    $('.errorTipoOrg').fadeOut();
+}
+
+function mostrarComo ( tipoUsuario ){
+    signOut();
+    let exclusivoOrg = $('.exclusivoOrg');
+    let exclusivoCol = $('.exclusivoCol');
+    if( tipoUsuario === 'colaborador' ){
+        exclusivoOrg.hide();
+        exclusivoCol.show();
+    }
+    else if( tipoUsuario === 'organizacion' ){
+        exclusivoCol.hide();
+        exclusivoOrg.show();
+    }
+    $("#modoRegistro").val( tipoUsuario );
+    $("#tituloModalLogin").html("Registrarse como " + tipoUsuario);
+    $("#errorLogin").hide();
+    $("#btnLogin").attr("disabled", false);
+    $("#btnLogin").html("Crear cuenta");
+    limpiarCamposRegistro();
+}

@@ -1,16 +1,13 @@
 $( document ).ready(function() {
+    listarProvincias();
+    listarTiposOrganizaciones();
 
-    $("#nombreColaborador").on("keyup change input",validarNombreColaborador);
-    $("#apellidoColaborador").on("keyup change input",validarApellidoColaborador);
-    $("#calle").on("keyup change input",validarNombreColaborador);
-    $("#numero").on("keyup change input",validarNombreColaborador);
-    let btnRegistrarseComoOrganizacion = document.getElementById("btnRegistrarseComoOrganizacion");
-    let btnRegistrarseComoColaborador = document.getElementById("btnRegistrarseComoColaborador");
+    $("#btnRegistrarseComoOrganizacion").on('click', mostrarRegistrarseComoOrganizacion);
+    $("#btnRegistrarseComoColaborador").on('click', mostrarRegistrarseComoColaborador);
 
-    btnRegistrarseComoColaborador.addEventListener('click', mostrarRegistrarseComoOrganizacion);
-    btnRegistrarseComoOrganizacion.addEventListener('click', mostrarRegistrarseComoColaborador);
     agregarPaginacionListaOrganizaciones();
     agregarPaginacionUsuarios();
+
     $("#btnIngresar").click(function(){
         $("#modoRegistro").val("ingresar");
         $("#btnLogin").html("Ingresar");
@@ -28,13 +25,17 @@ $( document ).ready(function() {
     $("#btnCerrarSesion").click(cerrarSesion);
 
     $("#btnCrearCuenta").click(function(){
-        $("#btnCrearCuenta").html("<span id = 'spinnerBtnLogin' class='spinner-border spinner-border-sm' role='status' aria-hidden='true'></span>Un momento...");
-        $("#btnCrearCuenta").attr("disabled", true);
+        // $("#btnCrearCuenta").html("<span id = 'spinnerBtnLogin' class='spinner-border spinner-border-sm' role='status' aria-hidden='true'></span>Un momento...");
+        // $("#btnCrearCuenta").attr("disabled", true);
         if($("#modoRegistro").val() == "colaborador"){
-            registrarColaborador();
+            if( validarRegistroColaborador() ){
+                registrarColaborador();
+            }
         }
         else if ($("#modoRegistro").val() == "organizacion"){
-            registrarOrganizacion();
+            if( validarRegistroOrganizacion() ){
+                registrarOrganizacion();
+            }
         }
     });
 });
@@ -42,8 +43,8 @@ $( document ).ready(function() {
 
 function clickBtnLogin()
 {
-    $("#btnLogin").html("<span id = 'spinnerBtnLogin' class='spinner-border spinner-border-sm' role='status' aria-hidden='true'></span>Un momento...");
-    $("#btnLogin").attr("disabled", true);
+    // $("#btnLogin").html("<span id = 'spinnerBtnLogin' class='spinner-border spinner-border-sm' role='status' aria-hidden='true'></span>Un momento...");
+    // $("#btnLogin").attr("disabled", true);
     if($("#modoRegistro").val() == "ingresar"){
         var datosLogin = {
             email: $("#emailUsuario").val(),
@@ -53,41 +54,11 @@ function clickBtnLogin()
         login(datosLogin);
     }
     else{
-
-        $("#modalRegistroColOrg").modal("show");
-        $("#modalLogin").modal("hide");
-
+        if( validarRegistroGoogle() ){
+            $("#modalRegistroColOrg").modal("show");
+            $("#modalLogin").modal("hide");
+        }
     }
-}
-function mostrarRegistrarseComoOrganizacion(){
-    signOut();
-    let exclusivoOrg = $('.exclusivoOrg');
-    let exclusivoCol = $('.exclusivoCol');
-    exclusivoCol.hide();
-    exclusivoOrg.show();
-    listarProvincias();
-    listarTiposOrganizaciones();
-    $("#modoRegistro").val("organizacion");
-    $("#tituloModalLogin").html("Registrarse como organización");
-    $("#errorLogin").hide();
-    $("#btnLogin").attr("disabled", false);
-    $("#btnLogin").html("Crear cuenta");
-
-}
-
-function mostrarRegistrarseComoColaborador(){
-    signOut();
-    let exclusivoOrg = $('.exclusivoOrg');
-    let exclusivoCol = $('.exclusivoCol');
-    exclusivoOrg.hide();
-    exclusivoCol.show();
-    listarProvincias();
-    $("#modoRegistro").val("colaborador");
-    $("#tituloModalLogin").html("Registrarse como colaborador");
-    $("#errorLogin").hide();
-    $("#btnLogin").attr("disabled", false);
-    $("#btnLogin").html("Crear cuenta");
-
 }
 
 function onSignIn(googleUser) {
@@ -225,7 +196,7 @@ function registrarOrganizacion()
                 idDomicilio:0,
                 calle:$("#calle").val(),
                 numero:$("#numero").val(),
-                piso:$("#calle").val(),
+                piso:$("#piso").val(),
                 depto:$("#depto").val(),
                 latitud:0,
                 longitud:0,
@@ -363,36 +334,6 @@ function registrarColaborador()
         });
 }
 
-function validarNombreColaborador()
-{
-    let nombreColaborador = $("#nombreColaborador").val();
-    exp = /[A-Za-zÁÉÍÓÚñáéíóúÑ\s]/;
-    if(!exp.test(nombreColaborador)){
-        $("#nombreColaborador").addClass("inputError");
-    }
-    else if(nombreColaborador.length > 30){
-        $("#nombreColaborador").addClass("inputError");
-    }
-    else{
-        $("#nombreColaborador").removeClass("inputError");
-    }
-}
-
-function validarApellidoColaborador()
-{
-    let apellidoColaborador = $("#apellidoColaborador").val();
-    exp = /[A-Za-zÁÉÍÓÚñáéíóúÑ\s]/;
-    if(!exp.test(nombreColaborador)){
-        $("#apellidoColaborador").addClass("inputError");
-    }
-    else if(nombreColaborador.length > 30){
-        $("#apellidoColaborador").addClass("inputError");
-    }
-    else{
-        $("#apellidoColaborador").removeClass("inputError");
-    }
-}
-
 function agregarPaginacionListaOrganizaciones(){
     $('.listaOrganizaciones').after('<div id="navListaOrganizaciones"></div>');
     let organizacion = document.querySelectorAll('.cardOrganizacion')
@@ -443,4 +384,12 @@ function agregarPaginacionUsuarios(){
         $( usuario ).css('opacity','0.0').hide().slice(primerItem, ultimoItem).
             css('display','block').animate({opacity:1}, 300);
     });
+}
+
+function mostrarRegistrarseComoOrganizacion(){
+    mostrarComo('organizacion')
+}
+
+function mostrarRegistrarseComoColaborador(){
+    mostrarComo('colaborador')
 }
