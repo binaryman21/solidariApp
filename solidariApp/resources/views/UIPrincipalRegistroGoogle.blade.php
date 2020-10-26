@@ -12,12 +12,12 @@
             <input type="hidden" name="" id = "modoRegistro">
             <div class="form-group mb-3">
                 <label for="email">Email</label>
-                <input type="email" id="emailUsuario" class="form-control" placeholder="example@example.com" required="">
+                <input type="email" id="emailUsuario" autocomplete="username" class="form-control" placeholder="example@example.com" required="">
                 <span class="error text-danger"></span>
             </div>
             <div class="form-group mb-3">
                 <label for="password">Contraseña</label>
-                <input type="password" id="claveUsuario" class="form-control" required="">
+                <input type="password" id="claveUsuario"  autocomplete="current-password" class="form-control" required="">
                 <span class="error text-danger"></span>
             </div>
             <div class="error text-danger oculto" id = "errorLogin">Usuario o contraseña incorrecta</div>

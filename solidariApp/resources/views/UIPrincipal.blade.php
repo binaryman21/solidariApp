@@ -16,23 +16,16 @@
         <div class="row bg-white rounded justify-content-lg-center">
             <div class="col-xs-12 col-sm-4 col-lg-3 p-0 p-md-2">
             <input class="form-control my-2 rounded" type="text">
-            <div class = "card listaOrganizaciones" >
-                <div class = "p-2 m-2 cardOrganizacion">
-                    <div class ="d-flex flex-row p-2 justify-content-between detalleOrganizacion">
-
+            <div class = "card listaOrganizaciones border-0" >
+                <div class = "cardOrganizacion my-2rounded shadow-sm border my-2 pb-3">
+                    <div class ="d-flex flex-row m-2 px-2 pt-5 justify-content-star detalleOrganizacion rounded align-items-center">
                         <img class="rounded-circle imgPerfilOrg" src="{{URL::asset('assets/img/user.png')}}" alt="imagen de usuario">
-                        <div class = "m-2">
-                            <p class="lead">
-                                Nombre de la organizacion
-                            </p>
-                            <p>
-                                Tipo de organizacion
-                            </p>
-                            <a class = "btn btn-link float-right" href = "/organizacion">Ver perfil</a>
+                        <div id="card-org-name" class="ml-2">
+                            <p>Nombre de la organizacion</p>
+                            <p>Tipo de organizacion</p>
                         </div>
-
                     </div>
-                    <div class  = "listaNecesidades" class="px-lg-2 pb-2">
+                    <div class = "listaNecesidades px-2">
                         <div class="card necesidad ropa">
                             <div class="card-body">
                                 <div class="row">
@@ -44,7 +37,6 @@
                                 </div>
                             </div>
                         </div>
-
                         <div class="card necesidad dinero">
                             <div class="card-body">
                                 <div class="row">
@@ -59,23 +51,15 @@
                     </div>
                     <button class = "btn btn-link float-right">Ver todas</button>
                 </div>
-
-                <div class = "p-2 m-2 cardOrganizacion">
-                    <div class ="d-flex flex-row p-2 justify-content-between detalleOrganizacion" style = "background-color:#EEEEEE;">
-
-                            <img class="rounded-circle imgPerfilOrg" src="{{URL::asset('assets/img/user.png')}}" alt="imagen de usuario">
-                            <div class = "m-2">
-                                <p class="lead">
-                                    Nombre de la organizacion
-                                </p>
-                                <p>
-                                    Tipo de organizacion
-                                </p>
-                                <a class = "btn btn-link float-right" href = "/organizacion">Ver perfil</a>
-                            </div>
-
+                <div class = "cardOrganizacion rounded shadow-sm border my-2 pb-3">
+                    <div class ="d-flex flex-row m-2 px-2 pt-5 justify-content-star detalleOrganizacion rounded align-items-center">
+                        <img class="rounded-circle imgPerfilOrg" src="{{URL::asset('assets/img/user.png')}}" alt="imagen de usuario">
+                        <div id="card-org-name" class="ml-2">
+                            <p>Nombre de la organizacion</p>
+                            <p>Tipo de organizacion</p>
+                        </div>
                     </div>
-                    <div class="listaNecesidades" class="px-lg-2 pb-2">
+                    <div class = "listaNecesidades px-2">
                         <div class="card necesidad ropa">
                             <div class="card-body">
                                 <div class="row">
@@ -87,7 +71,6 @@
                                 </div>
                             </div>
                         </div>
-
                         <div class="card necesidad dinero">
                             <div class="card-body">
                                 <div class="row">
@@ -102,7 +85,7 @@
                     </div>
                     <button class = "btn btn-link float-right">Ver todas</button>
                 </div>
-        </div>
+            </div>
         </div>
             <div class="col">
                 <div class="row px-2 pt-3 justify-content-between align-items-center">

@@ -64,16 +64,16 @@
                 </div>
                 <div class="form-row">
                     <div class="col-md-6 mb-3">
-                        <select id="selectLocalidad" class="form-control" required>
-                            <option value="-1" selected disabled>-- Seleccione una localidad --</option>
-                        </select>
-                        <span class="error text-danger errorLocalidad"> </span>
-                    </div>
-                    <div class="col-md-6 mb-3">
                         <select id="selectProvincia" class="form-control" required>
                             <option value="-1" selected disabled>-- Seleccione una provincia --</option>
                         </select>
                         <span class="error text-danger errorProvincia"> </span>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <select id="selectLocalidad" class="form-control" required>
+                            <option value="-1" selected disabled>-- Seleccione una localidad --</option>
+                        </select>
+                        <span class="error text-danger errorLocalidad"> </span>
                     </div>
                 </div>
                 <div class="modal-footer row">
