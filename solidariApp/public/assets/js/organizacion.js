@@ -1,7 +1,6 @@
 document.addEventListener('DOMContentLoaded', ()=>{
     isLoggedIn(cargarDatosPerfil);
     agregarPaginacionComentarios();
-    agregarPaginacionNecesidades();
 
     $("#editarMiPerfil").click(camposEditables);
     $("#guardarCambios").click(guardarCambios);
@@ -19,18 +18,49 @@ document.addEventListener('DOMContentLoaded', ()=>{
         categoriaActual = $("#slctCategoria option:selected").text().toLowerCase();
     })
 
-    console.log('si');
+    let necesidades = {
+        necesidad1: {
+            idNecesidad:1,
+            descripcionNecesidad:"descripcion 1",
+            cantidadNecesidad: "2",
+            fechaLimiteNecesidad: "2020/03/12",
+            fechaBajaNecesidad: "no definida",
+            categoriaNecesidad: {
+                idCategoria: "1",
+                nombreCategoria: "alimentos"
+            },
+            idUsuario: "12"
+        },
+        necesidad2: {
+            idNecesidad:2,
+            descripcionNecesidad: "descripcion 2",
+            cantidadNecesidad: "5",
+            fechaLimiteNecesidad: "2020/06/12",
+            fechaBajaNecesidad: "no definida",
+            categoriaNecesidad: {
+                idCategoria:"2",
+                nombreCategoria:"dinero"
+            },
+            idUsuario: "43"
+        }
+    }
+
+    // cargarNecesidades(necesidades);
+    agregarPaginacionNecesidades();
+
 })
 
 function cargarDatosPerfil(usuario)
 {
 
     getOrganizacion(usuario.idUsuario);
-    //getTelefonosUsuario(usuario.idUsuario);
-    //getDomiciliosUsuario(usuario.idUsuario);
 }
 
 function getOrganizacion(idUsuario){
+
+    //CARGAR NECESIDADES
+    cargarNecesidades( idUsuario );
+
     axios.get("/getOrganizacion/"+idUsuario)
     .then((response)=>{
         var organizacion = response.data.organizacion;
@@ -187,5 +217,48 @@ function mostrarModalEditarNecesidad(){
     /*let colorModal = $("#cardCategoria").text().toLowerCase();
     $("#modalEditarNecesidad .modal-content").addClass(colorModal);
     console.log("color " + colorModal);*/
+}
 
+
+
+
+// Cargar necesidades dinamicamente desde la BD
+function cargarNecesidades ( idUsuario ){
+    axios.get(`/listarNecesidades/${ idUsuario }`)
+        .then(( response )=>{
+        console.log( response.data );
+        let necesidades = response.data.organizacion;
+
+        let divNecesidades = $('.necesidades');
+
+        for (necesidad in necesidades) {
+            let cardNecesidad = 
+            `<div class="col-md-6">
+                <div class="card necesidad ${necesidades[necesidad].categoriaNecesidad.nombreCategoria.toLowerCase()}">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <p class="font-weight-bold">${necesidades[necesidad].categoriaNecesidad.nombreCategoria}</p>
+                                <p>${necesidades[necesidad].descripcionNecesidad}</p>
+                                <p>Cantidad: ${necesidades[necesidad].cantidadNecesidad}</p>
+                                <p>Fecha limite: ${necesidades[necesidad].fechaLimiteNecesidad}</p>
+                            </div>
+                            <div class="col-md-6 text-right d-flex flex-column justify-content-between">
+                                <p class="editarNecesidad">
+                                    <a data-toggle="modal" href="#modalEditarNecesidad" id="editar${necesidades[necesidad].idNecesidad}"><i class="far fa-edit"></i></a>
+                                </p>
+                                <p class="ayudasRecibidas">
+                                    <a href="#"><span class="nroAyudas">0</span><i class="fas fa-user-friends"></i></a>
+                                </p>
+                                <p class="estado">
+                                    <i class="fas fa-spinner"></i>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>`;
+            divNecesidades.append( cardNecesidad );
+        };
+    })
 }
