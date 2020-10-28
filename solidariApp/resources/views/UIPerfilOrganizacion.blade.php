@@ -7,13 +7,13 @@
         <div class="jumbotron">
             <div class="row align-middle">
                 <div class="col-md-2">
-                    <img class="rounded-circle imgPerfilOrg" src="{{URL::asset('assets/img/user.png')}}" alt="imagen de usuario">
+                    <img id = "urlFotoPerfilOrganizacion" class="rounded-circle imgPerfilOrg" src="{{URL::asset('assets/img/user.png')}}" alt="imagen de usuario">
                 </div>
                 <div class="col-md-8 align-self-center">
-                    <p class="lead">
+                    <p class="lead" id = "nombreOrganizacion">
                         Nombre de la organizacion
                     </p>
-                    <p>
+                    <p id = "tipoOrganizacion">
                         Tipo de organizacion
                     </p>
                 </div>
@@ -41,22 +41,26 @@
                     <form action="">
                         <div class="form-group">
                             <label for="email">Correo</label>
-                            <input type="email" id="email" class="form-control" value="usuario@mail.com" disabled required>
+                            <input type="email" id="emailOrganizacion" class="form-control" value="usuario@mail.com" disabled required>
                             <span class="error text-danger errorEmail"> </span>
                         </div>
                         <div class="form-group">
                             <label for="tel">Telefono</label>
-                            <input type="text" id="tel" class="form-control" value="(011) 2323232323" disabled required>
+                            <div id = "listadoTelefonos">
+
+                            </div>
                             <span class="error text-danger errorTel"> </span>
                         </div>
                         <div class="form-group">
                             <label for="domicilio">Domicilio</label>
-                            <input type="text" id="domicilio" class="form-control" value="Calle falsa 123, Buenos Aires" disabled required>
+                            <div id = "listadoDomicilios">
+
+                            </div>
                             <span class="error text-danger errorDomicilio"> </span>
                         </div>
                         <div class="form-group">
                             <label for="fechaUsuario">Usuario desde</label>
-                            <input type="text" id="fechaUsuario" class="form-control" value="07/02/2020" disabled required>
+                            <input type="text" id="fechaAltaUsuario" class="form-control" value="07/02/2020" disabled required>
                             <span class="error text-danger errorFechaUsuario"> </span>
                         </div>
                         <div class="d-flex opciones justify-content-between">
@@ -76,7 +80,7 @@
                     <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Buscar</button>
                 </div>
             </form>
-            <a href="#">
+            <a href="#" data-toggle="modal" data-target="#modalAltaNecesidad">
                 <i class="fas fa-plus-circle agregarNecesidad"></i>
             </a>
         </nav>
@@ -263,6 +267,8 @@
 
     </div> <!-- container -->
     @include("UICambiarPass")
+    @include("UIModalAñadirNecesidad")
 <!-- scripts -->
+<script type="text/javascript" src="{{URL::asset('assets/js/logueo.js')}}"></script>
 <script type="text/javascript" src="{{URL::asset('assets/js/organizacion.js')}}"></script>
 @endsection

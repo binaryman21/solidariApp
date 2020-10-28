@@ -6,10 +6,10 @@
     <div class="jumbotron">
         <div class="row align-middle">
             <div class="col-md-2">
-                <img class="rounded-circle imgPerfilCol" src="{{URL::asset('assets/img/user.png')}}" alt="imagen de usuario">
+                <img id = "imgPerfilColaborador" class="rounded-circle imgPerfilCol" src="{{URL::asset('assets/img/user.png')}}" alt="imagen de usuario">
             </div>
             <div class="col-md-8 align-self-center">
-                <p class="lead">
+                <p id = "nombreColaborador" class="lead">
                     Nombre del colaborador
                 </p>
             </div>
@@ -56,22 +56,26 @@
                 <form action="">
                     <div class="form-group">
                         <label for="email">Correo</label>
-                        <input type="email" id="email" class="form-control" value="usuario@mail.com" disabled required>
+                        <input type="email" id="emailColaborador" class="form-control" value="usuario@mail.com" disabled required>
                         <span class="error text-danger errorEmail"> </span>
                     </div>
                     <div class="form-group">
-                        <label for="tel">Telefono</label>
-                        <input type="text" id="tel" class="form-control" value="(011) 2323232323" disabled required>
+                        <label for="tel">Telefonos</label>
+                        <div id = "listadoTelefonos">
+
+                        </div>
                         <span class="error text-danger errorTel"> </span>
                     </div>
                     <div class="form-group">
                         <label for="domicilio">Domicilio</label>
-                        <input type="text" id="domicilio" class="form-control" value="Calle falsa 123, Buenos Aires" disabled required>
+                        <div id = "listadoDomicilios">
+
+                        </div>
                         <span class="error text-danger errorDomicilio"> </span>
                     </div>
                     <div class="form-group">
                         <label for="fechaUsuario">Usuario desde</label>
-                        <input type="text" id="fechaUsuario" class="form-control" value="07/02/2020" disabled required>
+                        <input type="text" id="fechaAltaUsuario" class="form-control" value="07/02/2020" disabled required>
                         <span class="error text-danger errorFechaUsuario"> </span>
                     </div>
                 </form>
@@ -176,6 +180,12 @@
 
 </div> <!-- container -->
 @include("UICambiarPass")
-<!-- Scripts -->
+
+
+@endsection
+
+@section('scripts')
+   <!-- Scripts -->
+<script type="text/javascript" src="{{URL::asset('assets/js/logueo.js')}}"></script>
 <script type="text/javascript" src="{{URL::asset('assets/js/colaborador.js')}}"></script>
 @endsection

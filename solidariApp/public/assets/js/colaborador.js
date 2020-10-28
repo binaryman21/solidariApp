@@ -1,10 +1,62 @@
+
+
+
 document.addEventListener('DOMContentLoaded', ()=>{
+    isLoggedIn(cargarDatosPerfil);
     agregarPaginacionComentarios();
     agregarPaginacionNecesidades();
-    console.log('si');
+
 })
 
+function cargarDatosPerfil(usuario)
+{
 
+    getColaborador(usuario.idUsuario);
+    //getTelefonosUsuario(usuario.idUsuario);
+    //getDomiciliosUsuario(usuario.idUsuario);
+}
+
+function getColaborador(idUsuario){
+    axios.get("/getColaborador/"+idUsuario)
+    .then((response)=>{
+        var colaborador = response.data.colaborador;
+        $("#nombreColaborador").html(colaborador.nombreColaborador + " " + colaborador.apellidoColaborador);
+        $("#imgPerfilColaborador").attr("src",colaborador.urlFotoPerfilUsuario);
+        $("#emailColaborador").val(colaborador.emailUsuario);
+        $("#fechaAltaUsuario").val(colaborador.fechaAltaUsuario);
+        $.each(response.data.domicilios, function (indexInArray, domicilio) {
+            $("#listadoDomicilios").html("");
+             $("#listadoDomicilios").append("<input type='text' class='form-control' value='"+ domicilio.calle + " " + domicilio.numero + ", " + domicilio.localidad + "' disabled required></input>");
+        });
+        $.each(response.data.telefonos, function (indexInArray, telefono) {
+            $("#listadoTelefonos").html("");
+             $("#listadoTelefonos").append("<input type='text' class='form-control' value=("+ telefono.codAreaTelefono +")" + telefono.numeroTelefono + " disabled required></input>");
+        });
+    });
+}
+/*
+function getTelefonosUsuario(idUsuario){
+    axios.get("/listarTelefonosUsuario/"+idUsuario)
+    .then((response)=>{
+        let telefonos = response.data.telefonos;
+       $.each(telefonos, function (indexInArray, telefono) {
+           $("#listadoTelefonos").html("");
+            $("#listadoTelefonos").append("<input type='text' class='form-control' value=("+ telefono.codAreaTelefono +")" + telefono.numeroTelefono + " disabled required></input>");
+       });
+    });
+}
+
+function getDomiciliosUsuario(idUsuario){
+    axios.get("/listarDomiciliosUsuario/"+idUsuario)
+    .then((response)=>{
+        let domicilios = response.data.domicilios;
+       $.each(domicilios, function (indexInArray, domicilio) {
+           $("#listadoDomicilios").html("");
+            $("#listadoDomicilios").append("<input type='text' class='form-control' value="+ domicilio.calle + " " + domicilio.numero + ", " + domicilio.localidad + " disabled required></input>");
+       });
+    });
+}
+*/
 function agregarPaginacionComentarios(){
     $('.comentarios').after('<div id="navComentarios"></div>');
     let comentario = document.querySelectorAll('.comentario')

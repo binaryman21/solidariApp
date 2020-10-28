@@ -1,8 +1,38 @@
 document.addEventListener('DOMContentLoaded', ()=>{
+    isLoggedIn(cargarDatosPerfil);
     agregarPaginacionComentarios();
     agregarPaginacionNecesidades();
-    console.log('si');
+
 })
+
+function cargarDatosPerfil(usuario)
+{
+
+    getOrganizacion(usuario.idUsuario);
+    //getTelefonosUsuario(usuario.idUsuario);
+    //getDomiciliosUsuario(usuario.idUsuario);
+}
+
+function getOrganizacion(idUsuario){
+    axios.get("/getOrganizacion/"+idUsuario)
+    .then((response)=>{
+        var organizacion = response.data.organizacion;
+        $("#nombreOrganizacion").html(organizacion.razonSocial);
+        $("#tipoOrganizacion").html(organizacion.nombreTipoOrganizacion);
+        $("#urlFotoPerfilOrganizacion").attr("src",organizacion.urlFotoPerfilUsuario);
+        $("#emailOrganizacion").val(organizacion.emailUsuario);
+        $("#fechaAltaUsuario").val(organizacion.fechaAltaUsuario);
+        alert(JSON.stringify(response.data));
+        $.each(response.data.domicilios, function (indexInArray, domicilio) {
+            $("#listadoDomicilios").html("");
+             $("#listadoDomicilios").append("<input type='text' class='form-control' value='"+ domicilio.calle + " " + domicilio.numero + ", " + domicilio.nombreLocalidad + "' disabled required></input>");
+        });
+        $.each(response.data.telefonos, function (indexInArray, telefono) {
+            $("#listadoTelefonos").html("");
+             $("#listadoTelefonos").append("<input type='text' class='form-control' value=("+ telefono.codAreaTelefono +")" + telefono.numeroTelefono + " disabled required></input>");
+        });
+    });
+}
 
 
 function agregarPaginacionComentarios(){

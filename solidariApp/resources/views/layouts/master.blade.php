@@ -40,7 +40,7 @@
                 <img id = "imgPerfil" src="" alt="" class = "rounded-circle" width = "32px">
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <a id = "#btnVerMiPerfil" class="dropdown-item" href="{{url('/organizacion')}}">Mi perfil</a>
+              <a id = "btnVerMiPerfil" class="dropdown-item" href="">Mi perfil</a>
               <div class="dropdown-divider"></div>
               <a id = "btnCerrarSesion" class="dropdown-item" href="#">Salir</a>
             </div>
@@ -56,6 +56,10 @@
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <!-- Google JS-->
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+    <script type="text/javascript" src="{{URL::asset('assets/js/google.js')}}"></script>
     @yield('scripts')
 </body>
 </html>
