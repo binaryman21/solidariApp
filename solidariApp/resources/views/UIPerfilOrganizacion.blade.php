@@ -112,7 +112,7 @@
                 <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Buscar</button>
             </div>
         </form>
-        <a href="#">
+        <a data-toggle="modal" href="#modalEditarNecesidad">
             <i class="fas fa-plus-circle agregarNecesidad"></i>
         </a>
     </nav>
@@ -130,7 +130,7 @@
                             </div>
                             <div class="col-md-6 text-right d-flex flex-column justify-content-between">
                                 <p class="editarNecesidad">
-                                    <a href="#"><i class="far fa-edit"></i></a>
+                                    <a data-toggle="modal" href="#modalEditarNecesidad"><i class="far fa-edit"></i></a>
                                 </p>
                                 <p class="ayudasRecibidas">
                                     <a href="#"><span class="nroAyudas">5</span><i class="fas fa-user-friends"></i></a>
@@ -304,6 +304,7 @@
 @include("UIPerfilModales/UICambiarPass")
 @include("UIPerfilModales/UIDarmeDeBaja")
 @include("UIPerfilModales/UIModificarFotoPerfil")
+@include("UIPerfilModales/UIModalEditarNecesidad")
 @endsection
 
 @section('scripts')
