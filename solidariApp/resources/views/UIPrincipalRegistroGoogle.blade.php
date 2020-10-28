@@ -27,7 +27,7 @@
                   <label class="form-check-label" for="dropdownCheck">Recordarme</label>
                 </div>
               </div>
-            <button type="submit" class="btn btn-primary btn-block my-4" id="btnLogin">
+            <button type="button" class="btn btn-primary btn-block my-4" id="btnLogin">
                 Crear cuenta
             </button>
             <div class="text-center">- o -</div>

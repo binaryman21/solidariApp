@@ -13,6 +13,7 @@ $( document ).ready(function() {
         $("#btnLogin").html("Ingresar");
         $("#tituloModalLogin").html("Ingresar a solidariApp");
         $("#btnLogin").attr("disabled", false);
+        limpiarCamposRegistro();
     });
     $("#btnLogin").click(clickBtnLogin);
 
@@ -46,12 +47,14 @@ function clickBtnLogin()
     // $("#btnLogin").html("<span id = 'spinnerBtnLogin' class='spinner-border spinner-border-sm' role='status' aria-hidden='true'></span>Un momento...");
     // $("#btnLogin").attr("disabled", true);
     if($("#modoRegistro").val() == "ingresar"){
-        var datosLogin = {
-            email: $("#emailUsuario").val(),
-            idGoogle: 0,
-            pass:$("#claveUsuario").val()
-        };
-        login(datosLogin);
+        if( validarRegistroGoogle() ){
+            var datosLogin = {
+                email: $("#emailUsuario").val(),
+                idGoogle: 0,
+                pass:$("#claveUsuario").val()
+            };
+            login(datosLogin);
+        }
     }
     else{
         if( validarRegistroGoogle() ){

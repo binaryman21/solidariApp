@@ -42,7 +42,8 @@ function validarRegistroOrganizacion( e ){
     return false;
 }
 
-function validarEmail(){
+function validarEmail( ){
+
     let email = $('#emailUsuario');
     let error = $('.errorEmail');
 
