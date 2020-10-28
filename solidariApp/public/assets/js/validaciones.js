@@ -7,11 +7,34 @@
 
 // });
 
+function validarLogin(){
+    let contador = 0;
+
+    let email = $('#emailUsuario');
+    let errorEmail = $('.errorEmail');
+    let pass = $('#claveUsuario');
+    let errorPass = $('.errorPass');
+
+    validarEmail( email, errorEmail ) ? contador++ : false; 
+    validarPassLogin( pass, errorPass ) ? contador ++ : false;
+
+    if( contador === 2 ){
+        return true;
+    }
+    return false;
+}
 
 function validarRegistroGoogle( e ) { 
     let contador = 0;
-    validarEmail() ? contador++ : false; 
-    validarPass() ? contador ++ : false;
+
+    let email = $('#emailUsuario');
+    let errorEmail = $('.errorEmail');
+    let pass = $('#claveUsuario');
+    let errorPass = $('.errorPass');
+
+    validarEmail( email, errorEmail ) ? contador++ : false; 
+    validarPass( pass, errorPass ) ? contador ++ : false;
+
     if( contador === 2 ){
         return true;
     }
@@ -20,8 +43,14 @@ function validarRegistroGoogle( e ) {
 
 function validarRegistroColaborador( e ){
     let contador = 0;
-    validarNombre() ? contador++ : false;
-    validarApellido() ? contador++ : false;
+
+    let nombreColaborador = $("#nombreColaborador");
+    let errorNombre = $('.errorNombre');
+    let apellidoColaborador = $("#apellidoColaborador");
+    let errorApellido = $('.errorApellido');
+
+    validarNombre( nombreColaborador, errorNombre ) ? contador++ : false;
+    validarApellido( apellidoColaborador, errorApellido ) ? contador++ : false;
     validarTelefono() ? contador++ : false;
     validarDireccion() ? contador++ : false;
     if( contador === 4 ){
@@ -32,8 +61,14 @@ function validarRegistroColaborador( e ){
 
 function validarRegistroOrganizacion( e ){
     let contador = 0;
-    validarNombreOrganizacion() ? contador++ : false;
-    validarTipoOrganizacion() ? contador++ : false;
+
+    let nombreOrganizacion = $("#nombreOrganizacion");
+    let errorNombreOrg = $('.errorNombreOrg');
+    let tipoOrg = $('#selectTipoOrganizacion');
+    let errorTipoOrg = $('.errorTipoOrg');
+
+    validarNombreOrganizacion( nombreOrganizacion, errorNombreOrg ) ? contador++ : false;
+    validarTipoOrganizacion( tipoOrg, errorTipoOrg ) ? contador++ : false;
     validarTelefono() ? contador++ : false;
     validarDireccion() ? contador++ : false;
     if( contador === 4 ){
@@ -42,10 +77,7 @@ function validarRegistroOrganizacion( e ){
     return false;
 }
 
-function validarEmail( ){
-
-    let email = $('#emailUsuario');
-    let error = $('.errorEmail');
+function validarEmail( email, error ){
 
     let regEx = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
@@ -67,10 +99,8 @@ function validarEmail( ){
 }
 
 
-function validarPass() {
-    let pass = $('#claveUsuario');
-    let error = $('.errorPass');
-
+function validarPass( pass, error ) {
+    
     if(pass.val() === ''){
         mostrarError( pass, error, 'Ingrese una contraseña.');
         return false;
@@ -87,12 +117,19 @@ function validarPass() {
     return true;
 }
 
+function validarPassLogin( pass, error ) {
+    
+    if(pass.val() === ''){
+        mostrarError( pass, error, 'Ingrese una contraseña.');
+        return false;
+    }
+    quitarError( pass, error );
+    return true;
+}
 
-function validarNombre()
+
+function validarNombre( nombreColaborador, error )
 {
-    let nombreColaborador = $("#nombreColaborador");
-    let error = $('.errorNombre');
-
     let regEx = /[A-Za-zÁÉÍÓÚñáéíóúÑ\s]/;
 
     if( nombreColaborador.val() === ''){
@@ -115,11 +152,8 @@ function validarNombre()
     return true;
 }
 
-function validarNombreOrganizacion()
+function validarNombreOrganizacion( nombreOrganizacion, error )
 {
-    let nombreOrganizacion = $("#nombreOrganizacion");
-    let error = $('.errorNombreOrg');
-
     let regEx = /[A-Za-zÁÉÍÓÚñáéíóúÑ\s]/;
 
     if( nombreOrganizacion.val() === ''){
@@ -143,11 +177,8 @@ function validarNombreOrganizacion()
 }
 
 
-function validarApellido()
+function validarApellido( apellidoColaborador, error )
 {
-    let apellidoColaborador = $("#apellidoColaborador");
-    let error = $('.errorApellido');
-
     let regEx = /[A-Za-zÁÉÍÓÚñáéíóúÑ\s]/;
 
     if( apellidoColaborador.val() === ''){
@@ -173,8 +204,14 @@ function validarApellido()
 
 function validarTelefono(){
     let contador = 0;
-    validarCodigoArea() ? contador++ : false; 
-    validarNroTelefono() ? contador ++ : false;
+
+    let codArea = $("#codArea");
+    let errorCod = $('.errorCodArea');
+    let nroTelefono = $("#numeroTelefono");
+    let errorNro = $('.errorNroTelefono');
+
+    validarCodigoArea( codArea, errorCod ) ? contador++ : false; 
+    validarNroTelefono( nroTelefono, errorNro ) ? contador ++ : false;
     if( contador === 2 ){
         return true;
     }
@@ -182,10 +219,8 @@ function validarTelefono(){
 }
 
 // CODIGO DE AREA
-function validarCodigoArea(){
-    let codArea = $("#codArea");
-    let errorCod = $('.errorCodArea');
-
+function validarCodigoArea( codArea, errorCod ){
+    
     let regEx = /^[0-9]+$/;
 
     if( codArea.val() === ''){
@@ -210,10 +245,7 @@ function validarCodigoArea(){
 
 
 // NUMERO DE TELEFONO
-function validarNroTelefono(){
-
-    let nroTelefono = $("#numeroTelefono");
-    let errorNro = $('.errorNroTelefono');
+function validarNroTelefono( nroTelefono, errorNro ){
 
     let regEx = /^[0-9]+$/;
 
@@ -240,10 +272,20 @@ function validarNroTelefono(){
 
 function validarDireccion(){
     let contador = 0;
-    validarCalle() ? contador++ : false; 
-    validarNroCalle() ? contador ++ : false;
-    validarProvincia() ? contador ++ : false;
-    validarLocalidad() ? contador ++ : false;
+
+    let calle = $("#calle");
+    let errorCalle = $('.errorCalle');
+    let nroCalle = $("#numero");
+    let errorNroCalle = $('.errorNro');
+    let provincia = $('#selectProvincia');
+    let errorProvincia = $('.errorProvincia');
+    let localidad = $('#selectLocalidad');
+    let errorLocalidad = $('.errorLocalidad');
+
+    validarCalle( calle, errorCalle ) ? contador++ : false; 
+    validarNroCalle( nroCalle, errorNroCalle ) ? contador ++ : false;
+    validarProvincia( provincia, errorProvincia ) ? contador ++ : false;
+    validarLocalidad( localidad, errorLocalidad ) ? contador ++ : false;
     if( contador === 4 ){
         return true;
     }
@@ -251,10 +293,8 @@ function validarDireccion(){
 }
 
 
-function validarCalle(){
-    let calle = $("#calle");
-    let error = $('.errorCalle');
-
+function validarCalle( calle, error ){
+    
     if( calle.val() === '' ){
         mostrarError( calle, error, 'Ingrese una calle.');
         return false;
@@ -264,10 +304,8 @@ function validarCalle(){
     return true;
 }
 
-function validarNroCalle(){
-    let nroCalle = $("#numero");
-    let error = $('.errorNro');
-
+function validarNroCalle( nroCalle, error ){
+    
     let regEx = /^[0-9]+$/;
 
     if( nroCalle.val() === '' ){
@@ -284,10 +322,8 @@ function validarNroCalle(){
 }
 
 
-function validarProvincia(){
-    let provincia = $('#selectProvincia');
-    let error = $('.errorProvincia');
-
+function validarProvincia( provincia, error ){
+    
     if( provincia.val() === null ){
         mostrarError( provincia, error, 'Seleccione una provincia.');
         return false;
@@ -297,10 +333,8 @@ function validarProvincia(){
     return true;
 }
 
-function validarLocalidad(){
-    let localidad = $('#selectLocalidad');
-    let error = $('.errorLocalidad');
-
+function validarLocalidad( localidad, error ){
+    
     if( localidad.val() === null ){
         mostrarError( localidad, error, 'Seleccione una localidad.');
         return false;
@@ -310,9 +344,7 @@ function validarLocalidad(){
     return true;
 }
 
-function validarTipoOrganizacion(){
-    let tipoOrg = $('#selectTipoOrganizacion');
-    let error = $('.errorTipoOrg');
+function validarTipoOrganizacion( tipoOrg, error ){
 
     if( tipoOrg.val() === null ){
         mostrarError( tipoOrg, error, 'Seleccione una tipo de organizacion.');

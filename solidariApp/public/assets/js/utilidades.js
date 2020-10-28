@@ -1,6 +1,8 @@
 function limpiarCamposRegistro(){
     $('#formularioRegistroDatos')[0].reset();
     $('#formRegistroGoogle')[0].reset();
+    // Error Login
+    $("#errorLogin").hide();
     // Email
     $('#emailUsuario').removeClass('is-invalid is-valid');
     $('.errorEmail').fadeOut();

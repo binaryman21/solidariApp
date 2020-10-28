@@ -47,7 +47,7 @@ function clickBtnLogin()
     // $("#btnLogin").html("<span id = 'spinnerBtnLogin' class='spinner-border spinner-border-sm' role='status' aria-hidden='true'></span>Un momento...");
     // $("#btnLogin").attr("disabled", true);
     if($("#modoRegistro").val() == "ingresar"){
-        if( validarRegistroGoogle() ){
+        if( validarLogin() ){
             var datosLogin = {
                 email: $("#emailUsuario").val(),
                 idGoogle: 0,
@@ -256,7 +256,7 @@ function registrarColaborador()
                 idDomicilio:0,
                 calle:$("#calle").val(),
                 numero:$("#numero").val(),
-                piso:$("#calle").val(),
+                piso:$("#piso").val(),
                 depto:$("#depto").val(),
                 latitud:0,
                 longitud:0,
