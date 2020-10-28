@@ -7,15 +7,15 @@
     <div class="jumbotron">
         <div class="row align-middle">
             <div class="col-md-2">
-                <img class="rounded-circle imgPerfilCol" src="{{URL::asset('assets/img/user.png')}}" alt="imagen de usuario">
+                <img id = "urlFotoPerfilOrganizacion" class="rounded-circle imgPerfilOrg" src="{{URL::asset('assets/img/user.png')}}" alt="imagen de usuario">
                 <button type="button" class="btn btn-success btn-sm d-none" data-toggle="modal" data-target="#modalModificarFotoPerfil" id="btnModificarImgPerfil">Modificar Foto </button>
 
             </div>
             <div class="col-md-8 align-self-center">
-                <p class="lead">
+                <p class="lead" id = "nombreOrganizacion">
                     Nombre de la organizacion
                 </p>
-                <p>
+                <p id = "tipoOrganizacion">
                     Tipo de organizacion
                 </p>
                 <div>
@@ -23,8 +23,9 @@
                     <i class="fas fa-hand-holding-heart"></i>
                     <i class="fas fa-handshake"></i>
                     <i class="fas fa-hand-holding-usd"></i>
-                </div>
+
             </div>
+        </div>
             <div class="col-md-2">
                 <button class="btn btn-block btn-primary" type="button" id="editarMiPerfil">Editar <i class="far fa-edit"></i> </button>
                 <button class="btn btn-block btn-primary d-none" type="button" id="guardarCambios">Guardar Cambios</button>
@@ -38,8 +39,8 @@
             <div class="descripcion">
                 <div class="card descripcion">
                     <div class="card-body">
-                        <p class="card-text">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quis molestias adipisci asperiores doloribus, soluta nostrum ab ea quasi ducimus aliquam. Illo accusamus rerum dignissimos aliquid culpa aperiam vitae ullam sunt.</p>
-                        <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Aut iusto nam aspernatur itaque? Possimus dicta perspiciatis autem reprehenderit, fugit eveniet quos odit excepturi omnis quam est delectus optio, eum fugiat?</p>
+                        <p class="card-text" id = "descripcionOrganizacion"></p>
+
                     </div>
                 </div>
             </div>
@@ -49,63 +50,23 @@
                 <form action="">
                     <div class="form-group">
                         <label for="inptEmail">Email</label>
-                        <input type="Email" id="inptEmail" class="form-control campoEditable" value="usuario@mail.com" disabled required>
+                        <input type="Email" id="emailOrganizacion" class="form-control campoEditable" value="usuario@mail.com" disabled required>
                         <span class="error text-danger inptEmail"> </span>
                     </div>
                     <label for="codArea">Telefono</label>
                     <button type="button" class="btn btn-success btn-sm d-none" id="btnAgregarTelefono">Agregar</button>
 
-                    <!-- Primer Telefono -->
-                    <div class="form-row">
-                        <div class="col-3 col-mb-3 mb-3">
-                            <input type="text" class="form-control campoEditable" id="codArea" value="011" disabled placeholder="Cod. Area" required>
-                            <span class="error text-danger errorCodArea"> </span>
-                        </div>
-                        <div class="col-6 col-mb-6 mb-6">
+                    <div id = "listadoTelefonos">
 
-                            <input type="text" class="form-control campoEditable" id="numeroTelefono" value="156472896" disabled placeholder="Numero" required>
-                            <span class="error text-danger errorNroTelefono"></span>
-                        </div>
-                        <div class="col-1 col-mb-1 mb-1">
-                            <button type="button" class="btn btn-danger btn-sm eliminar d-none">Eliminar</button>
-                        </div>
                     </div>
 
-                    <!-- Segundo Telefono -->
-                    <div class="form-row">
-                        <div class="col-3 col-mb-3 mb-3">
-                            <input type="text" class="form-control campoEditable" id="codArea" value="011" disabled placeholder="Cod. Area" required>
-                            <span class="error text-danger errorCodArea"> </span>
-                        </div>
-                        <div class="col-6 col-mb-6 mb-6">
-                            <input type="text" class="form-control campoEditable" id="numeroTelefono" value="156472896" disabled placeholder="Numero" required>
-                            <span class="error text-danger errorNroTelefono"></span>
-                        </div>
-                        <div class="col-1 col-mb-1 mb-1">
-                            <button type="button" class="btn btn-danger btn-sm eliminar d-none">Eliminar</button>
-                        </div>
-                    </div>
                     <hr>
                     <label for="calle">Direccion</label>
                     <button type="button" class="btn btn-success btn-sm d-none" id="btnAgregarDireccion">Agregar</button>
-                    <div class="form-row">
-                        <div class="col-9 col-md-6 mb-3">
-                            <input type="text" class="form-control campoEditable" id="calle" disabled placeholder="Calle" required>
-                            <span class="error text-danger errorCalle"> </span>
-                        </div>
-                        <div class="col-3 col-md-2 mb-3">
-                            <input type="text" class="form-control campoEditable" id="numero" disabled placeholder="Nro" required>
-                            <span class="error text-danger errorNro"> </span>
-                        </div>
-                        <div class="col-6 col-md-2 mb-3">
-                            <input type="text" class="form-control campoEditable" id="piso" disabled placeholder="Piso" required>
-                            <span class="error text-danger errorPiso"> </span>
-                        </div>
-                        <div class="col-6 col-md-2 mb-3">
-                            <input type="text" class="form-control campoEditable" id="depto" disabled placeholder="Depto" required>
-                            <span class="error text-danger errorDepto"> </span>
-                        </div>
+                    <div id = "listadoDomicilios">
+
                     </div>
+
                     <div class="form-row">
                         <div class="col-md-5 mb-3">
                             <select id="selectProvincia" class="form-control campoEditable" disabled required>
@@ -128,8 +89,8 @@
 
                     <hr>
                     <div class="form-group">
-                        <label for="fechaUsuario">Usuario desde</label>
-                        <input type="text" id="fechaUsuario" class="form-control" value="07/02/2020" disabled required>
+                        <label for="fechaAltaUsuario">Usuario desde</label>
+                        <input type="text" id="fechaAltaUsuario" class="form-control" value="07/02/2020" disabled required>
                         <span class="error text-danger errorFechaUsuario"> </span>
                     </div>
                     <hr>
@@ -343,6 +304,10 @@
 @include("UIPerfilModales/UICambiarPass")
 @include("UIPerfilModales/UIDarmeDeBaja")
 @include("UIPerfilModales/UIModificarFotoPerfil")
+@endsection
+
+@section('scripts')
 <!-- scripts -->
+<script type="text/javascript" src="{{URL::asset('assets/js/logueo.js')}}"></script>
 <script type="text/javascript" src="{{URL::asset('assets/js/organizacion.js')}}"></script>
 @endsection

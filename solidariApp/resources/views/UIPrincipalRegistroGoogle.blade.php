@@ -13,7 +13,7 @@
             <div class="form-group mb-3">
                 <label for="email">Email</label>
                 <input type="email" id="emailUsuario" class="form-control" placeholder="example@example.com" required="">
-                <span class="error text-danger"></span>
+                <span class="text-danger oculto" id = "errorCorreo">El correo ya esta registrado</span>
             </div>
             <div class="form-group mb-3">
                 <label for="password">Contraseña</label>

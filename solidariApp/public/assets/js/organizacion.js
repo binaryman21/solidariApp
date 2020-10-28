@@ -1,10 +1,78 @@
 document.addEventListener('DOMContentLoaded', ()=>{
+    isLoggedIn(cargarDatosPerfil);
     agregarPaginacionComentarios();
     agregarPaginacionNecesidades();
-    
+
     $("#editarMiPerfil").click(camposEditables);
     $("#guardarCambios").click(guardarCambios);
+
 })
+
+function cargarDatosPerfil(usuario)
+{
+
+    getOrganizacion(usuario.idUsuario);
+    //getTelefonosUsuario(usuario.idUsuario);
+    //getDomiciliosUsuario(usuario.idUsuario);
+}
+
+function getOrganizacion(idUsuario){
+    axios.get("/getOrganizacion/"+idUsuario)
+    .then((response)=>{
+        var organizacion = response.data.organizacion;
+        $("#nombreOrganizacion").html(organizacion.razonSocial);
+        $("#tipoOrganizacion").html(organizacion.nombreTipoOrganizacion);
+        $("#urlFotoPerfilOrganizacion").attr("src",organizacion.urlFotoPerfilUsuario);
+        $("#emailOrganizacion").val(organizacion.emailUsuario);
+        if(organizacion.descripcionOrganizacion == "")
+        {
+            organizacion.descripcionOrganizacion = "La organización no ha especificado ninguna descripción todavia";
+        }
+        $("#descripcionOrganizacion").html(organizacion.descripcionOrganizacion);
+        $("#fechaAltaUsuario").val(organizacion.fechaAltaUsuario);
+        alert(JSON.stringify(response.data));
+        $.each(response.data.domicilios, function (indexInArray, domicilio) {
+            $("#listadoDomicilios").html("");
+             $("#listadoDomicilios").append(`<div class="form-row">
+             <div class="col-9 col-md-6 mb-3">
+                 <input type="text" class="form-control campoEditable" id="calle" value = "` + domicilio.calle + `" disabled placeholder="Calle" required>
+                 <span class="error text-danger errorCalle"> </span>
+             </div>
+             <div class="col-3 col-md-2 mb-3">
+                 <input type="text" class="form-control campoEditable" id="numero" value = "` + domicilio.numero + `" disabled placeholder="Nro" required>
+                 <span class="error text-danger errorNro"> </span>
+             </div>
+             <div class="col-6 col-md-2 mb-3">
+                 <input type="text" class="form-control campoEditable" id="piso" disabled placeholder="Piso" value = "` + domicilio.piso + `" required>
+                 <span class="error text-danger errorPiso"> </span>
+             </div>
+             <div class="col-6 col-md-2 mb-3">
+                 <input type="text" class="form-control campoEditable" id="depto" disabled placeholder="Depto" value = "` + domicilio.depto + `" required>
+                 <span class="error text-danger errorDepto"> </span>
+             </div>
+         </div>`);
+        });
+        $.each(response.data.telefonos, function (indexInArray, telefono) {
+            $("#listadoTelefonos").html("");
+
+            $("#listadoTelefonos").append(`<div class="form-row">
+            <div class="col-3 col-mb-3 mb-3">
+                <input type="text" class="form-control campoEditable" id="codArea" value="` + telefono.codAreaTelefono + `" disabled placeholder="Cod. Area" required>
+                <span class="error text-danger errorCodArea"> </span>
+            </div>
+            <div class="col-6 col-mb-6 mb-6">
+
+                <input type="text" class="form-control campoEditable" id="numeroTelefono" value="` + telefono.numeroTelefono + `" disabled placeholder="Numero" required>
+                <span class="error text-danger errorNroTelefono"></span>
+            </div>
+            <div class="col-1 col-mb-1 mb-1">
+                <button type="button" class="btn btn-danger btn-sm eliminar d-none">Eliminar</button>
+            </div>
+        </div>`);
+
+        });
+    });
+}
 
 
 /*Hace los campos editables al apretar boton "Editar"*/
@@ -13,10 +81,10 @@ function camposEditables() {
     $("#guardarCambios").removeClass("d-none");
     $("#editarMiPerfil").addClass("disabled");
 
-    
+
     /*Campos editables*/
     $(".campoEditable").prop('disabled', false);
-    
+
     /*Mostrar botones de "Agregar*/
     $("#btnAgregarTelefono").removeClass("d-none");
     $("#btnAgregarDireccion").removeClass("d-none");

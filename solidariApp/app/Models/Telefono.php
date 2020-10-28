@@ -11,4 +11,10 @@ class Telefono extends Model
     protected $table = 'telefono';
     protected $primaryKey = 'idTelefono';
     public $timestamps = false;
+
+    public static function listarTelefonosUsuario($idUsuario){
+        return Telefono::where('idUsuario',$idUsuario)->get();
+    }
 }
+
+
