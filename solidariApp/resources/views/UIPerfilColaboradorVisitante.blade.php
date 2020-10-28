@@ -15,15 +15,16 @@
                 <p class="lead" id="apellidoColaborador">
                     Apellido
                 </p>
-                <p class="lead" id="apellidoColaborador">
-                    Insignias: 
-                </p>
+                <i class="fas fa-snowplow"></i>
+                <i class="fas fa-hand-holding-heart"></i>
+                <i class="fas fa-handshake"></i>
+                <i class="fas fa-hand-holding-usd"></i>
             </div>
             <div class="col-md-2">
                 <button class="btn btn-block btn-primary" type="button" data-toggle="modal" href="#modalCalificar">Calificar</button>
             </div>
         </div>
-        
+
     </div>
 
     <div class="row">
@@ -76,9 +77,9 @@
                             <input type="text" class="form-control" id="numeroTelefono" value="156472896" disabled placeholder="Numero" required>
                             <span class="error text-danger errorNroTelefono"></span>
                         </div>
-                       
+
                     </div>
-                 
+
                     <!-- Segundo Telefono -->
                     <div class="form-row">
                         <div class="col-3 col-mb-3 mb-3">
@@ -91,8 +92,8 @@
                         </div>
 
                     </div>
-                  
-                   
+
+
                     <hr>
                     <label for="calle">Direccion</label>
                     <div class="form-row">
@@ -142,8 +143,8 @@
                 <div class="d-flex opciones justify-content-between">
                     <!--<a href="#" class="text-secondary">Editar datos</a>
                     <a href="#" class="text-danger">Darme de baja</a>-->
-                    <a href="#" class="text-danger" data-toggle="modal" data-target="#modalReportarColaborador">Reportar Colaborador</a>
-                   </div>
+                    <a href="#" class="text-danger" data-toggle="modal" data-target="#modalReportar">Reportar Colaborador</a>
+                </div>
             </div>
         </div>
     </div>
@@ -157,84 +158,86 @@
         </form>
     </nav>
     <div class="necesidades">
-    <div class="row">
-        <div class="col-md-6">
-            <div class="card necesidad alimentos">
-                <div class="card-body">
-                    <p class="text-right">18/10/2020</p>
-                    <div class="row">
-                        <div class="col-md-3">
-                            <img class="rounded-circle imgNecesidad" src="{{URL::asset('assets/img/user.png')}}" alt="imagen de usuario">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card necesidad alimentos">
+                    <div class="card-body">
+                        <p class="text-right">18/10/2020</p>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <img class="rounded-circle imgNecesidad" src="{{URL::asset('assets/img/user.png')}}" alt="imagen de usuario">
+                            </div>
+                            <div class="col-md-9">
+                                <h5 class="card-title">Nombre organizacion</h5>
+                                <p class="card-text">Alimentos.</p>
+                            </div>
                         </div>
-                        <div class="col-md-9">
-                            <h5 class="card-title">Nombre organizacion</h5>
-                            <p class="card-text">Alimentos.</p>
-                        </div>
+                        <p class="mt-2">Descripcion de la necesidad</p>
                     </div>
-                    <p class="mt-2">Descripcion de la necesidad</p>
                 </div>
-                </div>
-        </div>
-        <div class="col-md-6">
-            <div class="card necesidad ropa">
-                <div class="card-body">
-                    <p class="text-right">18/10/2020</p>
-                    <div class="row">
-                        <div class="col-md-3">
-                            <img class="rounded-circle imgNecesidad" src="{{URL::asset('assets/img/user.png')}}" alt="imagen de usuario">
+            </div>
+            <div class="col-md-6">
+                <div class="card necesidad ropa">
+                    <div class="card-body">
+                        <p class="text-right">18/10/2020</p>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <img class="rounded-circle imgNecesidad" src="{{URL::asset('assets/img/user.png')}}" alt="imagen de usuario">
+                            </div>
+                            <div class="col-md-9">
+                                <h5 class="card-title">Nombre organizacion</h5>
+                                <p class="card-text">Ropa.</p>
+                            </div>
                         </div>
-                        <div class="col-md-9">
-                            <h5 class="card-title">Nombre organizacion</h5>
-                            <p class="card-text">Ropa.</p>
-                        </div>
+                        <p class="mt-2">Descripcion de la necesidad</p>
                     </div>
-                    <p class="mt-2">Descripcion de la necesidad</p>
                 </div>
             </div>
         </div>
-    </div> <!--row -->
-    <div class="row">
-        <div class="col-md-6">
-            <div class="card necesidad limpieza">
-                <div class="card-body">
-                    <p class="text-right">18/10/2020</p>
-                    <div class="row">
-                        <div class="col-md-3">
-                            <img class="rounded-circle imgNecesidad" src="{{URL::asset('assets/img/user.png')}}" alt="imagen de usuario">
+        <!--row -->
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card necesidad limpieza">
+                    <div class="card-body">
+                        <p class="text-right">18/10/2020</p>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <img class="rounded-circle imgNecesidad" src="{{URL::asset('assets/img/user.png')}}" alt="imagen de usuario">
+                            </div>
+                            <div class="col-md-9">
+                                <h5 class="card-title">Nombre organizacion</h5>
+                                <p class="card-text">Limpieza.</p>
+                            </div>
                         </div>
-                        <div class="col-md-9">
-                            <h5 class="card-title">Nombre organizacion</h5>
-                            <p class="card-text">Limpieza.</p>
-                        </div>
+                        <p class="mt-2">Descripcion de la necesidad</p>
                     </div>
-                    <p class="mt-2">Descripcion de la necesidad</p>
                 </div>
-                </div>
-        </div>
-        <div class="col-md-6">
-            <div class="card necesidad varios">
-                <div class="card-body">
-                    <p class="text-right">18/10/2020</p>
-                    <div class="row">
-                        <div class="col-md-3">
-                            <img class="rounded-circle imgNecesidad" src="{{URL::asset('assets/img/user.png')}}" alt="imagen de usuario">
+            </div>
+            <div class="col-md-6">
+                <div class="card necesidad varios">
+                    <div class="card-body">
+                        <p class="text-right">18/10/2020</p>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <img class="rounded-circle imgNecesidad" src="{{URL::asset('assets/img/user.png')}}" alt="imagen de usuario">
+                            </div>
+                            <div class="col-md-9">
+                                <h5 class="card-title">Nombre organizacion</h5>
+                                <p class="card-text">Varios.</p>
+                            </div>
                         </div>
-                        <div class="col-md-9">
-                            <h5 class="card-title">Nombre organizacion</h5>
-                            <p class="card-text">Varios.</p>
-                        </div>
+                        <p class="mt-2">Descripcion de la necesidad</p>
                     </div>
-                    <p class="mt-2">Descripcion de la necesidad</p>
                 </div>
             </div>
         </div>
-    </div> <!--row -->
-</div>
+        <!--row -->
+    </div>
 
 </div> <!-- container -->
 
-@include("UIModalCalificar")
-@include("UIModalReportar")
+@include("UIPerfilModales/UIModalCalificar")
+@include("UIPerfilModales/UIModalReportar")
 
 <!-- Scripts -->
 <script type="text/javascript" src="{{URL::asset('assets/js/colaborador.js')}}"></script>

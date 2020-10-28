@@ -7,6 +7,8 @@
         <div class="row align-middle">
             <div class="col-md-2">
                 <img class="rounded-circle imgPerfilCol" src="{{URL::asset('assets/img/user.png')}}" alt="imagen de usuario">
+                <button type="button" class="btn btn-success btn-sm d-none" data-toggle="modal" data-target="#modalModificarFotoPerfil" id="btnModificarImgPerfil">Modificar Foto </button>
+
             </div>
             <div class="col-md-8 align-self-center">
                 <p class="lead" id="nombreColaborador">
@@ -16,12 +18,18 @@
                     Apellido
                 </p>
                 <p class="lead" id="apellidoColaborador">
-                    Insignias: 
                 </p>
+                <div>
+                    <i class="fas fa-snowplow"></i>
+                    <i class="fas fa-hand-holding-heart"></i>
+                    <i class="fas fa-handshake"></i>
+                    <i class="fas fa-hand-holding-usd"></i>
+                </div>
+                
             </div>
             <div class="col-md-2">
-                <button class="btn btn-block btn-primary" type="button">Editar Mi Perfil</button>
-                <button class="btn btn-block btn-primary" type="button">Guardar Cambios</button>
+                <button class="btn btn-block btn-primary" type="button" id="editarMiPerfil">Editar <i class="far fa-edit"></i> </button>
+                <button class="btn btn-block btn-primary d-none" type="button" id="guardarCambios">Guardar Cambios</button>
             </div>
         </div>
 
@@ -61,82 +69,83 @@
             <div class="datos">
                 <form action="">
                     <div class="form-group">
-                        <label for="email">Email</label>
-                        <input type="email" id="email" class="form-control" value="usuario@mail.com" disabled required>
-                        <span class="error text-danger errorEmail"> </span>
+                        <label for="inptEmail">Email</label>
+                        <input type="Email" id="inptEmail" class="form-control campoEditable" value="usuario@mail.com" disabled required>
+                        <span class="error text-danger inptEmail"> </span>
                     </div>
                     <hr>
                     <label for="codArea">Telefono</label>
-                    <button type="button" class="btn btn-success btn-sm">Agregar</button>
-                    <!--  <span class="badge badge-pill badge-primary">Agregar</span>-->
+                    <button type="button" class="btn btn-success btn-sm d-none" id="btnAgregarTelefono">Agregar</button>
+
+                    <!-- Primer Telefono -->
                     <div class="form-row">
                         <div class="col-3 col-mb-3 mb-3">
-                            <input type="text" class="form-control" id="codArea" value="011" disabled placeholder="Cod. Area" required>
+                            <input type="text" class="form-control campoEditable" id="codArea" value="011" disabled placeholder="Cod. Area" required>
                             <span class="error text-danger errorCodArea"> </span>
                         </div>
                         <div class="col-6 col-mb-6 mb-6">
-                            <!-- <span class="badge badge-pill badge-danger pull-right">Eliminar</span>-->
-                            <input type="text" class="form-control" id="numeroTelefono" value="156472896" disabled placeholder="Numero" required>
+
+                            <input type="text" class="form-control campoEditable" id="numeroTelefono" value="156472896" disabled placeholder="Numero" required>
                             <span class="error text-danger errorNroTelefono"></span>
                         </div>
                         <div class="col-1 col-mb-1 mb-1">
-                        <button type="button" class="btn btn-danger btn-sm">Eliminar</button>
+                            <button type="button" class="btn btn-danger btn-sm eliminar d-none">Eliminar</button>
                         </div>
                     </div>
-                 
+
                     <!-- Segundo Telefono -->
                     <div class="form-row">
                         <div class="col-3 col-mb-3 mb-3">
-                            <input type="text" class="form-control" id="codArea" value="011" disabled placeholder="Cod. Area" required>
+                            <input type="text" class="form-control campoEditable" id="codArea" value="011" disabled placeholder="Cod. Area" required>
                             <span class="error text-danger errorCodArea"> </span>
                         </div>
                         <div class="col-6 col-mb-6 mb-6">
-                            <input type="text" class="form-control" id="numeroTelefono" value="156472896" disabled placeholder="Numero" required>
+                            <input type="text" class="form-control campoEditable" id="numeroTelefono" value="156472896" disabled placeholder="Numero" required>
                             <span class="error text-danger errorNroTelefono"></span>
                         </div>
                         <div class="col-1 col-mb-1 mb-1">
-                            <button type="button" class="btn btn-danger btn-sm">Eliminar</button>
+                            <button type="button" class="btn btn-danger btn-sm eliminar d-none">Eliminar</button>
                         </div>
                     </div>
-                  
-                   
+
+
                     <hr>
                     <label for="calle">Direccion</label>
-                    <button type="button" class="btn btn-success btn-sm">Agregar</button>
+                    <button type="button" class="btn btn-success btn-sm d-none" id="btnAgregarDireccion">Agregar</button>
                     <div class="form-row">
                         <div class="col-9 col-md-6 mb-3">
-                            <input type="text" class="form-control" id="calle" disabled placeholder="Calle" required>
+                            <input type="text" class="form-control campoEditable" id="calle" disabled placeholder="Calle" required>
                             <span class="error text-danger errorCalle"> </span>
                         </div>
                         <div class="col-3 col-md-2 mb-3">
-                            <input type="text" class="form-control" id="numero" disabled placeholder="Nro" required>
+                            <input type="text" class="form-control campoEditable" id="numero" disabled placeholder="Nro" required>
                             <span class="error text-danger errorNro"> </span>
                         </div>
                         <div class="col-6 col-md-2 mb-3">
-                            <input type="text" class="form-control" id="piso" disabled placeholder="Piso" required>
+                            <input type="text" class="form-control campoEditable" id="piso" disabled placeholder="Piso" required>
                             <span class="error text-danger errorPiso"> </span>
                         </div>
                         <div class="col-6 col-md-2 mb-3">
-                            <input type="text" class="form-control" id="depto" disabled placeholder="Depto" required>
+                            <input type="text" class="form-control campoEditable" id="depto" disabled placeholder="Depto" required>
                             <span class="error text-danger errorDepto"> </span>
                         </div>
                     </div>
                     <div class="form-row">
                         <div class="col-md-5 mb-3">
-                            <select id="selectProvincia" class="form-control" disabled required>
+                            <select id="selectProvincia" class="form-control campoEditable" disabled required>
                                 <option value="-1" selected>Provincia</option>
                             </select>
                             <span class="error text-danger errorProvincia"> </span>
                         </div>
 
                         <div class="col-md-5 mb-3">
-                            <select id="selectLocalidad" class="form-control" disabled required>
+                            <select id="selectLocalidad" class="form-control campoEditable" disabled required>
                                 <option value="-1" selected>Localidad</option>
                             </select>
                             <span class="error text-danger errorLocalidad"> </span>
                         </div>
                         <div class="col-1 col-mb-1 mb-1">
-                            <button type="button" class="btn btn-danger btn-sm">Eliminar</button>
+                            <button type="button" class="btn btn-danger btn-sm eliminar d-none">Eliminar</button>
                         </div>
                     </div>
 
@@ -153,7 +162,7 @@
                     <!--<a href="#" class="text-secondary">Editar datos</a>
                     <a href="#" class="text-danger">Darme de baja</a>-->
                     <a href="#" class="text-primary" data-toggle="modal" data-target="#modalCambiarPass">Cambiar Contraseña</a>
-                    <a href="#" class="text-primary" data-toggle="modal" data-target="#modalCambiarPass">Darme de Baja</a>
+                    <a href="#" class="text-primary" data-toggle="modal" data-target="#modalDarmeDeBaja">Darme de Baja</a>
                 </div>
             </div>
         </div>
@@ -252,7 +261,9 @@
     </div>
 
 </div> <!-- container -->
-@include("UICambiarPass")
+@include("UIPerfilModales/UICambiarPass")
+@include("UIPerfilModales/UIDarmeDeBaja")
+@include("UIPerfilModales/UIModificarFotoPerfil")
 <!-- Scripts -->
 <script type="text/javascript" src="{{URL::asset('assets/js/colaborador.js')}}"></script>
 @endsection
