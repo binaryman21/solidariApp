@@ -27,7 +27,10 @@ class ColaboradorController extends Controller
             $usuario->claveUsuario = $datosColaborador->claveUsuario;
             $usuario->emailUsuario = $datosColaborador->emailUsuario;
             $usuario->tokenGoogle = $datosColaborador->tokenGoogle;
-            $usuario->urlFotoPerfilUsuario = $datosColaborador->urlFotoPerfilUsuario;
+            if($datosColaborador->urlFotoPerfilUsuario != ""){
+                $usuario->urlFotoPerfilUsuario = $datosColaborador->urlFotoPerfilUsuario;
+            }
+
             $usuario->idRolUsuario = 1;
             $usuario->idEstadoUsuario = 1;
             $usuario->save();
@@ -83,6 +86,15 @@ class ColaboradorController extends Controller
         return response()->json([
             'resultado' => 1,
             'message' => "registro exitoso!"
+
+        ]);
+    }
+
+    public function getColaborador($idUsuario){
+        return response()->json([
+            'colaborador'=>Colaborador::getColaborador($idUsuario),
+            'domicilios' => Domicilio::listarDomiciliosUsuario($idUsuario),
+            'telefonos' => Telefono::listarTelefonosUsuario($idUsuario)
 
         ]);
     }

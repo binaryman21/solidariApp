@@ -17,15 +17,23 @@ class OrganizacionController extends Controller
 
         try
         {
-            DB::beginTransaction();
+
             $datosOrganizacion = json_decode($request->getContent());
             $usuario = new Usuario;
+            if(Usuario::isUser($usuario->emailUsuario))
+            {
+                return response()->json([
+                    'resultado' => 0
+                ]);
+            }
             $organizacion = new Organizacion;
-
+            DB::beginTransaction();
             $usuario->claveUsuario = $datosOrganizacion->claveUsuario;
             $usuario->emailUsuario = $datosOrganizacion->emailUsuario;
             $usuario->tokenGoogle = $datosOrganizacion->tokenGoogle;
+            if($datosOrganizacion->urlFotoPerfilUsuario != ""){
             $usuario->urlFotoPerfilUsuario = $datosOrganizacion->urlFotoPerfilUsuario;
+            }
             $usuario->idRolUsuario = 2;
             $usuario->idEstadoUsuario = 1;
             $usuario->save();
@@ -82,6 +90,14 @@ class OrganizacionController extends Controller
             'resultado' => 1,
             'message' => "registro exitoso!"
 
+        ]);
+    }
+
+    public function getOrganizacion($idUsuario){
+        return response()->json([
+            'organizacion' => Organizacion::getOrganizacion($idUsuario),
+            'domicilios' => Domicilio::listarDomiciliosUsuario($idUsuario),
+            'telefonos' => Telefono::listarTelefonosUsuario($idUsuario)
         ]);
     }
 }

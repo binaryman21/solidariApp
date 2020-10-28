@@ -11,23 +11,32 @@ class UsuarioController extends Controller
         $datosLogin = json_decode($request->getContent());
         $usuario = Usuario::login($datosLogin);
         session_start();
-        $_SESSION['usuario'] = $usuario;
+        $_SESSION['usuario'] = $usuario[0];
         return response()->json([
-            'usuario' => $usuario
+            'usuario' => $usuario[0]
             ]);
     }
 
     public function isUser(Request $request){
         $datos = json_decode($request->getContent());
         return response()->json([
-            'usuario' => Usuario::isUser($datos->email)
+            'isUser' => Usuario::isUser($datos->email)
             ]);
     }
 
     public function isLoggedIn(){
         session_start();
         if(isset($_SESSION['usuario'])){
-            return $_SESSION['usuario'];
+            return response()->json([
+                'usuario' => $_SESSION['usuario']
+                ]);
+
+        }
+        else{
+            return response()->json([
+                'usuario' =>  null
+                ]);
+
         }
     }
     public function logOut(){

@@ -1,5 +1,6 @@
 $( document ).ready(function() {
 
+    isLoggedIn();
     $("#nombreColaborador").on("keyup change input",validarNombreColaborador);
     $("#apellidoColaborador").on("keyup change input",validarApellidoColaborador);
     $("#calle").on("keyup change input",validarNombreColaborador);
@@ -11,26 +12,39 @@ $( document ).ready(function() {
     btnRegistrarseComoOrganizacion.addEventListener('click', mostrarRegistrarseComoColaborador);
     agregarPaginacionListaOrganizaciones();
     agregarPaginacionUsuarios();
+
+
+    //Evento click del boton ingresar en el navbar
     $("#btnIngresar").click(function(){
-        $("#modoRegistro").val("ingresar");
-        $("#btnLogin").html("Ingresar");
-        $("#tituloModalLogin").html("Ingresar a solidariApp");
-        $("#btnLogin").attr("disabled", false);
+        limpiarModalLogin();
+        $("#modoRegistro").val("ingresar"); //seteo el modalLogin en "ingreso"
+        $("#btnLogin").html("Ingresar"); //cambio el nombre del boton del modalLogin a "ingresar"
+        $("#tituloModalLogin").html("Ingresar a solidariApp"); //Seteo el titulo del modalLogin
     });
+
+
+    //evento click del boton del modalLogin
     $("#btnLogin").click(clickBtnLogin);
 
+    //evento change en el selectProvincia
     $("#selectProvincia").change(function(){
 
         let idProvincia = $("#selectProvincia").val();
         $("#selectLocalidad").html("");
         listarLocalidades(idProvincia);
     });
-    $("#btnCerrarSesion").click(cerrarSesion);
 
+
+
+    //evento click en el btnCrearCuenta del modalRegistroColOrg
     $("#btnCrearCuenta").click(function(){
+        //Deshabilito el boton y muestro el spinner
         $("#btnCrearCuenta").html("<span id = 'spinnerBtnLogin' class='spinner-border spinner-border-sm' role='status' aria-hidden='true'></span>Un momento...");
         $("#btnCrearCuenta").attr("disabled", true);
-        if($("#modoRegistro").val() == "colaborador"){
+
+        //Acciones segun el modoRegistro
+        if($("#modoRegistro").val() == "colaborador")
+        {
             registrarColaborador();
         }
         else if ($("#modoRegistro").val() == "organizacion"){
@@ -39,27 +53,59 @@ $( document ).ready(function() {
     });
 });
 
+function limpiarModalLogin()
+{
+    $("#emailUsuario").val("");
+    $("#claveUsuario").val("");
+    $("#btnLogin").attr("disabled", false); //Pongo en enabled el boton login
+    $("#errorLogin").hide();
+    $("#errorCorreo").hide();
+}
 
+//Codigo que se ejecuta al clickear el boton del modalLogin
 function clickBtnLogin()
 {
+    //Deshabilito el boton y muestro el spinner
     $("#btnLogin").html("<span id = 'spinnerBtnLogin' class='spinner-border spinner-border-sm' role='status' aria-hidden='true'></span>Un momento...");
     $("#btnLogin").attr("disabled", true);
-    if($("#modoRegistro").val() == "ingresar"){
+
+    //Si el modoRegistro es "ingresar"
+    if($("#modoRegistro").val() == "ingresar")
+    {
         var datosLogin = {
             email: $("#emailUsuario").val(),
             idGoogle: 0,
             pass:$("#claveUsuario").val()
         };
+        //hago el login
         login(datosLogin);
     }
-    else{
+    else
+    {
+        axios.post("/isUser",{email:$("#emailUsuario").val()})
+        .then((response)=>{
+            alert(response.data.isUser);
+            if(response.data.isUser)
+            {
+                $("#errorCorreo").html("El correo ya esta registrado");
+                $("#emailUsuario").val("");
+                $("#claveUsuario").val("");
+                $("#errorCorreo").show();
+                $("#btnLogin").html("Ingresar");
+                $("#btnLogin").attr("disabled", false);
+            }
+            else
+            {
+                $("#modalRegistroColOrg").modal("show");
+                $("#modalLogin").modal("hide");
+            }
 
-        $("#modalRegistroColOrg").modal("show");
-        $("#modalLogin").modal("hide");
+        });
 
     }
 }
 function mostrarRegistrarseComoOrganizacion(){
+    limpiarModalLogin();
     signOut();
     let exclusivoOrg = $('.exclusivoOrg');
     let exclusivoCol = $('.exclusivoCol');
@@ -69,13 +115,12 @@ function mostrarRegistrarseComoOrganizacion(){
     listarTiposOrganizaciones();
     $("#modoRegistro").val("organizacion");
     $("#tituloModalLogin").html("Registrarse como organización");
-    $("#errorLogin").hide();
-    $("#btnLogin").attr("disabled", false);
     $("#btnLogin").html("Crear cuenta");
 
 }
 
 function mostrarRegistrarseComoColaborador(){
+    limpiarModalLogin();
     signOut();
     let exclusivoOrg = $('.exclusivoOrg');
     let exclusivoCol = $('.exclusivoCol');
@@ -84,83 +129,13 @@ function mostrarRegistrarseComoColaborador(){
     listarProvincias();
     $("#modoRegistro").val("colaborador");
     $("#tituloModalLogin").html("Registrarse como colaborador");
-    $("#errorLogin").hide();
-    $("#btnLogin").attr("disabled", false);
     $("#btnLogin").html("Crear cuenta");
-
-}
-
-function onSignIn(googleUser) {
-    // Useful data for your client-side scripts:
-    let profile = googleUser.getBasicProfile();
-    console.log("ID: " + profile.getId()); // Don't send this directly to your server!
-    console.log('Full Name: ' + profile.getName());
-    console.log('Given Name: ' + profile.getGivenName());
-    console.log('Family Name: ' + profile.getFamilyName());
-    console.log("Image URL: " + profile.getImageUrl());
-    console.log("Email: " + profile.getEmail());
-
-    // The ID token you need to pass to your backend:
-    let id_token = googleUser.getAuthResponse().id_token;
-    console.log("ID Token: " + id_token);
-    var datosLogin = {
-        email: profile.getEmail(),
-        idGoogle: profile.getId(),
-        pass:""
-    };
-    $("#btnLogin").html("<span id = 'spinnerBtnLogin' class='spinner-border spinner-border-sm' role='status' aria-hidden='true'></span>Un momento...");
-    $("#btnLogin").attr("disabled", true);
-
-    axios.post("/login",JSON.stringify(datosLogin))
-    .then((response)=>{
-        //alert(JSON.stringify(response.data.usuario));
-
-        if(response.data.usuario.length == 0)
-        {
-            $("#idGoogle").val(profile.getId());
-            $("#urlFotoPerfilUsuario").val(profile.getImageUrl());
-            $("#emailUsuario").val(profile.getEmail());
-
-           if($("#modoRegistro").val() == "colaborador"){
-            $("#nombreColaborador").val(profile.getGivenName());
-            $("#apellidoColaborador").val(profile.getFamilyName());
-            $("#modalRegistroColOrg").modal("show");
-           }
-           else if($("#modoRegistro").val() == "organizacion")
-           {
-            $("#modalRegistroColOrg").modal("show");
-           }
-        }
-        else{
-            $("#modalLogin").modal("hide");
-            mostrarInterfazSesionIniciada(response.data.usuario[0]);
-        }
-    });
-
-}
-
-function mostrarInterfazSesionIniciada(usuario)
-{
-    $("#btnIngresar").hide();
-    $("#dropDownUsuario").show();
-    $("#botonesRegistro").hide();
-    $("#imgPerfil").attr("src",usuario.urlFotoPerfilUsuario);
-}
-function cerrarSesion()
-{
-    axios.post("/logOut")
-    .then((response)=>{
-        signOut();
-        $("#btnIngresar").show();
-        $("#dropDownUsuario").hide();
-        $("#botonesRegistro").show();
-    });
 
 }
 
 function listarTiposOrganizaciones()
 {
-    axios.get('/listarTipoOrganizaciones')
+    return axios.get('/listarTipoOrganizaciones')
       .then((response)=>{
         let tiposOrganizaciones = response.data.tipoOrganizaciones;
         $.each(tiposOrganizaciones, function (indexInArray, tipoOrganizacion) {
@@ -225,7 +200,7 @@ function registrarOrganizacion()
                 idDomicilio:0,
                 calle:$("#calle").val(),
                 numero:$("#numero").val(),
-                piso:$("#calle").val(),
+                piso:$("#piso").val(),
                 depto:$("#depto").val(),
                 latitud:0,
                 longitud:0,
@@ -271,25 +246,7 @@ function registrarOrganizacion()
         });
 }
 
-function login(datosLogin){
 
-    axios.post("/login",JSON.stringify(datosLogin))
-    .then((response)=>{
-
-        if(response.data.usuario.length == 0){
-            $("#errorLogin").show();
-            $("#emailUsuario").val("");
-            $("#claveUsuario").val("");
-            $("#btnLogin").html("Ingresar");
-            $("#btnLogin").attr("disabled", false);
-        }
-        else{
-            mostrarInterfazSesionIniciada(response.data.usuario);
-            $("#errorLogin").hide();
-            $("#modalLogin").modal("hide");
-        }
-    });
-}
 function registrarColaborador()
 {
     var colaborador =

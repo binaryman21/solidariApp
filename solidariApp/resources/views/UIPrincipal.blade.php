@@ -11,7 +11,6 @@
     crossorigin=""/>
 @endsection
 @section("contenido")
-
     <div class="container-fluid px-sm-3 px-lg-5">
         <div class="row bg-white rounded justify-content-lg-center">
             <div class="col-xs-12 col-sm-4 col-lg-3 p-0 p-md-2">
@@ -125,9 +124,9 @@
                         </select>
                     </div>
                 </div>
-                <div class="row p-2" style = "height:400px;">
+                <div class="row p-2" >
                 <div class = "d-flex flex-column rounded p-2" style = "width:100%;height:100%;">
-                    <div id="mapa"></div>
+                    <div id="mapa" class = "mapa"></div>
                 </div>
                 </div>
                 <div class="row p-2" id = "botonesRegistro">
@@ -159,25 +158,17 @@
 
 @section('scripts')
     @parent
-    <!-- Google JS-->
-    <script src="https://apis.google.com/js/platform.js" async defer></script>
-    <script type="text/javascript" src="{{URL::asset('assets/js/google.js')}}"></script>
+
     <!-- Leaflet JS -->
     <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
     integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
     crossorigin=""></script>
     <script type="text/javascript" src="{{URL::asset('assets/js/app.js')}}"></script>
     <!-- JS -->
+    <script type="text/javascript" src="{{URL::asset('assets/js/logueo.js')}}"></script>
     <script type="text/javascript" src="{{URL::asset('assets/js/UIPrincipal.js')}}"></script>
-    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 
-<script>
-  function signOut() {
-    var auth2 = gapi.auth2.getAuthInstance();
-    auth2.signOut().then(function () {
-      console.log('User signed out.');
-    });
-  }
-</script>
+
+
 @endsection
 
