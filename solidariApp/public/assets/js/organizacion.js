@@ -1,6 +1,20 @@
 document.addEventListener('DOMContentLoaded', ()=>{
     agregarPaginacionComentarios();
     agregarPaginacionNecesidades();
+
+    $("#btnEditarNecesidad").click(()=>{
+        mostrarModalEditarNecesidad();
+    })
+
+    //cambiar color del modalEditarNecesidad en función de la categoria.
+    let categoriaActual;
+    $("#slctCategoria").change(()=>{
+        let colorModal = $("#slctCategoria option:selected").text().toLowerCase();
+        $("#modalEditarNecesidad .modal-content").removeClass(categoriaActual);
+        $("#modalEditarNecesidad .modal-content").addClass(colorModal);
+        categoriaActual = $("#slctCategoria option:selected").text().toLowerCase();
+    })
+
     console.log('si');
 })
 
@@ -55,4 +69,11 @@ function agregarPaginacionNecesidades(){
         $( necesidad ).css('opacity','0.0').hide().slice(primerItem, ultimoItem).
             css('display','block').animate({opacity:1}, 300);
     });
+}
+
+function mostrarModalEditarNecesidad(){
+    /*let colorModal = $("#cardCategoria").text().toLowerCase();
+    $("#modalEditarNecesidad .modal-content").addClass(colorModal);
+    console.log("color " + colorModal);*/
+
 }

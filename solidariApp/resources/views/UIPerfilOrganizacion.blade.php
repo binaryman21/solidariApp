@@ -94,7 +94,7 @@
                                 </div>
                                 <div class="col-md-6 text-right d-flex flex-column justify-content-between">
                                     <p class="editarNecesidad">
-                                        <a href="#"><i class="far fa-edit"></i></a>
+                                        <a data-toggle="modal" href="#modalEditarNecesidad" id="btnEditarNecesidad"><i class="far fa-edit"></i></a>
                                     </p>
                                     <p class="ayudasRecibidas">
                                         <a href="#"><span class="nroAyudas">5</span><i class="fas fa-user-friends"></i></a>
@@ -119,7 +119,7 @@
                                 </div>
                                 <div class="col-md-6 text-right d-flex flex-column justify-content-between">
                                     <p class="editarNecesidad">
-                                        <a href="#"><i class="far fa-edit"></i></a>
+                                        <a data-toggle="modal" href="#modalEditarNecesidad" id="btnEditarNecesidad"><i class="far fa-edit"></i></a>
                                     </p>
                                     <p class="ayudasRecibidas">
                                         <a href="#"><span class="nroAyudas">1</span><i class="fas fa-user-friends"></i></a>
@@ -146,7 +146,7 @@
                                 </div>
                                 <div class="col-md-6 text-right d-flex flex-column justify-content-between">
                                     <p class="editarNecesidad">
-                                        <a href="#"><i class="far fa-edit"></i></a>
+                                        <a data-toggle="modal" href="#modalEditarNecesidad" id="btnEditarNecesidad"><i class="far fa-edit"></i></a>
                                     </p>
                                     <p class="ayudasRecibidas">
                                         <a href="#"><span class="nroAyudas">1</span><i class="fas fa-user-friends"></i></a>
@@ -171,7 +171,7 @@
                                 </div>
                                 <div class="col-md-6 text-right d-flex flex-column justify-content-between">
                                     <p class="editarNecesidad">
-                                        <a href="#"><i class="far fa-edit"></i></a>
+                                        <a data-toggle="modal" href="#modalEditarNecesidad" id="btnEditarNecesidad"><i class="far fa-edit"></i></a>
                                     </p>
                                     <p class="ayudasRecibidas">
                                         <a href="#"><span class="nroAyudas">0</span><i class="fas fa-user-friends"></i></a>
@@ -198,7 +198,7 @@
                                 </div>
                                 <div class="col-md-6 text-right d-flex flex-column justify-content-between">
                                     <p class="editarNecesidad">
-                                        <a href="#"><i class="far fa-edit"></i></a>
+                                        <a data-toggle="modal" href="#modalEditarNecesidad" id="btnEditarNecesidad"><i class="far fa-edit"></i></a>
                                     </p>
                                     <p class="ayudasRecibidas">
                                         <a href="#"><span class="nroAyudas">2</span><i class="fas fa-user-friends"></i></a>
@@ -263,6 +263,7 @@
 
     </div> <!-- container -->
     @include("UICambiarPass")
+    @include("UIModalEditarNecesidad")
 <!-- scripts -->
 <script type="text/javascript" src="{{URL::asset('assets/js/organizacion.js')}}"></script>
 @endsection
