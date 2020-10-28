@@ -1,8 +1,52 @@
 document.addEventListener('DOMContentLoaded', ()=>{
     agregarPaginacionComentarios();
     agregarPaginacionNecesidades();
-    console.log('si');
+    
+    $("#editarMiPerfil").click(camposEditables);
+    $("#guardarCambios").click(guardarCambios);
 })
+
+
+/*Hace los campos editables al apretar boton "Editar"*/
+function camposEditables() {
+    /*Botones*/
+    $("#guardarCambios").removeClass("d-none");
+    $("#editarMiPerfil").addClass("disabled");
+
+    
+    /*Campos editables*/
+    $(".campoEditable").prop('disabled', false);
+    
+    /*Mostrar botones de "Agregar*/
+    $("#btnAgregarTelefono").removeClass("d-none");
+    $("#btnAgregarDireccion").removeClass("d-none");
+    $("#btnModificarImgPerfil").removeClass("d-none");
+    $(".eliminar").removeClass("d-none");
+
+
+
+}
+
+/*Guarda los cambios realizados*/
+function guardarCambios() {
+    /*TODO: Guardar cambios en base de datos*/
+    /** */
+    if (1 )
+    /*Si los cambios fueron guardados exitosamente vuelvo a la vista original (sin modo edicion)*/ {
+
+
+        $("#guardarCambios").addClass("d-none");
+        $("#editarMiPerfil").removeClass("disabled");
+        $("#btnAgregarTelefono").addClass("d-none");
+        $("#btnAgregarDireccion").addClass("d-none");
+        $(".campoEditable").prop('disabled', true);
+        $("#btnModificarImgPerfil").addClass("d-none");
+        $(".eliminar").addClass("d-none");
+    } else {
+        /*Imprimir error*/
+    }
+
+}
 
 
 function agregarPaginacionComentarios(){

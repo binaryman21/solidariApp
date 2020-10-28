@@ -20,15 +20,15 @@ Route::get('/organizacion/visitante', function(){return view('UIPerfilOrganizaci
 
 Route::get('/organizacion', function()
 {
-    session_start();
+    /*session_start();
     if(!isset($_SESSION['usuario']))
     {
         return redirect('/');
     }
     else
-    {
+    {*/
         return view('UIPerfilOrganizacion');
-    }
+   /* }*/
 
 })->name('UIOrganizacion');
 
