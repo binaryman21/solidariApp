@@ -2,7 +2,7 @@ document.addEventListener('DOMContentLoaded', ()=>{
     isLoggedIn(cargarDatosPerfil);
     agregarPaginacionComentarios();
     agregarPaginacionNecesidades();
-
+    listarCategorias();
     $("#editarMiPerfil").click(camposEditables);
     $("#guardarCambios").click(guardarCambios);
 
@@ -24,6 +24,14 @@ document.addEventListener('DOMContentLoaded', ()=>{
 
 function cargarDatosPerfil(usuario)
 {
+    //evento click en el boton de editar necesidad
+    $("#btnGuardarCambiosNecesidad").click
+    (
+    function(event)
+    {
+        event.preventDefault()
+        registrarNecesidad(usuario.idUsuario)
+    });
 
     getOrganizacion(usuario.idUsuario);
     //getTelefonosUsuario(usuario.idUsuario);
