@@ -106,6 +106,27 @@
                             <span class="error text-danger errorDepto"> </span>
                         </div>
                     </div>
+                    <div class="form-row">
+                        <div class="col-md-5 mb-3">
+                            <select id="selectProvincia" class="form-control campoEditable" disabled required>
+                                <option value="-1" selected>Provincia</option>
+                            </select>
+                            <span class="error text-danger errorProvincia"> </span>
+                        </div>
+
+                        <div class="col-md-5 mb-3">
+                            <select id="selectLocalidad" class="form-control campoEditable" disabled required>
+                                <option value="-1" selected>Localidad</option>
+                            </select>
+                            <span class="error text-danger errorLocalidad"> </span>
+                        </div>
+                        <div class="col-1 col-mb-1 mb-1">
+                            <button type="button" class="btn btn-danger btn-sm eliminar d-none">Eliminar</button>
+                        </div>
+                    </div>
+
+
+                    <hr>
                     <div class="form-group">
                         <label for="fechaUsuario">Usuario desde</label>
                         <input type="text" id="fechaUsuario" class="form-control" value="07/02/2020" disabled required>
