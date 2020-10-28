@@ -68,13 +68,15 @@ function clickBtnLogin()
     //Si el modoRegistro es "ingresar"
     if($("#modoRegistro").val() == "ingresar")
     {
-        var datosLogin = {
-            email: $("#emailUsuario").val(),
-            idGoogle: 0,
-            pass:$("#claveUsuario").val()
-        };
-        //hago el login
-        login(datosLogin);
+        if( validarLogin() ){
+            var datosLogin = {
+                email: $("#emailUsuario").val(),
+                idGoogle: 0,
+                pass:$("#claveUsuario").val()
+            };
+            //hago el login
+            login(datosLogin);
+        }
     }
     else
     {
