@@ -8,7 +8,7 @@
         </button>
       </div>
       <div class="modal-body p-5">
-        <form>
+        <form action="" id="formRegistroGoogle">
             <input type="hidden" name="" id = "modoRegistro">
             <div class="form-group mb-3">
                 <label for="email">Email</label>
@@ -17,8 +17,8 @@
             </div>
             <div class="form-group mb-3">
                 <label for="password">Contraseña</label>
-                <input type="password" id="claveUsuario" class="form-control" required="">
-                <span class="error text-danger"></span>
+                <input type="password" id="claveUsuario" class="form-control" placeholder="********" required>
+                <span class="error errorPass text-danger"></span>
             </div>
             <div class="error text-danger oculto" id = "errorLogin">Usuario o contraseña incorrecta</div>
             <div class="form-group mb-3">
@@ -38,3 +38,5 @@
   </div>
 </div>
 </div>
+
+  

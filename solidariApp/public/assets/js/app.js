@@ -1,15 +1,10 @@
 document.addEventListener('DOMContentLoaded', ()=> {
-    cargarMapa();
-    // verCoordenadas();
+    getLocation();
 })
 
-
-
-function cargarMapa(){
-    // latitud y longitud de la UPE
-    let lat= -34.788942;
-    let lng= -58.523357;
-    let map = L.map('mapa').setView([lat, lng], 13);
+function cargarMapa( lat, lng ){   
+    let map = L.map('mapa');
+    map.setView([lat, lng], 13);
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
     }).addTo(map);
@@ -19,15 +14,25 @@ function cargarMapa(){
         .openPopup();
 }
 
-// function verCoordenadas(){
-//         if (navigator.geolocation) {
-//           navigator.geolocation.getCurrentPosition(showPosition);
-//         } else {
-//           console.log("Geolocation is not supported by this browser.");
-//         }
-//     }
 
-// function showPosition(position) {
-//     console.log( "Latitude: " + position.coords.latitude +
-//     "Longitude: " + position.coords.longitude);
-// }
+function getLocation() {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(showPosition, errorMapa);
+    } else {
+      console.log( "Geolocation is not supported by this browser." );
+    }
+  }
+  
+  function showPosition(position) {
+    // latitud y longitud de tu navegaor
+    let lat = position.coords.latitude;
+    let lng = position.coords.longitude;
+    cargarMapa( lat , lng );
+  }
+  
+  function errorMapa( error ){
+    // latitud y longitud de la UPE
+    let lat= -34.788942;
+    let lng= -58.523357;
+    cargarMapa( lat, lng )
+  }

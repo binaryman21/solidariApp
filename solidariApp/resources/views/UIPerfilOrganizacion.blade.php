@@ -68,14 +68,14 @@
                     </div>
 
                     <div class="form-row">
-                        <div class="col-md-5 mb-3">
+                        <div class="col-md-6 mb-3">
                             <select id="selectProvincia" class="form-control campoEditable" disabled required>
                                 <option value="-1" selected>Provincia</option>
                             </select>
                             <span class="error text-danger errorProvincia"> </span>
                         </div>
 
-                        <div class="col-md-5 mb-3">
+                        <div class="col-md-6 mb-3">
                             <select id="selectLocalidad" class="form-control campoEditable" disabled required>
                                 <option value="-1" selected>Localidad</option>
                             </select>

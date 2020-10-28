@@ -1,22 +1,22 @@
 $( document ).ready(function() {
+    listarProvincias();
+    listarTiposOrganizaciones();
 
     isLoggedIn();
-    $("#nombreColaborador").on("keyup change input",validarNombreColaborador);
-    $("#apellidoColaborador").on("keyup change input",validarApellidoColaborador);
-    $("#calle").on("keyup change input",validarNombreColaborador);
-    $("#numero").on("keyup change input",validarNombreColaborador);
-    let btnRegistrarseComoOrganizacion = document.getElementById("btnRegistrarseComoOrganizacion");
-    let btnRegistrarseComoColaborador = document.getElementById("btnRegistrarseComoColaborador");
+    // $("#nombreColaborador").on("keyup change input",validarNombreColaborador);
+    // $("#apellidoColaborador").on("keyup change input",validarApellidoColaborador);
+    // $("#calle").on("keyup change input",validarNombreColaborador);
+    // $("#numero").on("keyup change input",validarNombreColaborador);
+    $("#btnRegistrarseComoOrganizacion").on('click', mostrarRegistrarseComoOrganizacion);
+    $("#btnRegistrarseComoColaborador").on('click', mostrarRegistrarseComoColaborador);
 
-    btnRegistrarseComoColaborador.addEventListener('click', mostrarRegistrarseComoOrganizacion);
-    btnRegistrarseComoOrganizacion.addEventListener('click', mostrarRegistrarseComoColaborador);
     agregarPaginacionListaOrganizaciones();
     agregarPaginacionUsuarios();
 
 
     //Evento click del boton ingresar en el navbar
     $("#btnIngresar").click(function(){
-        limpiarModalLogin();
+        limpiarCamposRegistro();
         $("#modoRegistro").val("ingresar"); //seteo el modalLogin en "ingreso"
         $("#btnLogin").html("Ingresar"); //cambio el nombre del boton del modalLogin a "ingresar"
         $("#tituloModalLogin").html("Ingresar a solidariApp"); //Seteo el titulo del modalLogin
@@ -39,35 +39,31 @@ $( document ).ready(function() {
     //evento click en el btnCrearCuenta del modalRegistroColOrg
     $("#btnCrearCuenta").click(function(){
         //Deshabilito el boton y muestro el spinner
-        $("#btnCrearCuenta").html("<span id = 'spinnerBtnLogin' class='spinner-border spinner-border-sm' role='status' aria-hidden='true'></span>Un momento...");
-        $("#btnCrearCuenta").attr("disabled", true);
+        // $("#btnCrearCuenta").html("<span id = 'spinnerBtnLogin' class='spinner-border spinner-border-sm' role='status' aria-hidden='true'></span>Un momento...");
+        // $("#btnCrearCuenta").attr("disabled", true);
 
         //Acciones segun el modoRegistro
         if($("#modoRegistro").val() == "colaborador")
         {
-            registrarColaborador();
+            if( validarRegistroColaborador() ){
+                registrarColaborador();
+            }
         }
         else if ($("#modoRegistro").val() == "organizacion"){
-            registrarOrganizacion();
+            if( validarRegistroOrganizacion() ){
+                registrarOrganizacion();
+            }
         }
     });
 });
 
-function limpiarModalLogin()
-{
-    $("#emailUsuario").val("");
-    $("#claveUsuario").val("");
-    $("#btnLogin").attr("disabled", false); //Pongo en enabled el boton login
-    $("#errorLogin").hide();
-    $("#errorCorreo").hide();
-}
 
 //Codigo que se ejecuta al clickear el boton del modalLogin
 function clickBtnLogin()
 {
     //Deshabilito el boton y muestro el spinner
-    $("#btnLogin").html("<span id = 'spinnerBtnLogin' class='spinner-border spinner-border-sm' role='status' aria-hidden='true'></span>Un momento...");
-    $("#btnLogin").attr("disabled", true);
+    // $("#btnLogin").html("<span id = 'spinnerBtnLogin' class='spinner-border spinner-border-sm' role='status' aria-hidden='true'></span>Un momento...");
+    // $("#btnLogin").attr("disabled", true);
 
     //Si el modoRegistro es "ingresar"
     if($("#modoRegistro").val() == "ingresar")
@@ -82,55 +78,28 @@ function clickBtnLogin()
     }
     else
     {
-        axios.post("/isUser",{email:$("#emailUsuario").val()})
-        .then((response)=>{
-            alert(response.data.isUser);
-            if(response.data.isUser)
-            {
-                $("#errorCorreo").html("El correo ya esta registrado");
-                $("#emailUsuario").val("");
-                $("#claveUsuario").val("");
-                $("#errorCorreo").show();
-                $("#btnLogin").html("Ingresar");
-                $("#btnLogin").attr("disabled", false);
-            }
-            else
-            {
-                $("#modalRegistroColOrg").modal("show");
-                $("#modalLogin").modal("hide");
-            }
-
-        });
+        if( validarRegistroGoogle() ){
+            axios.post("/isUser",{email:$("#emailUsuario").val()})
+            .then((response)=>{
+                alert(response.data.isUser);
+                if(response.data.isUser)
+                {
+                    limpiarCamposRegistro();
+                    $("#errorCorreo").html("El correo ya esta registrado");
+                    $("#errorCorreo").show();
+                    $("#btnLogin").html("Ingresar");
+                    $("#btnLogin").attr("disabled", false);
+                }
+                else
+                {
+                    $("#modalRegistroColOrg").modal("show");
+                    $("#modalLogin").modal("hide");
+                }
+    
+            });
+        }
 
     }
-}
-function mostrarRegistrarseComoOrganizacion(){
-    limpiarModalLogin();
-    signOut();
-    let exclusivoOrg = $('.exclusivoOrg');
-    let exclusivoCol = $('.exclusivoCol');
-    exclusivoCol.hide();
-    exclusivoOrg.show();
-    listarProvincias();
-    listarTiposOrganizaciones();
-    $("#modoRegistro").val("organizacion");
-    $("#tituloModalLogin").html("Registrarse como organización");
-    $("#btnLogin").html("Crear cuenta");
-
-}
-
-function mostrarRegistrarseComoColaborador(){
-    limpiarModalLogin();
-    signOut();
-    let exclusivoOrg = $('.exclusivoOrg');
-    let exclusivoCol = $('.exclusivoCol');
-    exclusivoOrg.hide();
-    exclusivoCol.show();
-    listarProvincias();
-    $("#modoRegistro").val("colaborador");
-    $("#tituloModalLogin").html("Registrarse como colaborador");
-    $("#btnLogin").html("Crear cuenta");
-
 }
 
 function listarTiposOrganizaciones()
@@ -145,29 +114,6 @@ function listarTiposOrganizaciones()
       });
 }
 
-function listarProvincias()
-{
-    axios.get('/listarProvincias')
-      .then((response)=>{
-        let provincias = response.data.provincias;
-        $.each(provincias, function (indexInArray, provincia) {
-            $("#selectProvincia").append("<option value = '" + provincia.idProvincia + "'>" + provincia.nombreProvincia +"</option");
-        });
-
-      });
-}
-
-function listarLocalidades(idProvincia)
-{
-    axios.get('/listarLocalidades/' + idProvincia)
-      .then((response)=>{
-        let localidades = response.data.localidades;
-        $.each(localidades, function (indexInArray, localidad) {
-            $("#selectLocalidad").append("<option value = '" + localidad.idLocalidad + "'>" + localidad.nombreLocalidad +"</option");
-        });
-
-      });
-}
 
 function registrarOrganizacion()
 {
@@ -320,36 +266,6 @@ function registrarColaborador()
         });
 }
 
-function validarNombreColaborador()
-{
-    let nombreColaborador = $("#nombreColaborador").val();
-    exp = /[A-Za-zÁÉÍÓÚñáéíóúÑ\s]/;
-    if(!exp.test(nombreColaborador)){
-        $("#nombreColaborador").addClass("inputError");
-    }
-    else if(nombreColaborador.length > 30){
-        $("#nombreColaborador").addClass("inputError");
-    }
-    else{
-        $("#nombreColaborador").removeClass("inputError");
-    }
-}
-
-function validarApellidoColaborador()
-{
-    let apellidoColaborador = $("#apellidoColaborador").val();
-    exp = /[A-Za-zÁÉÍÓÚñáéíóúÑ\s]/;
-    if(!exp.test(nombreColaborador)){
-        $("#apellidoColaborador").addClass("inputError");
-    }
-    else if(nombreColaborador.length > 30){
-        $("#apellidoColaborador").addClass("inputError");
-    }
-    else{
-        $("#apellidoColaborador").removeClass("inputError");
-    }
-}
-
 function agregarPaginacionListaOrganizaciones(){
     $('.listaOrganizaciones').after('<div id="navListaOrganizaciones"></div>');
     let organizacion = document.querySelectorAll('.cardOrganizacion')
@@ -400,4 +316,12 @@ function agregarPaginacionUsuarios(){
         $( usuario ).css('opacity','0.0').hide().slice(primerItem, ultimoItem).
             css('display','block').animate({opacity:1}, 300);
     });
+}
+
+function mostrarRegistrarseComoOrganizacion(){
+    mostrarComo('organizacion')
+}
+
+function mostrarRegistrarseComoColaborador(){
+    mostrarComo('colaborador')
 }

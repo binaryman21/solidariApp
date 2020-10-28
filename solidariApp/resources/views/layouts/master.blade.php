@@ -51,6 +51,11 @@
     </nav>
     @yield("contenido")
 
+
+    <footer class="p-3 text-center bg-dark text-white mt-4">
+      <p>SolidariAPP&copy; - 2020</p>
+    </footer>
+
     <!-- JQuery -->
     <script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>    <!-- Bootstrap JS -->
     <!-- Bootstrap JS -->

@@ -8,32 +8,32 @@
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
-        <form action="">
+        <form id="formularioRegistroDatos" action="">
             <div class="modal-body">
 
                 <input type="hidden" name="" id = "urlFotoPerfilUsuario" value = "">
                 <input type="hidden" name="" id = "idGoogle" value = "">
                 <div class="form-group   exclusivoOrg">
                     <label for="nombreOrganizacion">Nombre de la organizacion</label>
-                    <input type="text" id="nombreOrganizacion" class="form-control" placeholder="Nombre" required>
-                    <span class="error text-danger errorNombre"> </span>
+                    <input type="text" id="nombreOrganizacion" class="form-control" placeholder="Nombre de Organizacion">
+                    <span class="error text-danger errorNombreOrg"> </span>
                 </div>
                 <div class="form-group  exclusivoCol">
                     <label for="nombreColaborador">Nombre</label>
-                    <input type="text" id="nombreColaborador" class="form-control" placeholder="Nombre" required>
+                    <input type="text" id="nombreColaborador" class="form-control" placeholder="Nombre">
                     <span class="error text-danger errorNombre"> </span>
                 </div>
                 <div class="form-group   exclusivoCol">
                     <label for="apellidoColaborador">Apellido</label>
-                    <input type="text" id="apellidoColaborador" class="form-control" placeholder="Apellido" required>
+                    <input type="text" id="apellidoColaborador" class="form-control" placeholder="Apellido">
                     <span class="error text-danger errorApellido"> </span>
                 </div>
-                <div class="form-group mb-3    exclusivoOrg">
+                <div class="form-group mb-3  exclusivoOrg">
                     <label for="selectTipoOrganizacion">Tipo organizacion</label>
-                    <select id="selectTipoOrganizacion" class="form-control" required >
+                    <select id="selectTipoOrganizacion" class="form-control" >
                         <option value="-1" selected disabled>-- Elige el tipo de org --</option>
                     </select>
-                    <span class="error text-danger errorLocalidad"> </span>
+                    <span class="error text-danger errorTipoOrg"> </span>
                 </div>
                 <label for="codArea">Telefono</label>
                 <div class="form-row">
@@ -55,30 +55,30 @@
                     <span class="error text-danger errorNro"> </span>
                 </div>
                 <div class="col-6 col-md-2 mb-3">
-                    <input type="text" class="form-control" id="piso" placeholder="Piso" required>
+                    <input type="text" class="form-control" id="piso" placeholder="Piso">
                     <span class="error text-danger errorPiso"> </span>
                 </div>
                 <div class="col-6 col-md-2 mb-3">
-                    <input type="text" class="form-control" id="depto" placeholder="Depto" required>
+                    <input type="text" class="form-control" id="depto" placeholder="Depto">
                     <span class="error text-danger errorDepto"> </span>
                 </div>
                 <div class="form-row">
-                    <div class="col-md-6 mb-3">
-                        <select id="selectLocalidad" class="form-control" required>
-                            <option value="-1" selected disabled>-- Seleccione una localidad --</option>
-                        </select>
-                        <span class="error text-danger errorLocalidad"> </span>
-                    </div>
                     <div class="col-md-6 mb-3">
                         <select id="selectProvincia" class="form-control" required>
                             <option value="-1" selected disabled>-- Seleccione una provincia --</option>
                         </select>
                         <span class="error text-danger errorProvincia"> </span>
                     </div>
+                    <div class="col-md-6 mb-3">
+                        <select id="selectLocalidad" class="form-control" required>
+                            <option value="-1" selected disabled>-- Seleccione una localidad --</option>
+                        </select>
+                        <span class="error text-danger errorLocalidad"> </span>
+                    </div>
                 </div>
                 <div class="modal-footer row">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                    <button type="submit" class="btn btn-primary" id = "btnCrearCuenta">Guardar</button>
+                    <button type="button" class="btn btn-primary" id = "btnCrearCuenta">Guardar</button>
                 </div>
             </div>
         </form>
@@ -86,3 +86,4 @@
       </div>
     </div>
   </div>
+
