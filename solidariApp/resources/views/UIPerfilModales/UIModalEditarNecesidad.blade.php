@@ -30,7 +30,7 @@
                     </div>
                     <div class="form-group">
                         <label for="inpFechaLimite">Fecha limite:</label>
-                        <input type="date" name="inpFechaLimite" id="inpFechaLimete" class="form-control">
+                        <input type="date" name="inpFechaLimite" id="inpFechaLimite" class="form-control">
                     </div>
                     <br>
                     <div class="d-flex justify-content-between">
