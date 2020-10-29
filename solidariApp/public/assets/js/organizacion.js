@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', ()=>{
     isLoggedIn(cargarDatosPerfil);
     agregarPaginacionComentarios();
-
+    listarCategorias();
     $("#editarMiPerfil").click(camposEditables);
     $("#guardarCambios").click(guardarCambios);
 
@@ -52,6 +52,14 @@ document.addEventListener('DOMContentLoaded', ()=>{
 
 function cargarDatosPerfil(usuario)
 {
+    //evento click en el boton de editar necesidad
+    $("#btnGuardarCambiosNecesidad").click
+    (
+    function(event)
+    {
+        event.preventDefault()
+        registrarNecesidad(usuario.idUsuario)
+    });
 
     getOrganizacion(usuario.idUsuario);
 }
@@ -226,26 +234,29 @@ function mostrarModalEditarNecesidad(){
 function cargarNecesidades ( idUsuario ){
     axios.get(`/listarNecesidades/${ idUsuario }`)
         .then(( response )=>{
-        console.log( response.data );
-        let necesidades = response.data.organizacion;
+        // console.log( response.data );
+        let necesidades = response.data.necesidades;
 
         let divNecesidades = $('.necesidades');
 
-        for (necesidad in necesidades) {
+        necesidades.forEach(necesidad => {
+
+            console.log( necesidad );
+
             let cardNecesidad = 
             `<div class="col-md-6">
-                <div class="card necesidad ${necesidades[necesidad].categoriaNecesidad.nombreCategoria.toLowerCase()}">
+                <div class="card necesidad ${necesidad.categoria.nombreCategoria.toLowerCase()}">
                     <div class="card-body">
                         <div class="row">
                             <div class="col-md-6">
-                                <p class="font-weight-bold">${necesidades[necesidad].categoriaNecesidad.nombreCategoria}</p>
-                                <p>${necesidades[necesidad].descripcionNecesidad}</p>
-                                <p>Cantidad: ${necesidades[necesidad].cantidadNecesidad}</p>
-                                <p>Fecha limite: ${necesidades[necesidad].fechaLimiteNecesidad}</p>
+                                <p class="font-weight-bold">${necesidad.categoria.nombreCategoria}</p>
+                                <p>${necesidad.descripcionNecesidad}</p>
+                                <p>Cantidad: ${necesidad.cantidadNecesidad}</p>
+                                <p>Fecha limite: ${ new Date(necesidad.fechaLimiteNecesidad).toLocaleDateString('es-AR') }</p>
                             </div>
                             <div class="col-md-6 text-right d-flex flex-column justify-content-between">
                                 <p class="editarNecesidad">
-                                    <a data-toggle="modal" href="#modalEditarNecesidad" id="editar${necesidades[necesidad].idNecesidad}"><i class="far fa-edit"></i></a>
+                                    <a data-toggle="modal" href="#modalEditarNecesidad" id="editar${necesidad.idNecesidad}"><i class="far fa-edit"></i></a>
                                 </p>
                                 <p class="ayudasRecibidas">
                                     <a href="#"><span class="nroAyudas">0</span><i class="fas fa-user-friends"></i></a>
@@ -259,6 +270,7 @@ function cargarNecesidades ( idUsuario ){
                 </div>
             </div>`;
             divNecesidades.append( cardNecesidad );
-        };
+        })
+    agregarPaginacionNecesidades();
     })
 }

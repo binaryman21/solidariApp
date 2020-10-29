@@ -153,4 +153,5 @@
 <!-- scripts -->
 <script type="text/javascript" src="{{URL::asset('assets/js/logueo.js')}}"></script>
 <script type="text/javascript" src="{{URL::asset('assets/js/organizacion.js')}}"></script>
+<script type="text/javascript" src="{{URL::asset('assets/js/necesidad.js')}}"></script>
 @endsection
