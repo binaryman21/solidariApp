@@ -20,9 +20,9 @@
         <button class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
-        <div class="navbar-collapse collapse" id="navbarSupportedContent" style="">
+        <div class="navbar-collapse collapse" id="navbarSupportedContent">
           <ul class="navbar-nav ml-auto px-5">
-            <li class="nav-item active px-3">
+            <li class="nav-item px-3">
               <a class="nav-link" href="{{url('/')}}">Inicio</a>
             </li>
             <li class="nav-item px-3">
