@@ -22,13 +22,13 @@
         </button>
         <div class="navbar-collapse collapse" id="navbarSupportedContent">
           <ul class="navbar-nav ml-auto px-5">
-            <li class="nav-item px-3">
+            <li class="nav-item px-3" id="navInicio">
               <a class="nav-link" href="{{url('/')}}">Inicio</a>
             </li>
-            <li class="nav-item px-3">
+            <li class="nav-item px-3" id="navContacto">
               <a class="nav-link" href="{{url('/contacto')}}">Contacto</a>
             </li>
-            <li class="nav-item px-3">
+            <li class="nav-item px-3" id="navAcerca">
               <a class="nav-link" href="{{url('/acerca')}}">Acerca de</a>
             </li>
 
@@ -55,7 +55,8 @@
     <footer class="p-3 text-center bg-dark text-white mt-4">
       <p>SolidariAPP&copy; - 2020</p>
     </footer>
-
+    <!-- JS -->
+    <script type="text/javascript" src="{{URL::asset('assets/js/master.js')}}"></script>
     <!-- JQuery -->
     <script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>    <!-- Bootstrap JS -->
     <!-- Bootstrap JS -->
