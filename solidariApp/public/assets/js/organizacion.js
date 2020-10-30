@@ -18,6 +18,17 @@ document.addEventListener('DOMContentLoaded', ()=>{
         categoriaActual = $("#slctCategoria option:selected").text().toLowerCase();
     })
 
+    $("#btnEditarDescripcion").click(function()
+    {
+        $("#btnEditarDescripcion").hide();
+        $("#btnGuardarDescripcion").show();
+        $("#descripcionOrganizacion").attr("contenteditable","true");
+        $("#descripcionOrganizacion").focus();
+
+    });
+
+
+
     let necesidades = {
         necesidad1: {
             idNecesidad:1,
@@ -61,6 +72,14 @@ function cargarDatosPerfil(usuario)
         registrarNecesidad(usuario.idUsuario)
     });
 
+    $("#btnGuardarDescripcion").click(function()
+    {
+        actualizarDescripcion(usuario.idUsuario);
+    });
+    $("#btnAgregarTelefono").click(function()
+    {
+        agregarTelefono(usuario.idUsuario);
+    });
     getOrganizacion(usuario.idUsuario);
 }
 
@@ -75,58 +94,152 @@ function getOrganizacion(idUsuario){
         $("#nombreOrganizacion").html(organizacion.razonSocial);
         $("#tipoOrganizacion").html(organizacion.nombreTipoOrganizacion);
         $("#urlFotoPerfilOrganizacion").attr("src",organizacion.urlFotoPerfilUsuario);
-        $("#emailOrganizacion").val(organizacion.emailUsuario);
+        $("#emailOrganizacion").html(organizacion.emailUsuario);
         if(organizacion.descripcionOrganizacion == "")
         {
             organizacion.descripcionOrganizacion = "La organización no ha especificado ninguna descripción todavia";
         }
         $("#descripcionOrganizacion").html(organizacion.descripcionOrganizacion);
-        $("#fechaAltaUsuario").val(organizacion.fechaAltaUsuario);
-        alert(JSON.stringify(response.data));
+        $("#fechaAltaUsuario").html(organizacion.fechaAltaUsuario);
         $.each(response.data.domicilios, function (indexInArray, domicilio) {
             $("#listadoDomicilios").html("");
-             $("#listadoDomicilios").append(`<div class="form-row">
-             <div class="col-9 col-md-6 mb-3">
-                 <input type="text" class="form-control campoEditable" id="calle" value = "` + domicilio.calle + `" disabled placeholder="Calle" required>
-                 <span class="error text-danger errorCalle"> </span>
-             </div>
-             <div class="col-3 col-md-2 mb-3">
-                 <input type="text" class="form-control campoEditable" id="numero" value = "` + domicilio.numero + `" disabled placeholder="Nro" required>
-                 <span class="error text-danger errorNro"> </span>
-             </div>
-             <div class="col-6 col-md-2 mb-3">
-                 <input type="text" class="form-control campoEditable" id="piso" disabled placeholder="Piso" value = "` + domicilio.piso + `" required>
-                 <span class="error text-danger errorPiso"> </span>
-             </div>
-             <div class="col-6 col-md-2 mb-3">
-                 <input type="text" class="form-control campoEditable" id="depto" disabled placeholder="Depto" value = "` + domicilio.depto + `" required>
-                 <span class="error text-danger errorDepto"> </span>
-             </div>
+             $("#listadoDomicilios").append(`<div class="form-row" >
+             <div class = "d-flex flex-row m-2  domicilio w-100 rounded p-1 justify-content-between">
+             <div class = "d-flex flex-column m-2 " id ="domicilio` + domicilio.idDomicilio + `">
+                <p class = "m-1 domicilioInfo1">` + domicilio.calle + ` ` + domicilio.numero + ` Piso ` + domicilio.piso + ` Depto ` + domicilio.depto + `</p>
+                <p class = "m-1">` + domicilio.nombreLocalidad + `, ` + domicilio.nombreProvincia + `</p>
+            </div>
+            <a class="ml-2" id="btnEditarDomicilio` + domicilio.idDomicilio + `" data-toggle="modal" href="#modalEditarDomicilio"><i class="far fa-edit"></i></a>
+            </div>
+
+
          </div>`);
+
+         $("#btnEditarDomicilio"+ domicilio.idDomicilio).click(function(){
+                cargarDatosModalDomicilio(domicilio);
+         });
+
         });
+        $("#listadoTelefonos").html("");
         $.each(response.data.telefonos, function (indexInArray, telefono) {
-            $("#listadoTelefonos").html("");
-
-            $("#listadoTelefonos").append(`<div class="form-row">
-            <div class="col-3 col-mb-3 mb-3">
-                <input type="text" class="form-control campoEditable" id="codArea" value="` + telefono.codAreaTelefono + `" disabled placeholder="Cod. Area" required>
-                <span class="error text-danger errorCodArea"> </span>
-            </div>
-            <div class="col-6 col-mb-6 mb-6">
-
-                <input type="text" class="form-control campoEditable" id="numeroTelefono" value="` + telefono.numeroTelefono + `" disabled placeholder="Numero" required>
-                <span class="error text-danger errorNroTelefono"></span>
-            </div>
-            <div class="col-1 col-mb-1 mb-1">
-                <button type="button" class="btn btn-danger btn-sm eliminar d-none">Eliminar</button>
-            </div>
-        </div>`);
-
+            agregarTelefonoAlListado(telefono);
         });
     });
 }
+function cargarDatosModalDomicilio(domicilio){
+    $("#calle").val(domicilio.calle);
+    $("#numero").val(domicilio.numero);
+    $("#piso").val(domicilio.piso);
+    $("#depto").val(domicilio.depto);
+    listarProvincias(domicilio.idProvincia);
+    listarLocalidades(domicilio.idProvincia,domicilio.idLocalidad);
 
+    $("#btnGuardarDomicilio").click(function(){
+        $("#btnGuardarDomicilio").html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>Un momento');
+        actualizarDomicilio(domicilio);
+    });
+}
 
+function actualizarDomicilio(domicilio)
+{
+        domicilio.calle = $("#calle").val(),
+        domicilio.numero = $("#numero").val(),
+        domicilio.piso = $("#piso").val(),
+        domicilio.depto = $("#depto").val(),
+        domicilio.idLocalidad = $("#selectLocalidad").val(),
+        domicilio.idProvincia = $("#selectProvincia").val()
+
+    axios.post("/actualizarDomicilio",domicilio)
+    .then((response)=>{
+        $("#btnGuardarDomicilio").html('Guardar');
+        $("#domicilio" + domicilio.idDomicilio).html(`<p class = "m-1 domicilioInfo1">` + domicilio.calle + ` ` + domicilio.numero + ` Piso ` + domicilio.piso + ` Depto ` + domicilio.depto + `</p>
+        <p class = "m-1">` + domicilio.nombreLocalidad + `, ` + domicilio.nombreProvincia + `</p>`);
+    });
+
+}
+function agregarTelefonoAlListado(telefono)
+{
+    $("#listadoTelefonos").append(`<div class="form-row" id = "telefono` + telefono.idTelefono + `">
+    <div class="col-3 col-mb-3 mb-3">
+    <input type="text" class="form-control campoEditable" id="codArea" value="` + telefono.codAreaTelefono + `" disabled placeholder="Cod. Area" required>
+    <span class="error text-danger errorCodArea"> </span>
+    </div>
+    <div class="col-6 col-mb-6 mb-6">
+
+    <input type="text" class="form-control campoEditable" id="numeroTelefono" value="` + telefono.numeroTelefono + `" disabled placeholder="Numero" required>
+    <span class="error text-danger errorNroTelefono"></span>
+    </div>
+    <div class="col-1 col-mb-1 mb-1">
+    <a class="text-danger" id="btnEliminarTelefono`+ telefono.idTelefono +`">
+
+    <i class="fas fa-trash-alt"></i>
+    </a>
+    <a class="text-primary oculto" id="btnOkEliminarTelefono`+ telefono.idTelefono +`">
+
+    <i class="far fa-check-circle"></i>
+    </a>
+
+    <a class="text-danger oculto" id="btnCancelEliminarTelefono`+ telefono.idTelefono +`">
+
+    <i class="far fa-times-circle"></i>
+    </a>
+
+    </div>
+    </div>`);
+
+    $("#btnEliminarTelefono" + telefono.idTelefono).click(function(){
+        $("#btnEliminarTelefono"+ telefono.idTelefono).hide();
+        $("#btnOkEliminarTelefono"+ telefono.idTelefono).show();
+        $("#btnCancelEliminarTelefono"+ telefono.idTelefono).show();
+    });
+
+    $("#btnCancelEliminarTelefono" + telefono.idTelefono).click(function(){
+        $("#btnEliminarTelefono"+ telefono.idTelefono).show();
+        $("#btnOkEliminarTelefono"+ telefono.idTelefono).hide();
+        $("#btnCancelEliminarTelefono"+ telefono.idTelefono).hide();
+    });
+        $("#btnOkEliminarTelefono" + telefono.idTelefono).click(function(){
+        $("#btnEliminarTelefono"+ telefono.idTelefono).show();
+        $("#btnOkEliminarTelefono"+ telefono.idTelefono).hide();
+        $("#btnCancelEliminarTelefono"+ telefono.idTelefono).hide();
+        $("#btnEliminarTelefono"+ telefono.idTelefono).html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>');
+
+        eliminarTelefono(telefono.idTelefono);
+    });
+}
+function actualizarDescripcion(idUsuario)
+{
+
+    $("#btnGuardarDescripcion").html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>Actualizando...');
+    $("#descripcionOrganizacion").attr("contenteditable","false");
+    axios.post("/actualizarDescripcion",{idUsuario:idUsuario,descripcionOrganizacion:$("#descripcionOrganizacion").html()})
+    .then((response)=>{
+        $("#btnEditarDescripcion").show();
+        $("#btnGuardarDescripcion").html('<i class="far fa-save"></i>');
+        $("#btnGuardarDescripcion").hide();
+    });
+}
+
+function eliminarTelefono(idTelefono)
+{
+    axios.post("/eliminarTelefono",{idTelefono:idTelefono})
+    .then((response)=>{
+        $("#telefono" + idTelefono).remove();
+    });
+}
+
+function agregarTelefono(idUsuario)
+{
+
+    $("#btnAgregarTelefono").html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>');
+    var telefono = {idTelefono:0,codAreaTelefono:$("#codArea").val(),numeroTelefono:$("#numeroTelefono").val(),esCelular:0,idUsuario:idUsuario}
+    axios.post("/registrarTelefono",telefono)
+    .then((response)=>{
+        $("#btnAgregarTelefono").html('<i class="fas fa-plus-circle agregarNecesidad"></i>');
+        telefono.idTelefono = response.data.idTelefono;
+        agregarTelefonoAlListado(telefono);
+    });
+}
 /*Hace los campos editables al apretar boton "Editar"*/
 function camposEditables() {
     /*Botones*/
@@ -238,12 +351,12 @@ function cargarNecesidades ( idUsuario ){
         let necesidades = response.data.necesidades;
 
         let divNecesidades = $('.necesidades');
-
+        divNecesidades.html("");
         necesidades.forEach(necesidad => {
 
             console.log( necesidad );
 
-            let cardNecesidad = 
+            let cardNecesidad =
             `<div class="col-md-6">
                 <div class="card necesidad ${necesidad.categoria.nombreCategoria.toLowerCase()}">
                     <div class="card-body">

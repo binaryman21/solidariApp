@@ -96,3 +96,15 @@ div.g-signin2 > .abcRioButtonLightBlue{
     color:red;
 }
 
+[contenteditable] {
+    outline: 0px solid transparent;
+  }
+
+.domicilioInfo1{
+    font-weight:bold;
+    font-size:1.2em;
+}
+
+.domicilio{
+    background-color:lightgray;
+}

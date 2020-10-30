@@ -13,7 +13,7 @@ class Telefono extends Model
     public $timestamps = false;
 
     public static function listarTelefonosUsuario($idUsuario){
-        return Telefono::where('idUsuario',$idUsuario)->get();
+        return Telefono::where('idUsuario',$idUsuario)->where('activo',true)->get();
     }
 }
 
