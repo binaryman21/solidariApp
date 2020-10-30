@@ -147,13 +147,18 @@ function actualizarDomicilio(domicilio)
         domicilio.piso = $("#piso").val(),
         domicilio.depto = $("#depto").val(),
         domicilio.idLocalidad = $("#selectLocalidad").val(),
-        domicilio.idProvincia = $("#selectProvincia").val()
-
+        domicilio.idProvincia = $("#selectProvincia").val(),
+        domicilio.nombreLocalidad = $("#selectLocalidad option:selected").text(),
+        domicilio.nombreProvincia = $("#selectProvincia option:selected").text()
     axios.post("/actualizarDomicilio",domicilio)
     .then((response)=>{
         $("#btnGuardarDomicilio").html('Guardar');
         $("#domicilio" + domicilio.idDomicilio).html(`<p class = "m-1 domicilioInfo1">` + domicilio.calle + ` ` + domicilio.numero + ` Piso ` + domicilio.piso + ` Depto ` + domicilio.depto + `</p>
         <p class = "m-1">` + domicilio.nombreLocalidad + `, ` + domicilio.nombreProvincia + `</p>`);
+
+        $("#btnEditarDomicilio"+ domicilio.idDomicilio).click(function(){
+            cargarDatosModalDomicilio(domicilio);
+     });
     });
 
 }

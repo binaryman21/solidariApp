@@ -228,10 +228,12 @@
 @include("UIPerfilModales/UICambiarPass")
 @include("UIPerfilModales/UIDarmeDeBaja")
 @include("UIPerfilModales/UIModificarFotoPerfil")
+@include("UIPerfilModales/UIEditarDomicilio")
 @endsection
 
 @section('scripts')
    <!-- Scripts -->
+<script type="text/javascript" src="{{URL::asset('assets/js/utilidades.js')}}"></script>
 <script type="text/javascript" src="{{URL::asset('assets/js/logueo.js')}}"></script>
 <script type="text/javascript" src="{{URL::asset('assets/js/colaborador.js')}}"></script>
 @endsection
