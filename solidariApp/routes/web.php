@@ -34,6 +34,7 @@ Route::get('/organizacion', function()
 
 Route::get('/administrador', function(){return view('UIPerfilAdministrador');})->name('UIAdministracion');
 Route::get('/administrador/reportes', function(){return view('UIReporteDenuncias');})->name('UIReporteDenuncias');
+Route::get('/contacto', function(){return view('UIContacto');})->name('UIContacto');
 Route::get('/listarProvincias', 'App\Http\Controllers\ProvinciaController@listarProvincias')->name('provincia');
 Route::get('/listarTiposOrganizaciones', 'App\Http\Controllers\ProvinciaController@listarTipoOrganizaciones')->name('provincia');
 
