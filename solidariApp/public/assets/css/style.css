@@ -24,7 +24,7 @@ body {
     background-color: white;
 }
 .imgPerfilCol,.imgPerfilOrg{
-    height: 100px;
+    width: 40px;
 }
 .imgNecesidad{
     height: 80px;
@@ -65,12 +65,24 @@ i {
     color: yellowgreen;
     font-size: 2em;
 }
+
 .detalleOrganizacion{
-    background-color:#EEEEEE;
+    height: 120px;
+    background-color: #ffffff;
+    box-shadow: inset 1px -12px 20px 0px #00000025, inset 25px -25px 49px 0px #00000025;
 }
-.cardOrganizacion{
-    border: 1px solid #E6E6E6;
+
+#card-org-name p:first-child{
+    font-size:85%;
+    font-weight: 700;
+    color: #616161;
 }
+
+#card-org-name p:last-child{
+    font-size:85%;
+    color: #4c4c4c;
+}
+
 .listaNecesidades{
 
     min-height: 200px;
@@ -96,3 +108,6 @@ div.g-signin2 > .abcRioButtonLightBlue{
     color:red;
 }
 
+#modalAltaNecesidad{
+    padding-right: 8px;
+}
