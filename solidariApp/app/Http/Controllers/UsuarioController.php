@@ -10,10 +10,12 @@ class UsuarioController extends Controller
     public function login(Request $request){
         $datosLogin = json_decode($request->getContent());
         $usuario = Usuario::login($datosLogin);
+        if($usuario != null){
         session_start();
-        $_SESSION['usuario'] = $usuario[0];
+        $_SESSION['usuario'] = $usuario;
+        }
         return response()->json([
-            'usuario' => $usuario[0]
+            'usuario' => $usuario
             ]);
     }
 
@@ -72,4 +74,5 @@ class UsuarioController extends Controller
             }
 
         }
+
 }

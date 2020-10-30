@@ -22,7 +22,6 @@ function listarCategorias()
     $("#slctCategoria").html("<option value = '0'>--Seleccione una categoria--</option");
     axios.get("/listarCategoriasNecesidad")
     .then((response)=>{
-        alert(JSON.stringify(response.data));
         $.each(response.data.CategoriasNecesidad, function (indexInArray, categoria) {
             $("#slctCategoria").append("<option value = '" + categoria.idCategoria + "'>" + categoria.nombreCategoria + "</option");
         });

@@ -73,19 +73,20 @@ function listarTiposOrganizaciones()
       });
 }
 
-function listarProvincias()
+function listarProvincias(defaultSelected)
 {
     axios.get('/listarProvincias')
       .then((response)=>{
         let provincias = response.data.provincias;
         $.each(provincias, function (indexInArray, provincia) {
             $("#selectProvincia").append("<option value = '" + provincia.idProvincia + "'>" + provincia.nombreProvincia +"</option");
-        });
 
+        });
+        $("#selectProvincia").val(defaultSelected);
       });
 }
 
-function listarLocalidades(idProvincia)
+function listarLocalidades(idProvincia,defaultSelected)
 {
     axios.get('/listarLocalidades/' + idProvincia)
       .then((response)=>{
@@ -93,6 +94,7 @@ function listarLocalidades(idProvincia)
         $.each(localidades, function (indexInArray, localidad) {
             $("#selectLocalidad").append("<option value = '" + localidad.idLocalidad + "'>" + localidad.nombreLocalidad +"</option");
         });
+        $("#selectLocalidad").val(defaultSelected);
 
       });
 }
