@@ -20,20 +20,21 @@ Route::get('/organizacion/visitante', function(){return view('UIPerfilOrganizaci
 
 Route::get('/organizacion', function()
 {
-    session_start();
+    /*session_start();
     if(!isset($_SESSION['usuario']))
     {
         return redirect('/');
     }
     else
-    {
+    {*/
         return view('UIPerfilOrganizacion');
-    }
+   /* }*/
 
 })->name('UIOrganizacion');
 
 Route::get('/administrador', function(){return view('UIPerfilAdministrador');})->name('UIAdministracion');
 Route::get('/administrador/reportes', function(){return view('UIReporteDenuncias');})->name('UIReporteDenuncias');
+Route::get('/contacto', function(){return view('UIContacto');})->name('UIContacto');
 Route::get('/listarProvincias', 'App\Http\Controllers\ProvinciaController@listarProvincias')->name('provincia');
 Route::get('/listarTiposOrganizaciones', 'App\Http\Controllers\ProvinciaController@listarTipoOrganizaciones')->name('provincia');
 
@@ -47,9 +48,16 @@ Route::post('/registrarColaborador', 'App\Http\Controllers\ColaboradorController
 Route::post('/registrarOrganizacion', 'App\Http\Controllers\OrganizacionController@registrarOrganizacion')->name('registrarOrganizacion');
 Route::post('/login', 'App\Http\Controllers\UsuarioController@login')->name('login');
 Route::post('/logOut', 'App\Http\Controllers\UsuarioController@logout')->name('logout');
-Route::post('/isLoggedIn', 'App\Http\Controllers\UsuarioController@isLoggedIn')->name('isLoggedIn');
+Route::post('/isUser', 'App\Http\Controllers\UsuarioController@isUser')->name('isUser');
+Route::get('/isLoggedIn', 'App\Http\Controllers\UsuarioController@isLoggedIn')->name('isLoggedIn');
 Route::post('/registrarUsuario', 'App\Http\Controllers\UsuarioController@registrarUsuario')->name('registrarUsuario');
 Route::post('/registrarNecesidad', 'App\Http\Controllers\NecesidadController@registrarNecesidad')->name('registrarNecesidad');
+Route::get('/getOrganizacion/{idUsuario}', 'App\Http\Controllers\OrganizacionController@getOrganizacion')->name('getOrganizacion');
+Route::get('/getColaborador/{idUsuario}', 'App\Http\Controllers\ColaboradorController@getColaborador')->name('getColaborador');
+Route::get('/listarDomiciliosUsuario/{idUsuario}', 'App\Http\Controllers\DomicilioController@listarDomiciliosUsuario')->name('listarDomiciliosUsuario');
+Route::get('/listarTelefonosUsuario/{idUsuario}', 'App\Http\Controllers\TelefonoController@listarTelefonosUsuario')->name('listarTelefonosUsuario');
+Route::get('/listarNecesidades/{idUsuario}', 'App\Http\Controllers\NecesidadController@listarNecesidades')->name('listarNecesidades');
+
 
 
 

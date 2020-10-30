@@ -1,4 +1,4 @@
-<div class="modal fade show bd-example-modal-lg" tabindex="-1" data-backdrop="static" id="añadirNecesidad" style="padding-right: 8px;" aria-modal="true" role="dialog">
+<div class="modal fade show bd-example-modal-lg" tabindex="-1" data-backdrop="static" id="modalAltaNecesidad" aria-modal="true" role="dialog">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header bg-primary align-items-center text-white">

@@ -1,8 +1,11 @@
-#mapa {
+.mapa {
     /* height: 180px;  */
-    height:  100%;
+    height:  400px;
 }
-
+.mapaExtendido {
+    /* height: 180px;  */
+    height:  700px;
+}
 :root {
     --alimentos-color: #FFF1DB;
     --ropa-color: #C7C6F5;
@@ -105,3 +108,6 @@ div.g-signin2 > .abcRioButtonLightBlue{
     color:red;
 }
 
+#modalAltaNecesidad{
+    padding-right: 8px;
+}

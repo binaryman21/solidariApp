@@ -11,4 +11,17 @@ class Necesidad extends Model
     protected $table = 'necesidad';
     protected $primaryKey = 'idNecesidad';
     public $timestamps = false;
+
+    public static function listarNecesidades($idUsuario)
+    {
+        return Necesidad::where("idUsuario",$idUsuario)->with('categoria')->get();
+    }
+
+    public function categoria()
+    {
+        return $this->belongsTo('App\Models\CategoriaNecesidad','idCategoriaNecesidad','idCategoria');
+    }
+
 }
+
+

@@ -16,10 +16,10 @@ class Usuario extends Model
         $email = $datosLogin->email;
         $pass = $datosLogin->pass;
         $idGoogle = $datosLogin->idGoogle;
-        $usuario = Usuario::where('emailUsuario', $email)->where('claveUsuario',$pass)->get();
+        $usuario = Usuario::with('rol')->where('emailUsuario', $email)->where('claveUsuario',$pass)->get();
         if($idGoogle != 0)
         {
-            $usuario = Usuario::where('emailUsuario', $email)->where('tokenGoogle',$idGoogle)->get();
+            $usuario = Usuario::with('rol')->where('emailUsuario', $email)->where('tokenGoogle',$idGoogle)->get();
         }
 
         return $usuario;
@@ -29,6 +29,16 @@ class Usuario extends Model
 
         return Usuario::where('emailUsuario',$email)->exists();
 
+    }
+
+    public function rol()
+    {
+        return $this->belongsTo('App\Models\Rol','idRolUsuario','idRol');
+    }
+
+    public function domicilios()
+    {
+        return $this->hasMany('App\Models\Domicilio','idUsuario','idUsuario');
     }
 
 }

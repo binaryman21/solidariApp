@@ -1,8 +1,172 @@
 document.addEventListener('DOMContentLoaded', ()=>{
+    isLoggedIn(cargarDatosPerfil);
     agregarPaginacionComentarios();
+    listarCategorias();
+    $("#editarMiPerfil").click(camposEditables);
+    $("#guardarCambios").click(guardarCambios);
+
+    $("#btnEditarNecesidad").click(()=>{
+        mostrarModalEditarNecesidad();
+    })
+
+    //cambiar color del modalEditarNecesidad en función de la categoria.
+    let categoriaActual;
+    $("#slctCategoria").change(()=>{
+        let colorModal = $("#slctCategoria option:selected").text().toLowerCase();
+        $("#modalEditarNecesidad .modal-content").removeClass(categoriaActual);
+        $("#modalEditarNecesidad .modal-content").addClass(colorModal);
+        categoriaActual = $("#slctCategoria option:selected").text().toLowerCase();
+    })
+
+    let necesidades = {
+        necesidad1: {
+            idNecesidad:1,
+            descripcionNecesidad:"descripcion 1",
+            cantidadNecesidad: "2",
+            fechaLimiteNecesidad: "2020/03/12",
+            fechaBajaNecesidad: "no definida",
+            categoriaNecesidad: {
+                idCategoria: "1",
+                nombreCategoria: "alimentos"
+            },
+            idUsuario: "12"
+        },
+        necesidad2: {
+            idNecesidad:2,
+            descripcionNecesidad: "descripcion 2",
+            cantidadNecesidad: "5",
+            fechaLimiteNecesidad: "2020/06/12",
+            fechaBajaNecesidad: "no definida",
+            categoriaNecesidad: {
+                idCategoria:"2",
+                nombreCategoria:"dinero"
+            },
+            idUsuario: "43"
+        }
+    }
+
+    // cargarNecesidades(necesidades);
     agregarPaginacionNecesidades();
-    console.log('si');
+
 })
+
+function cargarDatosPerfil(usuario)
+{
+    //evento click en el boton de editar necesidad
+    $("#btnGuardarCambiosNecesidad").click
+    (
+    function(event)
+    {
+        event.preventDefault()
+        registrarNecesidad(usuario.idUsuario)
+    });
+
+    getOrganizacion(usuario.idUsuario);
+}
+
+function getOrganizacion(idUsuario){
+
+    //CARGAR NECESIDADES
+    cargarNecesidades( idUsuario );
+
+    axios.get("/getOrganizacion/"+idUsuario)
+    .then((response)=>{
+        var organizacion = response.data.organizacion;
+        $("#nombreOrganizacion").html(organizacion.razonSocial);
+        $("#tipoOrganizacion").html(organizacion.nombreTipoOrganizacion);
+        $("#urlFotoPerfilOrganizacion").attr("src",organizacion.urlFotoPerfilUsuario);
+        $("#emailOrganizacion").val(organizacion.emailUsuario);
+        if(organizacion.descripcionOrganizacion == "")
+        {
+            organizacion.descripcionOrganizacion = "La organización no ha especificado ninguna descripción todavia";
+        }
+        $("#descripcionOrganizacion").html(organizacion.descripcionOrganizacion);
+        $("#fechaAltaUsuario").val(organizacion.fechaAltaUsuario);
+        alert(JSON.stringify(response.data));
+        $.each(response.data.domicilios, function (indexInArray, domicilio) {
+            $("#listadoDomicilios").html("");
+             $("#listadoDomicilios").append(`<div class="form-row">
+             <div class="col-9 col-md-6 mb-3">
+                 <input type="text" class="form-control campoEditable" id="calle" value = "` + domicilio.calle + `" disabled placeholder="Calle" required>
+                 <span class="error text-danger errorCalle"> </span>
+             </div>
+             <div class="col-3 col-md-2 mb-3">
+                 <input type="text" class="form-control campoEditable" id="numero" value = "` + domicilio.numero + `" disabled placeholder="Nro" required>
+                 <span class="error text-danger errorNro"> </span>
+             </div>
+             <div class="col-6 col-md-2 mb-3">
+                 <input type="text" class="form-control campoEditable" id="piso" disabled placeholder="Piso" value = "` + domicilio.piso + `" required>
+                 <span class="error text-danger errorPiso"> </span>
+             </div>
+             <div class="col-6 col-md-2 mb-3">
+                 <input type="text" class="form-control campoEditable" id="depto" disabled placeholder="Depto" value = "` + domicilio.depto + `" required>
+                 <span class="error text-danger errorDepto"> </span>
+             </div>
+         </div>`);
+        });
+        $.each(response.data.telefonos, function (indexInArray, telefono) {
+            $("#listadoTelefonos").html("");
+
+            $("#listadoTelefonos").append(`<div class="form-row">
+            <div class="col-3 col-mb-3 mb-3">
+                <input type="text" class="form-control campoEditable" id="codArea" value="` + telefono.codAreaTelefono + `" disabled placeholder="Cod. Area" required>
+                <span class="error text-danger errorCodArea"> </span>
+            </div>
+            <div class="col-6 col-mb-6 mb-6">
+
+                <input type="text" class="form-control campoEditable" id="numeroTelefono" value="` + telefono.numeroTelefono + `" disabled placeholder="Numero" required>
+                <span class="error text-danger errorNroTelefono"></span>
+            </div>
+            <div class="col-1 col-mb-1 mb-1">
+                <button type="button" class="btn btn-danger btn-sm eliminar d-none">Eliminar</button>
+            </div>
+        </div>`);
+
+        });
+    });
+}
+
+
+/*Hace los campos editables al apretar boton "Editar"*/
+function camposEditables() {
+    /*Botones*/
+    $("#guardarCambios").removeClass("d-none");
+    $("#editarMiPerfil").addClass("disabled");
+
+
+    /*Campos editables*/
+    $(".campoEditable").prop('disabled', false);
+
+    /*Mostrar botones de "Agregar*/
+    $("#btnAgregarTelefono").removeClass("d-none");
+    $("#btnAgregarDireccion").removeClass("d-none");
+    $("#btnModificarImgPerfil").removeClass("d-none");
+    $(".eliminar").removeClass("d-none");
+
+
+
+}
+
+/*Guarda los cambios realizados*/
+function guardarCambios() {
+    /*TODO: Guardar cambios en base de datos*/
+    /** */
+    if (1 )
+    /*Si los cambios fueron guardados exitosamente vuelvo a la vista original (sin modo edicion)*/ {
+
+
+        $("#guardarCambios").addClass("d-none");
+        $("#editarMiPerfil").removeClass("disabled");
+        $("#btnAgregarTelefono").addClass("d-none");
+        $("#btnAgregarDireccion").addClass("d-none");
+        $(".campoEditable").prop('disabled', true);
+        $("#btnModificarImgPerfil").addClass("d-none");
+        $(".eliminar").addClass("d-none");
+    } else {
+        /*Imprimir error*/
+    }
+
+}
 
 
 function agregarPaginacionComentarios(){
@@ -55,4 +219,58 @@ function agregarPaginacionNecesidades(){
         $( necesidad ).css('opacity','0.0').hide().slice(primerItem, ultimoItem).
             css('display','block').animate({opacity:1}, 300);
     });
+}
+
+function mostrarModalEditarNecesidad(){
+    /*let colorModal = $("#cardCategoria").text().toLowerCase();
+    $("#modalEditarNecesidad .modal-content").addClass(colorModal);
+    console.log("color " + colorModal);*/
+}
+
+
+
+
+// Cargar necesidades dinamicamente desde la BD
+function cargarNecesidades ( idUsuario ){
+    axios.get(`/listarNecesidades/${ idUsuario }`)
+        .then(( response )=>{
+        // console.log( response.data );
+        let necesidades = response.data.necesidades;
+
+        let divNecesidades = $('.necesidades');
+
+        necesidades.forEach(necesidad => {
+
+            console.log( necesidad );
+
+            let cardNecesidad = 
+            `<div class="col-md-6">
+                <div class="card necesidad ${necesidad.categoria.nombreCategoria.toLowerCase()}">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <p class="font-weight-bold">${necesidad.categoria.nombreCategoria}</p>
+                                <p>${necesidad.descripcionNecesidad}</p>
+                                <p>Cantidad: ${necesidad.cantidadNecesidad}</p>
+                                <p>Fecha limite: ${ new Date(necesidad.fechaLimiteNecesidad).toLocaleDateString('es-AR') }</p>
+                            </div>
+                            <div class="col-md-6 text-right d-flex flex-column justify-content-between">
+                                <p class="editarNecesidad">
+                                    <a data-toggle="modal" href="#modalEditarNecesidad" id="editar${necesidad.idNecesidad}"><i class="far fa-edit"></i></a>
+                                </p>
+                                <p class="ayudasRecibidas">
+                                    <a href="#"><span class="nroAyudas">0</span><i class="fas fa-user-friends"></i></a>
+                                </p>
+                                <p class="estado">
+                                    <i class="fas fa-spinner"></i>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>`;
+            divNecesidades.append( cardNecesidad );
+        })
+    agregarPaginacionNecesidades();
+    })
 }
