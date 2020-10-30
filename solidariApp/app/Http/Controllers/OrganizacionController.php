@@ -100,4 +100,22 @@ class OrganizacionController extends Controller
             'telefonos' => Telefono::listarTelefonosUsuario($idUsuario)
         ]);
     }
+
+    public function actualizarDescripcion(Request $request)
+    {
+        $datos = json_decode($request->getContent());
+
+        $flight = Organizacion::find($datos->idUsuario);
+
+        $flight->descripcionOrganizacion = $datos->descripcionOrganizacion;
+
+        $flight->save();
+
+        return response()->json([
+            'resultado' => 1,
+            'message' => "registro exitoso!"
+
+        ]);
+
+    }
 }

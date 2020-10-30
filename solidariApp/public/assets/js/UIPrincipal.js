@@ -1,5 +1,5 @@
 $( document ).ready(function() {
-    listarProvincias();
+    listarProvincias(1);
     listarTiposOrganizaciones();
 
     isLoggedIn();
@@ -31,7 +31,7 @@ $( document ).ready(function() {
 
         let idProvincia = $("#selectProvincia").val();
         $("#selectLocalidad").html("");
-        listarLocalidades(idProvincia);
+        listarLocalidades(idProvincia,1);
     });
 
 
@@ -39,8 +39,8 @@ $( document ).ready(function() {
     //evento click en el btnCrearCuenta del modalRegistroColOrg
     $("#btnCrearCuenta").click(function(){
         //Deshabilito el boton y muestro el spinner
-        // $("#btnCrearCuenta").html("<span id = 'spinnerBtnLogin' class='spinner-border spinner-border-sm' role='status' aria-hidden='true'></span>Un momento...");
-        // $("#btnCrearCuenta").attr("disabled", true);
+        $("#btnCrearCuenta").html("<span id = 'spinnerBtnLogin' class='spinner-border spinner-border-sm' role='status' aria-hidden='true'></span>Un momento...");
+        $("#btnCrearCuenta").attr("disabled", true);
 
         //Acciones segun el modoRegistro
         if($("#modoRegistro").val() == "colaborador")
@@ -48,10 +48,18 @@ $( document ).ready(function() {
             if( validarRegistroColaborador() ){
                 registrarColaborador();
             }
+            else{
+                $("#btnCrearCuenta").html("Crear cuenta");
+                $("#btnCrearCuenta").attr("disabled", false);
+            }
         }
         else if ($("#modoRegistro").val() == "organizacion"){
             if( validarRegistroOrganizacion() ){
                 registrarOrganizacion();
+            }
+            else{
+                $("#btnCrearCuenta").html("Crear cuenta");
+                $("#btnCrearCuenta").attr("disabled", false);
             }
         }
     });
@@ -62,8 +70,8 @@ $( document ).ready(function() {
 function clickBtnLogin()
 {
     //Deshabilito el boton y muestro el spinner
-    // $("#btnLogin").html("<span id = 'spinnerBtnLogin' class='spinner-border spinner-border-sm' role='status' aria-hidden='true'></span>Un momento...");
-    // $("#btnLogin").attr("disabled", true);
+    $("#btnLogin").html("<span id = 'spinnerBtnLogin' class='spinner-border spinner-border-sm' role='status' aria-hidden='true'></span>Un momento...");
+    $("#btnLogin").attr("disabled", true);
 
     //Si el modoRegistro es "ingresar"
     if($("#modoRegistro").val() == "ingresar")
@@ -77,6 +85,10 @@ function clickBtnLogin()
             //hago el login
             login(datosLogin);
         }
+        else{
+            $("#btnLogin").html("Ingresar");
+            $("#btnLogin").attr("disabled", false);
+        }
     }
     else
     {
@@ -89,7 +101,7 @@ function clickBtnLogin()
                     limpiarCamposRegistro();
                     $("#errorCorreo").html("El correo ya esta registrado");
                     $("#errorCorreo").show();
-                    $("#btnLogin").html("Ingresar");
+                    $("#btnLogin").html("Crear cuenta");
                     $("#btnLogin").attr("disabled", false);
                 }
                 else
@@ -97,8 +109,12 @@ function clickBtnLogin()
                     $("#modalRegistroColOrg").modal("show");
                     $("#modalLogin").modal("hide");
                 }
-    
+
             });
+        }
+        else{
+            $("#btnLogin").html("Crear cuenta");
+            $("#btnLogin").attr("disabled", false);
         }
 
     }

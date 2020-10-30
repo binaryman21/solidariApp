@@ -8,7 +8,7 @@ function login(datosLogin){
     axios.post("/login",JSON.stringify(datosLogin))
     .then((response)=>{
 
-        if(response.data.usuario.length == 0){
+        if(response.data.usuario == null){
             $("#errorLogin").show();
             $("#emailUsuario").val("");
             $("#claveUsuario").val("");
