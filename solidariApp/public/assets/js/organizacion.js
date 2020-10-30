@@ -5,18 +5,9 @@ document.addEventListener('DOMContentLoaded', ()=>{
     $("#editarMiPerfil").click(camposEditables);
     $("#guardarCambios").click(guardarCambios);
 
-    $("#btnEditarNecesidad").click(()=>{
-        mostrarModalEditarNecesidad();
-    })
 
-    //cambiar color del modalEditarNecesidad en función de la categoria.
-    let categoriaActual;
-    $("#slctCategoria").change(()=>{
-        let colorModal = $("#slctCategoria option:selected").text().toLowerCase();
-        $("#modalEditarNecesidad .modal-content").removeClass(categoriaActual);
-        $("#modalEditarNecesidad .modal-content").addClass(colorModal);
-        categoriaActual = $("#slctCategoria option:selected").text().toLowerCase();
-    })
+
+
 
     let necesidades = {
         necesidad1: {
@@ -45,7 +36,7 @@ document.addEventListener('DOMContentLoaded', ()=>{
         }
     }
 
-    // cargarNecesidades(necesidades);
+    //cargarNecesidades(necesidades);
     agregarPaginacionNecesidades();
 
 })
@@ -53,13 +44,13 @@ document.addEventListener('DOMContentLoaded', ()=>{
 function cargarDatosPerfil(usuario)
 {
     //evento click en el boton de editar necesidad
-    $("#btnGuardarCambiosNecesidad").click
-    (
-    function(event)
-    {
-        event.preventDefault()
-        registrarNecesidad(usuario.idUsuario)
-    });
+    // $("#btnGuardarCambiosNecesidad").click
+    // (
+    // function(event)
+    // {
+    //     event.preventDefault()
+    //     registrarNecesidad(usuario.idUsuario)
+    // });
 
     getOrganizacion(usuario.idUsuario);
 }
@@ -221,10 +212,49 @@ function agregarPaginacionNecesidades(){
     });
 }
 
-function mostrarModalEditarNecesidad(){
-    /*let colorModal = $("#cardCategoria").text().toLowerCase();
-    $("#modalEditarNecesidad .modal-content").addClass(colorModal);
-    console.log("color " + colorModal);*/
+function mostrarModalEditarNecesidad(idNecesidad){
+    axios.get(`/getNecesidad/${idNecesidad}`)
+        .then((response) =>{
+
+            let necesidad = response.data.necesidad;
+            let fecha = necesidad.fechaLimiteNecesidad;
+            fecha = fecha.split(" ");
+            $("#slctCategoria").val(necesidad.idCategoriaNecesidad);
+            $("#txtDescripcion").val(necesidad.descripcionNecesidad);
+            $("#inpCantidad").val(necesidad.cantidadNecesidad);
+            $("#inpFechaLimite").val(fecha[0]);
+            $("#modalEditarNecesidad .modal-content").addClass($("#slctCategoria option:selected").text().toLowerCase());
+
+            //cambiar color del modalEditarNecesidad en función de la categoria.
+            let categoriaActual = $("#slctCategoria option:selected").text().toLowerCase();
+            let colorModal;
+            $("#slctCategoria").change(()=>{
+                colorModal = $("#slctCategoria option:selected").text().toLowerCase();
+                $("#modalEditarNecesidad .modal-content").removeClass(categoriaActual);
+                $("#modalEditarNecesidad .modal-content").addClass(colorModal);
+                categoriaActual = $("#slctCategoria option:selected").text().toLowerCase();
+            })
+
+            //Evento click al cerrar el modal
+            $("#btnCerrarModal").click(()=>{
+                categoriaActual = $("#slctCategoria option:selected").text().toLowerCase();
+                $("#modalEditarNecesidad .modal-content").removeClass(categoriaActual);
+                document.getElementById("formEditarNecesidad").reset();
+
+            })
+
+            $("#btnGuardarCambiosNecesidad").click((e)=>{
+                e.preventDefault();
+                if(necesidad.idNecesidad != 0){
+                    //validarNecesidad() TODO
+                    updateNecesidad(necesidad.idUsuario,necesidad.idNecesidad);
+                }
+
+            })
+
+
+    })
+
 }
 
 
@@ -243,7 +273,7 @@ function cargarNecesidades ( idUsuario ){
 
             console.log( necesidad );
 
-            let cardNecesidad = 
+            let cardNecesidad =
             `<div class="col-md-6">
                 <div class="card necesidad ${necesidad.categoria.nombreCategoria.toLowerCase()}">
                     <div class="card-body">
@@ -270,6 +300,12 @@ function cargarNecesidades ( idUsuario ){
                 </div>
             </div>`;
             divNecesidades.append( cardNecesidad );
+
+            //evento click del btn editar necesidad
+            $("#editar" + necesidad.idNecesidad).click(()=>{
+                console.log("idNecesidad " + necesidad.idNecesidad);
+                mostrarModalEditarNecesidad(necesidad.idNecesidad);
+            })
         })
     agregarPaginacionNecesidades();
     })

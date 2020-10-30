@@ -48,6 +48,42 @@ class NecesidadController extends Controller
             'necesidades' => Necesidad::listarNecesidades($idUsuario)
         ]);
     }
+
+    public function getNecesidad($idNecesidad)
+    {
+        return response()->json([
+            'necesidad' => Necesidad::getNecesidad($idNecesidad)
+        ]);
+    }
+
+    public function updateNecesidad(Request $request)
+    {
+
+        try
+        {
+            $datosNecesidad = json_decode($request->getContent());
+
+            $necesidad = Necesidad::find($datosNecesidad->idNecesidad);
+            $necesidad->descripcionNecesidad = $datosNecesidad ->descripcionNecesidad;
+            $necesidad->cantidadNecesidad = $datosNecesidad ->cantidadNecesidad;
+            $necesidad->fechaLimiteNecesidad = $datosNecesidad ->fechaLimiteNecesidad;
+            $necesidad->idCategoriaNecesidad = $datosNecesidad ->categoriaNecesidad->idCategoria;
+            $necesidad->save();
+
+            return response()->json([
+                'resultado' => 1,
+                'message' => 'registro exitoso'
+            ]);
+        }
+        catch (\Exception $e)
+        {
+            return response()->json([
+                'resultado' => 0,
+                'message' => $e->getMessage()
+            ]);
+        }
+
+    }
 }
 
 
