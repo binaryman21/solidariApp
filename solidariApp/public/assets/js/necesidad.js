@@ -29,7 +29,7 @@ function listarCategorias()
 }
 
 function updateNecesidad(idUsuario, idNecesidad){
-    console.log("el id de la necesidad es " + idNecesidad);
+    //console.log("el id de la necesidad es " + idNecesidad);
     let necesidad ={
         idNecesidad:idNecesidad,
         descripcionNecesidad:$("#txtDescripcion").val(),
@@ -40,7 +40,7 @@ function updateNecesidad(idUsuario, idNecesidad){
         idUsuario: idUsuario
     }
 
-    alert(JSON.stringify(necesidad));
+    JSON.stringify(necesidad);
     axios.post("/updateNecesidad",necesidad)
     .then((response)=>{
         if(response.data.resultado){
@@ -52,4 +52,26 @@ function updateNecesidad(idUsuario, idNecesidad){
             alert(response.data.message);
         }
     });
+}
+
+function bajaNecesidad(idUsuario, idNecesidad){
+    let necesidad ={
+        idNecesidad:idNecesidad,
+    }
+
+    JSON.stringify(necesidad);
+    axios.post("/bajaNecesidad",necesidad)
+    .then((response)=>{
+        if(response.data.resultado){
+            cargarNecesidades(idUsuario);
+            $("#modalBajaNecesidad").modal('toggle');
+            $("#modalEditarNecesidad").modal('toggle');
+            document.getElementById("formEditarNecesidad").reset();
+            alert(response.data.message);
+        }else{
+            alert(response.data.message);
+        }
+    });
+
+
 }

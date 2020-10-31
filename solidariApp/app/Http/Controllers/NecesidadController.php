@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\CategoriaNecesidad;
 use Illuminate\Http\Request;
 use App\Models\Necesidad;
+use Illuminate\Support\Carbon;
 
 class NecesidadController extends Controller
 {
@@ -83,6 +84,31 @@ class NecesidadController extends Controller
             ]);
         }
 
+    }
+
+    public function bajaNecesidad(Request $request)
+    {
+        try
+        {
+            $fechaBaja = Carbon::now();
+            $datosNecesidad = json_decode($request->getContent());
+
+            $necesidad = Necesidad::find($datosNecesidad->idNecesidad);
+            $necesidad->fechaBajaNecesidad = $fechaBaja;
+            $necesidad->save();
+
+            return response()->json([
+                'resultado' => 1,
+                'message' => 'La necesidad se ha eliminado'
+            ]);
+        }
+        catch (\Exception $e)
+        {
+            return response()->json([
+                'resultado' => 0,
+                'message' => $e->getMessage()
+            ]);
+        }
     }
 }
 

@@ -343,7 +343,7 @@ function mostrarModalEditarNecesidad(idNecesidad){
             $("#inpFechaLimite").val(fecha[0]);
             $("#modalEditarNecesidad .modal-content").addClass($("#slctCategoria option:selected").text().toLowerCase());
 
-            //cambiar color del modalEditarNecesidad en función de la categoria.
+            // cambiar color del modalEditarNecesidad en función de la categoria.
             let categoriaActual = $("#slctCategoria option:selected").text().toLowerCase();
             let colorModal;
             $("#slctCategoria").change(()=>{
@@ -353,25 +353,31 @@ function mostrarModalEditarNecesidad(idNecesidad){
                 categoriaActual = $("#slctCategoria option:selected").text().toLowerCase();
             })
 
-            //Evento click al cerrar el modal
+            //click cerrar el modal
             $("#btnCerrarModal").click(()=>{
                 categoriaActual = $("#slctCategoria option:selected").text().toLowerCase();
                 $("#modalEditarNecesidad .modal-content").removeClass(categoriaActual);
                 document.getElementById("formEditarNecesidad").reset();
 
             })
-
+            //Click Guardar necesidad editada
             $("#btnGuardarCambiosNecesidad").click((e)=>{
                 e.preventDefault();
                 if(necesidad.idNecesidad != 0){
-                    //validarNecesidad() TODO
-                    updateNecesidad(necesidad.idUsuario,necesidad.idNecesidad);
+                    if(validarNecesidad()) updateNecesidad(necesidad.idUsuario,necesidad.idNecesidad);
                 }
 
             })
 
+            // //Click Cancelar eliminar necesidad
+            // $("#btnCancelarEliminarNecesidad").click(()=>{
+            //     $("#modalBajaNecesidad").modal("toggle");
+            // })
 
-    })
+            $("#btnConfirmarEliminarNecesidad").click(()=>{
+                bajaNecesidad(necesidad.idUsuario,necesidad.idNecesidad);
+            })
+        })
 
 }
 
@@ -390,35 +396,35 @@ function cargarNecesidades ( idUsuario ){
         necesidades.forEach(necesidad => {
 
             console.log( necesidad );
-
-            let cardNecesidad =
-            `<div class="col-md-6">
-                <div class="card necesidad ${necesidad.categoria.nombreCategoria.toLowerCase()}">
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col-md-6">
-                                <p class="font-weight-bold">${necesidad.categoria.nombreCategoria}</p>
-                                <p>${necesidad.descripcionNecesidad}</p>
-                                <p>Cantidad: ${necesidad.cantidadNecesidad}</p>
-                                <p>Fecha limite: ${ new Date(necesidad.fechaLimiteNecesidad).toLocaleDateString('es-AR') }</p>
-                            </div>
-                            <div class="col-md-6 text-right d-flex flex-column justify-content-between">
-                                <p class="editarNecesidad">
-                                    <a data-toggle="modal" href="#modalEditarNecesidad" id="editar${necesidad.idNecesidad}"><i class="far fa-edit"></i></a>
-                                </p>
-                                <p class="ayudasRecibidas">
-                                    <a href="#"><span class="nroAyudas">0</span><i class="fas fa-user-friends"></i></a>
-                                </p>
-                                <p class="estado">
-                                    <i class="fas fa-spinner"></i>
-                                </p>
+            if(necesidad.fechaBajaNecesidad == null){
+                let cardNecesidad =
+                `<div class="col-md-6">
+                    <div class="card necesidad ${necesidad.categoria.nombreCategoria.toLowerCase()}">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <p class="font-weight-bold">${necesidad.categoria.nombreCategoria}</p>
+                                    <p>${necesidad.descripcionNecesidad}</p>
+                                    <p>Cantidad: ${necesidad.cantidadNecesidad}</p>
+                                    <p>Fecha limite: ${ new Date(necesidad.fechaLimiteNecesidad).toLocaleDateString('es-AR') }</p>
+                                </div>
+                                <div class="col-md-6 text-right d-flex flex-column justify-content-between">
+                                    <p class="editarNecesidad">
+                                        <a data-toggle="modal" href="#modalEditarNecesidad" id="editar${necesidad.idNecesidad}"><i class="far fa-edit"></i></a>
+                                    </p>
+                                    <p class="ayudasRecibidas">
+                                        <a href="#"><span class="nroAyudas">0</span><i class="fas fa-user-friends"></i></a>
+                                    </p>
+                                    <p class="estado">
+                                        <i class="fas fa-spinner"></i>
+                                    </p>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            </div>`;
-            divNecesidades.append( cardNecesidad );
-
+                </div>`;
+                divNecesidades.append( cardNecesidad );
+            }
             //evento click del btn editar necesidad
             $("#editar" + necesidad.idNecesidad).click(()=>{
                 console.log("idNecesidad " + necesidad.idNecesidad);

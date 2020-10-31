@@ -15,7 +15,7 @@ function validarLogin(){
     let pass = $('#claveUsuario');
     let errorPass = $('.errorPass');
 
-    validarEmail( email, errorEmail ) ? contador++ : false; 
+    validarEmail( email, errorEmail ) ? contador++ : false;
     validarPassLogin( pass, errorPass ) ? contador ++ : false;
 
     if( contador === 2 ){
@@ -24,7 +24,7 @@ function validarLogin(){
     return false;
 }
 
-function validarRegistroGoogle( e ) { 
+function validarRegistroGoogle( e ) {
     let contador = 0;
 
     let email = $('#emailUsuario');
@@ -32,7 +32,7 @@ function validarRegistroGoogle( e ) {
     let pass = $('#claveUsuario');
     let errorPass = $('.errorPass');
 
-    validarEmail( email, errorEmail ) ? contador++ : false; 
+    validarEmail( email, errorEmail ) ? contador++ : false;
     validarPass( pass, errorPass ) ? contador ++ : false;
 
     if( contador === 2 ){
@@ -100,7 +100,7 @@ function validarEmail( email, error ){
 
 
 function validarPass( pass, error ) {
-    
+
     if(pass.val() === ''){
         mostrarError( pass, error, 'Ingrese una contraseña.');
         return false;
@@ -118,7 +118,7 @@ function validarPass( pass, error ) {
 }
 
 function validarPassLogin( pass, error ) {
-    
+
     if(pass.val() === ''){
         mostrarError( pass, error, 'Ingrese una contraseña.');
         return false;
@@ -210,7 +210,7 @@ function validarTelefono(){
     let nroTelefono = $("#numeroTelefono");
     let errorNro = $('.errorNroTelefono');
 
-    validarCodigoArea( codArea, errorCod ) ? contador++ : false; 
+    validarCodigoArea( codArea, errorCod ) ? contador++ : false;
     validarNroTelefono( nroTelefono, errorNro ) ? contador ++ : false;
     if( contador === 2 ){
         return true;
@@ -220,7 +220,7 @@ function validarTelefono(){
 
 // CODIGO DE AREA
 function validarCodigoArea( codArea, errorCod ){
-    
+
     let regEx = /^[0-9]+$/;
 
     if( codArea.val() === ''){
@@ -282,7 +282,7 @@ function validarDireccion(){
     let localidad = $('#selectLocalidad');
     let errorLocalidad = $('.errorLocalidad');
 
-    validarCalle( calle, errorCalle ) ? contador++ : false; 
+    validarCalle( calle, errorCalle ) ? contador++ : false;
     validarNroCalle( nroCalle, errorNroCalle ) ? contador ++ : false;
     validarProvincia( provincia, errorProvincia ) ? contador ++ : false;
     validarLocalidad( localidad, errorLocalidad ) ? contador ++ : false;
@@ -294,7 +294,7 @@ function validarDireccion(){
 
 
 function validarCalle( calle, error ){
-    
+
     if( calle.val() === '' ){
         mostrarError( calle, error, 'Ingrese una calle.');
         return false;
@@ -305,7 +305,7 @@ function validarCalle( calle, error ){
 }
 
 function validarNroCalle( nroCalle, error ){
-    
+
     let regEx = /^[0-9]+$/;
 
     if( nroCalle.val() === '' ){
@@ -323,7 +323,7 @@ function validarNroCalle( nroCalle, error ){
 
 
 function validarProvincia( provincia, error ){
-    
+
     if( provincia.val() === null ){
         mostrarError( provincia, error, 'Seleccione una provincia.');
         return false;
@@ -334,7 +334,7 @@ function validarProvincia( provincia, error ){
 }
 
 function validarLocalidad( localidad, error ){
-    
+
     if( localidad.val() === null ){
         mostrarError( localidad, error, 'Seleccione una localidad.');
         return false;
@@ -354,6 +354,114 @@ function validarTipoOrganizacion( tipoOrg, error ){
     quitarError( tipoOrg, error );
     return true;
 }
+
+function validarNecesidad(){
+    let contador = 0;
+    let categoria = $("#slctCategoria");
+    let categoriaError = $("#errorCategoria");
+    let fechaLimite = $("#inpFechaLimite");
+    let fechaLimiteError = $("#errorFechaLimite");
+
+    validarCategoria(categoria,categoriaError) ? contador++ : false;
+    validarFechaLimite(fechaLimite, fechaLimiteError) ? contador++ : false;
+
+    if( contador === 2 ){
+        return true;
+    }
+
+    return false;
+
+}
+ function validarCategoria(categoria, error){
+    if(categoria.val() < 1){
+        mostrarError( categoria, error, 'Elija una categoria');
+        return false;
+    }
+
+    quitarError( categoria, error );
+    return true;
+ }
+
+function validarFechaLimite(fecha,error){
+    var newDate = new Date();
+    var presentDate = newDate.getDate();
+    var presentMonth = newDate.getMonth();
+    var presentYear = newDate.getFullYear();
+    var dateOfBirthVal = fecha.val();
+
+    if (dateOfBirthVal != null){
+        var validatePattern = /^(\d{4})(\/|-)(\d{1,2})(\/|-)(\d{1,2})$/;
+        dateValues = dateOfBirthVal.match(validatePattern);
+
+        if (dateValues == null)
+        {
+            mostrarError( fecha, error, 'Error en la fecha ingresada');
+            return false;
+        }
+
+        var birthYear = dateValues[1];
+        var birthMonth = dateValues[3];
+        var birthDate=  dateValues[5];
+
+        if ((birthMonth < 1) || (birthMonth > 12))
+        {
+            mostrarError( fecha, error, 'Error en la fecha ingresada');
+            return false;
+        }
+        else if ((birthDate < 1) || (birthDate> 31))
+        {
+            mostrarError( fecha, error, 'Error en la fecha ingresada');
+            return false;
+        }
+        else if ((birthMonth==4 || birthMonth==6 || birthMonth==9 || birthMonth==11) && birthDate ==31)
+        {
+            mostrarError( fecha, error, 'Error en la fecha ingresada');
+            return false;
+        }
+        else if (birthMonth == 2){
+        var isleap = (birthYear % 4 == 0 && (birthYear % 100 != 0 || birthYear % 400 == 0));
+
+            if (birthDate> 29 || (birthDate ==29 && !isleap))
+            {
+                mostrarError( fecha, error, 'Error en la fecha ingresada');
+                return false;
+            }
+        }
+        else if((birthYear>presentYear)||(birthYear+70<presentYear))
+            {
+                mostrarError( fecha, error, 'Error en la fecha ingresada');
+                return false;
+            }
+        else if(birthYear==presentYear)
+            {
+            if(birthMonth>presentMonth+1)
+                {
+                    mostrarError( fecha, error, 'Error en la fecha ingresada');
+                    return false;
+                }
+            else if(birthMonth==presentMonth+1)
+                {
+                if(birthDate>presentDate)
+                    {
+                        mostrarError( fecha, error, 'Error en la fecha ingresada');
+                        return false;
+                    }
+                }
+            }
+    }
+
+    if(presentDate.getTime == dateOfBirthVal.getTime || presentDate > dateOfBirthVal){
+        {
+            mostrarError( fecha, error, 'La fecha limite debe ser mayor a la actual');
+            return false;
+        }
+    }
+
+
+    quitarError( fecha, error );
+    return true;
+}
+
 
 function mostrarError( campo, nombreError, texto ){
     nombreError.text( texto );

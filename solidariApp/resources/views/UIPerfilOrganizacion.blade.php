@@ -162,6 +162,7 @@
 @include("UIPerfilModales/UIModificarFotoPerfil")
 @include("UIPerfilModales/UIModalEditarNecesidad")
 @include("UIPerfilModales/UIEditarDomicilio")
+@include("UIPerfilModales/UIModalBajaNecesidad")
 @endsection
 
 @section('scripts')
@@ -170,4 +171,5 @@
 <script type="text/javascript" src="{{URL::asset('assets/js/logueo.js')}}"></script>
 <script type="text/javascript" src="{{URL::asset('assets/js/organizacion.js')}}"></script>
 <script type="text/javascript" src="{{URL::asset('assets/js/necesidad.js')}}"></script>
+<script type="text/javascript" src="{{URL::asset('assets/js/validaciones.js')}}"></script>
 @endsection
