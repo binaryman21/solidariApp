@@ -341,54 +341,53 @@ function agregarPaginacionNecesidades(){
     });
 }
 
-function mostrarModalEditarNecesidad(idNecesidad){
-    axios.get(`/getNecesidad/${idNecesidad}`)
-        .then((response) =>{
+function mostrarModalEditarNecesidad(necesidad){
+    limpiarValidaciones($("#inpFechaLimite"),  $("#errorFechaLimite") );
+    limpiarValidaciones($("#slctCategoria"), $("#errorCategoria"));
 
-            let necesidad = response.data.necesidad;
-            let fecha = necesidad.fechaLimiteNecesidad;
-            fecha = fecha.split(" ");
-            $("#slctCategoria").val(necesidad.idCategoriaNecesidad);
-            $("#txtDescripcion").val(necesidad.descripcionNecesidad);
-            $("#inpCantidad").val(necesidad.cantidadNecesidad);
-            $("#inpFechaLimite").val(fecha[0]);
-            $("#modalEditarNecesidad .modal-content").addClass($("#slctCategoria option:selected").text().toLowerCase());
 
-            // cambiar color del modalEditarNecesidad en función de la categoria.
-            let categoriaActual = $("#slctCategoria option:selected").text().toLowerCase();
-            let colorModal;
-            $("#slctCategoria").change(()=>{
-                colorModal = $("#slctCategoria option:selected").text().toLowerCase();
-                $("#modalEditarNecesidad .modal-content").removeClass(categoriaActual);
-                $("#modalEditarNecesidad .modal-content").addClass(colorModal);
-                categoriaActual = $("#slctCategoria option:selected").text().toLowerCase();
-            })
+    let fecha = necesidad.fechaLimiteNecesidad;
+    fecha = fecha.split(" ");
+    $("#slctCategoria").val(necesidad.idCategoriaNecesidad);
+    $("#txtDescripcion").val(necesidad.descripcionNecesidad);
+    $("#inpCantidad").val(necesidad.cantidadNecesidad);
+    $("#inpFechaLimite").val(fecha[0]);
+    $("#modalEditarNecesidad .modal-content").addClass($("#slctCategoria option:selected").text().toLowerCase());
 
-            //click cerrar el modal
-            $("#btnCerrarModal").click(()=>{
-                categoriaActual = $("#slctCategoria option:selected").text().toLowerCase();
-                $("#modalEditarNecesidad .modal-content").removeClass(categoriaActual);
-                document.getElementById("formEditarNecesidad").reset();
+    // cambiar color del modalEditarNecesidad en función de la categoria.
+    let categoriaActual = $("#slctCategoria option:selected").text().toLowerCase();
+    let colorModal;
+    $("#slctCategoria").change(()=>{
+        colorModal = $("#slctCategoria option:selected").text().toLowerCase();
+        $("#modalEditarNecesidad .modal-content").removeClass(categoriaActual);
+        $("#modalEditarNecesidad .modal-content").addClass(colorModal);
+        categoriaActual = $("#slctCategoria option:selected").text().toLowerCase();
+    })
 
-            })
-            //Click Guardar necesidad editada
-            $("#btnGuardarCambiosNecesidad").click((e)=>{
-                e.preventDefault();
-                if(necesidad.idNecesidad != 0){
-                    if(validarNecesidad()) updateNecesidad(necesidad.idUsuario,necesidad.idNecesidad);
-                }
+    //click cerrar el modal
+    $("#btnCerrarModal").click(()=>{
+        categoriaActual = $("#slctCategoria option:selected").text().toLowerCase();
+        $("#modalEditarNecesidad .modal-content").removeClass(categoriaActual);
+        document.getElementById("formEditarNecesidad").reset();
 
-            })
+    })
+    //Click Guardar necesidad editada
+    $("#btnGuardarCambiosNecesidad").click((e)=>{
+        e.preventDefault();
+        if(necesidad.idNecesidad != 0){
+            if(validarNecesidad()) updateNecesidad(necesidad.idUsuario,necesidad.idNecesidad);
+        }
 
-            // //Click Cancelar eliminar necesidad
-            // $("#btnCancelarEliminarNecesidad").click(()=>{
-            //     $("#modalBajaNecesidad").modal("toggle");
-            // })
+    })
 
-            $("#btnConfirmarEliminarNecesidad").click(()=>{
-                bajaNecesidad(necesidad.idUsuario,necesidad.idNecesidad);
-            })
-        })
+    // //Click Cancelar eliminar necesidad
+    // $("#btnCancelarEliminarNecesidad").click(()=>{
+    //     $("#modalBajaNecesidad").modal("toggle");
+    // })
+
+    $("#btnConfirmarEliminarNecesidad").click(()=>{
+        bajaNecesidad(necesidad.idUsuario,necesidad.idNecesidad);
+    })
 
 }
 
@@ -397,6 +396,7 @@ function mostrarModalEditarNecesidad(idNecesidad){
 
 // Cargar necesidades dinamicamente desde la BD
 function cargarNecesidades ( idUsuario ){
+    $("#navNecesidades").remove();
     axios.get(`/listarNecesidades/${ idUsuario }`)
         .then(( response )=>{
         // console.log( response.data );
@@ -438,8 +438,8 @@ function cargarNecesidades ( idUsuario ){
             }
             //evento click del btn editar necesidad
             $("#editar" + necesidad.idNecesidad).click(()=>{
-                console.log("idNecesidad " + necesidad.idNecesidad);
-                mostrarModalEditarNecesidad(necesidad.idNecesidad);
+                //console.log("idNecesidad " + necesidad.idNecesidad);
+                mostrarModalEditarNecesidad(necesidad);
             })
         })
     agregarPaginacionNecesidades();

@@ -39,6 +39,7 @@ function updateNecesidad(idUsuario, idNecesidad){
         categoriaNecesidad: {idCategoria:$("#slctCategoria").val(),nombreCategoria:$("#slctCategoria option :selected").text()},
         idUsuario: idUsuario
     }
+    console.log("fecha "+ necesidad.fechaLimiteNecesidad);
 
     JSON.stringify(necesidad);
     axios.post("/updateNecesidad",necesidad)
@@ -48,6 +49,7 @@ function updateNecesidad(idUsuario, idNecesidad){
             $("#modalEditarNecesidad").modal('toggle');
             document.getElementById("formEditarNecesidad").reset();
             alert(response.data.message);
+
         }else{
             alert(response.data.message);
         }
