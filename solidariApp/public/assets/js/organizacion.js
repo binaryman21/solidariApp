@@ -350,11 +350,14 @@ function mostrarModalEditarNecesidad(necesidad){
     //Click Guardar necesidad editada
     $("#btnGuardarCambiosNecesidad").unbind( "click" );
     $("#btnGuardarCambiosNecesidad").click((e)=>{
-        bloquearBoton($("#btnGuardarCambiosNecesidad"));
+
         e.preventDefault();
         if(necesidad.idNecesidad != 0){
 
-            if(validarNecesidad()) updateNecesidad(necesidad);
+            if(validarNecesidad()) {
+                bloquearBoton($("#btnGuardarCambiosNecesidad"));
+                updateNecesidad(necesidad);
+            }
         }
 
     })
