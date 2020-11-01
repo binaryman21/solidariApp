@@ -115,6 +115,12 @@ function cargarDatosModalDomicilio(domicilio){
 
 function actualizarDomicilio(domicilio)
 {
+    obtenerCoordenadas($("#calle").val(), $("#numero").val(), $("#selectLocalidad option:selected" ).text(), $("#selectProvincia option:selected" ).text())
+    .then(data => {
+        let coordenadas = {
+            lat: data.lat,
+            lon: data.lon
+        }
         domicilio.calle = $("#calle").val(),
         domicilio.numero = $("#numero").val(),
         domicilio.piso = $("#piso").val(),
@@ -122,19 +128,22 @@ function actualizarDomicilio(domicilio)
         domicilio.idLocalidad = $("#selectLocalidad").val(),
         domicilio.idProvincia = $("#selectProvincia").val(),
         domicilio.nombreLocalidad = $("#selectLocalidad option:selected").text(),
-        domicilio.nombreProvincia = $("#selectProvincia option:selected").text()
+        domicilio.nombreProvincia = $("#selectProvincia option:selected").text(),
+        domicilio.latitud = coordenadas.lat,
+        domicilio.longitud = coordenadas.lon
+        
+        axios.post("/actualizarDomicilio",domicilio)
+        .then((response)=>{
+            $("#btnGuardarDomicilio").html('Guardar');
+            $("#domicilio" + domicilio.idDomicilio).html(`<p class = "m-1 domicilioInfo1">` + domicilio.calle + ` ` + domicilio.numero + ` Piso ` + domicilio.piso + ` Depto ` + domicilio.depto + `</p>
+            <p class = "m-1">` + domicilio.nombreLocalidad + `, ` + domicilio.nombreProvincia + `</p>`);
 
-    axios.post("/actualizarDomicilio",domicilio)
-    .then((response)=>{
-        $("#btnGuardarDomicilio").html('Guardar');
-        $("#domicilio" + domicilio.idDomicilio).html(`<p class = "m-1 domicilioInfo1">` + domicilio.calle + ` ` + domicilio.numero + ` Piso ` + domicilio.piso + ` Depto ` + domicilio.depto + `</p>
-        <p class = "m-1">` + domicilio.nombreLocalidad + `, ` + domicilio.nombreProvincia + `</p>`);
-
-        $("#btnEditarDomicilio"+ domicilio.idDomicilio).click(function(){
-            cargarDatosModalDomicilio(domicilio);
+            $("#btnEditarDomicilio"+ domicilio.idDomicilio).click(function(){
+                cargarDatosModalDomicilio(domicilio);
+            });
         });
-    });
-    limpiarDomicilio();
+        limpiarDomicilio();
+    })
 }
 
 function agregarTelefonoAlListado(telefono)

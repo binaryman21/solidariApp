@@ -1,6 +1,7 @@
 $( document ).ready(function() {
     listarProvincias(1);
     listarTiposOrganizaciones();
+    getOrganizaciones();
 
     isLoggedIn();
     // $("#nombreColaborador").on("keyup change input",validarNombreColaborador);
@@ -10,7 +11,6 @@ $( document ).ready(function() {
     $("#btnRegistrarseComoOrganizacion").on('click', mostrarRegistrarseComoOrganizacion);
     $("#btnRegistrarseComoColaborador").on('click', mostrarRegistrarseComoColaborador);
 
-    agregarPaginacionListaOrganizaciones();
     agregarPaginacionUsuarios();
 
 
@@ -135,7 +135,6 @@ function listarTiposOrganizaciones()
 
 function registrarOrganizacion()
 {
-    
     obtenerCoordenadas($("#calle").val(), $("#numero").val(), $("#selectLocalidad option:selected" ).text(), $("#selectProvincia option:selected" ).text())
         .then(data => {
             let coordenadas = {
@@ -223,75 +222,82 @@ function registrarOrganizacion()
 
 function registrarColaborador()
 {
-    var colaborador =
-    {
-        idUsuario:0,
-        claveUsuario:$("#claveUsuario").val(),
-        emailUsuario:$("#emailUsuario").val(),
-        tokenGoogle:$("#idGoogle").val(),
-        urlFotoPerfilUsuario:$("#urlFotoPerfilUsuario").val(),
-        rol:{idRolUsuario:0,nombreRolUsuario:""},
-        estado:{idEstadoUsuario:0,nombreEstadoUsuario:""},
-        nombreColaborador:$("#nombreColaborador").val(),
-        apellidoColaborador:$("#apellidoColaborador").val(),
-
-        telefonos:
-        [
-            {idTelefono:0,
-                codAreaTelefono:$("#codArea").val(),
-                numeroTelefono:$("#numeroTelefono").val(),
-                esCelular:0
+    obtenerCoordenadas($("#calle").val(), $("#numero").val(), $("#selectLocalidad option:selected" ).text(), $("#selectProvincia option:selected" ).text())
+        .then(data => {
+            let coordenadas = {
+                lat: data.lat,
+                lon: data.lon
             }
-        ],
-        domicilios:
-        [
+            var colaborador =
             {
-                idDomicilio:0,
-                calle:$("#calle").val(),
-                numero:$("#numero").val(),
-                piso:$("#piso").val(),
-                depto:$("#depto").val(),
-                latitud:0,
-                longitud:0,
-                localidad:
-                {
-                    idLocalidad:$("#selectLocalidad").val(),
-                    nombreLocalidad:""
-                }
+                idUsuario:0,
+                claveUsuario:$("#claveUsuario").val(),
+                emailUsuario:$("#emailUsuario").val(),
+                tokenGoogle:$("#idGoogle").val(),
+                urlFotoPerfilUsuario:$("#urlFotoPerfilUsuario").val(),
+                rol:{idRolUsuario:0,nombreRolUsuario:""},
+                estado:{idEstadoUsuario:0,nombreEstadoUsuario:""},
+                nombreColaborador:$("#nombreColaborador").val(),
+                apellidoColaborador:$("#apellidoColaborador").val(),
+
+                telefonos:
+                [
+                    {idTelefono:0,
+                        codAreaTelefono:$("#codArea").val(),
+                        numeroTelefono:$("#numeroTelefono").val(),
+                        esCelular:0
+                    }
+                ],
+                domicilios:
+                [
+                    {
+                        idDomicilio:0,
+                        calle:$("#calle").val(),
+                        numero:$("#numero").val(),
+                        piso:$("#piso").val(),
+                        depto:$("#depto").val(),
+                        latitud:coordenadas.lat,
+                        longitud:coordenadas.lon,
+                        localidad:
+                        {
+                            idLocalidad:$("#selectLocalidad").val(),
+                            nombreLocalidad:""
+                        }
+                    }
+                ],
+                links:
+                [
+                    //{idLink:0,urlLink:"",tipoLink:{idTipoLink:0,nombreTipoLink:""}}
+                ]
             }
-        ],
-        links:
-        [
-            //{idLink:0,urlLink:"",tipoLink:{idTipoLink:0,nombreTipoLink:""}}
-        ]
-    }
 
-    axios.post("/registrarColaborador",JSON.stringify(colaborador))
-    .then((response)=>{
-        $("#btnCrearCuenta").html("Guardar");
-        $("#btnCrearCuenta").attr("disabled", false);
-        alert(response.data.message);
-        if(response.data.resultado == 1){
-            $("#modalRegistroColOrg").modal("hide");
-            $("#msjResultadoRegistro").html("Registro exitoso!");
-            $("#modalResultadoRegistro").modal("show");
+            axios.post("/registrarColaborador",JSON.stringify(colaborador))
+            .then((response)=>{
+                $("#btnCrearCuenta").html("Guardar");
+                $("#btnCrearCuenta").attr("disabled", false);
+                alert(response.data.message);
+                if(response.data.resultado == 1){
+                    $("#modalRegistroColOrg").modal("hide");
+                    $("#msjResultadoRegistro").html("Registro exitoso!");
+                    $("#modalResultadoRegistro").modal("show");
 
-            var datosLogin = {
-                email: colaborador.emailUsuario,
-                idGoogle: colaborador.tokenGoogle,
-                pass:colaborador.claveUsuario
-            };
+                    var datosLogin = {
+                        email: colaborador.emailUsuario,
+                        idGoogle: colaborador.tokenGoogle,
+                        pass:colaborador.claveUsuario
+                    };
 
-            login(datosLogin);
+                    login(datosLogin);
 
-        }
-        else{
-            $("#modalRegistroColOrg").modal("hide");
-            $("#msjResultadoRegistro").html("Algo fallo, intentalo mas tarde");
-            $("#modalResultadoRegistro").modal("show");
+                }
+                else{
+                    $("#modalRegistroColOrg").modal("hide");
+                    $("#msjResultadoRegistro").html("Algo fallo, intentalo mas tarde");
+                    $("#modalResultadoRegistro").modal("show");
 
-        }
-        });
+                }
+            });
+        })
 }
 
 function agregarPaginacionListaOrganizaciones(){
@@ -352,4 +358,45 @@ function mostrarRegistrarseComoOrganizacion(){
 
 function mostrarRegistrarseComoColaborador(){
     mostrarComo('colaborador')
+}
+
+function getOrganizaciones( ){
+    let divOrganizaciones = $('.listaOrganizaciones');
+    divOrganizaciones.html('');
+    fetch('/getOrganizaciones/')
+        .then(response => response.json())
+        .then(data => {
+        let organizaciones = data.organizaciones;
+        // TODO: CARGAR NECESIDADES
+        organizaciones.forEach(organizacion => {
+            let cardOrganizacion = 
+                `<div class = "cardOrganizacion my-2rounded shadow-sm border my-2 pb-3" id="cardOrganizacion${organizacion.idUsuario}">
+                    <div class ="d-flex flex-row m-2 px-2 pt-5 justify-content-star detalleOrganizacion rounded align-items-center">
+                        <img class="rounded-circle imgPerfilOrg" src="${organizacion.urlFotoPerfilUsuario}" alt="imagen de usuario">
+                        <div id="card-org-name" class="ml-2">
+                            <p>${organizacion.razonSocial}</p>
+                            <p>${organizacion.nombreTipoOrganizacion}</p>
+                        </div>
+                    </div>
+                    <div class = "listaNecesidades px-2">
+                        <div class="card necesidad alimentos">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <p class="font-weight-bold">alimentos</p>
+                                        <p>sasa</p>
+                                    </div>
+                                    <div class = "col-md-6 d-flex flex-row align-items-end justify-content-end"><button class = "btn btn-primary" data-toggle="modal" data-target="#modalDetalleNecesidad">Me interesa</button></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <button class = "btn btn-link float-right">Ver todas</button>
+                </div>`
+            divOrganizaciones.append( cardOrganizacion );
+            cargarOrgEnMapa( organizacion );
+    })
+    
+    agregarPaginacionListaOrganizaciones(); 
+    })
 }

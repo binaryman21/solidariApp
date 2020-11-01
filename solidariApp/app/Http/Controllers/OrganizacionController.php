@@ -101,6 +101,13 @@ class OrganizacionController extends Controller
         ]);
     }
 
+    //Traerme todas las organizaciones
+    public function getOrganizaciones(){
+        return response()->json([
+            'organizaciones' => Organizacion::getOrganizaciones()
+        ]);
+    }
+
     public function actualizarDescripcion(Request $request)
     {
         $datos = json_decode($request->getContent());

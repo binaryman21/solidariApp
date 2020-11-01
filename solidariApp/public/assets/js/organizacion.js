@@ -62,10 +62,10 @@ function getOrganizacion(idUsuario){
 
     //CARGAR NECESIDADES
     cargarNecesidades( idUsuario );
-
-    axios.get("/getOrganizacion/"+idUsuario)
-    .then((response)=>{
-        var organizacion = response.data.organizacion;
+    fetch("/getOrganizacion/"+idUsuario)
+    .then(response => response.json())
+    .then(data => {
+        var organizacion = data.organizacion;
         $("#nombreOrganizacion").html(organizacion.razonSocial);
         $("#tipoOrganizacion").html(organizacion.nombreTipoOrganizacion);
         $("#urlFotoPerfilOrganizacion").attr("src",organizacion.urlFotoPerfilUsuario);
@@ -76,7 +76,7 @@ function getOrganizacion(idUsuario){
         }
         $("#descripcionOrganizacion").html(organizacion.descripcionOrganizacion);
         $("#fechaAltaUsuario").html(organizacion.fechaAltaUsuario);
-        $.each(response.data.domicilios, function (indexInArray, domicilio) {
+        $.each(data.domicilios, function (indexInArray, domicilio) {
             $("#listadoDomicilios").html("");
              $("#listadoDomicilios").append(`<div class="form-row" >
              <div class = "d-flex flex-row m-2  domicilio w-100 rounded p-1 justify-content-between">
@@ -94,7 +94,7 @@ function getOrganizacion(idUsuario){
 
         });
         $("#listadoTelefonos").html("");
-        $.each(response.data.telefonos, function (indexInArray, telefono) {
+        $.each(data.telefonos, function (indexInArray, telefono) {
             agregarTelefonoAlListado(telefono);
         });
     });
@@ -117,27 +117,37 @@ function cargarDatosModalDomicilio(domicilio){
 
 function actualizarDomicilio(domicilio)
 {
-    domicilio.calle = $("#calle").val(),
-    domicilio.numero = $("#numero").val(),
-    domicilio.piso = $("#piso").val(),
-    domicilio.depto = $("#depto").val(),
-    domicilio.idLocalidad = $("#selectLocalidad").val(),
-    domicilio.idProvincia = $("#selectProvincia").val(),
-    domicilio.nombreLocalidad = $("#selectLocalidad option:selected").text(),
-    domicilio.nombreProvincia = $("#selectProvincia option:selected").text()
-    axios.post("/actualizarDomicilio",domicilio)
-    .then((response)=>{
-        $("#btnGuardarDomicilio").html('Guardar');
-        $("#domicilio" + domicilio.idDomicilio).html(`<p class = "m-1 domicilioInfo1">` + domicilio.calle + ` ` + domicilio.numero + ` Piso ` + domicilio.piso + ` Depto ` + domicilio.depto + `</p>
-        <p class = "m-1">` + domicilio.nombreLocalidad + `, ` + domicilio.nombreProvincia + `</p>`);
+    obtenerCoordenadas($("#calle").val(), $("#numero").val(), $("#selectLocalidad option:selected" ).text(), $("#selectProvincia option:selected" ).text())
+        .then(data => {
+            let coordenadas = {
+                lat: data.lat,
+                lon: data.lon
+            }
+            domicilio.calle = $("#calle").val(),
+            domicilio.numero = $("#numero").val(),
+            domicilio.piso = $("#piso").val(),
+            domicilio.depto = $("#depto").val(),
+            domicilio.idLocalidad = $("#selectLocalidad").val(),
+            domicilio.idProvincia = $("#selectProvincia").val(),
+            domicilio.nombreLocalidad = $("#selectLocalidad option:selected").text(),
+            domicilio.nombreProvincia = $("#selectProvincia option:selected").text(),
+            domicilio.latitud = coordenadas.lat,
+            domicilio.longitud = coordenadas.lon
+            axios
+            .post("/actualizarDomicilio",domicilio)
+            .then((response)=>{
+                $("#btnGuardarDomicilio").html('Guardar');
+                $("#domicilio" + domicilio.idDomicilio).html(`<p class = "m-1 domicilioInfo1">` + domicilio.calle + ` ` + domicilio.numero + ` Piso ` + domicilio.piso + ` Depto ` + domicilio.depto + `</p>
+                <p class = "m-1">` + domicilio.nombreLocalidad + `, ` + domicilio.nombreProvincia + `</p>`);
 
-        $("#btnEditarDomicilio"+ domicilio.idDomicilio).click(function(){
-            cargarDatosModalDomicilio(domicilio);
-        });
-    });
-    limpiarDomicilio();
-
+                $("#btnEditarDomicilio"+ domicilio.idDomicilio).click(function(){
+                    cargarDatosModalDomicilio(domicilio);
+                });
+            });
+            limpiarDomicilio();
+        })
 }
+
 function agregarTelefonoAlListado(telefono)
 {
     $("#listadoTelefonos").append(`<div class="form-row" id = "telefono${telefono.idTelefono}">
@@ -370,16 +380,17 @@ function mostrarModalEditarNecesidad(necesidad){
 
 // Cargar necesidades dinamicamente desde la BD
 function cargarNecesidades ( idUsuario ){
-    axios.get(`/listarNecesidades/${ idUsuario }`)
-        .then(( response )=>{
+    fetch(`/listarNecesidades/${ idUsuario }`)
+        .then(response => response.json())
+        .then(data => {
         // console.log( response.data );
-        let necesidades = response.data.necesidades;
+        let necesidades = data.necesidades;
 
         let divNecesidades = $('.necesidades');
         divNecesidades.html("");
         necesidades.forEach(necesidad => {
 
-            console.log( necesidad );
+            // console.log( necesidad );
             if(necesidad.fechaBajaNecesidad == null){
                 let cardNecesidad =
                 `<div class="col-md-6">

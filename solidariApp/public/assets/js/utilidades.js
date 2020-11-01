@@ -67,9 +67,10 @@ function mostrarComo ( tipoUsuario ){
 
 function listarTiposOrganizaciones()
 {
-    axios.get('/listarTipoOrganizaciones')
-      .then((response)=>{
-        let tiposOrganizaciones = response.data.tipoOrganizaciones;
+    fetch("/listarTipoOrganizaciones")
+    .then(response => response.json())
+    .then(data => {
+        let tiposOrganizaciones = data.tipoOrganizaciones;
         $.each(tiposOrganizaciones, function (indexInArray, tipoOrganizacion) {
             $("#selectTipoOrganizacion").append("<option value = '" + tipoOrganizacion.idTipoOrganizacion + "'>" + tipoOrganizacion.nombreTipoOrganizacion +"</option");
         });
@@ -79,9 +80,10 @@ function listarTiposOrganizaciones()
 
 function listarProvincias(defaultSelected)
 {
-    axios.get('/listarProvincias')
-      .then((response)=>{
-        let provincias = response.data.provincias;
+    fetch("/listarProvincias")
+    .then(response => response.json())
+    .then(data => {
+        let provincias = data.provincias;
         $.each(provincias, function (indexInArray, provincia) {
             $("#selectProvincia").append("<option value = '" + provincia.idProvincia + "'>" + provincia.nombreProvincia +"</option");
 
@@ -92,9 +94,10 @@ function listarProvincias(defaultSelected)
 
 function listarLocalidades(idProvincia,defaultSelected)
 {
-    axios.get('/listarLocalidades/' + idProvincia)
-      .then((response)=>{
-        let localidades = response.data.localidades;
+    fetch("/listarLocalidades/"+idProvincia)
+    .then(response => response.json())
+    .then(data => {
+        let localidades = data.localidades;
         $.each(localidades, function (indexInArray, localidad) {
             $("#selectLocalidad").append("<option value = '" + localidad.idLocalidad + "'>" + localidad.nombreLocalidad +"</option");
         });
@@ -115,9 +118,8 @@ function limpiarValidaciones(inp,error){
 }   
 
 //OBTENGO LAS COORDENADAS DESDE LA API   
-
 async function obtenerCoordenadas(calle, nro, localidad, provincia){
-    if(provincia == 'Buenos Aires-GBA'){
+    if(provincia == 'Buenos Aires-GBA' || provincia == 'Capital Federal'){
         provincia = 'Buenos Aires';
     }
 
@@ -129,8 +131,11 @@ async function obtenerCoordenadas(calle, nro, localidad, provincia){
       lat: 0,
       lon: 0
     }
-    coordenadas.lat = data[0].lat;
-    coordenadas.lon = data[0].lon;
+
+    if( data.length > 0){
+        coordenadas.lat = data[0].lat;
+        coordenadas.lon = data[0].lon;
+    }
     // console.log( lat + lon );
     return coordenadas;
   }

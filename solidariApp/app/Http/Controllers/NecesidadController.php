@@ -50,6 +50,13 @@ class NecesidadController extends Controller
         ]);
     }
 
+    public function listarNecesidadesPantallaPrincipal($idUsuario)
+    {
+        return response()->json([
+            'necesidades' => Necesidad::listarNecesidadesPantallaPrincipal($idUsuario)
+        ]);
+    }
+
     public function getNecesidad($idNecesidad)
     {
         return response()->json([

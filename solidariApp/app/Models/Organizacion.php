@@ -18,4 +18,13 @@ class Organizacion extends Model
                     ->join('tipoOrganizacion', 'tipoOrganizacion.idTipoOrganizacion', '=', 'organizacion.idTipoOrganizacion')
                         ->where('organizacion.idUsuario',$idUsuario)->first();
     }
+
+    public static function getOrganizaciones()
+    {
+        return Organizacion::join('usuario', 'organizacion.idUsuario', '=', 'usuario.idUsuario')
+            ->join('tipoOrganizacion', 'tipoOrganizacion.idTipoOrganizacion', '=', 'organizacion.idTipoOrganizacion')    
+            ->join('domicilio', 'domicilio.idUsuario', '=', 'organizacion.idUsuario')    
+                ->take(20)
+                ->get();
+    }
 }
