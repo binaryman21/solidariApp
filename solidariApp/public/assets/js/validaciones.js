@@ -387,7 +387,7 @@ function validarFechaLimite(fecha,error){
     var presentDate = newDate.getDate();
     var presentMonth = newDate.getMonth();
     var presentYear = newDate.getFullYear();
-    var dateOfBirthVal = fecha.val();
+    var dateOfBirthVal = new Date(fecha.val());
 
     if (dateOfBirthVal != null){
         var validatePattern = /^(\d{4})(\/|-)(\d{1,2})(\/|-)(\d{1,2})$/;
@@ -395,7 +395,7 @@ function validarFechaLimite(fecha,error){
 
         if (dateValues == null)
         {
-            mostrarError( fecha, error, 'Error en la fecha ingresada');
+            mostrarError( fecha, error, 'Error en la fecha ingresada1');
             return false;
         }
 
@@ -405,17 +405,17 @@ function validarFechaLimite(fecha,error){
 
         if ((birthMonth < 1) || (birthMonth > 12))
         {
-            mostrarError( fecha, error, 'Error en la fecha ingresada');
+            mostrarError( fecha, error, 'Error en la fecha ingresada2');
             return false;
         }
         else if ((birthDate < 1) || (birthDate> 31))
         {
-            mostrarError( fecha, error, 'Error en la fecha ingresada');
+            mostrarError( fecha, error, 'Error en la fecha ingresada3');
             return false;
         }
         else if ((birthMonth==4 || birthMonth==6 || birthMonth==9 || birthMonth==11) && birthDate ==31)
         {
-            mostrarError( fecha, error, 'Error en la fecha ingresada');
+            mostrarError( fecha, error, 'Error en la fecha ingresada4');
             return false;
         }
         else if (birthMonth == 2){
@@ -423,27 +423,27 @@ function validarFechaLimite(fecha,error){
 
             if (birthDate> 29 || (birthDate ==29 && !isleap))
             {
-                mostrarError( fecha, error, 'Error en la fecha ingresada');
+                mostrarError( fecha, error, 'Error en la fecha ingresada5');
                 return false;
             }
         }
         else if((birthYear>presentYear)||(birthYear+70<presentYear))
             {
-                mostrarError( fecha, error, 'Error en la fecha ingresada');
+                mostrarError( fecha, error, 'Error en la fecha ingresada6');
                 return false;
             }
         else if(birthYear==presentYear)
             {
             if(birthMonth>presentMonth+1)
                 {
-                    mostrarError( fecha, error, 'Error en la fecha ingresada');
+                    mostrarError( fecha, error, 'Error en la fecha ingresada7');
                     return false;
                 }
             else if(birthMonth==presentMonth+1)
                 {
                 if(birthDate>presentDate)
                     {
-                        mostrarError( fecha, error, 'Error en la fecha ingresada');
+                        mostrarError( fecha, error, 'Error en la fecha ingresada8');
                         return false;
                     }
                 }
@@ -452,7 +452,7 @@ function validarFechaLimite(fecha,error){
 
     if(presentDate.getTime == dateOfBirthVal.getTime || presentDate > dateOfBirthVal){
         {
-            mostrarError( fecha, error, 'La fecha limite debe ser mayor a la actual');
+            mostrarError( fecha, error, 'La fecha limite debe ser mayor a la actual9');
             return false;
         }
     }
