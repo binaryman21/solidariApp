@@ -66,15 +66,6 @@ document.addEventListener('DOMContentLoaded', ()=>{
 function cargarDatosPerfil(usuario)
 {
 
-    //evento click en el boton de editar necesidad
-     $("#btnGuardarCambiosNecesidad").click
-     (
-    function(event)
-     {
-         event.preventDefault()
-        registrarNecesidad(usuario.idUsuario)
-     });
-
     $("#btnGuardarDescripcion").click(function()
     {
         actualizarDescripcion(usuario.idUsuario);
