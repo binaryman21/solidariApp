@@ -1,19 +1,16 @@
+var map = L.map('mapa');
+var markers = []
+
 document.addEventListener('DOMContentLoaded', ()=> {
     getLocation();
 })
 
 function cargarMapa( lat, lng ){   
-    let map = L.map('mapa');
     map.setView([lat, lng], 13);
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
     }).addTo(map);
-    
-    L.marker([lat, lng]).addTo(map)
-        .bindPopup('Organizaciones')
-        .openPopup();
 }
-
 
 function getLocation() {
     if (navigator.geolocation) {
@@ -35,4 +32,28 @@ function getLocation() {
     let lat= -34.788942;
     let lng= -58.523357;
     cargarMapa( lat, lng )
+  }
+
+  function cargarOrgEnMapa( organizacion ){
+      markers[organizacion.idUsuario] =  new L.marker([organizacion.latitud, organizacion.longitud], {id: organizacion.idUsuario}).addTo(map)
+      .bindPopup( organizacion.razonSocial )
+      .openPopup();
+      markers[organizacion.idUsuario].on('click', () => {
+        $('.modal-footer .btn-link').remove()
+        $('.modal-title').text( organizacion.razonSocial );
+        let card = $(`.cardOrganizacion${organizacion.idUsuario}`).clone();
+        console.log( card );
+        $("#modalOrganizaciones .modal-body").html( card );
+        $("#modalOrganizaciones .modal-body .cardOrganizacion").css('display', 'block');
+        $('.modal-footer').append( $("#modalOrganizaciones .modal-body .btn-link") )
+        $("#modalOrganizaciones .modal-body .btn-link").remove();
+        $('.btnDetalleOrg').on( 'click', ocultarModal )
+        $("#modalOrganizaciones").modal('show');
+      })
+      getLocation();
+  }
+
+  function ocultarModal(){
+    $("#modalOrganizaciones").modal('hide')
+    $("#modalOrganizaciones .modal-body").html( '' );
   }

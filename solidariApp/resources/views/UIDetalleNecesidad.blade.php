@@ -10,23 +10,7 @@
         </div>
         <div class="modal-body">
             <div class="row">
-                <div class="col-md-6">
-                    <div class="card necesidad alimentos">
-                        <div class="card-body">
-                            <div class="container-fluid">
-                                <div class="datosNecesidad">
-                                    <p class="font-weight-bold">Alimentos</p>
-                                    <p>Necesito fideos y arroz</p>
-                                    <p>Cantidad: 10</p>
-                                    <p>Fecha limite: no definida</p>
-                                    <p>Estado: en proceso</p>
-                                    <p>Colaboradores: 5</p>
-                                </div>
-                            </div>
-                            <button type="button" class="btn btnColaborar btn-block btn-outline-primary mt-4" data-toggle="modal" data-target="#modalColaborar"><i class="far fa-handshake"></i>COLABORAR</button>
-                        </div>
-
-                    </div>
+                <div class="col-md-6 detalleNecesidadModal">
 
                 </div>
                 <div class="col-md-6">

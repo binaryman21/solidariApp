@@ -23,6 +23,8 @@ class DomicilioController extends Controller
         $domicilio->numero = $datos->numero;
         $domicilio->piso = $datos->piso;
         $domicilio->depto = $datos->depto;
+        $domicilio->latitud = $datos->latitud;
+        $domicilio->longitud = $datos->longitud;
         $domicilio->idLocalidad = $datos->idLocalidad;
         $domicilio->save();
 

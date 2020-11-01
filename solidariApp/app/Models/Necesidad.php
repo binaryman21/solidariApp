@@ -17,6 +17,11 @@ class Necesidad extends Model
         return Necesidad::where("idUsuario",$idUsuario)->with('categoria')->get();
     }
 
+    public static function listarNecesidadesPantallaPrincipal($idUsuario)
+    {
+        return Necesidad::where("idUsuario",$idUsuario)->with('categoria')->take(2)->get();
+    }
+
     public static function getNecesidad($idNecesidad)
     {
         return Necesidad::find($idNecesidad);

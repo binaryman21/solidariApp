@@ -35,21 +35,25 @@ function limpiarCamposRegistro(){
     // Numero de telefono
     $('#numeroTelefono').removeClass('is-invalid is-valid');
     $('.errorNroTelefono').fadeOut();
-    // Calle
-    $('#calle').removeClass('is-invalid is-valid');
-    $('.errorCalle').fadeOut();
-    // Nro
-    $('#numero').removeClass('is-invalid is-valid');
-    $('.errorNro').fadeOut();
-    // Localidad
-    $('#selectLocalidad').removeClass('is-invalid is-valid');
-    $('.errorLocalidad').fadeOut();
-    // Provincia
-    $('#selectProvincia').removeClass('is-invalid is-valid');
-    $('.errorProvincia').fadeOut();
+    limpiarDomicilio();
     // Tipo de organizacion
     $('#selectTipoOrganizacion').removeClass('is-invalid is-valid');
     $('.errorTipoOrg').fadeOut();
+}
+
+function limpiarDomicilio(){
+        // Calle
+        $('#calle').removeClass('is-invalid is-valid');
+        $('.errorCalle').fadeOut();
+        // Nro
+        $('#numero').removeClass('is-invalid is-valid');
+        $('.errorNro').fadeOut();
+        // Localidad
+        $('#selectLocalidad').removeClass('is-invalid is-valid');
+        $('.errorLocalidad').fadeOut();
+        // Provincia
+        $('#selectProvincia').removeClass('is-invalid is-valid');
+        $('.errorProvincia').fadeOut();
 }
 
 function mostrarComo ( tipoUsuario ){
@@ -74,9 +78,10 @@ function mostrarComo ( tipoUsuario ){
 
 function listarTiposOrganizaciones()
 {
-    axios.get('/listarTipoOrganizaciones')
-      .then((response)=>{
-        let tiposOrganizaciones = response.data.tipoOrganizaciones;
+    fetch("/listarTipoOrganizaciones")
+    .then(response => response.json())
+    .then(data => {
+        let tiposOrganizaciones = data.tipoOrganizaciones;
         $.each(tiposOrganizaciones, function (indexInArray, tipoOrganizacion) {
             $("#selectTipoOrganizacion").append("<option value = '" + tipoOrganizacion.idTipoOrganizacion + "'>" + tipoOrganizacion.nombreTipoOrganizacion +"</option");
         });
@@ -86,9 +91,10 @@ function listarTiposOrganizaciones()
 
 function listarProvincias(defaultSelected)
 {
-    axios.get('/listarProvincias')
-      .then((response)=>{
-        let provincias = response.data.provincias;
+    fetch("/listarProvincias")
+    .then(response => response.json())
+    .then(data => {
+        let provincias = data.provincias;
         $.each(provincias, function (indexInArray, provincia) {
             $("#selectProvincia").append("<option value = '" + provincia.idProvincia + "'>" + provincia.nombreProvincia +"</option");
 
@@ -99,9 +105,10 @@ function listarProvincias(defaultSelected)
 
 function listarLocalidades(idProvincia,defaultSelected)
 {
-    axios.get('/listarLocalidades/' + idProvincia)
-      .then((response)=>{
-        let localidades = response.data.localidades;
+    fetch("/listarLocalidades/"+idProvincia)
+    .then(response => response.json())
+    .then(data => {
+        let localidades = data.localidades;
         $.each(localidades, function (indexInArray, localidad) {
             $("#selectLocalidad").append("<option value = '" + localidad.idLocalidad + "'>" + localidad.nombreLocalidad +"</option");
         });
@@ -113,7 +120,6 @@ function listarLocalidades(idProvincia,defaultSelected)
 function limpiarValidaciones(inp,error){
     if(inp){
         inp.removeClass('is-invalid is-valid');
-
         if(error){
             error.fadeOut();
         }else{
@@ -136,3 +142,27 @@ function desbloquearBoton(boton){
     boton.html(textoBoton);
     boton.attr("disabled",false);
 }
+   
+
+//OBTENGO LAS COORDENADAS DESDE LA API   
+async function obtenerCoordenadas(calle, nro, localidad, provincia){
+    if(provincia == 'Buenos Aires-GBA' || provincia == 'Capital Federal'){
+        provincia = 'Buenos Aires';
+    }
+
+    let url = `https://nominatim.openstreetmap.org/search?q=${calle}+${nro},+${localidad},+${provincia}&format=json&polygon_geojson=1&addressdetails=1`;
+    
+    let respuesta = await fetch( url );
+    let data = await respuesta.json();
+    let coordenadas = {
+      lat: 0,
+      lon: 0
+    }
+
+    if( data.length > 0){
+        coordenadas.lat = data[0].lat;
+        coordenadas.lon = data[0].lon;
+    }
+    // console.log( lat + lon );
+    return coordenadas;
+  }
