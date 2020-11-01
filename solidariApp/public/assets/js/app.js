@@ -1,4 +1,5 @@
 var map = L.map('mapa');
+var markers = []
 
 document.addEventListener('DOMContentLoaded', ()=> {
     getLocation();
@@ -34,18 +35,25 @@ function getLocation() {
   }
 
   function cargarOrgEnMapa( organizacion ){
-      let marcador = L.marker([organizacion.latitud, organizacion.longitud]).addTo(map)
+      markers[organizacion.idUsuario] =  new L.marker([organizacion.latitud, organizacion.longitud], {id: organizacion.idUsuario}).addTo(map)
       .bindPopup( organizacion.razonSocial )
       .openPopup();
-      marcador.on('click', () => {
-        console.log('si');
+      markers[organizacion.idUsuario].on('click', () => {
         $('.modal-footer .btn-link').remove()
         $('.modal-title').text( organizacion.razonSocial );
-        $("#modalOrganizaciones .modal-body").html( $(`#cardOrganizacion${organizacion.idUsuario}`) );
+        let card = $(`.cardOrganizacion${organizacion.idUsuario}`).clone();
+        console.log( card );
+        $("#modalOrganizaciones .modal-body").html( card );
         $("#modalOrganizaciones .modal-body .cardOrganizacion").css('display', 'block');
         $('.modal-footer').append( $("#modalOrganizaciones .modal-body .btn-link") )
         $("#modalOrganizaciones .modal-body .btn-link").remove();
+        $('.btnDetalleOrg').on( 'click', ocultarModal )
         $("#modalOrganizaciones").modal('show');
       })
       getLocation();
+  }
+
+  function ocultarModal(){
+    $("#modalOrganizaciones").modal('hide')
+    $("#modalOrganizaciones .modal-body").html( '' );
   }

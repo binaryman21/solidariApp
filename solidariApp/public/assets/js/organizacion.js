@@ -1,7 +1,8 @@
+isLoggedIn(cargarDatosPerfil);
+
 document.addEventListener('DOMContentLoaded', ()=>{
-    isLoggedIn(cargarDatosPerfil);
-    agregarPaginacionComentarios();
     listarCategorias();
+    agregarPaginacionComentarios();
     $("#editarMiPerfil").click(camposEditables);
     $("#guardarCambios").click(guardarCambios);
 
@@ -32,7 +33,7 @@ document.addEventListener('DOMContentLoaded', ()=>{
     });
 
     //cargarNecesidades(necesidades);
-    agregarPaginacionNecesidades();
+    // agregarPaginacionNecesidades();
 
 })
 
@@ -234,11 +235,13 @@ function agregarTelefono(idUsuario)
 }
 /*Hace los campos editables al apretar boton "Editar"*/
 function camposEditables() {
+    console.log( 'si ');
     /*Botones*/
     $("#guardarCambios").removeClass("d-none");
     $(".tacho").removeClass("d-none");
     $("#editarMiPerfil").addClass("disabled");
     $(".editarDom").removeClass("d-none");
+    $('#btnEditarDescripcion i').removeClass('d-none');
 
     /*Campos editables*/
     $(".campoEditable").prop('disabled', false);
@@ -270,6 +273,7 @@ function guardarCambios() {
     $('#numeroTelefono').val('');
     limpiarValidaciones($('#numeroTelefono'), $('.errorNroTelefono'));
     $(".editarDom").addClass("d-none");
+    $('#btnEditarDescripcion i').addClass('d-none');
 }
 
 

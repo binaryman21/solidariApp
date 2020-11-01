@@ -1,5 +1,6 @@
+isLoggedIn(cargarDatosPerfil);
+
 document.addEventListener('DOMContentLoaded', () => {
-    isLoggedIn(cargarDatosPerfil);
     agregarPaginacionComentarios();
     agregarPaginacionNecesidades();
 

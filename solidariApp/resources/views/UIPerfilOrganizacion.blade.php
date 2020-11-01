@@ -37,7 +37,7 @@
         <div class="col-md-6">
             <div class = "d-flex flex-row">
                 <h4>Descripcion</h4>
-                <a class="ml-2" id="btnEditarDescripcion"><i class="far fa-edit"></i></a>
+                <a class="ml-2" id="btnEditarDescripcion"><i class="far fa-edit d-none"></i></a>
                 <a class="ml-2 oculto" id="btnGuardarDescripcion"><i class="far fa-save"></i></a>
             </div>
             <div class="descripcion">

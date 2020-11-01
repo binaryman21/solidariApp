@@ -24,7 +24,9 @@ class Organizacion extends Model
         return Organizacion::join('usuario', 'organizacion.idUsuario', '=', 'usuario.idUsuario')
             ->join('tipoOrganizacion', 'tipoOrganizacion.idTipoOrganizacion', '=', 'organizacion.idTipoOrganizacion')    
             ->join('domicilio', 'domicilio.idUsuario', '=', 'organizacion.idUsuario')    
-                ->take(20)
+            // ->join('necesidad', 'necesidad.idUsuario', '=', 'organizacion.idUsuario')    
+            // ->join('categoriaNecesidad', 'categoriaNecesidad.idCategoria', '=', 'necesidad.idCategoriaNecesidad')    
+                ->take(10)
                 ->get();
     }
 }

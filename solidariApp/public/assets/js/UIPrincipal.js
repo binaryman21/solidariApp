@@ -1,9 +1,9 @@
+getOrganizaciones();
+isLoggedIn();
+
 $( document ).ready(function() {
     listarProvincias(1);
     listarTiposOrganizaciones();
-    getOrganizaciones();
-
-    isLoggedIn();
     // $("#nombreColaborador").on("keyup change input",validarNombreColaborador);
     // $("#apellidoColaborador").on("keyup change input",validarApellidoColaborador);
     // $("#calle").on("keyup change input",validarNombreColaborador);
@@ -369,8 +369,8 @@ function getOrganizaciones( ){
         let organizaciones = data.organizaciones;
         // TODO: CARGAR NECESIDADES
         organizaciones.forEach(organizacion => {
-            let cardOrganizacion = 
-                `<div class = "cardOrganizacion my-2rounded shadow-sm border my-2 pb-3" id="cardOrganizacion${organizacion.idUsuario}">
+                let cardOrganizacion = 
+                `<div class = "cardOrganizacion cardOrganizacion${organizacion.idUsuario} my-2rounded shadow-sm border my-2 pb-3">
                     <div class ="d-flex flex-row m-2 px-2 pt-5 justify-content-star detalleOrganizacion rounded align-items-center">
                         <img class="rounded-circle imgPerfilOrg" src="${organizacion.urlFotoPerfilUsuario}" alt="imagen de usuario">
                         <div id="card-org-name" class="ml-2">
@@ -378,25 +378,55 @@ function getOrganizaciones( ){
                             <p>${organizacion.nombreTipoOrganizacion}</p>
                         </div>
                     </div>
-                    <div class = "listaNecesidades px-2">
-                        <div class="card necesidad alimentos">
-                            <div class="card-body">
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <p class="font-weight-bold">alimentos</p>
-                                        <p>sasa</p>
-                                    </div>
-                                    <div class = "col-md-6 d-flex flex-row align-items-end justify-content-end"><button class = "btn btn-primary" data-toggle="modal" data-target="#modalDetalleNecesidad">Me interesa</button></div>
-                                </div>
-                            </div>
-                        </div>
+                    <div class = "listaNecesidades${organizacion.idUsuario} px-2">
+                        
                     </div>
                     <button class = "btn btn-link float-right">Ver todas</button>
                 </div>`
-            divOrganizaciones.append( cardOrganizacion );
-            cargarOrgEnMapa( organizacion );
+                divOrganizaciones.append( cardOrganizacion );
+                cargarOrgEnMapa( organizacion );
+
+                organizacion.necesidades.forEach( necesidad => {
+                    $(`.listaNecesidades${organizacion.idUsuario}`).append(
+                        `<div class="card necesidad ${necesidad.categoria.nombreCategoria.toLowerCase()}">           
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <p class="font-weight-bold">${necesidad.categoria.nombreCategoria}</p>
+                                        <p>${necesidad.descripcionNecesidad}</p>
+                                    </div>
+                                    <div class = "col-md-6 d-flex flex-row align-items-end justify-content-end"><button class = "btn btn-primary btnDetalleOrg${necesidad.idNecesidad}" data-toggle="modal" data-target="#modalDetalleNecesidad">Me interesa</button></div>
+                                </div>
+                            </div>
+                        </div>`
+                    )
+                        
+                    $(`.btnDetalleOrg${necesidad.idNecesidad}`).on('click', function(){
+                        cargarDatosModalDetalleNecesidad(necesidad);                       
+                    })
+                })
+                
     })
-    
     agregarPaginacionListaOrganizaciones(); 
     })
+}
+
+function cargarDatosModalDetalleNecesidad( necesidad ){
+    console.log( necesidad );
+        $('.detalleNecesidadModal').html(
+        `<div class="card necesidad ${necesidad.categoria.nombreCategoria.toLowerCase()}">
+            <div class="card-body">
+                <div class="container-fluid">
+                    <div class="datosNecesidad">
+                        <p class="font-weight-bold">${necesidad.categoria.nombreCategoria}</p>
+                        <p>${necesidad.descripcionNecesidad}</p>
+                        <p>Cantidad: ${necesidad.cantidadNecesidad}</p>
+                        <p>Fecha limite: ${necesidad.fechaLimiteNecesidad}</p>
+                        <p>Estado: en proceso</p>
+                        <p>Colaboradores: 5</p>
+                    </div>
+                </div>
+                <button type="button" class="btn btnColaborar btn-block btn-outline-primary mt-4" data-toggle="modal" data-target="#modalColaborar"><i class="far fa-handshake"></i>COLABORAR</button>
+            </div>
+        </div>`)
 }

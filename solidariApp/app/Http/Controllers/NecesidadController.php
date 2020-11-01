@@ -50,7 +50,7 @@ class NecesidadController extends Controller
         ]);
     }
 
-    public function listarNecesidadesPantallaPrincipal($idUsuario)
+    public static function listarNecesidadesPantallaPrincipal($idUsuario)
     {
         return response()->json([
             'necesidades' => Necesidad::listarNecesidadesPantallaPrincipal($idUsuario)

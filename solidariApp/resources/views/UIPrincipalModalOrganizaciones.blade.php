@@ -10,7 +10,7 @@
             <div class="modal-body container-fluid">
 
             </div>
-            <div class="modal-footer row">
+            <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
             </div>
         </div>

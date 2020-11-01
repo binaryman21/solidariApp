@@ -84,11 +84,11 @@
     <!-- JS -->
     <script type="text/javascript" src="{{URL::asset('assets/js/logueo.js')}}"></script>
     <script type="text/javascript" src="{{URL::asset('assets/js/UIPrincipal.js')}}"></script>
-    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js" defer></script>
     <!-- Validaciones -->
-    <script type="text/javascript" src="{{URL::asset('assets/js/validaciones.js')}}"></script>
+    <script type="text/javascript" src="{{URL::asset('assets/js/validaciones.js')}}" defer></script>
     <!-- Utilidades -->
-    <script type="text/javascript" src="{{URL::asset('assets/js/utilidades.js')}}"></script>
+    <script type="text/javascript" src="{{URL::asset('assets/js/utilidades.js')}}" defer></script>
 
 
 

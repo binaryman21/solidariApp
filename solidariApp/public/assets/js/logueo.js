@@ -25,14 +25,14 @@ function login(datosLogin){
 
 function isLoggedIn(funcionSuccess)
 {
-    axios.get("/isLoggedIn")
-    .then((response)=>{
-
-        if(response.data.usuario != null)
+    fetch("/isLoggedIn")
+    .then(response => response.json())
+    .then(data => {
+        if(data.usuario != null)
         {
-            mostrarInterfazSesionIniciada(response.data.usuario);
+            mostrarInterfazSesionIniciada(data.usuario);
             if(funcionSuccess != undefined){
-                funcionSuccess(response.data.usuario);
+                funcionSuccess(data.usuario);
             }
 
         }
