@@ -27,35 +27,6 @@ document.addEventListener('DOMContentLoaded', ()=>{
 
     });
 
-
-
-    let necesidades = {
-        necesidad1: {
-            idNecesidad:1,
-            descripcionNecesidad:"descripcion 1",
-            cantidadNecesidad: "2",
-            fechaLimiteNecesidad: "2020/03/12",
-            fechaBajaNecesidad: "no definida",
-            categoriaNecesidad: {
-                idCategoria: "1",
-                nombreCategoria: "alimentos"
-            },
-            idUsuario: "12"
-        },
-        necesidad2: {
-            idNecesidad:2,
-            descripcionNecesidad: "descripcion 2",
-            cantidadNecesidad: "5",
-            fechaLimiteNecesidad: "2020/06/12",
-            fechaBajaNecesidad: "no definida",
-            categoriaNecesidad: {
-                idCategoria:"2",
-                nombreCategoria:"dinero"
-            },
-            idUsuario: "43"
-        }
-    }
-
     // cargarNecesidades(necesidades);
     agregarPaginacionNecesidades();
 
@@ -78,7 +49,9 @@ function cargarDatosPerfil(usuario)
     });
     $("#btnAgregarTelefono").click(function()
     {
-        agregarTelefono(usuario.idUsuario);
+        if( validarTelefono( '' ) ){
+            agregarTelefono(usuario.idUsuario);
+        }
     });
     getOrganizacion(usuario.idUsuario);
 }
@@ -135,8 +108,10 @@ function cargarDatosModalDomicilio(domicilio){
     listarLocalidades(domicilio.idProvincia,domicilio.idLocalidad);
 
     $("#btnGuardarDomicilio").click(function(){
-        $("#btnGuardarDomicilio").html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>Un momento');
-        actualizarDomicilio(domicilio);
+        if( validarDireccion () ){
+            $("#btnGuardarDomicilio").html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>Un momento');
+            actualizarDomicilio(domicilio);
+        }
     });
 }
 
@@ -166,13 +141,13 @@ function agregarTelefonoAlListado(telefono)
 {
     $("#listadoTelefonos").append(`<div class="form-row" id = "telefono` + telefono.idTelefono + `">
     <div class="col-3 col-mb-3 mb-3">
-    <input type="text" class="form-control campoEditable" id="codArea" value="` + telefono.codAreaTelefono + `" disabled placeholder="Cod. Area" required>
-    <span class="error text-danger errorCodArea"> </span>
+    <input type="text" class="form-control campoEditable" id="codArea${telefono.idTelefono}" value="` + telefono.codAreaTelefono + `" disabled placeholder="Cod. Area" required>
+    <span class="error text-danger errorCodArea${telefono.idTelefono}"> </span>
     </div>
     <div class="col-6 col-mb-6 mb-6">
 
-    <input type="text" class="form-control campoEditable" id="numeroTelefono" value="` + telefono.numeroTelefono + `" disabled placeholder="Numero" required>
-    <span class="error text-danger errorNroTelefono"></span>
+    <input type="text" class="form-control campoEditable" id="numeroTelefono${telefono.idTelefono}" value="` + telefono.numeroTelefono + `" disabled placeholder="Numero" required>
+    <span class="error text-danger errorNroTelefono${telefono.idTelefono}"></span>
     </div>
     <div class="col-1 col-mb-1 mb-1">
     <a class="text-danger" id="btnEliminarTelefono`+ telefono.idTelefono +`">
