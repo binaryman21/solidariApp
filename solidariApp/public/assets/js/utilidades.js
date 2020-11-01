@@ -24,21 +24,25 @@ function limpiarCamposRegistro(){
     // Numero de telefono
     $('#numeroTelefono').removeClass('is-invalid is-valid');
     $('.errorNroTelefono').fadeOut();
-    // Calle
-    $('#calle').removeClass('is-invalid is-valid');
-    $('.errorCalle').fadeOut();
-    // Nro
-    $('#numero').removeClass('is-invalid is-valid');
-    $('.errorNro').fadeOut();
-    // Localidad
-    $('#selectLocalidad').removeClass('is-invalid is-valid');
-    $('.errorLocalidad').fadeOut();
-    // Provincia
-    $('#selectProvincia').removeClass('is-invalid is-valid');
-    $('.errorProvincia').fadeOut();
+    limpiarDomicilio();
     // Tipo de organizacion
     $('#selectTipoOrganizacion').removeClass('is-invalid is-valid');
     $('.errorTipoOrg').fadeOut();
+}
+
+function limpiarDomicilio(){
+        // Calle
+        $('#calle').removeClass('is-invalid is-valid');
+        $('.errorCalle').fadeOut();
+        // Nro
+        $('#numero').removeClass('is-invalid is-valid');
+        $('.errorNro').fadeOut();
+        // Localidad
+        $('#selectLocalidad').removeClass('is-invalid is-valid');
+        $('.errorLocalidad').fadeOut();
+        // Provincia
+        $('#selectProvincia').removeClass('is-invalid is-valid');
+        $('.errorProvincia').fadeOut();
 }
 
 function mostrarComo ( tipoUsuario ){
@@ -102,7 +106,6 @@ function listarLocalidades(idProvincia,defaultSelected)
 function limpiarValidaciones(inp,error){
     if(inp){
         inp.removeClass('is-invalid is-valid');
-
         if(error){
             error.fadeOut();
         }else{

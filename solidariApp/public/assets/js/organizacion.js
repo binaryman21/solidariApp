@@ -5,9 +5,14 @@ document.addEventListener('DOMContentLoaded', ()=>{
     $("#editarMiPerfil").click(camposEditables);
     $("#guardarCambios").click(guardarCambios);
 
+    $("#btnEditarDescripcion").click(function()
+    {
+        $("#btnEditarDescripcion").hide();
+        $("#btnGuardarDescripcion").show();
+        $("#descripcionOrganizacion").attr("contenteditable","true");
+        $("#descripcionOrganizacion").focus();
 
-
-
+    });
 
     $("#btnEditarDescripcion").click(function()
     {
@@ -18,45 +23,13 @@ document.addEventListener('DOMContentLoaded', ()=>{
 
     });
 
+    //MODAL EDITAR DOMICILIO
+    $("#selectProvincia").change(function(){
 
-
-    $("#btnEditarDescripcion").click(function()
-    {
-        $("#btnEditarDescripcion").hide();
-        $("#btnGuardarDescripcion").show();
-        $("#descripcionOrganizacion").attr("contenteditable","true");
-        $("#descripcionOrganizacion").focus();
-
+        let idProvincia = $("#selectProvincia").val();
+        $("#selectLocalidad").html("");
+        listarLocalidades(idProvincia,1);
     });
-
-
-
-    let necesidades = {
-        necesidad1: {
-            idNecesidad:1,
-            descripcionNecesidad:"descripcion 1",
-            cantidadNecesidad: "2",
-            fechaLimiteNecesidad: "2020/03/12",
-            fechaBajaNecesidad: "no definida",
-            categoriaNecesidad: {
-                idCategoria: "1",
-                nombreCategoria: "alimentos"
-            },
-            idUsuario: "12"
-        },
-        necesidad2: {
-            idNecesidad:2,
-            descripcionNecesidad: "descripcion 2",
-            cantidadNecesidad: "5",
-            fechaLimiteNecesidad: "2020/06/12",
-            fechaBajaNecesidad: "no definida",
-            categoriaNecesidad: {
-                idCategoria:"2",
-                nombreCategoria:"dinero"
-            },
-            idUsuario: "43"
-        }
-    }
 
     //cargarNecesidades(necesidades);
     agregarPaginacionNecesidades();
@@ -111,10 +84,8 @@ function getOrganizacion(idUsuario){
                 <p class = "m-1 domicilioInfo1">` + domicilio.calle + ` ` + domicilio.numero + ` Piso ` + domicilio.piso + ` Depto ` + domicilio.depto + `</p>
                 <p class = "m-1">` + domicilio.nombreLocalidad + `, ` + domicilio.nombreProvincia + `</p>
             </div>
-            <a class="ml-2" id="btnEditarDomicilio` + domicilio.idDomicilio + `" data-toggle="modal" href="#modalEditarDomicilio"><i class="far fa-edit"></i></a>
+            <a class="ml-2" id="btnEditarDomicilio` + domicilio.idDomicilio + `" data-toggle="modal" href="#modalEditarDomicilio"><i class="far fa-edit editarDom d-none"></i></a>
             </div>
-
-
          </div>`);
 
          $("#btnEditarDomicilio"+ domicilio.idDomicilio).click(function(){
@@ -137,21 +108,23 @@ function cargarDatosModalDomicilio(domicilio){
     listarLocalidades(domicilio.idProvincia,domicilio.idLocalidad);
 
     $("#btnGuardarDomicilio").click(function(){
-        $("#btnGuardarDomicilio").html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>Un momento');
-        actualizarDomicilio(domicilio);
+        if( validarDireccion() ){
+            $("#btnGuardarDomicilio").html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>Un momento');
+            actualizarDomicilio(domicilio);
+        }
     });
 }
 
 function actualizarDomicilio(domicilio)
 {
-        domicilio.calle = $("#calle").val(),
-        domicilio.numero = $("#numero").val(),
-        domicilio.piso = $("#piso").val(),
-        domicilio.depto = $("#depto").val(),
-        domicilio.idLocalidad = $("#selectLocalidad").val(),
-        domicilio.idProvincia = $("#selectProvincia").val(),
-        domicilio.nombreLocalidad = $("#selectLocalidad option:selected").text(),
-        domicilio.nombreProvincia = $("#selectProvincia option:selected").text()
+    domicilio.calle = $("#calle").val(),
+    domicilio.numero = $("#numero").val(),
+    domicilio.piso = $("#piso").val(),
+    domicilio.depto = $("#depto").val(),
+    domicilio.idLocalidad = $("#selectLocalidad").val(),
+    domicilio.idProvincia = $("#selectProvincia").val(),
+    domicilio.nombreLocalidad = $("#selectLocalidad option:selected").text(),
+    domicilio.nombreProvincia = $("#selectProvincia option:selected").text()
     axios.post("/actualizarDomicilio",domicilio)
     .then((response)=>{
         $("#btnGuardarDomicilio").html('Guardar');
@@ -160,26 +133,27 @@ function actualizarDomicilio(domicilio)
 
         $("#btnEditarDomicilio"+ domicilio.idDomicilio).click(function(){
             cargarDatosModalDomicilio(domicilio);
-     });
+        });
     });
+    limpiarDomicilio();
 
 }
 function agregarTelefonoAlListado(telefono)
 {
-    $("#listadoTelefonos").append(`<div class="form-row" id = "telefono` + telefono.idTelefono + `">
+    $("#listadoTelefonos").append(`<div class="form-row" id = "telefono${telefono.idTelefono}">
     <div class="col-3 col-mb-3 mb-3">
-    <input type="text" class="form-control campoEditable" id="codArea" value="` + telefono.codAreaTelefono + `" disabled placeholder="Cod. Area" required>
-    <span class="error text-danger errorCodArea"> </span>
+    <input type="text" class="form-control" id="codArea${telefono.idTelefono}" value="${telefono.codAreaTelefono}" disabled placeholder="Cod. Area" required>
+    <span class="error text-danger errorCodArea${telefono.idTelefono}"> </span>
     </div>
     <div class="col-6 col-mb-6 mb-6">
 
-    <input type="text" class="form-control campoEditable" id="numeroTelefono" value="` + telefono.numeroTelefono + `" disabled placeholder="Numero" required>
-    <span class="error text-danger errorNroTelefono"></span>
+    <input type="text" class="form-control" id="numeroTelefono${telefono.idTelefono}" value="${telefono.numeroTelefono}" disabled placeholder="Numero" required>
+    <span class="error text-danger errorNroTelefono${telefono.idTelefono}"></span>
     </div>
     <div class="col-1 col-mb-1 mb-1">
-    <a class="text-danger" id="btnEliminarTelefono`+ telefono.idTelefono +`">
+    <a class="text-danger" id="btnEliminarTelefono${telefono.idTelefono}">
 
-    <i class="fas fa-trash-alt"></i>
+    <i class="fas fa-trash-alt tacho d-none"></i>
     </a>
     <a class="text-primary oculto" id="btnOkEliminarTelefono`+ telefono.idTelefono +`">
 
@@ -214,9 +188,9 @@ function agregarTelefonoAlListado(telefono)
         eliminarTelefono(telefono.idTelefono);
     });
 }
+
 function actualizarDescripcion(idUsuario)
 {
-
     $("#btnGuardarDescripcion").html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>Actualizando...');
     $("#descripcionOrganizacion").attr("contenteditable","false");
     axios.post("/actualizarDescripcion",{idUsuario:idUsuario,descripcionOrganizacion:$("#descripcionOrganizacion").html()})
@@ -237,25 +211,28 @@ function eliminarTelefono(idTelefono)
 
 function agregarTelefono(idUsuario)
 {
-
-    $("#btnAgregarTelefono").html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>');
-    var telefono = {idTelefono:0,codAreaTelefono:$("#codArea").val(),numeroTelefono:$("#numeroTelefono").val(),esCelular:0,idUsuario:idUsuario}
-    axios.post("/registrarTelefono",telefono)
-    .then((response)=>{
-        $("#btnAgregarTelefono").html('<i class="fas fa-plus-circle agregarNecesidad"></i>');
-        telefono.idTelefono = response.data.idTelefono;
-        agregarTelefonoAlListado(telefono);
-    });
+    if( validarTelefono() ){
+        $("#btnAgregarTelefono").html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>');
+        var telefono = {idTelefono:0,codAreaTelefono:$("#codArea").val(),numeroTelefono:$("#numeroTelefono").val(),esCelular:0,idUsuario:idUsuario}
+        axios.post("/registrarTelefono",telefono)
+        .then((response)=>{
+            $("#btnAgregarTelefono").html('<i class="fas fa-plus-circle agregarNecesidad"></i>');
+            telefono.idTelefono = response.data.idTelefono;
+            agregarTelefonoAlListado(telefono);
+        });
+    }
 }
 /*Hace los campos editables al apretar boton "Editar"*/
 function camposEditables() {
     /*Botones*/
     $("#guardarCambios").removeClass("d-none");
+    $(".tacho").removeClass("d-none");
     $("#editarMiPerfil").addClass("disabled");
-
+    $(".editarDom").removeClass("d-none");
 
     /*Campos editables*/
     $(".campoEditable").prop('disabled', false);
+    $(".nuevoTelefono").removeClass("d-none");
 
     /*Mostrar botones de "Agregar*/
     $("#btnAgregarTelefono").removeClass("d-none");
@@ -269,23 +246,20 @@ function camposEditables() {
 
 /*Guarda los cambios realizados*/
 function guardarCambios() {
-    /*TODO: Guardar cambios en base de datos*/
-    /** */
-    if (1 )
-    /*Si los cambios fueron guardados exitosamente vuelvo a la vista original (sin modo edicion)*/ {
-
-
-        $("#guardarCambios").addClass("d-none");
-        $("#editarMiPerfil").removeClass("disabled");
-        $("#btnAgregarTelefono").addClass("d-none");
-        $("#btnAgregarDireccion").addClass("d-none");
-        $(".campoEditable").prop('disabled', true);
-        $("#btnModificarImgPerfil").addClass("d-none");
-        $(".eliminar").addClass("d-none");
-    } else {
-        /*Imprimir error*/
-    }
-
+    $("#guardarCambios").addClass("d-none");
+    $(".tacho").addClass("d-none");
+    $(".nuevoTelefono").addClass("d-none");
+    $("#editarMiPerfil").removeClass("disabled");
+    $("#btnAgregarTelefono").addClass("d-none");
+    $("#btnAgregarDireccion").addClass("d-none");
+    $(".campoEditable").prop('disabled', true);
+    $("#btnModificarImgPerfil").addClass("d-none");
+    $(".eliminar").addClass("d-none");
+    $('#codArea').val('');
+    limpiarValidaciones($('#codArea'), $('.errorCodArea'));
+    $('#numeroTelefono').val('');
+    limpiarValidaciones($('#numeroTelefono'), $('.errorNroTelefono'));
+    $(".editarDom").addClass("d-none");
 }
 
 
@@ -316,6 +290,7 @@ function agregarPaginacionComentarios(){
 }
 
 function agregarPaginacionNecesidades(){
+    $("#navNecesidades").remove();
     $('.necesidades').after('<div id="navNecesidades"></div>');
     let necesidad = document.querySelectorAll('.necesidad')
     let filasMostradas = 4;
@@ -344,7 +319,6 @@ function agregarPaginacionNecesidades(){
 function mostrarModalEditarNecesidad(necesidad){
     limpiarValidaciones($("#inpFechaLimite"),  $("#errorFechaLimite") );
     limpiarValidaciones($("#slctCategoria"), $("#errorCategoria"));
-
 
     let fecha = necesidad.fechaLimiteNecesidad;
     fecha = fecha.split(" ");
@@ -396,7 +370,6 @@ function mostrarModalEditarNecesidad(necesidad){
 
 // Cargar necesidades dinamicamente desde la BD
 function cargarNecesidades ( idUsuario ){
-    $("#navNecesidades").remove();
     axios.get(`/listarNecesidades/${ idUsuario }`)
         .then(( response )=>{
         // console.log( response.data );
