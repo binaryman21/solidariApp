@@ -135,79 +135,89 @@ function listarTiposOrganizaciones()
 
 function registrarOrganizacion()
 {
-    var organizacion =
-    {
-        idUsuario:0,
-        claveUsuario:$("#claveUsuario").val(),
-        emailUsuario:$("#emailUsuario").val(),
-        tokenGoogle:$("#idGoogle").val(),
-        urlFotoPerfilUsuario:$("#urlFotoPerfilUsuario").val(),
-        rol:{idRolUsuario:0,nombreRolUsuario:""},
-        estado:{idEstadoUsuario:0,nombreEstadoUsuario:""},
-        razonSocial:$("#nombreOrganizacion").val(),
-        tipoOrganizacion:
-        {
-            idTipoOrganizacion:$("#selectTipoOrganizacion").val(),
-            nombreTipoOrganizacion:$("#selectTipoOrganizacion :selected").text()
-        },
-        telefonos:
-        [
-            {idTelefono:0,
-                codAreaTelefono:$("#codArea").val(),
-                numeroTelefono:$("#numeroTelefono").val(),
-                esCelular:0
+    
+    obtenerCoordenadas($("#calle").val(), $("#numero").val(), $("#selectLocalidad option:selected" ).text(), $("#selectProvincia option:selected" ).text())
+        .then(data => {
+            let coordenadas = {
+                lat: data.lat,
+                lon: data.lon
             }
-        ],
-        domicilios:
-        [
+            console.log( coordenadas );
+            var organizacion =
             {
-                idDomicilio:0,
-                calle:$("#calle").val(),
-                numero:$("#numero").val(),
-                piso:$("#piso").val(),
-                depto:$("#depto").val(),
-                latitud:0,
-                longitud:0,
-                localidad:
+                idUsuario:0,
+                claveUsuario:$("#claveUsuario").val(),
+                emailUsuario:$("#emailUsuario").val(),
+                tokenGoogle:$("#idGoogle").val(),
+                urlFotoPerfilUsuario:$("#urlFotoPerfilUsuario").val(),
+                rol:{idRolUsuario:0,nombreRolUsuario:""},
+                estado:{idEstadoUsuario:0,nombreEstadoUsuario:""},
+                razonSocial:$("#nombreOrganizacion").val(),
+                tipoOrganizacion:
                 {
-                    idLocalidad:$("#selectLocalidad").val(),
-                    nombreLocalidad:""
-                }
+                    idTipoOrganizacion:$("#selectTipoOrganizacion").val(),
+                    nombreTipoOrganizacion:$("#selectTipoOrganizacion :selected").text()
+                },
+                telefonos:
+                [
+                    {idTelefono:0,
+                        codAreaTelefono:$("#codArea").val(),
+                        numeroTelefono:$("#numeroTelefono").val(),
+                        esCelular:0
+                    }
+                ],
+                domicilios:
+                [
+                    {
+                        idDomicilio:0,
+                        calle:$("#calle").val(),
+                        numero:$("#numero").val(),
+                        piso:$("#piso").val(),
+                        depto:$("#depto").val(),
+                        latitud: coordenadas.lat,
+                        longitud: coordenadas.lon,
+                        localidad:
+                        {
+                            idLocalidad:$("#selectLocalidad").val(),
+                            nombreLocalidad:""
+                        }
+                    }
+                ],
+                links:
+                [
+                    //{idLink:0,urlLink:"",tipoLink:{idTipoLink:0,nombreTipoLink:""}}
+                ]
             }
-        ],
-        links:
-        [
-            //{idLink:0,urlLink:"",tipoLink:{idTipoLink:0,nombreTipoLink:""}}
-        ]
-    }
-
-    axios.post("/registrarOrganizacion",JSON.stringify(organizacion))
-    .then((response)=>{
-
-        alert(response.data.message);
-        $("#btnCrearCuenta").html("Guardar");
-        $("#btnCrearCuenta").attr("disabled", false);
-        if(response.data.resultado == 1){
-            $("#modalRegistroColOrg").modal("hide");
-            $("#msjResultadoRegistro").html("Registro exitoso!");
-            $("#modalResultadoRegistro").modal("show");
-
-            var datosLogin = {
-                email: organizacion.emailUsuario,
-                idGoogle: organizacion.tokenGoogle,
-                pass:organizacion.claveUsuario
-            };
-
-            login(datosLogin);
-
-        }
-        else{
-            $("#modalRegistroColOrg").modal("hide");
-            $("#msjResultadoRegistro").html("Algo fallo, intentalo mas tarde");
-            $("#modalResultadoRegistro").modal("show");
-
-        }
-        });
+        
+            axios.post("/registrarOrganizacion",JSON.stringify(organizacion))
+            .then((response)=>{
+        
+                alert(response.data.message);
+                $("#btnCrearCuenta").html("Guardar");
+                $("#btnCrearCuenta").attr("disabled", false);
+                if(response.data.resultado == 1){
+                    $("#modalRegistroColOrg").modal("hide");
+                    $("#msjResultadoRegistro").html("Registro exitoso!");
+                    $("#modalResultadoRegistro").modal("show");
+        
+                    var datosLogin = {
+                        email: organizacion.emailUsuario,
+                        idGoogle: organizacion.tokenGoogle,
+                        pass:organizacion.claveUsuario
+                    };
+        
+                    login(datosLogin);
+        
+                }
+                else{
+                    $("#modalRegistroColOrg").modal("hide");
+                    $("#msjResultadoRegistro").html("Algo fallo, intentalo mas tarde");
+                    $("#modalResultadoRegistro").modal("show");
+        
+                }
+                });
+            
+        }); 
 }
 
 

@@ -112,4 +112,25 @@ function limpiarValidaciones(inp,error){
             inp.nextSibling.fadeOut();
         }
     }
-}
+}   
+
+//OBTENGO LAS COORDENADAS DESDE LA API   
+
+async function obtenerCoordenadas(calle, nro, localidad, provincia){
+    if(provincia == 'Buenos Aires-GBA'){
+        provincia = 'Buenos Aires';
+    }
+
+    let url = `https://nominatim.openstreetmap.org/search?q=${calle}+${nro},+${localidad},+${provincia}&format=json&polygon_geojson=1&addressdetails=1`;
+    
+    let respuesta = await fetch( url );
+    let data = await respuesta.json();
+    let coordenadas = {
+      lat: 0,
+      lon: 0
+    }
+    coordenadas.lat = data[0].lat;
+    coordenadas.lon = data[0].lon;
+    // console.log( lat + lon );
+    return coordenadas;
+  }
