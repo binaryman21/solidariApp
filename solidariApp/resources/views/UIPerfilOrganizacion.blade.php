@@ -162,6 +162,7 @@
 @include("UIPerfilModales/UIModificarFotoPerfil")
 @include("UIPerfilModales/UIModalEditarNecesidad")
 @include("UIPerfilModales/UIEditarDomicilio")
+@include("UIPerfilModales/UIModalBajaNecesidad")
 @endsection
 
 @section('scripts')

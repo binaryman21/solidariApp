@@ -27,3 +27,53 @@ function listarCategorias()
         });
     });
 }
+
+function updateNecesidad(idUsuario, idNecesidad){
+    //console.log("el id de la necesidad es " + idNecesidad);
+    let necesidad ={
+        idNecesidad:idNecesidad,
+        descripcionNecesidad:$("#txtDescripcion").val(),
+        cantidadNecesidad:$("#inpCantidad").val(),
+        fechaLimiteNecesidad: $("#inpFechaLimite").val(),
+        fechaBajaNecesidad: "",
+        categoriaNecesidad: {idCategoria:$("#slctCategoria").val(),nombreCategoria:$("#slctCategoria option :selected").text()},
+        idUsuario: idUsuario
+    }
+    console.log("fecha "+ necesidad.fechaLimiteNecesidad);
+
+    JSON.stringify(necesidad);
+    axios.post("/updateNecesidad",necesidad)
+    .then((response)=>{
+        if(response.data.resultado){
+            cargarNecesidades(idUsuario);
+            $("#modalEditarNecesidad").modal('toggle');
+            document.getElementById("formEditarNecesidad").reset();
+            alert(response.data.message);
+
+        }else{
+            alert(response.data.message);
+        }
+    });
+}
+
+function bajaNecesidad(idUsuario, idNecesidad){
+    let necesidad ={
+        idNecesidad:idNecesidad,
+    }
+
+    JSON.stringify(necesidad);
+    axios.post("/bajaNecesidad",necesidad)
+    .then((response)=>{
+        if(response.data.resultado){
+            cargarNecesidades(idUsuario);
+            $("#modalBajaNecesidad").modal('toggle');
+            $("#modalEditarNecesidad").modal('toggle');
+            document.getElementById("formEditarNecesidad").reset();
+            alert(response.data.message);
+        }else{
+            alert(response.data.message);
+        }
+    });
+
+
+}

@@ -98,3 +98,15 @@ function listarLocalidades(idProvincia,defaultSelected)
 
       });
 }
+
+function limpiarValidaciones(inp,error){
+    if(inp){
+        inp.removeClass('is-invalid is-valid');
+
+        if(error){
+            error.fadeOut();
+        }else{
+            inp.nextSibling.fadeOut();
+        }
+    }
+}

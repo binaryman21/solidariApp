@@ -5,18 +5,20 @@ document.addEventListener('DOMContentLoaded', ()=>{
     $("#editarMiPerfil").click(camposEditables);
     $("#guardarCambios").click(guardarCambios);
 
-    $("#btnEditarNecesidad").click(()=>{
-        mostrarModalEditarNecesidad();
-    })
 
-    //cambiar color del modalEditarNecesidad en función de la categoria.
-    let categoriaActual;
-    $("#slctCategoria").change(()=>{
-        let colorModal = $("#slctCategoria option:selected").text().toLowerCase();
-        $("#modalEditarNecesidad .modal-content").removeClass(categoriaActual);
-        $("#modalEditarNecesidad .modal-content").addClass(colorModal);
-        categoriaActual = $("#slctCategoria option:selected").text().toLowerCase();
-    })
+
+
+
+    $("#btnEditarDescripcion").click(function()
+    {
+        $("#btnEditarDescripcion").hide();
+        $("#btnGuardarDescripcion").show();
+        $("#descripcionOrganizacion").attr("contenteditable","true");
+        $("#descripcionOrganizacion").focus();
+
+    });
+
+
 
     $("#btnEditarDescripcion").click(function()
     {
@@ -35,13 +37,13 @@ document.addEventListener('DOMContentLoaded', ()=>{
 function cargarDatosPerfil(usuario)
 {
     //evento click en el boton de editar necesidad
-    $("#btnGuardarCambiosNecesidad").click
-    (
-    function(event)
-    {
-        event.preventDefault()
-        registrarNecesidad(usuario.idUsuario)
-    });
+    // $("#btnGuardarCambiosNecesidad").click
+    // (
+    // function(event)
+    // {
+    //     event.preventDefault()
+    //     registrarNecesidad(usuario.idUsuario)
+    // });
 
     $("#btnGuardarDescripcion").click(function()
     {
@@ -314,10 +316,54 @@ function agregarPaginacionNecesidades(){
     });
 }
 
-function mostrarModalEditarNecesidad(){
-    /*let colorModal = $("#cardCategoria").text().toLowerCase();
-    $("#modalEditarNecesidad .modal-content").addClass(colorModal);
-    console.log("color " + colorModal);*/
+function mostrarModalEditarNecesidad(necesidad){
+    limpiarValidaciones($("#inpFechaLimite"),  $("#errorFechaLimite") );
+    limpiarValidaciones($("#slctCategoria"), $("#errorCategoria"));
+
+
+    let fecha = necesidad.fechaLimiteNecesidad;
+    fecha = fecha.split(" ");
+    $("#slctCategoria").val(necesidad.idCategoriaNecesidad);
+    $("#txtDescripcion").val(necesidad.descripcionNecesidad);
+    $("#inpCantidad").val(necesidad.cantidadNecesidad);
+    $("#inpFechaLimite").val(fecha[0]);
+    $("#modalEditarNecesidad .modal-content").addClass($("#slctCategoria option:selected").text().toLowerCase());
+
+    // cambiar color del modalEditarNecesidad en función de la categoria.
+    let categoriaActual = $("#slctCategoria option:selected").text().toLowerCase();
+    let colorModal;
+    $("#slctCategoria").change(()=>{
+        colorModal = $("#slctCategoria option:selected").text().toLowerCase();
+        $("#modalEditarNecesidad .modal-content").removeClass(categoriaActual);
+        $("#modalEditarNecesidad .modal-content").addClass(colorModal);
+        categoriaActual = $("#slctCategoria option:selected").text().toLowerCase();
+    })
+
+    //click cerrar el modal
+    $("#btnCerrarModal").click(()=>{
+        categoriaActual = $("#slctCategoria option:selected").text().toLowerCase();
+        $("#modalEditarNecesidad .modal-content").removeClass(categoriaActual);
+        document.getElementById("formEditarNecesidad").reset();
+
+    })
+    //Click Guardar necesidad editada
+    $("#btnGuardarCambiosNecesidad").click((e)=>{
+        e.preventDefault();
+        if(necesidad.idNecesidad != 0){
+            if(validarNecesidad()) updateNecesidad(necesidad.idUsuario,necesidad.idNecesidad);
+        }
+
+    })
+
+    // //Click Cancelar eliminar necesidad
+    // $("#btnCancelarEliminarNecesidad").click(()=>{
+    //     $("#modalBajaNecesidad").modal("toggle");
+    // })
+
+    $("#btnConfirmarEliminarNecesidad").click(()=>{
+        bajaNecesidad(necesidad.idUsuario,necesidad.idNecesidad);
+    })
+
 }
 
 
@@ -325,6 +371,7 @@ function mostrarModalEditarNecesidad(){
 
 // Cargar necesidades dinamicamente desde la BD
 function cargarNecesidades ( idUsuario ){
+    $("#navNecesidades").remove();
     axios.get(`/listarNecesidades/${ idUsuario }`)
         .then(( response )=>{
         // console.log( response.data );
@@ -335,34 +382,40 @@ function cargarNecesidades ( idUsuario ){
         necesidades.forEach(necesidad => {
 
             console.log( necesidad );
-
-            let cardNecesidad =
-            `<div class="col-md-6">
-                <div class="card necesidad ${necesidad.categoria.nombreCategoria.toLowerCase()}">
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col-md-6">
-                                <p class="font-weight-bold">${necesidad.categoria.nombreCategoria}</p>
-                                <p>${necesidad.descripcionNecesidad}</p>
-                                <p>Cantidad: ${necesidad.cantidadNecesidad}</p>
-                                <p>Fecha limite: ${ new Date(necesidad.fechaLimiteNecesidad).toLocaleDateString('es-AR') }</p>
-                            </div>
-                            <div class="col-md-6 text-right d-flex flex-column justify-content-between">
-                                <p class="editarNecesidad">
-                                    <a data-toggle="modal" href="#modalEditarNecesidad" id="editar${necesidad.idNecesidad}"><i class="far fa-edit"></i></a>
-                                </p>
-                                <p class="ayudasRecibidas">
-                                    <a href="#"><span class="nroAyudas">0</span><i class="fas fa-user-friends"></i></a>
-                                </p>
-                                <p class="estado">
-                                    <i class="fas fa-spinner"></i>
-                                </p>
+            if(necesidad.fechaBajaNecesidad == null){
+                let cardNecesidad =
+                `<div class="col-md-6">
+                    <div class="card necesidad ${necesidad.categoria.nombreCategoria.toLowerCase()}">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <p class="font-weight-bold">${necesidad.categoria.nombreCategoria}</p>
+                                    <p>${necesidad.descripcionNecesidad}</p>
+                                    <p>Cantidad: ${necesidad.cantidadNecesidad}</p>
+                                    <p>Fecha limite: ${ new Date(necesidad.fechaLimiteNecesidad).toLocaleDateString('es-AR') }</p>
+                                </div>
+                                <div class="col-md-6 text-right d-flex flex-column justify-content-between">
+                                    <p class="editarNecesidad">
+                                        <a data-toggle="modal" href="#modalEditarNecesidad" id="editar${necesidad.idNecesidad}"><i class="far fa-edit"></i></a>
+                                    </p>
+                                    <p class="ayudasRecibidas">
+                                        <a href="#"><span class="nroAyudas">0</span><i class="fas fa-user-friends"></i></a>
+                                    </p>
+                                    <p class="estado">
+                                        <i class="fas fa-spinner"></i>
+                                    </p>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            </div>`;
-            divNecesidades.append( cardNecesidad );
+                </div>`;
+                divNecesidades.append( cardNecesidad );
+            }
+            //evento click del btn editar necesidad
+            $("#editar" + necesidad.idNecesidad).click(()=>{
+                //console.log("idNecesidad " + necesidad.idNecesidad);
+                mostrarModalEditarNecesidad(necesidad);
+            })
         })
     agregarPaginacionNecesidades();
     })
