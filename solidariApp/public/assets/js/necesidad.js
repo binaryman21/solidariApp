@@ -14,7 +14,7 @@ function registrarNecesidad(idUsuario)
 
     axios.post("/registrarNecesidad",necesidad)
     .then((response)=>{
-        alert(response.data.message);
+
         desbloquearBoton($("#btnGuardarCambiosNecesidad"));
         let divNecesidades = $('.necesidades');
         divNecesidades.prepend(`<div class="col-md-6" id="necesidad${necesidad.idNecesidad}"></div>`);
@@ -60,20 +60,19 @@ function updateNecesidad(necesidad){
     });
 }
 
-function bajaNecesidad(idUsuario, idNecesidad){
-    let necesidad ={
-        idNecesidad:idNecesidad,
-    }
+function bajaNecesidad(idNecesidad){
 
-    JSON.stringify(necesidad);
-    axios.post("/bajaNecesidad",necesidad)
+
+    axios.post("/bajaNecesidad",{idNecesidad:idNecesidad})
     .then((response)=>{
+        desbloquearBoton($("#btnConfirmarEliminarNecesidad"));
         if(response.data.resultado){
-            cargarNecesidades(idUsuario);
+
+            $("#necesidad" + idNecesidad).remove();
             $("#modalBajaNecesidad").modal('toggle');
             $("#modalEditarNecesidad").modal('toggle');
             document.getElementById("formEditarNecesidad").reset();
-            alert(response.data.message);
+
         }else{
             alert(response.data.message);
         }

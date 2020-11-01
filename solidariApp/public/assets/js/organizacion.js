@@ -6,7 +6,11 @@ document.addEventListener('DOMContentLoaded', ()=>{
     $("#guardarCambios").click(guardarCambios);
 
 
+    $("#btnEliminarNecesidad").click(function(event){
 
+        event.preventDefault();
+
+    });
     $("#slctCategoria").change(()=>{
         colorModal = $("#slctCategoria option:selected").text().toLowerCase();
         $("#modalEditarNecesidad .modal-content").removeClass($("#categoriaActual").val());
@@ -352,16 +356,19 @@ function mostrarModalEditarNecesidad(necesidad){
 
             if(validarNecesidad()) updateNecesidad(necesidad);
         }
-    $("#btnEliminarNecesidad").click((e)=>{e.preventDefault();});
+
+    })
+
  // //Click Cancelar eliminar necesidad
     // $("#btnCancelarEliminarNecesidad").click(()=>{
     //     $("#modalBajaNecesidad").modal("toggle");
     // })
+    $("#btnConfirmarEliminarNecesidad").unbind("click");
     $("#btnConfirmarEliminarNecesidad").click((e)=>{
-
-        bajaNecesidad(necesidad.idUsuario,necesidad.idNecesidad);
+        bloquearBoton($("#btnConfirmarEliminarNecesidad"));
+        bajaNecesidad(necesidad.idNecesidad);
     })
-        })
+
 
 }
 

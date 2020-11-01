@@ -14,21 +14,34 @@ use App\Http\Controllers\ProvinciaController;
 */
 Route::get('/', function(){return view('UIPrincipal');})->name('UIPrincipal');
 
-Route::get('/colaborador', function(){return view('UIPerfilColaborador');})->name('UIColaborador');
+Route::get('/colaborador', function()
+{
+    session_start();
+    if(!isset($_SESSION['usuario']) || $_SESSION['usuario']->rol->nombreRol != 'colaborador')
+    {
+        return redirect('/');
+    }
+    else
+    {
+        return view('UIPerfilColaborador');
+    }
+
+})->name('UIColaborador');
+
 Route::get('/colaborador/visitante', function(){return view('UIPerfilColaboradorVisitante');})->name('UIColaboradorVisitante');
 Route::get('/organizacion/visitante', function(){return view('UIPerfilOrganizacionVisitante');})->name('UIOrganizacionVisitante');
 
 Route::get('/organizacion', function()
 {
-    /*session_start();
-    if(!isset($_SESSION['usuario']))
+    session_start();
+    if(!isset($_SESSION['usuario']) || $_SESSION['usuario']->rol->nombreRol != 'organizacion')
     {
         return redirect('/');
     }
     else
-    {*/
+    {
         return view('UIPerfilOrganizacion');
-   /* }*/
+    }
 
 })->name('UIOrganizacion');
 
