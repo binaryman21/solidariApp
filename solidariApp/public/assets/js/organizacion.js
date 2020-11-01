@@ -6,8 +6,17 @@ document.addEventListener('DOMContentLoaded', ()=>{
     $("#guardarCambios").click(guardarCambios);
 
 
+    $("#btnEliminarNecesidad").click(function(event){
 
+        event.preventDefault();
 
+    });
+    $("#slctCategoria").change(()=>{
+        colorModal = $("#slctCategoria option:selected").text().toLowerCase();
+        $("#modalEditarNecesidad .modal-content").removeClass($("#categoriaActual").val());
+        $("#modalEditarNecesidad .modal-content").addClass(colorModal);
+        $("#categoriaActual").val(colorModal);
+    })
 
     $("#btnEditarDescripcion").click(function()
     {
@@ -29,22 +38,27 @@ document.addEventListener('DOMContentLoaded', ()=>{
 
     });
 
+<<<<<<< HEAD
     // cargarNecesidades(necesidades);
+=======
+>>>>>>> 4e66257c4cec67ad3acbdc58cbb7213342b3143e
     agregarPaginacionNecesidades();
 
 })
 
 function cargarDatosPerfil(usuario)
 {
-    //evento click en el boton de editar necesidad
-    // $("#btnGuardarCambiosNecesidad").click
-    // (
-    // function(event)
-    // {
-    //     event.preventDefault()
-    //     registrarNecesidad(usuario.idUsuario)
-    // });
+    $("#btnNuevaNecesidad").click(function(){
+        document.getElementById("formEditarNecesidad").reset();
+        $("#modalEditarNecesidad .modal-content").removeClass($("#categoriaActual").val());
+        $("#btnGuardarCambiosNecesidad").unbind( "click" );
+        $("#btnGuardarCambiosNecesidad").click(function(e){
 
+            e.preventDefault();
+            bloquearBoton($("#btnGuardarCambiosNecesidad"));
+            registrarNecesidad(usuario.idUsuario);
+                });
+    });
     $("#btnGuardarDescripcion").click(function()
     {
         actualizarDescripcion(usuario.idUsuario);
@@ -323,50 +337,51 @@ function mostrarModalEditarNecesidad(necesidad){
 
     let fecha = necesidad.fechaLimiteNecesidad;
     fecha = fecha.split(" ");
-    $("#slctCategoria").val(necesidad.idCategoriaNecesidad);
+    $("#slctCategoria").val(necesidad.categoria.idCategoria);
     $("#txtDescripcion").val(necesidad.descripcionNecesidad);
     $("#inpCantidad").val(necesidad.cantidadNecesidad);
     $("#inpFechaLimite").val(fecha[0]);
-    $("#modalEditarNecesidad .modal-content").addClass($("#slctCategoria option:selected").text().toLowerCase());
+    $("#modalEditarNecesidad .modal-content").removeClass($("#categoriaActual").val());
+    let categoriaActual = $("#slctCategoria option:selected").text().toLowerCase();
+    $("#modalEditarNecesidad .modal-content").addClass(categoriaActual);
 
     // cambiar color del modalEditarNecesidad en función de la categoria.
-    let categoriaActual = $("#slctCategoria option:selected").text().toLowerCase();
-    let colorModal;
-    $("#slctCategoria").change(()=>{
-        colorModal = $("#slctCategoria option:selected").text().toLowerCase();
-        $("#modalEditarNecesidad .modal-content").removeClass(categoriaActual);
-        $("#modalEditarNecesidad .modal-content").addClass(colorModal);
-        categoriaActual = $("#slctCategoria option:selected").text().toLowerCase();
-    })
 
-    //click cerrar el modal
+    $("#categoriaActual").val(categoriaActual);
+
+       //click cerrar el modal
     $("#btnCerrarModal").click(()=>{
-        categoriaActual = $("#slctCategoria option:selected").text().toLowerCase();
-        $("#modalEditarNecesidad .modal-content").removeClass(categoriaActual);
+
         document.getElementById("formEditarNecesidad").reset();
 
-    })
+          })
     //Click Guardar necesidad editada
+    $("#btnGuardarCambiosNecesidad").unbind( "click" );
     $("#btnGuardarCambiosNecesidad").click((e)=>{
+
         e.preventDefault();
         if(necesidad.idNecesidad != 0){
-            if(validarNecesidad()) updateNecesidad(necesidad.idUsuario,necesidad.idNecesidad);
+
+            if(validarNecesidad()) {
+                bloquearBoton($("#btnGuardarCambiosNecesidad"));
+                updateNecesidad(necesidad);
+            }
         }
 
     })
 
-    // //Click Cancelar eliminar necesidad
+ // //Click Cancelar eliminar necesidad
     // $("#btnCancelarEliminarNecesidad").click(()=>{
     //     $("#modalBajaNecesidad").modal("toggle");
     // })
-
-    $("#btnConfirmarEliminarNecesidad").click(()=>{
-        bajaNecesidad(necesidad.idUsuario,necesidad.idNecesidad);
+    $("#btnConfirmarEliminarNecesidad").unbind("click");
+    $("#btnConfirmarEliminarNecesidad").click((e)=>{
+        bloquearBoton($("#btnConfirmarEliminarNecesidad"));
+        bajaNecesidad(necesidad.idNecesidad);
     })
 
+
 }
-
-
 
 
 // Cargar necesidades dinamicamente desde la BD
@@ -383,40 +398,50 @@ function cargarNecesidades ( idUsuario ){
 
             console.log( necesidad );
             if(necesidad.fechaBajaNecesidad == null){
-                let cardNecesidad =
-                `<div class="col-md-6">
-                    <div class="card necesidad ${necesidad.categoria.nombreCategoria.toLowerCase()}">
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <p class="font-weight-bold">${necesidad.categoria.nombreCategoria}</p>
-                                    <p>${necesidad.descripcionNecesidad}</p>
-                                    <p>Cantidad: ${necesidad.cantidadNecesidad}</p>
-                                    <p>Fecha limite: ${ new Date(necesidad.fechaLimiteNecesidad).toLocaleDateString('es-AR') }</p>
-                                </div>
-                                <div class="col-md-6 text-right d-flex flex-column justify-content-between">
-                                    <p class="editarNecesidad">
-                                        <a data-toggle="modal" href="#modalEditarNecesidad" id="editar${necesidad.idNecesidad}"><i class="far fa-edit"></i></a>
-                                    </p>
-                                    <p class="ayudasRecibidas">
-                                        <a href="#"><span class="nroAyudas">0</span><i class="fas fa-user-friends"></i></a>
-                                    </p>
-                                    <p class="estado">
-                                        <i class="fas fa-spinner"></i>
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>`;
-                divNecesidades.append( cardNecesidad );
+
+                divNecesidades.append(`<div class="col-md-6" id="necesidad${necesidad.idNecesidad}">
+
+                </div>`);
+
+                crearCardNecesidad(necesidad);
             }
-            //evento click del btn editar necesidad
-            $("#editar" + necesidad.idNecesidad).click(()=>{
-                //console.log("idNecesidad " + necesidad.idNecesidad);
-                mostrarModalEditarNecesidad(necesidad);
-            })
+
         })
     agregarPaginacionNecesidades();
+    })
+}
+
+function crearCardNecesidad(necesidad)
+{
+    $("#necesidad" + necesidad.idNecesidad).html("");
+        let cardNecesidad =   `<div class="card necesidad ${necesidad.categoria.nombreCategoria.toLowerCase()}">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-6">
+                    <p class="font-weight-bold">${necesidad.categoria.nombreCategoria}</p>
+                    <p>${necesidad.descripcionNecesidad}</p>
+                    <p>Cantidad: ${necesidad.cantidadNecesidad}</p>
+                    <p>Fecha limite: ${ new Date(necesidad.fechaLimiteNecesidad).toLocaleDateString('es-AR') }</p>
+                </div>
+                <div class="col-md-6 text-right d-flex flex-column justify-content-between">
+                    <p class="editarNecesidad">
+                        <a data-toggle="modal" href="#modalEditarNecesidad" id="editar${necesidad.idNecesidad}"><i class="far fa-edit"></i></a>
+                    </p>
+                    <p class="ayudasRecibidas">
+                        <a href="#"><span class="nroAyudas">0</span><i class="fas fa-user-friends"></i></a>
+                    </p>
+                    <p class="estado">
+                        <i class="fas fa-spinner"></i>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>`;
+    $("#necesidad" + necesidad.idNecesidad).append(cardNecesidad);
+    $("#editar" + necesidad.idNecesidad).unbind("click");
+     //evento click del btn editar necesidad
+     $("#editar" + necesidad.idNecesidad).click(()=>{
+        console.log("idNecesidad " + necesidad.idNecesidad);
+        mostrarModalEditarNecesidad(necesidad);
     })
 }

@@ -12,7 +12,7 @@
                     <div class="form-group" >
                         <label for="slctCategoria">Categoría de la Necesidad</label>
                         <select name="slctCategoria" id="slctCategoria" class="form-control" required>
-
+                         <input type="hidden" id = "categoriaActual">
                         </select>
                         <span class="text-danger" id="errorCategoria"></span>
                     </div>

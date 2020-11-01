@@ -19,7 +19,7 @@ class NecesidadController extends Controller
             $necesidad->descripcionNecesidad = $datosNecesidad ->descripcionNecesidad;
             $necesidad->cantidadNecesidad = $datosNecesidad ->cantidadNecesidad;
             $necesidad->fechaLimiteNecesidad = $datosNecesidad ->fechaLimiteNecesidad;
-            $necesidad->idCategoriaNecesidad = $datosNecesidad ->categoriaNecesidad->idCategoria;
+            $necesidad->idCategoriaNecesidad = $datosNecesidad ->categoria->idCategoria;
             $necesidad->idUsuario = $datosNecesidad ->idUsuario;
             $necesidad->save();
             return response()->json([
@@ -68,7 +68,7 @@ class NecesidadController extends Controller
             $necesidad->descripcionNecesidad = $datosNecesidad ->descripcionNecesidad;
             $necesidad->cantidadNecesidad = $datosNecesidad ->cantidadNecesidad;
             $necesidad->fechaLimiteNecesidad = $datosNecesidad ->fechaLimiteNecesidad;
-            $necesidad->idCategoriaNecesidad = $datosNecesidad ->categoriaNecesidad->idCategoria;
+            $necesidad->idCategoriaNecesidad = $datosNecesidad ->categoria->idCategoria;
             $necesidad->save();
 
             return response()->json([

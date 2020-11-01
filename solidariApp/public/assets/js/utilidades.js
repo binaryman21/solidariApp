@@ -1,3 +1,14 @@
+function limpiarValidaciones(inp,error){
+    if(inp){
+        inp.removeClass('is-invalid is-valid');
+
+        if(error){
+            error.fadeOut();
+        }else{
+            inp.nextSibling.fadeOut();
+        }
+    }
+}
 function limpiarCamposRegistro(){
     $('#formularioRegistroDatos')[0].reset();
     $('#formRegistroGoogle')[0].reset();
@@ -109,4 +120,19 @@ function limpiarValidaciones(inp,error){
             inp.nextSibling.fadeOut();
         }
     }
+}
+
+function bloquearBoton(boton)
+{
+    idBoton = boton.attr('id');
+    textoBoton = boton.html();
+    boton.html("<span class='spinner-border spinner-border-sm' role='status' aria-hidden='true'></span>Un momento...<p class = 'd-none' id = 'texto-"+idBoton+"'>"+textoBoton+"</p>");
+    boton.attr("disabled",true);
+}
+
+function desbloquearBoton(boton){
+    idBoton = boton.attr('id');
+    textoBoton = $("#texto-"+idBoton).html();
+    boton.html(textoBoton);
+    boton.attr("disabled",false);
 }
