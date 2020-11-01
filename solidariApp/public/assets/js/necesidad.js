@@ -1,20 +1,24 @@
 
 function registrarNecesidad(idUsuario)
 {
-    //$("#formEditarNecesidad")[0].checkValidity();
+
     let necesidad = {
         idNecesidad:0,
         descripcionNecesidad:$("#txtDescripcion").val(),
         cantidadNecesidad:$("#inpCantidad").val(),
         fechaLimiteNecesidad: $("#inpFechaLimite").val(),
         fechaBajaNecesidad: "",
-        categoriaNecesidad: {idCategoria:$("#slctCategoria").val(),nombreCategoria:$("#slctCategoria option :selected").text()},
+        categoria: {idCategoria:$("#slctCategoria").val(),nombreCategoria:$("#slctCategoria option:selected").text()},
         idUsuario: idUsuario
     }
-    alert(JSON.stringify(necesidad));
+
     axios.post("/registrarNecesidad",necesidad)
     .then((response)=>{
         alert(response.data.message);
+        desbloquearBoton($("#btnGuardarCambiosNecesidad"));
+        let divNecesidades = $('.necesidades');
+        divNecesidades.prepend(`<div class="col-md-6" id="necesidad${necesidad.idNecesidad}"></div>`);
+        crearCardNecesidad(necesidad);
     });
 }
 function listarCategorias()
@@ -28,26 +32,26 @@ function listarCategorias()
     });
 }
 
-function updateNecesidad(idUsuario, idNecesidad){
+function updateNecesidad(necesidad){
     //console.log("el id de la necesidad es " + idNecesidad);
-    let necesidad ={
-        idNecesidad:idNecesidad,
-        descripcionNecesidad:$("#txtDescripcion").val(),
-        cantidadNecesidad:$("#inpCantidad").val(),
-        fechaLimiteNecesidad: $("#inpFechaLimite").val(),
-        fechaBajaNecesidad: "",
-        categoriaNecesidad: {idCategoria:$("#slctCategoria").val(),nombreCategoria:$("#slctCategoria option :selected").text()},
-        idUsuario: idUsuario
-    }
-    console.log("fecha "+ necesidad.fechaLimiteNecesidad);
 
+
+        necesidad.descripcionNecesidad = $("#txtDescripcion").val();
+        necesidad.cantidadNecesidad =$("#inpCantidad").val();
+        necesidadfechaLimiteNecesidad =  $("#inpFechaLimite").val();
+        necesidad.fechaBajaNecesidad =  "";
+        necesidad.categoria.idCategoria = $("#slctCategoria").val();
+        necesidad.categoria.nombreCategoria = $("#slctCategoria option:selected").text();
+        console.log($("#slctCategoria option :selected").text());
     JSON.stringify(necesidad);
     axios.post("/updateNecesidad",necesidad)
     .then((response)=>{
         if(response.data.resultado){
-            cargarNecesidades(idUsuario);
+            //cargarNecesidades(idUsuario);
+            crearCardNecesidad(necesidad);
             $("#modalEditarNecesidad").modal('toggle');
             document.getElementById("formEditarNecesidad").reset();
+            desbloquearBoton($("#btnGuardarCambiosNecesidad"));
             alert(response.data.message);
 
         }else{

@@ -121,3 +121,18 @@ function limpiarValidaciones(inp,error){
         }
     }
 }
+
+function bloquearBoton(boton)
+{
+    idBoton = boton.attr('id');
+    textoBoton = boton.html();
+    boton.html("<span class='spinner-border spinner-border-sm' role='status' aria-hidden='true'></span>Un momento...<p class = 'd-none' id = 'texto-"+idBoton+"'>"+textoBoton+"</p>");
+    boton.attr("disabled",true);
+}
+
+function desbloquearBoton(boton){
+    idBoton = boton.attr('id');
+    textoBoton = $("#texto-"+idBoton).html();
+    boton.html(textoBoton);
+    boton.attr("disabled",false);
+}
