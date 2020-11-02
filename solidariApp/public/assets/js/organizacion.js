@@ -1,10 +1,10 @@
+isLoggedIn(cargarDatosPerfil);
+
 document.addEventListener('DOMContentLoaded', ()=>{
-    isLoggedIn(cargarDatosPerfil);
-    agregarPaginacionComentarios();
     listarCategorias();
+    agregarPaginacionComentarios();
     $("#editarMiPerfil").click(camposEditables);
     $("#guardarCambios").click(guardarCambios);
-
 
     $("#btnEliminarNecesidad").click(function(event){
 
@@ -27,8 +27,6 @@ document.addEventListener('DOMContentLoaded', ()=>{
 
     });
 
-
-
     $("#btnEditarDescripcion").click(function()
     {
         $("#btnEditarDescripcion").hide();
@@ -38,7 +36,19 @@ document.addEventListener('DOMContentLoaded', ()=>{
 
     });
 
+
+    // cargarNecesidades(necesidades);
     agregarPaginacionNecesidades();
+    //MODAL EDITAR DOMICILIO
+    $("#selectProvincia").change(function(){
+
+        let idProvincia = $("#selectProvincia").val();
+        $("#selectLocalidad").html("");
+        listarLocalidades(idProvincia,1);
+    });
+
+    //cargarNecesidades(necesidades);
+    // agregarPaginacionNecesidades();
 
 })
 
@@ -61,7 +71,9 @@ function cargarDatosPerfil(usuario)
     });
     $("#btnAgregarTelefono").click(function()
     {
-        agregarTelefono(usuario.idUsuario);
+        if( validarTelefono( '' ) ){
+            agregarTelefono(usuario.idUsuario);
+        }
     });
     getOrganizacion(usuario.idUsuario);
 }
@@ -70,10 +82,10 @@ function getOrganizacion(idUsuario){
 
     //CARGAR NECESIDADES
     cargarNecesidades( idUsuario );
-
-    axios.get("/getOrganizacion/"+idUsuario)
-    .then((response)=>{
-        var organizacion = response.data.organizacion;
+    fetch("/getOrganizacion/"+idUsuario)
+    .then(response => response.json())
+    .then(data => {
+        var organizacion = data.organizacion;
         $("#nombreOrganizacion").html(organizacion.razonSocial);
         $("#tipoOrganizacion").html(organizacion.nombreTipoOrganizacion);
         $("#urlFotoPerfilOrganizacion").attr("src",organizacion.urlFotoPerfilUsuario);
@@ -84,7 +96,7 @@ function getOrganizacion(idUsuario){
         }
         $("#descripcionOrganizacion").html(organizacion.descripcionOrganizacion);
         $("#fechaAltaUsuario").html(organizacion.fechaAltaUsuario);
-        $.each(response.data.domicilios, function (indexInArray, domicilio) {
+        $.each(data.domicilios, function (indexInArray, domicilio) {
             $("#listadoDomicilios").html("");
              $("#listadoDomicilios").append(`<div class="form-row" >
              <div class = "d-flex flex-row m-2  domicilio w-100 rounded p-1 justify-content-between">
@@ -92,10 +104,8 @@ function getOrganizacion(idUsuario){
                 <p class = "m-1 domicilioInfo1">` + domicilio.calle + ` ` + domicilio.numero + ` Piso ` + domicilio.piso + ` Depto ` + domicilio.depto + `</p>
                 <p class = "m-1">` + domicilio.nombreLocalidad + `, ` + domicilio.nombreProvincia + `</p>
             </div>
-            <a class="ml-2" id="btnEditarDomicilio` + domicilio.idDomicilio + `" data-toggle="modal" href="#modalEditarDomicilio"><i class="far fa-edit"></i></a>
+            <a class="ml-2" id="btnEditarDomicilio` + domicilio.idDomicilio + `" data-toggle="modal" href="#modalEditarDomicilio"><i class="far fa-edit editarDom d-none"></i></a>
             </div>
-
-
          </div>`);
 
          $("#btnEditarDomicilio"+ domicilio.idDomicilio).click(function(){
@@ -104,7 +114,7 @@ function getOrganizacion(idUsuario){
 
         });
         $("#listadoTelefonos").html("");
-        $.each(response.data.telefonos, function (indexInArray, telefono) {
+        $.each(data.telefonos, function (indexInArray, telefono) {
             agregarTelefonoAlListado(telefono);
         });
     });
@@ -118,61 +128,69 @@ function cargarDatosModalDomicilio(domicilio){
     listarLocalidades(domicilio.idProvincia,domicilio.idLocalidad);
 
     $("#btnGuardarDomicilio").click(function(){
-        $("#btnGuardarDomicilio").html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>Un momento');
-        actualizarDomicilio(domicilio);
+         if( validarDireccion() ){
+            $("#btnGuardarDomicilio").html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>Un momento');
+            actualizarDomicilio(domicilio);
+        }
     });
 }
 
 function actualizarDomicilio(domicilio)
 {
-        domicilio.calle = $("#calle").val(),
-        domicilio.numero = $("#numero").val(),
-        domicilio.piso = $("#piso").val(),
-        domicilio.depto = $("#depto").val(),
-        domicilio.idLocalidad = $("#selectLocalidad").val(),
-        domicilio.idProvincia = $("#selectProvincia").val(),
-        domicilio.nombreLocalidad = $("#selectLocalidad option:selected").text(),
-        domicilio.nombreProvincia = $("#selectProvincia option:selected").text()
-    axios.post("/actualizarDomicilio",domicilio)
-    .then((response)=>{
-        $("#btnGuardarDomicilio").html('Guardar');
-        $("#domicilio" + domicilio.idDomicilio).html(`<p class = "m-1 domicilioInfo1">` + domicilio.calle + ` ` + domicilio.numero + ` Piso ` + domicilio.piso + ` Depto ` + domicilio.depto + `</p>
-        <p class = "m-1">` + domicilio.nombreLocalidad + `, ` + domicilio.nombreProvincia + `</p>`);
+    obtenerCoordenadas($("#calle").val(), $("#numero").val(), $("#selectLocalidad option:selected" ).text(), $("#selectProvincia option:selected" ).text())
+        .then(data => {
+            let coordenadas = {
+                lat: data.lat,
+                lon: data.lon
+            }
+            domicilio.calle = $("#calle").val(),
+            domicilio.numero = $("#numero").val(),
+            domicilio.piso = $("#piso").val(),
+            domicilio.depto = $("#depto").val(),
+            domicilio.idLocalidad = $("#selectLocalidad").val(),
+            domicilio.idProvincia = $("#selectProvincia").val(),
+            domicilio.nombreLocalidad = $("#selectLocalidad option:selected").text(),
+            domicilio.nombreProvincia = $("#selectProvincia option:selected").text(),
+            domicilio.latitud = coordenadas.lat,
+            domicilio.longitud = coordenadas.lon
+            axios
+            .post("/actualizarDomicilio",domicilio)
+            .then((response)=>{
+                $("#btnGuardarDomicilio").html('Guardar');
+                $("#domicilio" + domicilio.idDomicilio).html(`<p class = "m-1 domicilioInfo1">` + domicilio.calle + ` ` + domicilio.numero + ` Piso ` + domicilio.piso + ` Depto ` + domicilio.depto + `</p>
+                <p class = "m-1">` + domicilio.nombreLocalidad + `, ` + domicilio.nombreProvincia + `</p>`);
 
-        $("#btnEditarDomicilio"+ domicilio.idDomicilio).click(function(){
-            cargarDatosModalDomicilio(domicilio);
-     });
-    });
-
+                $("#btnEditarDomicilio"+ domicilio.idDomicilio).click(function(){
+                    cargarDatosModalDomicilio(domicilio);
+                });
+            });
+            limpiarDomicilio();
+        })
 }
+
 function agregarTelefonoAlListado(telefono)
 {
-    $("#listadoTelefonos").append(`<div class="form-row" id = "telefono` + telefono.idTelefono + `">
-    <div class="col-3 col-mb-3 mb-3">
-    <input type="text" class="form-control campoEditable" id="codArea" value="` + telefono.codAreaTelefono + `" disabled placeholder="Cod. Area" required>
-    <span class="error text-danger errorCodArea"> </span>
-    </div>
-    <div class="col-6 col-mb-6 mb-6">
-
-    <input type="text" class="form-control campoEditable" id="numeroTelefono" value="` + telefono.numeroTelefono + `" disabled placeholder="Numero" required>
-    <span class="error text-danger errorNroTelefono"></span>
-    </div>
-    <div class="col-1 col-mb-1 mb-1">
-    <a class="text-danger" id="btnEliminarTelefono`+ telefono.idTelefono +`">
-
-    <i class="fas fa-trash-alt"></i>
-    </a>
-    <a class="text-primary oculto" id="btnOkEliminarTelefono`+ telefono.idTelefono +`">
-
-    <i class="far fa-check-circle"></i>
-    </a>
-
-    <a class="text-danger oculto" id="btnCancelEliminarTelefono`+ telefono.idTelefono +`">
-
-    <i class="far fa-times-circle"></i>
-    </a>
-
-    </div>
+    $("#listadoTelefonos").append(
+    `<div class="form-row" id = "telefono${telefono.idTelefono}">
+        <div class="col-3 col-mb-3 mb-3">
+            <input type="text" class="form-control" id="codArea${telefono.idTelefono}" value="${telefono.codAreaTelefono}" disabled placeholder="Cod. Area" required>
+            <span class="error text-danger errorCodArea${telefono.idTelefono}"> </span>
+        </div>
+        <div class="col-6 col-mb-6 mb-6">
+            <input type="text" class="form-control" id="numeroTelefono${telefono.idTelefono}" value="${telefono.numeroTelefono}" disabled placeholder="Numero" required>
+            <span class="error text-danger errorNroTelefono${telefono.idTelefono}"></span>
+        </div>
+        <div class="col-1 col-mb-1 mb-1">
+            <a class="text-danger" id="btnEliminarTelefono${telefono.idTelefono}">
+                <i class="fas fa-trash-alt tacho"></i>
+            </a>
+            <a class="text-primary oculto" id="btnOkEliminarTelefono${telefono.idTelefono}">
+                <i class="far fa-check-circle"></i>
+            </a>
+            <a class="text-danger oculto" id="btnCancelEliminarTelefono`+ telefono.idTelefono +`">
+                <i class="far fa-times-circle"></i>
+            </a>
+        </div>
     </div>`);
 
     $("#btnEliminarTelefono" + telefono.idTelefono).click(function(){
@@ -195,9 +213,9 @@ function agregarTelefonoAlListado(telefono)
         eliminarTelefono(telefono.idTelefono);
     });
 }
+
 function actualizarDescripcion(idUsuario)
 {
-
     $("#btnGuardarDescripcion").html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>Actualizando...');
     $("#descripcionOrganizacion").attr("contenteditable","false");
     axios.post("/actualizarDescripcion",{idUsuario:idUsuario,descripcionOrganizacion:$("#descripcionOrganizacion").html()})
@@ -218,55 +236,53 @@ function eliminarTelefono(idTelefono)
 
 function agregarTelefono(idUsuario)
 {
+        $("#btnAgregarTelefono").html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>');
+        var telefono = {idTelefono:0,codAreaTelefono:$("#codArea").val(),numeroTelefono:$("#numeroTelefono").val(),esCelular:0,idUsuario:idUsuario}
+        axios.post("/registrarTelefono",telefono)
+        .then((response)=>{
+            $("#btnAgregarTelefono").html('<i class="fas fa-plus-circle agregarNecesidad"></i>');
+            telefono.idTelefono = response.data.idTelefono;
+            agregarTelefonoAlListado(telefono);
+        });
 
-    $("#btnAgregarTelefono").html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>');
-    var telefono = {idTelefono:0,codAreaTelefono:$("#codArea").val(),numeroTelefono:$("#numeroTelefono").val(),esCelular:0,idUsuario:idUsuario}
-    axios.post("/registrarTelefono",telefono)
-    .then((response)=>{
-        $("#btnAgregarTelefono").html('<i class="fas fa-plus-circle agregarNecesidad"></i>');
-        telefono.idTelefono = response.data.idTelefono;
-        agregarTelefonoAlListado(telefono);
-    });
 }
 /*Hace los campos editables al apretar boton "Editar"*/
 function camposEditables() {
     /*Botones*/
     $("#guardarCambios").removeClass("d-none");
+    $(".tacho").removeClass("d-none");
     $("#editarMiPerfil").addClass("disabled");
-
+    $(".editarDom").removeClass("d-none");
+    $('#btnEditarDescripcion i').removeClass('d-none');
 
     /*Campos editables*/
     $(".campoEditable").prop('disabled', false);
+    $(".nuevoTelefono").removeClass("d-none");
 
     /*Mostrar botones de "Agregar*/
     $("#btnAgregarTelefono").removeClass("d-none");
     $("#btnAgregarDireccion").removeClass("d-none");
     $("#btnModificarImgPerfil").removeClass("d-none");
     $(".eliminar").removeClass("d-none");
-
-
-
 }
 
 /*Guarda los cambios realizados*/
 function guardarCambios() {
-    /*TODO: Guardar cambios en base de datos*/
-    /** */
-    if (1 )
-    /*Si los cambios fueron guardados exitosamente vuelvo a la vista original (sin modo edicion)*/ {
-
-
-        $("#guardarCambios").addClass("d-none");
-        $("#editarMiPerfil").removeClass("disabled");
-        $("#btnAgregarTelefono").addClass("d-none");
-        $("#btnAgregarDireccion").addClass("d-none");
-        $(".campoEditable").prop('disabled', true);
-        $("#btnModificarImgPerfil").addClass("d-none");
-        $(".eliminar").addClass("d-none");
-    } else {
-        /*Imprimir error*/
-    }
-
+    $("#guardarCambios").addClass("d-none");
+    $(".tacho").addClass("d-none");
+    $(".nuevoTelefono").addClass("d-none");
+    $("#editarMiPerfil").removeClass("disabled");
+    $("#btnAgregarTelefono").addClass("d-none");
+    $("#btnAgregarDireccion").addClass("d-none");
+    $(".campoEditable").prop('disabled', true);
+    $("#btnModificarImgPerfil").addClass("d-none");
+    $(".eliminar").addClass("d-none");
+    $('#codArea').val('');
+    limpiarValidaciones($('#codArea'), $('.errorCodArea'));
+    $('#numeroTelefono').val('');
+    limpiarValidaciones($('#numeroTelefono'), $('.errorNroTelefono'));
+    $(".editarDom").addClass("d-none");
+    $('#btnEditarDescripcion i').addClass('d-none');
 }
 
 
@@ -298,6 +314,7 @@ function agregarPaginacionComentarios(){
 
 function agregarPaginacionNecesidades(){
     $('#navNecesidades').remove();
+
     $('.necesidades').after('<div id="navNecesidades"></div>');
     let necesidad = document.querySelectorAll('.necesidad')
     let filasMostradas = 4;
@@ -326,7 +343,6 @@ function agregarPaginacionNecesidades(){
 function mostrarModalEditarNecesidad(necesidad){
     limpiarValidaciones($("#inpFechaLimite"),  $("#errorFechaLimite") );
     limpiarValidaciones($("#slctCategoria"), $("#errorCategoria"));
-
 
     let fecha = necesidad.fechaLimiteNecesidad;
     fecha = fecha.split(" ");
@@ -379,23 +395,19 @@ function mostrarModalEditarNecesidad(necesidad){
 
 // Cargar necesidades dinamicamente desde la BD
 function cargarNecesidades ( idUsuario ){
-    $("#navNecesidades").remove();
-    axios.get(`/listarNecesidades/${ idUsuario }`)
-        .then(( response )=>{
+    fetch(`/listarNecesidades/${ idUsuario }`)
+        .then(response => response.json())
+        .then(data => {
         // console.log( response.data );
-        let necesidades = response.data.necesidades;
+        let necesidades = data.necesidades;
 
         let divNecesidades = $('.necesidades');
         divNecesidades.html("");
         necesidades.forEach(necesidad => {
 
-            console.log( necesidad );
+            // console.log( necesidad );
             if(necesidad.fechaBajaNecesidad == null){
-
-                divNecesidades.append(`<div class="col-md-6" id="necesidad${necesidad.idNecesidad}">
-
-                </div>`);
-
+                divNecesidades.append(`<div class="col-md-6" id="necesidad${necesidad.idNecesidad}"></div>`);
                 crearCardNecesidad(necesidad);
             }
 
