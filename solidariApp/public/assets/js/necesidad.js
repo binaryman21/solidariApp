@@ -19,6 +19,7 @@ function registrarNecesidad(idUsuario)
         let divNecesidades = $('.necesidades');
         divNecesidades.prepend(`<div class="col-md-6" id="necesidad${necesidad.idNecesidad}"></div>`);
         crearCardNecesidad(necesidad);
+        agregarPaginacionNecesidades();
     });
 }
 function listarCategorias()

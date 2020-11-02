@@ -297,6 +297,7 @@ function agregarPaginacionComentarios(){
 }
 
 function agregarPaginacionNecesidades(){
+    $('#navNecesidades').remove();
     $('.necesidades').after('<div id="navNecesidades"></div>');
     let necesidad = document.querySelectorAll('.necesidad')
     let filasMostradas = 4;
