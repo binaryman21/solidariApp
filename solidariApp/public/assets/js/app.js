@@ -58,7 +58,7 @@ function getLocation() {
               $("#modalOrganizaciones .modal-body").append( cardOrganizacion );
               $('#modalOrganizaciones .modal-footer').append('<button class = "btn btn-link float-right">Ver todas</button>');
               organizacion.necesidades.forEach( necesidad => {
-              $(`.listaNecesidades${organizacion.idUsuario}`).append(
+              $(`#modalOrganizaciones .listaNecesidades${organizacion.idUsuario}`).append(
                   `<div class="card necesidad ${necesidad.categoria.nombreCategoria.toLowerCase()}">           
                     <div class="card-body">
                       <div class="row">

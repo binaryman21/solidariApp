@@ -401,7 +401,6 @@ function getOrganizaciones( ){
                     
                     $(`.btnDetalleOrg${necesidad.idNecesidad}`).on('click', function(){
                         cargarDatosModalDetalleNecesidad(necesidad);    
-                        console.log('sapee');                   
                     })
                 })
                 cargarOrgEnMapa( organizacion );
