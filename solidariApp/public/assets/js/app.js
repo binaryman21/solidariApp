@@ -41,19 +41,47 @@ function getLocation() {
       markers[organizacion.idUsuario].on('click', () => {
         $('.modal-footer .btn-link').remove()
         $('.modal-title').text( organizacion.razonSocial );
-        let card = $(`.cardOrganizacion${organizacion.idUsuario}`).clone();
-        console.log( card );
-        $("#modalOrganizaciones .modal-body").html( card );
-        $("#modalOrganizaciones .modal-body .cardOrganizacion").css('display', 'block');
-        $('.modal-footer').append( $("#modalOrganizaciones .modal-body .btn-link") )
-        $("#modalOrganizaciones .modal-body .btn-link").remove();
-        $('.btnDetalleOrg').on( 'click', ocultarModal )
-        $("#modalOrganizaciones").modal('show');
+        $("#modalOrganizaciones .modal-body").html( '' );
+        $("#modalOrganizaciones .modal-footer .btn-link").remove();
+        let cardOrganizacion = 
+          `<div class = "cardOrganizacion cardOrganizacion${organizacion.idUsuario} my-2rounded shadow-sm border my-2 pb-3">
+              <div class ="d-flex flex-row m-2 px-2 pt-5 justify-content-star detalleOrganizacion rounded align-items-center">
+                <img class="rounded-circle imgPerfilOrg" src="${organizacion.urlFotoPerfilUsuario}" alt="imagen de usuario">
+                <div id="card-org-name" class="ml-2">
+                    <p>${organizacion.razonSocial}</p>
+                    <p>${organizacion.nombreTipoOrganizacion}</p>
+                </div>
+              </div>
+              <div class = "listaNecesidades${organizacion.idUsuario} px-2">
+              </div>
+            </div>`
+              $("#modalOrganizaciones .modal-body").append( cardOrganizacion );
+              $('#modalOrganizaciones .modal-footer').append('<button class = "btn btn-link float-right">Ver todas</button>');
+              organizacion.necesidades.forEach( necesidad => {
+              $(`.listaNecesidades${organizacion.idUsuario}`).append(
+                  `<div class="card necesidad ${necesidad.categoria.nombreCategoria.toLowerCase()}">           
+                    <div class="card-body">
+                      <div class="row">
+                        <div class="col-md-6">
+                          <p class="font-weight-bold">${necesidad.categoria.nombreCategoria}</p>
+                          <p>${necesidad.descripcionNecesidad}</p>
+                        </div>
+                      <div class = "col-md-6 d-flex flex-row align-items-end justify-content-end">
+                        <button class = "btn btn-primary btnDetalleOrg btnDetalleOrg${necesidad.idNecesidad}" data-toggle="modal" data-target="#modalDetalleNecesidad">Me interesa</button></div>
+                      </div>
+                    </div>
+                  </div>`
+                  )
+                  $(`.btnDetalleOrg${necesidad.idNecesidad}`).on('click', function(){
+                      cargarDatosModalDetalleNecesidad(necesidad);    
+                  })
+              })
+          $('.btnDetalleOrg').on( 'click', ocultarModal )
+          $("#modalOrganizaciones").modal('show');
       })
       getLocation();
   }
 
   function ocultarModal(){
-    $("#modalOrganizaciones").modal('hide')
-    $("#modalOrganizaciones .modal-body").html( '' );
+    $("#modalOrganizaciones").modal('hide');
   }

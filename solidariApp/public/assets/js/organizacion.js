@@ -6,8 +6,6 @@ document.addEventListener('DOMContentLoaded', ()=>{
     $("#editarMiPerfil").click(camposEditables);
     $("#guardarCambios").click(guardarCambios);
 
-<<<<<<< HEAD
-
     $("#btnEliminarNecesidad").click(function(event){
 
         event.preventDefault();
@@ -20,8 +18,6 @@ document.addEventListener('DOMContentLoaded', ()=>{
         $("#categoriaActual").val(colorModal);
     })
 
-=======
->>>>>>> Giuliano
     $("#btnEditarDescripcion").click(function()
     {
         $("#btnEditarDescripcion").hide();
@@ -40,13 +36,9 @@ document.addEventListener('DOMContentLoaded', ()=>{
 
     });
 
-<<<<<<< HEAD
-<<<<<<< HEAD
+
     // cargarNecesidades(necesidades);
-=======
->>>>>>> 4e66257c4cec67ad3acbdc58cbb7213342b3143e
     agregarPaginacionNecesidades();
-=======
     //MODAL EDITAR DOMICILIO
     $("#selectProvincia").change(function(){
 
@@ -57,7 +49,6 @@ document.addEventListener('DOMContentLoaded', ()=>{
 
     //cargarNecesidades(necesidades);
     // agregarPaginacionNecesidades();
->>>>>>> Giuliano
 
 })
 
@@ -137,11 +128,7 @@ function cargarDatosModalDomicilio(domicilio){
     listarLocalidades(domicilio.idProvincia,domicilio.idLocalidad);
 
     $("#btnGuardarDomicilio").click(function(){
-<<<<<<< HEAD
-        if( validarDireccion () ){
-=======
-        if( validarDireccion() ){
->>>>>>> Giuliano
+         if( validarDireccion() ){
             $("#btnGuardarDomicilio").html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>Un momento');
             actualizarDomicilio(domicilio);
         }
@@ -183,40 +170,27 @@ function actualizarDomicilio(domicilio)
 
 function agregarTelefonoAlListado(telefono)
 {
-    $("#listadoTelefonos").append(`<div class="form-row" id = "telefono${telefono.idTelefono}">
-    <div class="col-3 col-mb-3 mb-3">
-<<<<<<< HEAD
-    <input type="text" class="form-control campoEditable" id="codArea${telefono.idTelefono}" value="` + telefono.codAreaTelefono + `" disabled placeholder="Cod. Area" required>
-=======
-    <input type="text" class="form-control" id="codArea${telefono.idTelefono}" value="${telefono.codAreaTelefono}" disabled placeholder="Cod. Area" required>
->>>>>>> Giuliano
-    <span class="error text-danger errorCodArea${telefono.idTelefono}"> </span>
-    </div>
-    <div class="col-6 col-mb-6 mb-6">
-
-<<<<<<< HEAD
-    <input type="text" class="form-control campoEditable" id="numeroTelefono${telefono.idTelefono}" value="` + telefono.numeroTelefono + `" disabled placeholder="Numero" required>
-=======
-    <input type="text" class="form-control" id="numeroTelefono${telefono.idTelefono}" value="${telefono.numeroTelefono}" disabled placeholder="Numero" required>
->>>>>>> Giuliano
-    <span class="error text-danger errorNroTelefono${telefono.idTelefono}"></span>
-    </div>
-    <div class="col-1 col-mb-1 mb-1">
-    <a class="text-danger" id="btnEliminarTelefono${telefono.idTelefono}">
-
-    <i class="fas fa-trash-alt tacho d-none"></i>
-    </a>
-    <a class="text-primary oculto" id="btnOkEliminarTelefono`+ telefono.idTelefono +`">
-
-    <i class="far fa-check-circle"></i>
-    </a>
-
-    <a class="text-danger oculto" id="btnCancelEliminarTelefono`+ telefono.idTelefono +`">
-
-    <i class="far fa-times-circle"></i>
-    </a>
-
-    </div>
+    $("#listadoTelefonos").append(
+    `<div class="form-row" id = "telefono${telefono.idTelefono}">
+        <div class="col-3 col-mb-3 mb-3">
+            <input type="text" class="form-control" id="codArea${telefono.idTelefono}" value="${telefono.codAreaTelefono}" disabled placeholder="Cod. Area" required>
+            <span class="error text-danger errorCodArea${telefono.idTelefono}"> </span>
+        </div>
+        <div class="col-6 col-mb-6 mb-6">
+            <input type="text" class="form-control" id="numeroTelefono${telefono.idTelefono}" value="${telefono.numeroTelefono}" disabled placeholder="Numero" required>
+            <span class="error text-danger errorNroTelefono${telefono.idTelefono}"></span>
+        </div>
+        <div class="col-1 col-mb-1 mb-1">
+            <a class="text-danger" id="btnEliminarTelefono${telefono.idTelefono}">
+                <i class="fas fa-trash-alt tacho"></i>
+            </a>
+            <a class="text-primary oculto" id="btnOkEliminarTelefono${telefono.idTelefono}">
+                <i class="far fa-check-circle"></i>
+            </a>
+            <a class="text-danger oculto" id="btnCancelEliminarTelefono`+ telefono.idTelefono +`">
+                <i class="far fa-times-circle"></i>
+            </a>
+        </div>
     </div>`);
 
     $("#btnEliminarTelefono" + telefono.idTelefono).click(function(){
@@ -262,7 +236,6 @@ function eliminarTelefono(idTelefono)
 
 function agregarTelefono(idUsuario)
 {
-    if( validarTelefono() ){
         $("#btnAgregarTelefono").html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>');
         var telefono = {idTelefono:0,codAreaTelefono:$("#codArea").val(),numeroTelefono:$("#numeroTelefono").val(),esCelular:0,idUsuario:idUsuario}
         axios.post("/registrarTelefono",telefono)
@@ -271,11 +244,10 @@ function agregarTelefono(idUsuario)
             telefono.idTelefono = response.data.idTelefono;
             agregarTelefonoAlListado(telefono);
         });
-    }
+
 }
 /*Hace los campos editables al apretar boton "Editar"*/
 function camposEditables() {
-    console.log( 'si ');
     /*Botones*/
     $("#guardarCambios").removeClass("d-none");
     $(".tacho").removeClass("d-none");
@@ -292,9 +264,6 @@ function camposEditables() {
     $("#btnAgregarDireccion").removeClass("d-none");
     $("#btnModificarImgPerfil").removeClass("d-none");
     $(".eliminar").removeClass("d-none");
-
-
-
 }
 
 /*Guarda los cambios realizados*/
@@ -437,11 +406,7 @@ function cargarNecesidades ( idUsuario ){
 
             // console.log( necesidad );
             if(necesidad.fechaBajaNecesidad == null){
-
-                divNecesidades.append(`<div class="col-md-6" id="necesidad${necesidad.idNecesidad}">
-
-                </div>`);
-
+                divNecesidades.append(`<div class="col-md-6" id="necesidad${necesidad.idNecesidad}"></div>`);
                 crearCardNecesidad(necesidad);
             }
 

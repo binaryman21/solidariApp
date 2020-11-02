@@ -1,14 +1,3 @@
-function limpiarValidaciones(inp,error){
-    if(inp){
-        inp.removeClass('is-invalid is-valid');
-
-        if(error){
-            error.fadeOut();
-        }else{
-            inp.nextSibling.fadeOut();
-        }
-    }
-}
 function limpiarCamposRegistro(){
     $('#formularioRegistroDatos')[0].reset();
     $('#formRegistroGoogle')[0].reset();

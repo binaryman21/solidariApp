@@ -26,7 +26,7 @@ class Organizacion extends Model
             ->join('domicilio', 'domicilio.idUsuario', '=', 'organizacion.idUsuario')    
             // ->join('necesidad', 'necesidad.idUsuario', '=', 'organizacion.idUsuario')    
             // ->join('categoriaNecesidad', 'categoriaNecesidad.idCategoria', '=', 'necesidad.idCategoriaNecesidad')    
-                ->take(10)
+                ->take(30)
                 ->get();
     }
 }
