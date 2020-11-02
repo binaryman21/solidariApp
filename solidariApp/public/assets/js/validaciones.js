@@ -51,7 +51,7 @@ function validarRegistroColaborador( e ){
 
     validarNombre( nombreColaborador, errorNombre ) ? contador++ : false;
     validarApellido( apellidoColaborador, errorApellido ) ? contador++ : false;
-    validarTelefono() ? contador++ : false;
+    validarTelefono( '' ) ? contador++ : false;
     validarDireccion() ? contador++ : false;
     if( contador === 4 ){
         return true;
@@ -202,13 +202,13 @@ function validarApellido( apellidoColaborador, error )
 }
 
 
-function validarTelefono(){
+function validarTelefono( id ){
     let contador = 0;
 
-    let codArea = $("#codArea");
-    let errorCod = $('.errorCodArea');
-    let nroTelefono = $("#numeroTelefono");
-    let errorNro = $('.errorNroTelefono');
+    let codArea = $("#codArea"+id);
+    let errorCod = $('.errorCodArea'+id);
+    let nroTelefono = $("#numeroTelefono"+id);
+    let errorNro = $('.errorNroTelefono'+id);
 
     validarCodigoArea( codArea, errorCod ) ? contador++ : false;
     validarNroTelefono( nroTelefono, errorNro ) ? contador ++ : false;

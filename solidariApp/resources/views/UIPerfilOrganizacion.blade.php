@@ -37,7 +37,7 @@
         <div class="col-md-6">
             <div class = "d-flex flex-row">
                 <h4>Descripcion</h4>
-                <a class="ml-2" id="btnEditarDescripcion"><i class="far fa-edit"></i></a>
+                <a class="ml-2" id="btnEditarDescripcion"><i class="far fa-edit d-none"></i></a>
                 <a class="ml-2 oculto" id="btnGuardarDescripcion"><i class="far fa-save"></i></a>
             </div>
             <div class="descripcion">
@@ -62,22 +62,22 @@
                         </p>
                     </div>
                     <label for="codArea">Telefono</label>
-                    <div class="form-row">
-                        <div class="col-3 col-mb-3 mb-3">
-                            <input type="text" class="form-control campoEditable" id="codArea" placeholder="Cod. Area" required>
-                            <span class="error text-danger errorCodArea"> </span>
+                    <div class="nuevoTelefono d-none">
+                        <div class="form-row">
+                            <div class="col-3 col-mb-3 mb-3">
+                                <input type="text" class="form-control" id="codArea" placeholder="Cod. Area" required>
+                                <span class="error text-danger errorCodArea"> </span>
+                            </div>
+                            <div class="col-6 col-mb-6 mb-6">
+                                <input type="text" class="form-control" id="numeroTelefono" value="" placeholder="Numero" required>
+                                <span class="error text-danger errorNroTelefono"></span>
+                            </div>
+                            <div class="col-1 col-mb-1 mb-1">
+                                <a id = "btnAgregarTelefono" class = "primary-text">
+                                    <i class="fas fa-plus-circle agregarNecesidad"></i>
+                                </a>
+                            </div>
                         </div>
-                        <div class="col-6 col-mb-6 mb-6">
-
-                            <input type="text" class="form-control campoEditable" id="numeroTelefono" value="" placeholder="Numero" required>
-                            <span class="error text-danger errorNroTelefono"></span>
-                        </div>
-                        <div class="col-1 col-mb-1 mb-1">
-                            <a id = "btnAgregarTelefono" class = "primary-text">
-                                <i class="fas fa-plus-circle agregarNecesidad"></i>
-                            </a>
-                        </div>
-
                     </div>
                     <div id = "listadoTelefonos">
                         <p>
@@ -88,7 +88,6 @@
 
                     <hr>
                     <label for="calle">Direccion</label>
-                    <button type="button" class="btn btn-success btn-sm d-none" id="btnAgregarDireccion">Agregar</button>
                     <div id = "listadoDomicilios">
                         <p>
                             <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
@@ -123,7 +122,7 @@
                 <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Buscar</button>
             </div>
         </form>
-        <a data-toggle="modal" href="#modalEditarNecesidad">
+        <a data-toggle="modal" href="#modalEditarNecesidad" id = "btnNuevaNecesidad">
             <i class="fas fa-plus-circle agregarNecesidad"></i>
         </a>
     </nav>

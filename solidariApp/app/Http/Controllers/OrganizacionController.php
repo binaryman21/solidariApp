@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\Usuario;
+use App\Models\Necesidad;
 use App\Models\Link;
 use App\Models\Organizacion;
 use App\Models\Domicilio;
@@ -98,6 +99,23 @@ class OrganizacionController extends Controller
             'organizacion' => Organizacion::getOrganizacion($idUsuario),
             'domicilios' => Domicilio::listarDomiciliosUsuario($idUsuario),
             'telefonos' => Telefono::listarTelefonosUsuario($idUsuario)
+        ]);
+    }
+
+    //Traerme todas las organizaciones
+    public function getOrganizaciones(){
+
+        $organizaciones = Organizacion::getOrganizaciones();
+
+        foreach( $organizaciones as $organizacion ){
+            $organizacion['necesidades'] = Necesidad::listarNecesidadesPantallaPrincipal( $organizacion->idUsuario );
+        }
+
+        return json_encode([
+        // return response()->json([
+            'organizaciones' => $organizaciones
+
+            // 'necesidades' => Necesidad::getOrganizaciones()
         ]);
     }
 

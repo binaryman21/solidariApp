@@ -16,74 +16,7 @@
             <div class="col-xs-12 col-sm-4 col-lg-3 p-0 p-md-2">
             <input class="form-control my-2 rounded" type="text">
             <div class = "card listaOrganizaciones border-0" >
-                <div class = "cardOrganizacion my-2rounded shadow-sm border my-2 pb-3">
-                    <div class ="d-flex flex-row m-2 px-2 pt-5 justify-content-star detalleOrganizacion rounded align-items-center">
-                        <img class="rounded-circle imgPerfilOrg" src="{{URL::asset('assets/img/user.png')}}" alt="imagen de usuario">
-                        <div id="card-org-name" class="ml-2">
-                            <p>Nombre de la organizacion</p>
-                            <p>Tipo de organizacion</p>
-                        </div>
-                    </div>
-                    <div class = "listaNecesidades px-2">
-                        <div class="card necesidad ropa">
-                            <div class="card-body">
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <p class="font-weight-bold">Ropa</p>
-                                        <p>Necesito camperas.</p>
-                                    </div>
-                                    <div class = "col-md-6 d-flex flex-row align-items-end justify-content-end"><button class = "btn btn-primary" data-toggle="modal" data-target="#modalDetalleNecesidad">Me interesa</button></div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="card necesidad dinero">
-                            <div class="card-body">
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <p class="font-weight-bold">Dinero</p>
-                                        <p>Necesito dinero</p>
-                                    </div>
-                                    <div class = "col-md-6 d-flex flex-row align-items-end justify-content-end"><button class = "btn btn-primary" data-toggle="modal" data-target="#modalDetalleNecesidad">Me interesa</button></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <button class = "btn btn-link float-right">Ver todas</button>
-                </div>
-                <div class = "cardOrganizacion rounded shadow-sm border my-2 pb-3">
-                    <div class ="d-flex flex-row m-2 px-2 pt-5 justify-content-star detalleOrganizacion rounded align-items-center">
-                        <img class="rounded-circle imgPerfilOrg" src="{{URL::asset('assets/img/user.png')}}" alt="imagen de usuario">
-                        <div id="card-org-name" class="ml-2">
-                            <p>Nombre de la organizacion</p>
-                            <p>Tipo de organizacion</p>
-                        </div>
-                    </div>
-                    <div class = "listaNecesidades px-2">
-                        <div class="card necesidad ropa">
-                            <div class="card-body">
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <p class="font-weight-bold">Ropa</p>
-                                        <p>Necesito camperas.</p>
-                                    </div>
-                                    <div class = "col-md-6 d-flex flex-row align-items-end justify-content-end"><button class = "btn btn-primary" data-toggle="modal" data-target="#modalDetalleNecesidad">Me interesa</button></div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="card necesidad dinero">
-                            <div class="card-body">
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <p class="font-weight-bold">Dinero</p>
-                                        <p>Necesito dinero</p>
-                                    </div>
-                                    <div class = "col-md-6 d-flex flex-row align-items-end justify-content-end"><button class = "btn btn-primary" data-toggle="modal" data-target="#modalDetalleNecesidad">Me interesa</button></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <button class = "btn btn-link float-right">Ver todas</button>
-                </div>
+                
             </div>
         </div>
             <div class="col">
@@ -137,6 +70,7 @@
     @include("UIPrincipalRegistro")
     @include("UIDetalleNecesidad")
     @include("UIPrincipalResultadoRegistro")
+    @include("UIPrincipalModalOrganizaciones")
 @endsection
 
 @section('scripts')
@@ -150,11 +84,11 @@
     <!-- JS -->
     <script type="text/javascript" src="{{URL::asset('assets/js/logueo.js')}}"></script>
     <script type="text/javascript" src="{{URL::asset('assets/js/UIPrincipal.js')}}"></script>
-    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js" defer></script>
     <!-- Validaciones -->
-    <script type="text/javascript" src="{{URL::asset('assets/js/validaciones.js')}}"></script>
+    <script type="text/javascript" src="{{URL::asset('assets/js/validaciones.js')}}" defer></script>
     <!-- Utilidades -->
-    <script type="text/javascript" src="{{URL::asset('assets/js/utilidades.js')}}"></script>
+    <script type="text/javascript" src="{{URL::asset('assets/js/utilidades.js')}}" defer></script>
 
 
 
