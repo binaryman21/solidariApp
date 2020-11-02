@@ -18,37 +18,16 @@
                     <input class="form-control border-secondary border-right-0" type="text" placeholder="Buscar ... ">
                     <div class="input-group-append">
                         <button class="btn btn-outline-secondary border-secondary border-left-0" type="button"><i class="fa fa-search fa-xs"></i></button>
-                        </div>
                     </div>
+                </div>
                 <div class = "card listaOrganizaciones border-0" >
-                    <x-card-organizacion
+                <!--<x-card-organizacion
                         orgcover="https://products.ls.graphics/paaatterns/images/009.png"
                         orgavatar="https://www.ievictorwiedemann.edu.co/images/pngocean.com-12.png"
                         orgname="Niños Felices"
                         orgtype="Comedor social"
                         orglocation="Ezeiza, Buenos Aires"
-                    />
-                    <x-card-organizacion
-                        orgcover="https://products.ls.graphics/paaatterns/images/009.png"
-                        orgavatar="https://www.ievictorwiedemann.edu.co/images/pngocean.com-12.png"
-                        orgname="Niños Felices"
-                        orgtype="Comedor social"
-                        orglocation="Ezeiza, Buenos Aires"
-                    />
-                    <x-card-organizacion
-                        orgcover="https://products.ls.graphics/paaatterns/images/009.png"
-                        orgavatar="https://www.ievictorwiedemann.edu.co/images/pngocean.com-12.png"
-                        orgname="Niños Felices"
-                        orgtype="Comedor social"
-                        orglocation="Ezeiza, Buenos Aires"
-                    />
-                    <x-card-organizacion
-                        orgcover="https://products.ls.graphics/paaatterns/images/009.png"
-                        orgavatar="https://www.ievictorwiedemann.edu.co/images/pngocean.com-12.png"
-                        orgname="Niños Felices"
-                        orgtype="Comedor social"
-                        orglocation="Ezeiza, Buenos Aires"
-                    />
+                    />-->
                 </div>
             </div>
             <div class="col">
@@ -112,6 +91,7 @@
     @include("UIPrincipalRegistro")
     @include("UIDetalleNecesidad")
     @include("UIPrincipalResultadoRegistro")
+    @include("UIPrincipalModalOrganizaciones")
 @endsection
 
 @section('scripts')
@@ -125,11 +105,11 @@
     <!-- JS -->
     <script type="text/javascript" src="{{URL::asset('assets/js/logueo.js')}}"></script>
     <script type="text/javascript" src="{{URL::asset('assets/js/UIPrincipal.js')}}"></script>
-    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js" defer></script>
     <!-- Validaciones -->
-    <script type="text/javascript" src="{{URL::asset('assets/js/validaciones.js')}}"></script>
+    <script type="text/javascript" src="{{URL::asset('assets/js/validaciones.js')}}" defer></script>
     <!-- Utilidades -->
-    <script type="text/javascript" src="{{URL::asset('assets/js/utilidades.js')}}"></script>
+    <script type="text/javascript" src="{{URL::asset('assets/js/utilidades.js')}}" defer></script>
 
 
 
