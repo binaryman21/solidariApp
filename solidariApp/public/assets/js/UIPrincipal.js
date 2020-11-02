@@ -411,7 +411,6 @@ function getOrganizaciones( ){
 }
 
 function cargarDatosModalDetalleNecesidad( necesidad ){
-    console.log( necesidad );
         $('.detalleNecesidadModal').html(
         `<div class="card necesidad ${necesidad.categoria.nombreCategoria.toLowerCase()}">
             <div class="card-body">
