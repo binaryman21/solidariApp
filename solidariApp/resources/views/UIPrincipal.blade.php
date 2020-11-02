@@ -14,78 +14,43 @@
     <div class="container-fluid px-sm-3 px-lg-5">
         <div class="row bg-white rounded justify-content-lg-center">
             <div class="col-xs-12 col-sm-4 col-lg-3 p-0 p-md-2">
-            <input class="form-control my-2 rounded" type="text">
-            <div class = "card listaOrganizaciones border-0" >
-                <div class = "cardOrganizacion my-2rounded shadow-sm border my-2 pb-3">
-                    <div class ="d-flex flex-row m-2 px-2 pt-5 justify-content-star detalleOrganizacion rounded align-items-center">
-                        <img class="rounded-circle imgPerfilOrg" src="{{URL::asset('assets/img/user.png')}}" alt="imagen de usuario">
-                        <div id="card-org-name" class="ml-2">
-                            <p>Nombre de la organizacion</p>
-                            <p>Tipo de organizacion</p>
+                <div class="input-group my-2 mt-4 mt-lg-3">
+                    <input class="form-control border-secondary border-right-0" type="text" placeholder="Buscar ... ">
+                    <div class="input-group-append">
+                        <button class="btn btn-outline-secondary border-secondary border-left-0" type="button"><i class="fa fa-search fa-xs"></i></button>
                         </div>
                     </div>
-                    <div class = "listaNecesidades px-2">
-                        <div class="card necesidad ropa">
-                            <div class="card-body">
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <p class="font-weight-bold">Ropa</p>
-                                        <p>Necesito camperas.</p>
-                                    </div>
-                                    <div class = "col-md-6 d-flex flex-row align-items-end justify-content-end"><button class = "btn btn-primary" data-toggle="modal" data-target="#modalDetalleNecesidad">Me interesa</button></div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="card necesidad dinero">
-                            <div class="card-body">
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <p class="font-weight-bold">Dinero</p>
-                                        <p>Necesito dinero</p>
-                                    </div>
-                                    <div class = "col-md-6 d-flex flex-row align-items-end justify-content-end"><button class = "btn btn-primary" data-toggle="modal" data-target="#modalDetalleNecesidad">Me interesa</button></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <button class = "btn btn-link float-right">Ver todas</button>
-                </div>
-                <div class = "cardOrganizacion rounded shadow-sm border my-2 pb-3">
-                    <div class ="d-flex flex-row m-2 px-2 pt-5 justify-content-star detalleOrganizacion rounded align-items-center">
-                        <img class="rounded-circle imgPerfilOrg" src="{{URL::asset('assets/img/user.png')}}" alt="imagen de usuario">
-                        <div id="card-org-name" class="ml-2">
-                            <p>Nombre de la organizacion</p>
-                            <p>Tipo de organizacion</p>
-                        </div>
-                    </div>
-                    <div class = "listaNecesidades px-2">
-                        <div class="card necesidad ropa">
-                            <div class="card-body">
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <p class="font-weight-bold">Ropa</p>
-                                        <p>Necesito camperas.</p>
-                                    </div>
-                                    <div class = "col-md-6 d-flex flex-row align-items-end justify-content-end"><button class = "btn btn-primary" data-toggle="modal" data-target="#modalDetalleNecesidad">Me interesa</button></div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="card necesidad dinero">
-                            <div class="card-body">
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <p class="font-weight-bold">Dinero</p>
-                                        <p>Necesito dinero</p>
-                                    </div>
-                                    <div class = "col-md-6 d-flex flex-row align-items-end justify-content-end"><button class = "btn btn-primary" data-toggle="modal" data-target="#modalDetalleNecesidad">Me interesa</button></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <button class = "btn btn-link float-right">Ver todas</button>
+                <div class = "card listaOrganizaciones border-0" >
+                    <x-card-organizacion
+                        orgcover="https://products.ls.graphics/paaatterns/images/009.png"
+                        orgavatar="https://www.ievictorwiedemann.edu.co/images/pngocean.com-12.png"
+                        orgname="Niños Felices"
+                        orgtype="Comedor social"
+                        orglocation="Ezeiza, Buenos Aires"
+                    />
+                    <x-card-organizacion
+                        orgcover="https://products.ls.graphics/paaatterns/images/009.png"
+                        orgavatar="https://www.ievictorwiedemann.edu.co/images/pngocean.com-12.png"
+                        orgname="Niños Felices"
+                        orgtype="Comedor social"
+                        orglocation="Ezeiza, Buenos Aires"
+                    />
+                    <x-card-organizacion
+                        orgcover="https://products.ls.graphics/paaatterns/images/009.png"
+                        orgavatar="https://www.ievictorwiedemann.edu.co/images/pngocean.com-12.png"
+                        orgname="Niños Felices"
+                        orgtype="Comedor social"
+                        orglocation="Ezeiza, Buenos Aires"
+                    />
+                    <x-card-organizacion
+                        orgcover="https://products.ls.graphics/paaatterns/images/009.png"
+                        orgavatar="https://www.ievictorwiedemann.edu.co/images/pngocean.com-12.png"
+                        orgname="Niños Felices"
+                        orgtype="Comedor social"
+                        orglocation="Ezeiza, Buenos Aires"
+                    />
                 </div>
             </div>
-        </div>
             <div class="col">
                 <div class="row px-2 pt-3 justify-content-between align-items-center">
                     <div class="col-12 col-lg-5">
@@ -108,9 +73,20 @@
                     </div>
                 </div>
                 <div class="row p-2" >
-                <div class = "d-flex flex-column rounded p-2" style = "width:100%;height:100%;">
-                    <div id="mapa" class = "mapa"></div>
+                    <div class = "d-flex flex-column rounded p-2" style = "width:100%;height:100%;">
+                        <div id="mapa" class = "mapa"></div>
+                    </div>
                 </div>
+                <div class="row d-flex justify-content-between mx-1 align-items-center border rounded">
+                    <div class="col py-2">Filtrar por</div>
+                    <div class="col p-0 btn-group" role="group">
+                        <button class="btn btn-light" data-toggle="tooltip" data-placement="top" title="Filtrar por Alimentos"><i class="fas fa-utensils fa-sm"></i></button>
+                        <button class="btn btn-light" data-toggle="tooltip" data-placement="top" title="Filtrar por Ropa"><i class="fas fa-tshirt fa-sm"></i></button>
+                        <button class="btn btn-light" data-toggle="tooltip" data-placement="top" title="Filtrar por Dinero"><i class="fas fa-donate fa-sm"></i></button>
+                        <button class="btn btn-light" data-toggle="tooltip" data-placement="top" title="Filtrar por productos de limpieza"><i class="fas fa-spray-can fa-sm"></i></button>
+                        <button class="btn btn-light" data-toggle="tooltip" data-placement="top" title="Filtrar por Alimentos"><i class="fas fa-hands-helping fa-sm"></i></button>
+                        <button class="btn btn-light" data-toggle="tooltip" data-placement="top" title="Filtrar por Varios"><i class="fas fa-hand-holding-heart fa-sm"></i></button>
+                    </div>
                 </div>
                 <div class="row p-2" id = "botonesRegistro">
                     <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-xs-12 rounded p-2" >
@@ -119,13 +95,12 @@
                         <p class="mb-4">Al registrarte como colaborador podrás ayudar a una organización con diferentes recursos</p>
                         <button class = "btn btn-light" data-toggle="modal" data-target="#modalLogin" id="btnRegistrarseComoColaborador">Registrarme como colaborador</button>
                     </div>
-
                     </div>
                     <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-xs-12 p-2">
                         <div class = "d-flex flex-column rounded justify-content-between p-4" style = "background-color:#B4CAE2;width:100%;height:100%;">
-                        <h5>¿Necesitas ayuda?</h5>
-                        <p class="mb-4">Al registrarte como organización serás visible en el mapa del sitio y los colaboradores podrán ayudarte con recursos que necesites</p>
-                        <button class = "btn btn-light" data-toggle="modal" data-target="#modalLogin" id="btnRegistrarseComoOrganizacion">Registrarme como organizacion</button>
+                            <h5>¿Necesitas ayuda?</h5>
+                            <p class="mb-4">Al registrarte como organización serás visible en el mapa del sitio y los colaboradores podrán ayudarte con recursos que necesites</p>
+                            <button class = "btn btn-light" data-toggle="modal" data-target="#modalLogin" id="btnRegistrarseComoOrganizacion">Registrarme como organizacion</button>
                         </div>
                     </div>
                 </div>

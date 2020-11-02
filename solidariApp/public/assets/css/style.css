@@ -83,13 +83,6 @@ i {
     color: #4c4c4c;
 }
 
-.listaNecesidades{
-
-    min-height: 200px;
-    max-height: 768px;
-
-}
-
 div.g-signin2 > .abcRioButtonLightBlue{
     width: 100% !important;
 }
