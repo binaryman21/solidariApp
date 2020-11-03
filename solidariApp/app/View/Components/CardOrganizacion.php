@@ -18,7 +18,7 @@ class CardOrganizacion extends Component
      *
      * @return void
      */
-    public function __construct($orgname, $orgtype, $orgavatar, $orgcover, $orglocation)
+    public function __construct($orgname, $orgtype, $orgavatar, $orglocation, $orgcover = null)
     {
         $this->orgname = $orgname;
         $this->orgtype = $orgtype;
@@ -35,5 +35,17 @@ class CardOrganizacion extends Component
     public function render()
     {
         return view('components.card-organizacion');
+    }
+
+    public function renderCover(){
+
+        if($this->orgcover){
+
+            return ', url'.$this->orgcover.');
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;';
+        }
+        else return ';';
     }
 }

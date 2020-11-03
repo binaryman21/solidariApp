@@ -5,11 +5,8 @@
     ])}}
 >
 <div class="d-flex flex-row m-0 mx-1 mt-1 px-2 pt-5 justify-content-star detalleOrganizacion align-items-center"
-    style="background: -webkit-linear-gradient(rgba(0,0,0,0) 0%,rgba(0,0,0,0) 25%,rgba(0,0,0,0.15) 45%,rgb(0 0 0 / 34%) 60%,rgba(0,0,0,0.6) 80%,rgba(0,0,0,0.7) 100%),
-    url({{$orgcover}});
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;">
+    style="background: -webkit-linear-gradient(rgba(0,0,0,0) 0%,rgba(0,0,0,0) 25%,rgba(0,0,0,0.15) 45%,rgb(0 0 0 / 34%) 60%,
+    rgba(0,0,0,0.6) 80%,rgba(0,0,0,0.7) 100%){{$renderCover}}">
 <img class="rounded-circle imgPerfilOrg" src={{$orgavatar}} alt="{{"avatar de ".$orgname}}">
     <div id="card-org-name" class="ml-2"
         style="text-shadow: -6px 7px 16px black;"
