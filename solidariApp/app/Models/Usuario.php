@@ -26,7 +26,7 @@ class Usuario extends Model
     }
 
     public static function isUser($email){
-
+        /*TODO: agregar condicion: idEstadoUsuario = 1 */
         return Usuario::where('emailUsuario',$email)->exists();
 
     }
@@ -41,6 +41,31 @@ class Usuario extends Model
         return $this->hasMany('App\Models\Domicilio','idUsuario','idUsuario');
     }
 
+    /*Dar de baja usuario*/
+    public static function bajaUser($idUsuario)
+    {
+       /*Inicio log*/ 
+      $myfile = fopen("C:\Users\PC\Documents\GitHub\solidariApp\solidariApp\storage\logs\pepe.txt", "w") or die("Unable to open file!");
+      $txt = "LOG!:\n";
+      fwrite($myfile, $txt);
+      fwrite($myfile, $idUsuario);
+      fclose($myfile);
+        /*FIN log*/ 
+
+      /*Seteo idEstadoUsuario en 0 */
+      Usuario::where('idUsuario', $idUsuario)->update(array('idEstadoUsuario' => '2'));
+    
+      /*TODO: Si el usuario es de tipo Organizacion tengo que setear
+      todas sus necesidades como resueltas*/
+
+    }
+
+    public static function updateFotoPerfil($idUsuario, $urlFotoPerfil)
+    {
+        Usuario::where('idUsuario', $idUsuario)->update(array('urlFotoPerfilUsuario' => $urlFotoPerfil));
+    }
+ 
 }
+
 
 

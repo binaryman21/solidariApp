@@ -6,6 +6,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     $("#editarMiPerfil").click(camposEditables);
     $("#guardarCambios").click(guardarCambios);
+    $("#btnConfirmarDarmeDeBaja").click(bajaUsuario);
+    $("#btnConfirmarFotoPerfil").click(updateFotoPerfil);
 
     //MODAL EDITAR DOMICILIO
     $("#selectProvincia").change(function(){
@@ -14,7 +16,44 @@ document.addEventListener('DOMContentLoaded', () => {
         $("#selectLocalidad").html("");
         listarLocalidades(idProvincia,1);
     });
+
 })
+
+/*Dar de baja el usuario logeado*/
+function bajaUsuario()
+{
+     axios.post("/bajaUsuario")
+    .then((response)=>{
+        if(response.data.resultado === 1 ){
+           console.log(response.data.message);
+
+        }else{
+            /*Ocurrio un error*/
+            alert("Ocurrio un error inesperado.");
+            console.log(response.data.message);
+        }   
+    });
+
+}
+
+/*Actualizar foto de perfil de usuario logeado*/
+function updateFotoPerfil(urlFotoPerfil)
+{
+    /*rlFotoPerfil = 'https://lh3.googleusercontent.com/a-/AOh14GhTGY3nf9J3kD650nNV6TieHWdgU_wVpKDOMrK1wA=s96-c';*/
+     axios.post("/updateFotoPerfil/"+"'"+urlFotoPerfil+"'")
+    .then((response)=>{
+        if(response.data.resultado === 1 ){
+           console.log(response.data.message);
+
+        }else{
+            /*Ocurrio un error*/
+            alert("Ocurrio un error inesperado.");
+            console.log(response.data.message);
+        }   
+    });
+
+}
+
 
 /*Hace los campos editables al apretar boton "Editar"*/
 function camposEditables() {
