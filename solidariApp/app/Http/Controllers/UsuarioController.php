@@ -43,6 +43,65 @@ class UsuarioController extends Controller
         session_start();
         unset($_SESSION['usuario']);
     }
+
+  
+    /*Dar de baja al usuario logeado*/
+    public function bajaUsuario()    
+    {
+        try
+        {
+            session_start();
+            if(isset($_SESSION['usuario'])){
+                /*Busco el ID del usuario logeado*/
+                $usuarioLogoeado = $_SESSION['usuario'];
+                Usuario::bajaUser($usuarioLogoeado->idUsuario);
+                  
+            }
+
+            return response()->json([
+                'resultado' => 1,
+                'message' => 'ejecucion exitosa'
+            ]);
+        }
+        catch (\Exception $e)
+        {
+            return response()->json([
+                'resultado' => 0,
+                'message' => $e->getMessage()
+            ]);
+        }
+
+    }
+
+      
+    /*Dar de baja al usuario logeado*/
+    public function updateFotoPerfil($urlFotoPerfil)    
+    {
+        
+        try
+        {
+            session_start();
+            if(isset($_SESSION['usuario'])){
+                /*Busco el ID del usuario logeado*/
+                $usuarioLogoeado = $_SESSION['usuario'];
+                Usuario::updateFotoPerfil($usuarioLogoeado->idUsuario,$urlFotoPerfil);
+                  
+            }
+
+            return response()->json([
+                'resultado' => 1,
+                'message' => 'ejecucion exitosa'
+            ]);
+        }
+        catch (\Exception $e)
+        {
+            return response()->json([
+                'resultado' => 0,
+                'message' => $e->getMessage()
+            ]);
+        }
+    }
+    
     public function registrarUsuario(Request $request)
     {
         try

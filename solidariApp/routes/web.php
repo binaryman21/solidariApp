@@ -57,7 +57,8 @@ Route::get('/getColaborador/{idUsuario}', 'App\Http\Controllers\ColaboradorContr
 Route::get('/listarDomiciliosUsuario/{idUsuario}', 'App\Http\Controllers\DomicilioController@listarDomiciliosUsuario')->name('listarDomiciliosUsuario');
 Route::get('/listarTelefonosUsuario/{idUsuario}', 'App\Http\Controllers\TelefonoController@listarTelefonosUsuario')->name('listarTelefonosUsuario');
 Route::get('/listarNecesidades/{idUsuario}', 'App\Http\Controllers\NecesidadController@listarNecesidades')->name('listarNecesidades');
-
+Route::post('/bajaUsuario','App\Http\Controllers\UsuarioController@bajaUsuario')->name('bajaUsuario');
+Route::post('/updateFotoPerfil/{urlFotoPerfil}','App\Http\Controllers\UsuarioController@updateFotoPerfil')->name('updateFotoPerfil');
 
 
 
