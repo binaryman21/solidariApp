@@ -367,46 +367,47 @@ function getOrganizaciones( ){
         .then(response => response.json())
         .then(data => {
         let organizaciones = data.organizaciones;
-        organizaciones.forEach(organizacion => {
-            let cardOrganizacion = 
-            `<div class = "cardOrganizacion cardOrganizacion${organizacion.idUsuario} my-2rounded shadow-sm border my-2 pb-3">
-                <div class ="d-flex flex-row m-2 px-2 pt-5 justify-content-star detalleOrganizacion rounded align-items-center">
-                    <img class="rounded-circle imgPerfilOrg" src="${organizacion.urlFotoPerfilUsuario}" alt="imagen de usuario">
+        organizaciones.forEach(org => {
+
+            let cardOrganizacion = `
+            <div class="card cardOrganizacion cardOrganizacion${org.idUsuario} shadow-sm border my-2" style="display: block; opacity: 1;">
+                <div class="card-header d-flex flex-row px-2 justify-content-star detalleOrganizacion align-items-center">
+                    <img class="rounded-circle imgPerfilOrg" src="${org.urlFotoPerfilUsuario || 'assets/img/imgUserProfile.png'}" alt="Avatar de la org ${org.razonSocial}">
                     <div id="card-org-name" class="ml-2">
-                        <p>${organizacion.razonSocial}</p>
-                        <p>${organizacion.nombreTipoOrganizacion}</p>
+                        <p>${org.razonSocial}</p>
+                        <p>${org.nombreTipoOrganizacion}</p>
                     </div>
                 </div>
-                <div class = "listaNecesidades${organizacion.idUsuario} px-2">
-                    
-                </div>
-                <button class = "btn btn-link float-right">Ver todas</button>
-                </div>`
-                divOrganizaciones.append( cardOrganizacion );
+                <div class="card-body p-0 listaNecesidades${org.idUsuario}">
                 
-                organizacion.necesidades.forEach( necesidad => {
-                $(`.listaNecesidades${organizacion.idUsuario}`).append(
-                    `<div class="card necesidad ${necesidad.categoria.nombreCategoria.toLowerCase()}">           
-                    <div class="card-body">
-                    <div class="row">
-                    <div class="col-md-6">
-                    <p class="font-weight-bold">${necesidad.categoria.nombreCategoria}</p>
-                    <p>${necesidad.descripcionNecesidad}</p>
+                </div>
+                <div class="card-footer py-0 bg-transparent">
+                    <button class="btn w-100 btn-link ml-auto text-decoration-none">Ver todas</button>
+                </div>
+            </div>`
+
+            divOrganizaciones.append( cardOrganizacion );
+            org.necesidades.forEach( need => {
+                $(`.listaNecesidades${org.idUsuario}`).append(`
+                    <div class="${need.categoria.nombreCategoria.toLowerCase()}">
+                        <div class="class-body py-2 px-3">
+                            <div class="card-title"><h6>${need.categoria.nombreCategoria}</h6></div>
+                            <div class="card-subtitle text-muted">${need.descripcionNecesidad}</div>
+                        </div>
+                        <div class="card-footer d-flex align-items-end justify-content-end p-0">
+                            <button class="btn btn-link btnDetalleOrg btnDetalleOrg${need.idNecesidad} text-decoration-none" data-toggle="modal" data-target="#modalDetalleNecesidad">Me interesa</button>
+                        </div>
                     </div>
-                    <div class = "col-md-6 d-flex flex-row align-items-end justify-content-end"><button class = "btn btn-primary btnDetalleOrg btnDetalleOrg${necesidad.idNecesidad}" data-toggle="modal" data-target="#modalDetalleNecesidad">Me interesa</button></div>
-                    </div>
-                    </div>
-                    </div>`
-                    )
-                    
-                    $(`.btnDetalleOrg${necesidad.idNecesidad}`).on('click', function(){
-                        cargarDatosModalDetalleNecesidad(necesidad);    
-                    })
+                `)
+
+                $(`.btnDetalleOrg${need.idNecesidad}`).on('click', function(){
+                    cargarDatosModalDetalleNecesidad(need);
                 })
-                cargarOrgEnMapa( organizacion );
-                
-    })
-    agregarPaginacionListaOrganizaciones(); 
+            })
+
+            cargarOrgEnMapa(org);
+        })
+        agregarPaginacionListaOrganizaciones(); 
     })
 }
 
