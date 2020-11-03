@@ -14,21 +14,34 @@ use App\Http\Controllers\ProvinciaController;
 */
 Route::get('/', function(){return view('UIPrincipal');})->name('UIPrincipal');
 
-Route::get('/colaborador', function(){return view('UIPerfilColaborador');})->name('UIColaborador');
+Route::get('/colaborador', function()
+{
+    session_start();
+    if(!isset($_SESSION['usuario']) || $_SESSION['usuario']->rol->nombreRol != 'colaborador')
+    {
+        return redirect('/');
+    }
+    else
+    {
+        return view('UIPerfilColaborador');
+    }
+
+})->name('UIColaborador');
+
 Route::get('/colaborador/visitante', function(){return view('UIPerfilColaboradorVisitante');})->name('UIColaboradorVisitante');
 Route::get('/organizacion/visitante', function(){return view('UIPerfilOrganizacionVisitante');})->name('UIOrganizacionVisitante');
 
 Route::get('/organizacion', function()
 {
-    /*session_start();
-    if(!isset($_SESSION['usuario']))
+    session_start();
+    if(!isset($_SESSION['usuario']) || $_SESSION['usuario']->rol->nombreRol != 'organizacion')
     {
         return redirect('/');
     }
     else
-    {*/
+    {
         return view('UIPerfilOrganizacion');
-   /* }*/
+    }
 
 })->name('UIOrganizacion');
 
@@ -53,12 +66,22 @@ Route::get('/isLoggedIn', 'App\Http\Controllers\UsuarioController@isLoggedIn')->
 Route::post('/registrarUsuario', 'App\Http\Controllers\UsuarioController@registrarUsuario')->name('registrarUsuario');
 Route::post('/registrarNecesidad', 'App\Http\Controllers\NecesidadController@registrarNecesidad')->name('registrarNecesidad');
 Route::get('/getOrganizacion/{idUsuario}', 'App\Http\Controllers\OrganizacionController@getOrganizacion')->name('getOrganizacion');
+Route::get('/getOrganizaciones', 'App\Http\Controllers\OrganizacionController@getOrganizaciones')->name('getOrganizaciones');
 Route::get('/getColaborador/{idUsuario}', 'App\Http\Controllers\ColaboradorController@getColaborador')->name('getColaborador');
 Route::get('/listarDomiciliosUsuario/{idUsuario}', 'App\Http\Controllers\DomicilioController@listarDomiciliosUsuario')->name('listarDomiciliosUsuario');
-Route::get('/listarTelefonosUsuario/{idUsuario}', 'App\Http\Controllers\TelefonoController@listarTelefonosUsuario')->name('listarTelefonosUsuario');
+Route::get ('/listarTelefonosUsuario/{idUsuario}', 'App\Http\Controllers\TelefonoController@listarTelefonosUsuario')->name('listarTelefonosUsuario');
 Route::get('/listarNecesidades/{idUsuario}', 'App\Http\Controllers\NecesidadController@listarNecesidades')->name('listarNecesidades');
 Route::post('/bajaUsuario','App\Http\Controllers\UsuarioController@bajaUsuario')->name('bajaUsuario');
 Route::post('/updateFotoPerfil/{urlFotoPerfil}','App\Http\Controllers\UsuarioController@updateFotoPerfil')->name('updateFotoPerfil');
+Route::get('/listarNecesidadesPantallaPrincipal/{idUsuario}', 'App\Http\Controllers\NecesidadController@listarNecesidadesPantallaPrincipal')->name('listarNecesidadesPantallaPrincipal');
+Route::get('/getNecesidad/{idNecesidad}', 'App\Http\Controllers\NecesidadController@getNecesidad')->name('getNecesidad');
+Route::post('/bajaNecesidad','App\Http\Controllers\NecesidadController@bajaNecesidad')->name('bajaNecesidad');
+Route::post('/updateNecesidad','App\Http\Controllers\NecesidadController@updateNecesidad')->name('updateNecesidad');
+Route::post('/actualizarDescripcion', 'App\Http\Controllers\OrganizacionController@actualizarDescripcion')->name('listarNecesidades');
+Route::post('/registrarTelefono', 'App\Http\Controllers\TelefonoController@registrarTelefono')->name('listarNecesidades');
+Route::post('/eliminarTelefono', 'App\Http\Controllers\TelefonoController@eliminarTelefono')->name('listarNecesidades');
+Route::post('/actualizarDomicilio', 'App\Http\Controllers\DomicilioController@actualizarDomicilio')->name('listarNecesidades');
+
 
 
 

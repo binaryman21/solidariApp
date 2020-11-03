@@ -35,12 +35,18 @@
 
     <div class="row mb-4">
         <div class="col-md-6">
-            <h4>Descripcion</h4>
+            <div class = "d-flex flex-row">
+                <h4>Descripcion</h4>
+                <a class="ml-2" id="btnEditarDescripcion"><i class="far fa-edit d-none"></i></a>
+                <a class="ml-2 oculto" id="btnGuardarDescripcion"><i class="far fa-save"></i></a>
+            </div>
             <div class="descripcion">
                 <div class="card descripcion">
                     <div class="card-body">
-                        <p class="card-text" id = "descripcionOrganizacion"></p>
-
+                        <p class="card-text" id = "descripcionOrganizacion" contenteditable="false">
+                            <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                            <span class="sr-only">cargando...</span>
+                        </p>
                     </div>
                 </div>
             </div>
@@ -50,48 +56,52 @@
                 <form action="">
                     <div class="form-group">
                         <label for="inptEmail">Email</label>
-                        <input type="Email" id="emailOrganizacion" class="form-control campoEditable" value="usuario@mail.com" disabled required>
-                        <span class="error text-danger inptEmail"> </span>
+                        <p id = "emailOrganizacion">
+                            <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                            <span class="sr-only">cargando...</span>
+                        </p>
                     </div>
                     <label for="codArea">Telefono</label>
-                    <button type="button" class="btn btn-success btn-sm d-none" id="btnAgregarTelefono">Agregar</button>
-
+                    <div class="nuevoTelefono d-none">
+                        <div class="form-row">
+                            <div class="col-3 col-mb-3 mb-3">
+                                <input type="text" class="form-control" id="codArea" placeholder="Cod. Area" required>
+                                <span class="error text-danger errorCodArea"> </span>
+                            </div>
+                            <div class="col-6 col-mb-6 mb-6">
+                                <input type="text" class="form-control" id="numeroTelefono" value="" placeholder="Numero" required>
+                                <span class="error text-danger errorNroTelefono"></span>
+                            </div>
+                            <div class="col-1 col-mb-1 mb-1">
+                                <a id = "btnAgregarTelefono" class = "primary-text">
+                                    <i class="fas fa-plus-circle agregarNecesidad"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
                     <div id = "listadoTelefonos">
-
+                        <p>
+                            <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                            <span class="sr-only">cargando...</span>
+                        </p>
                     </div>
 
                     <hr>
                     <label for="calle">Direccion</label>
-                    <button type="button" class="btn btn-success btn-sm d-none" id="btnAgregarDireccion">Agregar</button>
                     <div id = "listadoDomicilios">
-
+                        <p>
+                            <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                            <span class="sr-only">cargando...</span>
+                        </p>
                     </div>
-
-                    <div class="form-row">
-                        <div class="col-md-6 mb-3">
-                            <select id="selectProvincia" class="form-control campoEditable" disabled required>
-                                <option value="-1" selected>Provincia</option>
-                            </select>
-                            <span class="error text-danger errorProvincia"> </span>
-                        </div>
-
-                        <div class="col-md-6 mb-3">
-                            <select id="selectLocalidad" class="form-control campoEditable" disabled required>
-                                <option value="-1" selected>Localidad</option>
-                            </select>
-                            <span class="error text-danger errorLocalidad"> </span>
-                        </div>
-                        <div class="col-1 col-mb-1 mb-1">
-                            <button type="button" class="btn btn-danger btn-sm eliminar d-none">Eliminar</button>
-                        </div>
-                    </div>
-
 
                     <hr>
                     <div class="form-group">
                         <label for="fechaAltaUsuario">Usuario desde</label>
-                        <input type="text" id="fechaAltaUsuario" class="form-control" value="07/02/2020" disabled required>
-                        <span class="error text-danger errorFechaUsuario"> </span>
+                        <p id = "fechaAltaUsuario">
+                            <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                            <span class="sr-only">cargando...</span>
+                        </p>
                     </div>
                     <hr>
                     <div class="d-flex opciones justify-content-between">
@@ -112,12 +122,15 @@
                 <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Buscar</button>
             </div>
         </form>
-        <a data-toggle="modal" href="#modalEditarNecesidad">
+        <a data-toggle="modal" href="#modalEditarNecesidad" id = "btnNuevaNecesidad">
             <i class="fas fa-plus-circle agregarNecesidad"></i>
         </a>
     </nav>
     <div class="necesidades row">
-
+        <p>
+            <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+            <span class="sr-only">cargando...</span>
+        </p>
     </div> <!-- necesidades -->
 
     <div class="comentarios mt-4">
@@ -147,11 +160,15 @@
 @include("UIPerfilModales/UIDarmeDeBaja")
 @include("UIPerfilModales/UIModificarFotoPerfil")
 @include("UIPerfilModales/UIModalEditarNecesidad")
+@include("UIPerfilModales/UIEditarDomicilio")
+@include("UIPerfilModales/UIModalBajaNecesidad")
 @endsection
 
 @section('scripts')
 <!-- scripts -->
+<script type="text/javascript" src="{{URL::asset('assets/js/utilidades.js')}}"></script>
 <script type="text/javascript" src="{{URL::asset('assets/js/logueo.js')}}"></script>
 <script type="text/javascript" src="{{URL::asset('assets/js/organizacion.js')}}"></script>
 <script type="text/javascript" src="{{URL::asset('assets/js/necesidad.js')}}"></script>
+<script type="text/javascript" src="{{URL::asset('assets/js/validaciones.js')}}"></script>
 @endsection

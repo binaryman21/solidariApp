@@ -13,7 +13,8 @@
 
             <div class="col-md-8 align-self-center">
                 <p id = "nombreColaborador" class="lead">
-                    Nombre del colaborador
+                        <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                        <span class="sr-only">cargando...</span>
                 </p>
                 <p class="lead" id="apellidoColaborador">
                 </p>
@@ -67,52 +68,55 @@
             <div class="datos">
                 <form action="">
                     <div class="form-group">
-                        <label for="email">Correo</label>
-                        <input type="email" id="emailColaborador" class="form-control" value="usuario@mail.com" disabled required>
-                        <span class="error text-danger errorEmail"> </span>
+                        <label>Correo</label>
+                        <p id = "correo">
+                            <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                            <span class="sr-only">cargando...</span>
+                        </p>
+
                     </div>
                     <hr>
                     <label for="codArea">Telefono</label>
-                    <button type="button" class="btn btn-success btn-sm d-none" id="btnAgregarTelefono">Agregar</button>
-
+                    <div class="nuevoTelefono d-none">
+                        <div class="form-row">
+                            <div class="col-3 col-mb-3 mb-3">
+                                <input type="text" class="form-control" id="codArea" placeholder="Cod. Area" required>
+                                <span class="error text-danger errorCodArea"> </span>
+                            </div>
+                            <div class="col-6 col-mb-6 mb-6">
+                                <input type="text" class="form-control" id="numeroTelefono" value="" placeholder="Numero" required>
+                                <span class="error text-danger errorNroTelefono"></span>
+                            </div>
+                            <div class="col-1 col-mb-1 mb-1">
+                                <a id = "btnAgregarTelefono" class = "primary-text">
+                                    <i class="fas fa-plus-circle agregarNecesidad"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
                     <!-- Primer Telefono -->
                     <div id = "listadoTelefonos">
-
+                        <p>
+                            <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                            <span class="sr-only">cargando...</span>
+                        </p>
                     </div>
 
                     <hr>
                     <label for="calle">Direccion</label>
-                    <button type="button" class="btn btn-success btn-sm d-none" id="btnAgregarDireccion">Agregar</button>
                     <div id = "listadoDomicilios">
-
+                        <p>
+                            <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                            <span class="sr-only">cargando...</span>
+                        </p>
                     </div>
-
-                    <div class="form-row">
-                        <div class="col-md-6 mb-3">
-                            <select id="selectProvincia" class="form-control campoEditable" disabled required>
-                                <option value="-1" selected>Provincia</option>
-                            </select>
-                            <span class="error text-danger errorProvincia"> </span>
-                        </div>
-
-                        <div class="col-md-6 mb-3">
-                            <select id="selectLocalidad" class="form-control campoEditable" disabled required>
-                                <option value="-1" selected>Localidad</option>
-                            </select>
-                            <span class="error text-danger errorLocalidad"> </span>
-                        </div>
-                        <div class="col-1 col-mb-1 mb-1">
-                            <button type="button" class="btn btn-danger btn-sm eliminar d-none">Eliminar</button>
-                        </div>
-
-                    </div>
-
-
                     <hr>
                     <div class="form-group">
                         <label for="fechaUsuario">Usuario desde</label>
-                        <input type="text" id="fechaAltaUsuario" class="form-control" value="07/02/2020" disabled required>
-                        <span class="error text-danger errorFechaUsuario"> </span>
+                        <p id = "fechaAltaUsuario">
+                            <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                            <span class="sr-only">cargando...</span>
+                        </p>
                     </div>
                 </form>
                 <hr>
@@ -222,10 +226,13 @@
 @include("UIPerfilModales/UICambiarPass")
 @include("UIPerfilModales/UIDarmeDeBaja")
 @include("UIPerfilModales/UIModificarFotoPerfil")
+@include("UIPerfilModales/UIEditarDomicilio")
 @endsection
 
 @section('scripts')
    <!-- Scripts -->
+<script type="text/javascript" src="{{URL::asset('assets/js/utilidades.js')}}"></script>
 <script type="text/javascript" src="{{URL::asset('assets/js/logueo.js')}}"></script>
 <script type="text/javascript" src="{{URL::asset('assets/js/colaborador.js')}}"></script>
+<script type="text/javascript" src="{{URL::asset('assets/js/validaciones.js')}}"></script>
 @endsection

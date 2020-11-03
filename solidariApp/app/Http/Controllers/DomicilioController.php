@@ -12,4 +12,26 @@ class DomicilioController extends Controller
             'domicilios' => Domicilio::listarDomiciliosUsuario($idUsuario)
         ]);
     }
+
+    public function actualizarDomicilio(Request $request)
+    {
+        $datos = json_decode($request->getContent());
+
+        $domicilio = Domicilio::find($datos->idDomicilio);
+
+        $domicilio->calle = $datos->calle;
+        $domicilio->numero = $datos->numero;
+        $domicilio->piso = $datos->piso;
+        $domicilio->depto = $datos->depto;
+        $domicilio->latitud = $datos->latitud;
+        $domicilio->longitud = $datos->longitud;
+        $domicilio->idLocalidad = $datos->idLocalidad;
+        $domicilio->save();
+
+        return response()->json([
+            'resultado' => 1
+
+        ]);
+
+    }
 }
