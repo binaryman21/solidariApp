@@ -1,6 +1,6 @@
 
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<html lang="{{str_replace('_', '-', app()->getLocale())}}" class="h-100">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -14,46 +14,46 @@
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
 </head>
-<body>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light shadow-sm mb-md-4 bg-white px-5">
-        <a class="navbar-brand" href="{{url('/')}}">SolidariAPP</a>
-        <button class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="navbar-collapse collapse" id="navbarSupportedContent">
-          <ul class="navbar-nav ml-auto px-5">
-            <li class="nav-item px-3" id="navInicio">
-              <a class="nav-link" href="{{url('/')}}">Inicio</a>
-            </li>
-            <li class="nav-item px-3" id="navContacto">
-              <a class="nav-link" href="{{url('/contacto')}}">Contacto</a>
-            </li>
-            <li class="nav-item px-3" id="navAcerca">
-              <a class="nav-link" href="{{url('/acerca')}}">Acerca de</a>
-            </li>
-
-
-          <button class="btn btn-outline-primary my-2 my-sm-0 px-5" data-toggle="modal" data-target="#modalLogin"  id = "btnIngresar">Ingresar</button>
-
-          <li class="nav-item dropdown oculto" id = "dropDownUsuario">
-            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <img id = "imgPerfil" src="" alt="" class = "rounded-circle" width = "32px">
-            </a>
-            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <a id = "btnVerMiPerfil" class="dropdown-item" href="">Mi perfil</a>
-              <div class="dropdown-divider"></div>
-              <a id = "btnCerrarSesion" class="dropdown-item" href="#">Salir</a>
+<body class="d-flex flex-column h-100">
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light shadow-sm mb-md-3 bg-white pl-lg-5">
+            <a class="navbar-brand" href="{{url('/')}}">SolidariAPP</a>
+            <button class="navbar-toggler border-0 collapsed" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <i class="fas fa-bars fa-sm"></i>
+            </button>
+            <div class="navbar-collapse collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav ml-auto pr-3 align-items-center">
+                    <li class="nav-item px-3" id="navInicio">
+                        <a class="nav-link" href="{{url('/')}}">Inicio</a>
+                    </li>
+                    <li class="nav-item px-3" id="navContacto">
+                        <a class="nav-link" href="{{url('/contacto')}}">Contacto</a>
+                    </li>
+                    <li class="nav-item px-3" id="navAcerca">
+                        <a class="nav-link" href="{{url('/acerca')}}">Acerca de</a>
+                    </li>
+                    <button class="btn btn-outline-primary my-2 my-sm-0 px-5" data-toggle="modal" data-target="#modalLogin"  id = "btnIngresar">Ingresar</button>
+                    <li class="nav-item dropdown oculto" id = "dropDownUsuario">
+                        <a class="nav-link" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <img id = "imgPerfil" src="" alt="" class = "rounded-circle" width = "32px">
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                            <a id = "btnVerMiPerfil" class="dropdown-item" href="">Mi perfil</a>
+                            <div class="dropdown-divider"></div>
+                            <a id = "btnCerrarSesion" class="dropdown-item" href="#">Salir</a>
+                        </div>
+                    </li>
+                </ul>
             </div>
-          </li>
-        </ul>
-
+        </nav>
+    </header>
+    <main role="main" class="flex-shrink-0">
+        @yield("contenido")
+    </main>
+    <footer class="footer mt-auto py-3 text-center text-white bg-dark">
+        <div class="container">
+            <p>SolidariAPP© - 2020</p>
         </div>
-    </nav>
-    @yield("contenido")
-
-
-    <footer class="p-3 text-center bg-dark text-white mt-4">
-      <p>SolidariAPP&copy; - 2020</p>
     </footer>
     <!-- JS -->
     <script type="text/javascript" src="{{URL::asset('assets/js/master.js')}}"></script>
