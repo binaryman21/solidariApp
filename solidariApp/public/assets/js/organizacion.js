@@ -86,6 +86,7 @@ function getOrganizacion(idUsuario){
     .then(response => response.json())
     .then(data => {
         var organizacion = data.organizacion;
+
         $("#nombreOrganizacion").html(organizacion.razonSocial);
         $("#tipoOrganizacion").html(organizacion.nombreTipoOrganizacion);
         $("#urlFotoPerfilOrganizacion").attr("src",organizacion.urlFotoPerfilUsuario);
@@ -97,11 +98,17 @@ function getOrganizacion(idUsuario){
         $("#descripcionOrganizacion").html(organizacion.descripcionOrganizacion);
         $("#fechaAltaUsuario").html(organizacion.fechaAltaUsuario);
         $.each(data.domicilios, function (indexInArray, domicilio) {
+            var piso = "Piso";
+            var depto = "Depto";
+
+            if(domicilio.piso == '') piso = '';
+            if(domicilio.depto == '') depto = '';
+
             $("#listadoDomicilios").html("");
              $("#listadoDomicilios").append(`<div class="form-row" >
              <div class = "d-flex flex-row m-2  domicilio w-100 rounded p-1 justify-content-between">
              <div class = "d-flex flex-column m-2 " id ="domicilio` + domicilio.idDomicilio + `">
-                <p class = "m-1 domicilioInfo1">` + domicilio.calle + ` ` + domicilio.numero + ` Piso ` + domicilio.piso + ` Depto ` + domicilio.depto + `</p>
+                <p class = "m-1 domicilioInfo1">` + domicilio.calle + ` ` + domicilio.numero + ` ` + piso + ` ` + domicilio.piso + ` ` + depto + ` ` + domicilio.depto + `</p>
                 <p class = "m-1">` + domicilio.nombreLocalidad + `, ` + domicilio.nombreProvincia + `</p>
             </div>
             <a class="ml-2" id="btnEditarDomicilio` + domicilio.idDomicilio + `" data-toggle="modal" href="#modalEditarDomicilio"><i class="far fa-edit editarDom d-none"></i></a>
@@ -131,6 +138,7 @@ function cargarDatosModalDomicilio(domicilio){
          if( validarDireccion() ){
             $("#btnGuardarDomicilio").html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>Un momento');
             actualizarDomicilio(domicilio);
+            $("#modalEditarDomicilio").modal("toggle");
         }
     });
 }
@@ -156,8 +164,14 @@ function actualizarDomicilio(domicilio)
             axios
             .post("/actualizarDomicilio",domicilio)
             .then((response)=>{
+                var piso = "Piso";
+                var depto = "Depto";
+
+                if(domicilio.piso == '') piso = '';
+                if(domicilio.depto == '') depto = '';
+
                 $("#btnGuardarDomicilio").html('Guardar');
-                $("#domicilio" + domicilio.idDomicilio).html(`<p class = "m-1 domicilioInfo1">` + domicilio.calle + ` ` + domicilio.numero + ` Piso ` + domicilio.piso + ` Depto ` + domicilio.depto + `</p>
+                $("#domicilio" + domicilio.idDomicilio).html(`<p class = "m-1 domicilioInfo1">` + domicilio.calle + ` ` + domicilio.numero + ` ` + piso + ` ` + domicilio.piso + ` ` + depto + ` ` + domicilio.depto + `</p>
                 <p class = "m-1">` + domicilio.nombreLocalidad + `, ` + domicilio.nombreProvincia + `</p>`);
 
                 $("#btnEditarDomicilio"+ domicilio.idDomicilio).click(function(){
@@ -313,7 +327,8 @@ function agregarPaginacionComentarios(){
 }
 
 function agregarPaginacionNecesidades(){
-    $("#navNecesidades").remove();
+    $('#navNecesidades').remove();
+
     $('.necesidades').after('<div id="navNecesidades"></div>');
     let necesidad = document.querySelectorAll('.necesidad')
     let filasMostradas = 4;

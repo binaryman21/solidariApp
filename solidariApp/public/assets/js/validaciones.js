@@ -388,9 +388,9 @@ function validarFechaLimite(fecha,error){
     var presentDate = newDate.getDate();
     var presentMonth = newDate.getMonth();
     var presentYear = newDate.getFullYear();
-    var dateOfBirthVal = new Date(fecha.val());
+    var fechaLimite = new Date(fecha.val());
 
-    if (dateOfBirthVal != null){
+    if (fechaLimite != null){
         var validatePattern = /^(\d{4})(\/|-)(\d{1,2})(\/|-)(\d{1,2})$/;
         dateValues = fecha.val().match(validatePattern);
 
@@ -400,49 +400,49 @@ function validarFechaLimite(fecha,error){
             return false;
         }
 
-        var birthYear = dateValues[1];
-        var birthMonth = dateValues[3];
-        var birthDate=  dateValues[5];
+        var anio = dateValues[1];
+        var mes = dateValues[3];
+        var dia =  dateValues[5];
 
-        if ((birthMonth < 1) || (birthMonth > 12))
+        if ((mes < 1) || (mes > 12))
         {
             mostrarError( fecha, error, 'Error en la fecha ingresada 2');
             return false;
         }
-        else if ((birthDate < 1) || (birthDate> 31))
+        else if ((dia < 1) || (dia> 31))
         {
             mostrarError( fecha, error, 'Error en la fecha ingresada 3');
             return false;
         }
-        else if ((birthMonth==4 || birthMonth==6 || birthMonth==9 || birthMonth==11) && birthDate ==31)
+        else if ((mes==4 || mes==6 || mes==9 || mes==11) && dia ==31)
         {
             mostrarError( fecha, error, 'Error en la fecha ingresada 4');
             return false;
         }
-        else if (birthMonth == 2){
-        var isleap = (birthYear % 4 == 0 && (birthYear % 100 != 0 || birthYear % 400 == 0));
+        else if (mes == 2){
+        var isleap = (anio % 4 == 0 && (anio % 100 != 0 || anio % 400 == 0));
 
-            if (birthDate> 29 || (birthDate ==29 && !isleap))
+            if (dia> 29 || (dia ==29 && !isleap))
             {
                 mostrarError( fecha, error, 'Error en la fecha ingresada 5');
                 return false;
             }
         }
-        else if((birthYear<presentYear))
+        else if((anio<presentYear))
             {
                 mostrarError( fecha, error, 'Error en la fecha ingresada 5');
                 return false;
             }
-        else if(birthYear==presentYear)
+        else if(anio==presentYear)
             {
-            if(birthMonth<presentMonth+1)
+            if(mes<presentMonth+1)
                 {
                     mostrarError( fecha, error, 'Error en la fecha ingresada 6');
                     return false;
                 }
-            else if(birthMonth==presentMonth+1)
+            else if(mes==presentMonth+1)
                 {
-                if(birthDate<=presentDate)
+                if(dia<=presentDate)
                     {
                         mostrarError( fecha, error, 'Error en la fecha ingresada 7');
                         return false;

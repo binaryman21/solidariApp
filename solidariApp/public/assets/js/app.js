@@ -1,4 +1,6 @@
-var map = L.map('mapa');
+var map = L.map('mapa', {
+    attributionControl: false
+});
 var markers = []
 
 document.addEventListener('DOMContentLoaded', ()=> {
