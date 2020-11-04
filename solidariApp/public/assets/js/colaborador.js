@@ -1,6 +1,24 @@
-isLoggedIn(cargarDatosPerfil);
+
 
 document.addEventListener('DOMContentLoaded', () => {
+
+     //Obtengo la url para saber el id de organizacion
+     var url = $(location).attr('href').split("/");
+     //alert(url);
+     if(url.length == 5 && url[4] != "" && !isNaN(url[4])){
+        isLoggedIn();
+         getColaborador(url[4],1);
+
+     }
+     else if(url.length == 4 || (url.length == 5 && url[4] == "")){
+        isLoggedIn(getColaborador);
+        $("#editarMiPerfil").removeClass("d-none");
+
+     }
+     else{
+         window.location = "/";
+     }
+
     agregarPaginacionComentarios();
     agregarPaginacionNecesidades();
 
@@ -31,7 +49,7 @@ function bajaUsuario()
             /*Ocurrio un error*/
             alert("Ocurrio un error inesperado.");
             console.log(response.data.message);
-        }   
+        }
     });
 
 }
@@ -49,7 +67,7 @@ function updateFotoPerfil(urlFotoPerfil)
             /*Ocurrio un error*/
             alert("Ocurrio un error inesperado.");
             console.log(response.data.message);
-        }   
+        }
     });
 
 }
@@ -92,20 +110,16 @@ function guardarCambios() {
     $(".editarDom").addClass("d-none");
 }
 
+function getColaborador(idUsuario,vistaVisitante){
 
-function cargarDatosPerfil(usuario)
-{
 
-    getColaborador(usuario.idUsuario);
     $("#btnAgregarTelefono").click(function()
     {
-        agregarTelefono(usuario.idUsuario);
+        agregarTelefono(idUsuario);
     });
     //getTelefonosUsuario(usuario.idUsuario);
     //getDomiciliosUsuario(usuario.idUsuario);
-}
 
-function getColaborador(idUsuario){
     axios.get("/getColaborador/"+idUsuario)
     .then((response)=>{
         var colaborador = response.data.colaborador;

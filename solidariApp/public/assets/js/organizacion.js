@@ -6,6 +6,7 @@ document.addEventListener('DOMContentLoaded', ()=>{
     var url = $(location).attr('href').split("/");
     //alert(url);
     if(url.length == 5 && url[4] != "" && !isNaN(url[4])){
+        isLoggedIn();
         getOrganizacion(url[4],1);
         $("#btnSuscribirse").removeClass("d-none");
         $("#btnCalificar").removeClass("d-none");

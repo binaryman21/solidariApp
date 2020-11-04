@@ -19,7 +19,7 @@
                     </p>
                     <div class="busqueda mt-2 mb-2">
                         <input class="form-control" type="search" placeholder="Buscar" aria-label="Search">
-                    </div> 
+                    </div>
                     <div class="usuarios">
                         <div class="usuario">
                             <div class="alert alert-secondary" role="alert">
@@ -149,7 +149,7 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-          <button type="button" class="btn btn-primary">Aceptar</button>
+          <button type="button" class="btn btn-primary" id = "btnConfirmarColaboracion">Aceptar</button>
         </div>
       </div>
     </div>

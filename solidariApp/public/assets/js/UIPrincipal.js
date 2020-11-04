@@ -187,10 +187,10 @@ function registrarOrganizacion()
                     //{idLink:0,urlLink:"",tipoLink:{idTipoLink:0,nombreTipoLink:""}}
                 ]
             }
-        
+
             axios.post("/registrarOrganizacion",JSON.stringify(organizacion))
             .then((response)=>{
-        
+
                 alert(response.data.message);
                 $("#btnCrearCuenta").html("Guardar");
                 $("#btnCrearCuenta").attr("disabled", false);
@@ -198,25 +198,25 @@ function registrarOrganizacion()
                     $("#modalRegistroColOrg").modal("hide");
                     $("#msjResultadoRegistro").html("Registro exitoso!");
                     $("#modalResultadoRegistro").modal("show");
-        
+
                     var datosLogin = {
                         email: organizacion.emailUsuario,
                         idGoogle: organizacion.tokenGoogle,
                         pass:organizacion.claveUsuario
                     };
-        
+
                     login(datosLogin);
-        
+
                 }
                 else{
                     $("#modalRegistroColOrg").modal("hide");
                     $("#msjResultadoRegistro").html("Algo fallo, intentalo mas tarde");
                     $("#modalResultadoRegistro").modal("show");
-        
+
                 }
                 });
-            
-        }); 
+
+        });
 }
 
 
@@ -379,7 +379,7 @@ function getOrganizaciones( ){
                         </div>
                     </div>
                     <div class="card-body p-0 listaNecesidades${org.idUsuario}">
-                    
+
                     </div>
                     <div class="card-footer py-0 bg-transparent">
                         <button class="btn w-100 btn-link ml-auto text-decoration-none">Ver todas</button>
@@ -408,7 +408,7 @@ function getOrganizaciones( ){
                 cargarOrgEnMapa(org);
             }
         })
-        agregarPaginacionListaOrganizaciones(); 
+        agregarPaginacionListaOrganizaciones();
     })
 }
 
@@ -428,5 +428,9 @@ function cargarDatosModalDetalleNecesidad( necesidad ){
                 </div>
                 <button type="button" class="btn btnColaborar btn-block btn-outline-primary mt-4" data-toggle="modal" data-target="#modalColaborar"><i class="far fa-handshake"></i>COLABORAR</button>
             </div>
-        </div>`)
+        </div>`);
+        $("#btnConfirmarColaboracion").unbind("click");
+        $("#btnConfirmarColaboracion").click(function(){
+            colaborar(necesidad.idNecesidad);
+        });
 }
