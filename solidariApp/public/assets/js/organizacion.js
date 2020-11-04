@@ -1,6 +1,23 @@
-isLoggedIn(cargarDatosPerfil);
+
 
 document.addEventListener('DOMContentLoaded', ()=>{
+
+    //Obtengo la url para saber el id de organizacion
+    var url = $(location).attr('href').split("/");
+    //alert(url);
+    if(url.length == 5 && url[4] != "" && !isNaN(url[4])){
+        getOrganizacion(url[4],1);
+        $("#btnSuscribirse").removeClass("d-none");
+        $("#btnCalificar").removeClass("d-none");
+    }
+    else if(url.length == 4 || (url.length == 5 && url[4] == "")){
+        isLoggedIn(getOrganizacion);
+        $("#editarMiPerfil").removeClass("d-none");
+    }
+    else{
+        window.location = "/";
+    }
+
     listarCategorias();
     agregarPaginacionComentarios();
     $("#editarMiPerfil").click(camposEditables);
@@ -52,8 +69,9 @@ document.addEventListener('DOMContentLoaded', ()=>{
 
 })
 
-function cargarDatosPerfil(usuario)
-{
+function getOrganizacion(idUsuario, vistaVisitante = 0){
+
+    if(vistaVisitante == 0){
     $("#btnNuevaNecesidad").click(function(){
         limpiarValidaciones($("#inpFechaLimite"),  $("#errorFechaLimite") );
         limpiarValidaciones($("#slctCategoria"), $("#errorCategoria"));
@@ -80,13 +98,9 @@ function cargarDatosPerfil(usuario)
             agregarTelefono(usuario.idUsuario);
         }
     });
-    getOrganizacion(usuario.idUsuario);
-}
-
-function getOrganizacion(idUsuario){
-
+    }
     //CARGAR NECESIDADES
-    cargarNecesidades( idUsuario );
+    cargarNecesidades( idUsuario, vistaVisitante );
     fetch("/getOrganizacion/"+idUsuario)
     .then(response => response.json())
     .then(data => {
@@ -418,7 +432,7 @@ function mostrarModalEditarNecesidad(necesidad){
 
 
 // Cargar necesidades dinamicamente desde la BD
-function cargarNecesidades ( idUsuario ){
+function cargarNecesidades ( idUsuario, vistaVisitante){
     fetch(`/listarNecesidades/${ idUsuario }`)
         .then(response => response.json())
         .then(data => {
@@ -432,7 +446,7 @@ function cargarNecesidades ( idUsuario ){
             // console.log( necesidad );
             if(necesidad.fechaBajaNecesidad == null){
                 divNecesidades.append(`<div class="col-md-6" id="necesidad${necesidad.idNecesidad}"></div>`);
-                crearCardNecesidad(necesidad);
+                crearCardNecesidad(necesidad,vistaVisitante);
             }
 
         })
@@ -440,8 +454,15 @@ function cargarNecesidades ( idUsuario ){
     })
 }
 
-function crearCardNecesidad(necesidad)
+function crearCardNecesidad(necesidad,vistaVisitante)
 {
+    var btnEditarNecesidad = "";
+    if(vistaVisitante == 0){
+    btnEditarNecesidad = `<p class="editarNecesidad">
+    <a data-toggle="modal" href="#modalEditarNecesidad" id="editar${necesidad.idNecesidad}"><i class="far fa-edit"></i></a>
+</p>`;
+    }
+
     $("#necesidad" + necesidad.idNecesidad).html("");
         let cardNecesidad =   `<div class="card necesidad ${necesidad.categoria.nombreCategoria.toLowerCase()}">
         <div class="card-body">
@@ -453,9 +474,7 @@ function crearCardNecesidad(necesidad)
                     <p>Fecha limite: ${ new Date(necesidad.fechaLimiteNecesidad).toLocaleDateString('es-AR') }</p>
                 </div>
                 <div class="col-md-6 text-right d-flex flex-column justify-content-between">
-                    <p class="editarNecesidad">
-                        <a data-toggle="modal" href="#modalEditarNecesidad" id="editar${necesidad.idNecesidad}"><i class="far fa-edit"></i></a>
-                    </p>
+                `+ btnEditarNecesidad + `
                     <p class="ayudasRecibidas">
                         <a href="#"><span class="nroAyudas">0</span><i class="fas fa-user-friends"></i></a>
                     </p>
@@ -467,10 +486,13 @@ function crearCardNecesidad(necesidad)
         </div>
     </div>`;
     $("#necesidad" + necesidad.idNecesidad).append(cardNecesidad);
+
+    if(vistaVisitante == 0){
     $("#editar" + necesidad.idNecesidad).unbind("click");
      //evento click del btn editar necesidad
      $("#editar" + necesidad.idNecesidad).click(()=>{
         console.log("idNecesidad " + necesidad.idNecesidad);
         mostrarModalEditarNecesidad(necesidad);
     })
+}
 }

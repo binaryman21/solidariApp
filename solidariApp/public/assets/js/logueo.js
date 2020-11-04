@@ -31,7 +31,7 @@ function isLoggedIn(funcionSuccess)
         {
             mostrarInterfazSesionIniciada(data.usuario);
             if(funcionSuccess != undefined){
-                funcionSuccess(data.usuario);
+                funcionSuccess(data.usuario.idUsuario);
             }
 
         }
