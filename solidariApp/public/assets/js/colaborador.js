@@ -75,11 +75,17 @@ function getColaborador(idUsuario){
         $("#correo").html(colaborador.emailUsuario);
         $("#fechaAltaUsuario").html(colaborador.fechaAltaUsuario);
         $.each(response.data.domicilios, function (indexInArray, domicilio) {
+            var piso = "Piso";
+            var depto = "Depto";
+
+            if(domicilio.piso == '') piso = '';
+            if(domicilio.depto == '') depto = '';
+
             $("#listadoDomicilios").html("");
              $("#listadoDomicilios").append(`<div class="form-row" >
              <div class = "d-flex flex-row m-2  domicilio w-100 rounded p-1 justify-content-between">
              <div class = "d-flex flex-column m-2 " id ="domicilio` + domicilio.idDomicilio + `">
-                <p class = "m-1 domicilioInfo1">` + domicilio.calle + ` ` + domicilio.numero + ` Piso ` + domicilio.piso + ` Depto ` + domicilio.depto + `</p>
+                <p class = "m-1 domicilioInfo1">` + domicilio.calle + ` ` + domicilio.numero + ` ` + piso + ` ` + domicilio.piso + ` ` + depto + ` ` + domicilio.depto + `</p>
                 <p class = "m-1">` + domicilio.nombreLocalidad + `, ` + domicilio.nombreProvincia + `</p>
             </div>
             <a class="ml-2" id="btnEditarDomicilio` + domicilio.idDomicilio + `" data-toggle="modal" href="#modalEditarDomicilio"><i class="far fa-edit editarDom d-none"></i></a>
@@ -110,6 +116,7 @@ function cargarDatosModalDomicilio(domicilio){
         if( validarDireccion() ){
             $("#btnGuardarDomicilio").html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>Un momento');
             actualizarDomicilio(domicilio);
+            $("#modalEditarDomicilio").modal("toggle");
         }
     });
 }
@@ -132,11 +139,17 @@ function actualizarDomicilio(domicilio)
         domicilio.nombreProvincia = $("#selectProvincia option:selected").text(),
         domicilio.latitud = coordenadas.lat,
         domicilio.longitud = coordenadas.lon
-        
+
         axios.post("/actualizarDomicilio",domicilio)
         .then((response)=>{
+            var piso = "Piso";
+            var depto = "Depto";
+
+            if(domicilio.piso == '') piso = '';
+            if(domicilio.depto == '') depto = '';
+
             $("#btnGuardarDomicilio").html('Guardar');
-            $("#domicilio" + domicilio.idDomicilio).html(`<p class = "m-1 domicilioInfo1">` + domicilio.calle + ` ` + domicilio.numero + ` Piso ` + domicilio.piso + ` Depto ` + domicilio.depto + `</p>
+            $("#domicilio" + domicilio.idDomicilio).html(`<p class = "m-1 domicilioInfo1">` + domicilio.calle + ` ` + domicilio.numero + ` ` + piso + ` ` + domicilio.piso + ` ` + depto + ` ` + domicilio.depto + `</p>
             <p class = "m-1">` + domicilio.nombreLocalidad + `, ` + domicilio.nombreProvincia + `</p>`);
 
             $("#btnEditarDomicilio"+ domicilio.idDomicilio).click(function(){
