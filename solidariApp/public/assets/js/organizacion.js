@@ -55,15 +55,20 @@ document.addEventListener('DOMContentLoaded', ()=>{
 function cargarDatosPerfil(usuario)
 {
     $("#btnNuevaNecesidad").click(function(){
+        limpiarValidaciones($("#inpFechaLimite"),  $("#errorFechaLimite") );
+        limpiarValidaciones($("#slctCategoria"), $("#errorCategoria"));
+        limpiarValidaciones($("#inpCantidad"), $("#errorCantidad"));
+        limpiarValidaciones($("#txtDescripcion"), $("#errorDescripcion"));
         document.getElementById("formEditarNecesidad").reset();
         $("#modalEditarNecesidad .modal-content").removeClass($("#categoriaActual").val());
         $("#btnGuardarCambiosNecesidad").unbind( "click" );
         $("#btnGuardarCambiosNecesidad").click(function(e){
-
-            e.preventDefault();
-            bloquearBoton($("#btnGuardarCambiosNecesidad"));
-            registrarNecesidad(usuario.idUsuario);
-                });
+            if( validarNecesidad() ){
+                e.preventDefault();
+                bloquearBoton($("#btnGuardarCambiosNecesidad"));
+                registrarNecesidad(usuario.idUsuario);
+            }
+        });
     });
     $("#btnGuardarDescripcion").click(function()
     {
@@ -173,7 +178,7 @@ function actualizarDomicilio(domicilio)
                 $("#btnGuardarDomicilio").html('Guardar');
                 $("#domicilio" + domicilio.idDomicilio).html(`<p class = "m-1 domicilioInfo1">` + domicilio.calle + ` ` + domicilio.numero + ` ` + piso + ` ` + domicilio.piso + ` ` + depto + ` ` + domicilio.depto + `</p>
                 <p class = "m-1">` + domicilio.nombreLocalidad + `, ` + domicilio.nombreProvincia + `</p>`);
-
+                alertify.success('Domicilio modificado');
                 $("#btnEditarDomicilio"+ domicilio.idDomicilio).click(function(){
                     cargarDatosModalDomicilio(domicilio);
                 });
@@ -245,6 +250,7 @@ function eliminarTelefono(idTelefono)
     axios.post("/eliminarTelefono",{idTelefono:idTelefono})
     .then((response)=>{
         $("#telefono" + idTelefono).remove();
+        alertify.error('Telefono eliminado');
     });
 }
 
@@ -257,6 +263,11 @@ function agregarTelefono(idUsuario)
             $("#btnAgregarTelefono").html('<i class="fas fa-plus-circle agregarNecesidad"></i>');
             telefono.idTelefono = response.data.idTelefono;
             agregarTelefonoAlListado(telefono);
+            $('#codArea').val('');
+            limpiarValidaciones($('#codArea'), $('.errorCodArea'));
+            $('#numeroTelefono').val('');
+            limpiarValidaciones($('#numeroTelefono'), $('.errorNroTelefono'));
+            alertify.success('Telefono agregado');
         });
 
 }
@@ -357,7 +368,6 @@ function agregarPaginacionNecesidades(){
 function mostrarModalEditarNecesidad(necesidad){
     limpiarValidaciones($("#inpFechaLimite"),  $("#errorFechaLimite") );
     limpiarValidaciones($("#slctCategoria"), $("#errorCategoria"));
-
     let fecha = necesidad.fechaLimiteNecesidad;
     fecha = fecha.split(" ");
     $("#slctCategoria").val(necesidad.categoria.idCategoria);
@@ -377,15 +387,15 @@ function mostrarModalEditarNecesidad(necesidad){
 
         document.getElementById("formEditarNecesidad").reset();
 
-          })
+    })
     //Click Guardar necesidad editada
     $("#btnGuardarCambiosNecesidad").unbind( "click" );
     $("#btnGuardarCambiosNecesidad").click((e)=>{
 
         e.preventDefault();
         if(necesidad.idNecesidad != 0){
-
             if(validarNecesidad()) {
+                console.log(necesidad);
                 bloquearBoton($("#btnGuardarCambiosNecesidad"));
                 updateNecesidad(necesidad);
             }

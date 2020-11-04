@@ -214,7 +214,7 @@ function agregarTelefonoAlListado(telefono)
     <div class="col-1 col-mb-1 mb-1">
     <a class="text-danger" id="btnEliminarTelefono${telefono.idTelefono}">
 
-    <i class="fas fa-trash-alt tacho d-none"></i>
+    <i class="fas fa-trash-alt tacho"></i>
     </a>
     <a class="text-primary oculto" id="btnOkEliminarTelefono`+ telefono.idTelefono +`">
 
@@ -255,12 +255,13 @@ function eliminarTelefono(idTelefono)
     axios.post("/eliminarTelefono",{idTelefono:idTelefono})
     .then((response)=>{
         $("#telefono" + idTelefono).remove();
+        alertify.error('Telefono eliminado');
     });
 }
 
 function agregarTelefono(idUsuario)
 {
-    if( validarTelefono() ){
+    if( validarTelefono('') ){
         $("#btnAgregarTelefono").html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>');
         var telefono = {idTelefono:0,codAreaTelefono:$("#codArea").val(),numeroTelefono:$("#numeroTelefono").val(),esCelular:0,idUsuario:idUsuario}
         axios.post("/registrarTelefono",telefono)
@@ -268,6 +269,11 @@ function agregarTelefono(idUsuario)
             $("#btnAgregarTelefono").html('<i class="fas fa-plus-circle agregarNecesidad"></i>');
             telefono.idTelefono = response.data.idTelefono;
             agregarTelefonoAlListado(telefono);
+            $('#codArea').val('');
+            limpiarValidaciones($('#codArea'), $('.errorCodArea'));
+            $('#numeroTelefono').val('');
+            limpiarValidaciones($('#numeroTelefono'), $('.errorNroTelefono'));
+            alertify.success('Telefono agregado');
         });
     }
 }
