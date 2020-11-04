@@ -28,9 +28,9 @@ Route::get('/colaborador', function()
 
 })->name('UIColaborador');
 
-Route::get('/colaborador/visitante', function(){return view('UIPerfilColaboradorVisitante');})->name('UIColaboradorVisitante');
-Route::get('/organizacion/visitante', function(){return view('UIPerfilOrganizacionVisitante');})->name('UIOrganizacionVisitante');
-
+Route::get('/colaborador/{idUsuario}', function($idUsuario){return view('UIPerfilColaborador');})->name('UIColaboradorVisitante');
+Route::get('/organizacion/{idUsuario}', function($idUsuario){return view('UIPerfilOrganizacion');})->name('UIOrganizacionVisitante');
+//Route::get('/organizacion/{idUsuario}', 'App\Http\Controllers\OrganizacionController@getOrganizacion')->name('getOrganizacion');
 Route::get('/organizacion', function()
 {
     session_start();

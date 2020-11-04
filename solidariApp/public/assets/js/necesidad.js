@@ -49,7 +49,7 @@ function updateNecesidad(necesidad){
     .then((response)=>{
         if(response.data.resultado){
             //cargarNecesidades(idUsuario);
-            crearCardNecesidad(necesidad);
+            crearCardNecesidad(necesidad, 1);
             $("#modalEditarNecesidad").modal('toggle');
             document.getElementById("formEditarNecesidad").reset();
             desbloquearBoton($("#btnGuardarCambiosNecesidad"));
