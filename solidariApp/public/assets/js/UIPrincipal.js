@@ -4,15 +4,10 @@ isLoggedIn();
 $( document ).ready(function() {
     listarProvincias(1);
     listarTiposOrganizaciones();
-    // $("#nombreColaborador").on("keyup change input",validarNombreColaborador);
-    // $("#apellidoColaborador").on("keyup change input",validarApellidoColaborador);
-    // $("#calle").on("keyup change input",validarNombreColaborador);
-    // $("#numero").on("keyup change input",validarNombreColaborador);
     $("#btnRegistrarseComoOrganizacion").on('click', mostrarRegistrarseComoOrganizacion);
     $("#btnRegistrarseComoColaborador").on('click', mostrarRegistrarseComoColaborador);
 
     agregarPaginacionUsuarios();
-
 
     //Evento click del boton ingresar en el navbar
     $("#btnIngresar").click(function(){
@@ -123,13 +118,12 @@ function clickBtnLogin()
 function listarTiposOrganizaciones()
 {
     return axios.get('/listarTipoOrganizaciones')
-      .then((response)=>{
-        let tiposOrganizaciones = response.data.tipoOrganizaciones;
-        $.each(tiposOrganizaciones, function (indexInArray, tipoOrganizacion) {
-            $("#selectTipoOrganizacion").append("<option value = '" + tipoOrganizacion.idTipoOrganizacion + "'>" + tipoOrganizacion.nombreTipoOrganizacion +"</option");
+        .then((response)=>{
+            let tiposOrganizaciones = response.data.tipoOrganizaciones;
+            $.each(tiposOrganizaciones, function (indexInArray, tipoOrganizacion) {
+                $("#selectTipoOrganizacion").append("<option value = '" + tipoOrganizacion.idTipoOrganizacion + "'>" + tipoOrganizacion.nombreTipoOrganizacion +"</option");
+            });
         });
-
-      });
 }
 
 
@@ -142,7 +136,7 @@ function registrarOrganizacion()
                 lon: data.lon
             }
             console.log( coordenadas );
-            var organizacion =
+            let organizacion =
             {
                 idUsuario:0,
                 claveUsuario:$("#claveUsuario").val(),
@@ -159,7 +153,8 @@ function registrarOrganizacion()
                 },
                 telefonos:
                 [
-                    {idTelefono:0,
+                    {
+                        idTelefono:0,
                         codAreaTelefono:$("#codArea").val(),
                         numeroTelefono:$("#numeroTelefono").val(),
                         esCelular:0
@@ -190,16 +185,16 @@ function registrarOrganizacion()
 
             axios.post("/registrarOrganizacion",JSON.stringify(organizacion))
             .then((response)=>{
-
-                alert(response.data.message);
+                // alert(response.data.message);
                 $("#btnCrearCuenta").html("Guardar");
                 $("#btnCrearCuenta").attr("disabled", false);
                 if(response.data.resultado == 1){
                     $("#modalRegistroColOrg").modal("hide");
-                    $("#msjResultadoRegistro").html("Registro exitoso!");
-                    $("#modalResultadoRegistro").modal("show");
+                    // $("#msjResultadoRegistro").html("Registro exitoso!");
+                    // $("#modalResultadoRegistro").modal("show");
+                    alertify.success('Registro exitoso!')
 
-                    var datosLogin = {
+                    let datosLogin = {
                         email: organizacion.emailUsuario,
                         idGoogle: organizacion.tokenGoogle,
                         pass:organizacion.claveUsuario
@@ -210,9 +205,9 @@ function registrarOrganizacion()
                 }
                 else{
                     $("#modalRegistroColOrg").modal("hide");
-                    $("#msjResultadoRegistro").html("Algo fallo, intentalo mas tarde");
-                    $("#modalResultadoRegistro").modal("show");
-
+                    alertify.error('Algo fallo, intentalo mas tarde')
+                    // $("#msjResultadoRegistro").html("Algo fallo, intentalo mas tarde");
+                    // $("#modalResultadoRegistro").modal("show");
                 }
                 });
 
