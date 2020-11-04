@@ -9,7 +9,6 @@
             <div class="col-md-2">
                 <img id = "urlFotoPerfilOrganizacion" class="rounded-circle imgPerfilOrg" src="{{URL::asset('assets/img/user.png')}}" alt="imagen de usuario">
                 <button type="button" class="btn btn-success btn-sm d-none" data-toggle="modal" data-target="#modalModificarFotoPerfil" id="btnModificarImgPerfil">Modificar Foto </button>
-
             </div>
             <div class="col-md-8 align-self-center">
                 <p class="lead" id = "nombreOrganizacion">
@@ -27,8 +26,8 @@
             </div>
         </div>
             <div class="col-md-2">
-                <button class="btn btn-block btn-primary" type="button" id="editarMiPerfil">Editar <i class="far fa-edit"></i> </button>
-                <button class="btn btn-block btn-primary d-none" type="button" id="guardarCambios">Guardar Cambios</button>
+                <button class="btn btn-block btn-primary btn-sm" type="button" id="editarMiPerfil">Editar <i class="far fa-edit"></i> </button>
+                <button class="btn btn-block btn-primary d-none btn-sm" type="button" id="guardarCambios">Guardar Cambios</button>
             </div>
         </div>
     </div>
@@ -36,7 +35,7 @@
     <div class="row mb-4">
         <div class="col-md-6">
             <div class = "d-flex flex-row">
-                <h4>Descripcion</h4>
+                <h4 class="text-center">Descripcion</h4>
                 <a class="ml-2" id="btnEditarDescripcion"><i class="far fa-edit d-none"></i></a>
                 <a class="ml-2 oculto" id="btnGuardarDescripcion"><i class="far fa-save"></i></a>
             </div>
@@ -61,6 +60,7 @@
                             <span class="sr-only">cargando...</span>
                         </p>
                     </div>
+                    <hr>
                     <label for="codArea">Telefono</label>
                     <div class="nuevoTelefono d-none">
                         <div class="form-row">
@@ -115,7 +115,7 @@
 
 
     <nav class="navbar navbar-light bg-light justify-content-between">
-        <a class="navbar-brand">Necesidades</a>
+        <a class="navbar-brand ">Necesidades</a>
         <form class="form-inline">
             <div class="busqueda">
                 <input class="form-control mr-sm-2" type="search" placeholder="Buscar" aria-label="Search">
@@ -133,7 +133,9 @@
         </p>
     </div> <!-- necesidades -->
 
-    <div class="comentarios mt-4">
+    <hr>
+
+    <div class="comentarios  text-center mt-4">
         <h4>Comentarios</h4>
         <div class="card comentario">
             <div class="card-body">
@@ -171,4 +173,5 @@
 <script type="text/javascript" src="{{URL::asset('assets/js/organizacion.js')}}"></script>
 <script type="text/javascript" src="{{URL::asset('assets/js/necesidad.js')}}"></script>
 <script type="text/javascript" src="{{URL::asset('assets/js/validaciones.js')}}"></script>
+<script src="https://apis.google.com/js/platform.js?onload=onLoad" async defer></script>
 @endsection

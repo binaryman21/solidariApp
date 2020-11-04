@@ -4,7 +4,6 @@ $(document).ready(function(){
 });
 
 function login(datosLogin){
-
     axios.post("/login",JSON.stringify(datosLogin))
     .then((response)=>{
         if(response.data.usuario == null){
@@ -33,7 +32,6 @@ function isLoggedIn(funcionSuccess)
             if(funcionSuccess != undefined){
                 funcionSuccess(data.usuario);
             }
-
         }
     });
 }
@@ -50,8 +48,7 @@ function mostrarInterfazSesionIniciada(usuario)
 }
 
 function signOut() {
-
-    var auth2 = gapi.auth2.getAuthInstance();
+    let auth2 = gapi.auth2.getAuthInstance();
     auth2.signOut().then(function () {
       console.log('User signed out.');
     });
@@ -62,11 +59,17 @@ function cerrarSesion()
     signOut();
     axios.post("/logOut")
     .then((response)=>{
-
+        console.log( response.data );
+        console.log('chau');
         window.location= "/";
     });
-
 }
+
+function onLoad() {
+    gapi.load('auth2', function() {
+      gapi.auth2.init();
+    });
+  }
 
 function onSignIn(googleUser) {
     // Useful data for your client-side scripts:
@@ -80,8 +83,8 @@ function onSignIn(googleUser) {
 
     // The ID token you need to pass to your backend:
     let id_token = googleUser.getAuthResponse().id_token;
-    console.log("ID Token: " + id_token);
-    var datosLogin = {
+    // console.log("ID Token: " + id_token);
+    let datosLogin = {
         email: profile.getEmail(),
         idGoogle: profile.getId(),
         pass:""
