@@ -7,7 +7,6 @@ function login(datosLogin){
 
     axios.post("/login",JSON.stringify(datosLogin))
     .then((response)=>{
-
         if(response.data.usuario == null){
             $("#errorLogin").show();
             $("#emailUsuario").val("");
@@ -93,23 +92,28 @@ function onSignIn(googleUser) {
     axios.post("/login",JSON.stringify(datosLogin))
     .then((response)=>{
 
-        if(response.data.usuario.length == 0)
+        //estaba con lenght, tiene que ser con null!
+        if(response.data.usuario === null)
         {
+        // Logica para cuando el usuario se loguea sin estar registrado
 
-            $("#idGoogle").val(profile.getId());
-            $("#urlFotoPerfilUsuario").val(profile.getImageUrl());
-            $("#emailUsuario").val(profile.getEmail());
+            // $("#idGoogle").val(profile.getId());
+            // $("#urlFotoPerfilUsuario").val(profile.getImageUrl());
+            // $("#emailUsuario").val(profile.getEmail());
 
-           if($("#modoRegistro").val() == "colaborador"){
+        //    if($("#modoRegistro").val() == "colaborador"){
 
-            $("#nombreColaborador").val(profile.getGivenName());
-            $("#apellidoColaborador").val(profile.getFamilyName());
-            $("#modalRegistroColOrg").modal("show");
-           }
-           else if($("#modoRegistro").val() == "organizacion")
-           {
-            $("#modalRegistroColOrg").modal("show");
-           }
+        //     $("#nombreColaborador").val(profile.getGivenName());
+        //     $("#apellidoColaborador").val(profile.getFamilyName());
+        //     $("#modalRegistroColOrg").modal("show");
+        //    }
+        //    else if($("#modoRegistro").val() == "organizacion")
+        //    {
+        // }
+        // $("#modalRegistroColOrg").modal("show");
+            alertify.error('No estas registrado!!');
+            $("#modalLogin").modal("hide");
+            signOut();
         }
         else{
             $("#modalLogin").modal("hide");

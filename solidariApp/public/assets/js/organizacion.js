@@ -159,7 +159,7 @@ function actualizarDomicilio(domicilio)
                 $("#btnGuardarDomicilio").html('Guardar');
                 $("#domicilio" + domicilio.idDomicilio).html(`<p class = "m-1 domicilioInfo1">` + domicilio.calle + ` ` + domicilio.numero + ` Piso ` + domicilio.piso + ` Depto ` + domicilio.depto + `</p>
                 <p class = "m-1">` + domicilio.nombreLocalidad + `, ` + domicilio.nombreProvincia + `</p>`);
-
+                alertify.success('Domicilio modificado');
                 $("#btnEditarDomicilio"+ domicilio.idDomicilio).click(function(){
                     cargarDatosModalDomicilio(domicilio);
                 });
@@ -231,6 +231,7 @@ function eliminarTelefono(idTelefono)
     axios.post("/eliminarTelefono",{idTelefono:idTelefono})
     .then((response)=>{
         $("#telefono" + idTelefono).remove();
+        alertify.error('Telefono eliminado');
     });
 }
 
@@ -243,6 +244,7 @@ function agregarTelefono(idUsuario)
             $("#btnAgregarTelefono").html('<i class="fas fa-plus-circle agregarNecesidad"></i>');
             telefono.idTelefono = response.data.idTelefono;
             agregarTelefonoAlListado(telefono);
+            alertify.success('Telefono agregado');
         });
 
 }

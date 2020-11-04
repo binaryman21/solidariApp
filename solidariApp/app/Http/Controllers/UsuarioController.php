@@ -11,12 +11,12 @@ class UsuarioController extends Controller
         $datosLogin = json_decode($request->getContent());
         $usuario = Usuario::login($datosLogin);
         if($usuario != null){
-        session_start();
-        $_SESSION['usuario'] = $usuario;
+            session_start();
+            $_SESSION['usuario'] = $usuario;
         }
         return response()->json([
             'usuario' => $usuario
-            ]);
+        ]);
     }
 
     public function isUser(Request $request){
