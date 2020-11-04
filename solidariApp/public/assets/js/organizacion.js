@@ -95,11 +95,12 @@ function getOrganizacion(idUsuario, vistaVisitante = 0){
     }
     //CARGAR NECESIDADES
     cargarNecesidades( idUsuario, vistaVisitante );
+    console.log( idUsuario );
     fetch("/getOrganizacion/"+idUsuario)
     .then(response => response.json())
     .then(data => {
         let organizacion = data.organizacion;
-
+        console.log( organizacion.razonSocial );
         $("#nombreOrganizacion").html(organizacion.razonSocial);
         $("#tipoOrganizacion").html(organizacion.nombreTipoOrganizacion);
         $("#urlFotoPerfilOrganizacion").attr("src",organizacion.urlFotoPerfilUsuario);

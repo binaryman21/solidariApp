@@ -60,7 +60,7 @@ function cerrarSesion()
     axios.post("/logOut")
     .then((response)=>{
         console.log( response.data );
-        console.log('chau');
+        // console.log('chau');
         window.location= "/";
     });
 }
@@ -100,23 +100,23 @@ function onSignIn(googleUser) {
         {
         // Logica para cuando el usuario se loguea sin estar registrado
 
-            // $("#idGoogle").val(profile.getId());
-            // $("#urlFotoPerfilUsuario").val(profile.getImageUrl());
-            // $("#emailUsuario").val(profile.getEmail());
+            $("#idGoogle").val(profile.getId());
+            $("#urlFotoPerfilUsuario").val(profile.getImageUrl());
+            $("#emailUsuario").val(profile.getEmail());
 
-        //    if($("#modoRegistro").val() == "colaborador"){
+           if($("#modoRegistro").val() == "colaborador"){
 
-        //     $("#nombreColaborador").val(profile.getGivenName());
-        //     $("#apellidoColaborador").val(profile.getFamilyName());
-        //     $("#modalRegistroColOrg").modal("show");
-        //    }
-        //    else if($("#modoRegistro").val() == "organizacion")
-        //    {
-        // }
-        // $("#modalRegistroColOrg").modal("show");
-            alertify.error('No estas registrado!!');
+            $("#nombreColaborador").val(profile.getGivenName());
+            $("#apellidoColaborador").val(profile.getFamilyName());
+            $("#modalRegistroColOrg").modal("show");
+           }
+           else if($("#modoRegistro").val() == "organizacion")
+           {
+               $("#modalRegistroColOrg").modal("show");
+            }
+            // alertify.error('No estas registrado!!');
             $("#modalLogin").modal("hide");
-            signOut();
+            // signOut();
         }
         else{
             $("#modalLogin").modal("hide");
