@@ -24,7 +24,8 @@ class NecesidadController extends Controller
             $necesidad->save();
             return response()->json([
                 'resultado' => 1,
-                'message' => 'registro exitoso'
+                'message' => 'registro exitoso',
+                'id' => $necesidad->idNecesidad
             ]);
         }
         catch (\Exception $e)

@@ -361,29 +361,53 @@ function validarNecesidad(){
     let categoriaError = $("#errorCategoria");
     let fechaLimite = $("#inpFechaLimite");
     let fechaLimiteError = $("#errorFechaLimite");
+    let descripcion = $("#txtDescripcion");
+    let descripcionError = $("#errorDescripcion");
+    let cantidad = $("#inpCantidad");
+    let cantidadError = $("#errorCantidad");
 
     validarCategoria(categoria,categoriaError) ? contador++ : false;
     validarFechaLimite(fechaLimite, fechaLimiteError) ? contador++ : false;
+    validarDescripcion(descripcion, descripcionError) ? contador++ : false;
+    validarCantidad(cantidad, cantidadError) ? contador++ : false;
 
-    if( contador === 2 ){
+    if( contador === 4 ){
         return true;
     }
 
     return false;
 
 }
- function validarCategoria(categoria, error){
+
+function validarCategoria(categoria, error){
     if(categoria.val() < 1){
         mostrarError( categoria, error, 'Elija una categoria');
         return false;
     }
-
     quitarError( categoria, error );
     return true;
- }
+}
+
+function validarDescripcion(descripcion, error){
+    if(descripcion.val().length < 1){
+        mostrarError( descripcion, error, 'Complete la descripcion');
+        return false;
+    }
+    quitarError( descripcion, error );
+    return true;
+}
+
+function validarCantidad(cantidad, error){
+    if(cantidad.val() < 0){
+        mostrarError( cantidad, error, 'Ingrese una cantidad valida');
+        return false;
+    }
+    quitarError( cantidad, error );
+    return true;
+}
 
 function validarFechaLimite(fecha,error){
-    console.log("fecha "+ fecha.val());
+    // console.log("fecha "+ fecha.val());
     var newDate = new Date();
     var presentDate = newDate.getDate();
     var presentMonth = newDate.getMonth();
@@ -396,7 +420,7 @@ function validarFechaLimite(fecha,error){
 
         if (dateValues == null)
         {
-            mostrarError( fecha, error, 'Error en la fecha ingresada 1');
+            mostrarError( fecha, error, 'Ingrese una fecha');
             return false;
         }
 
@@ -406,17 +430,17 @@ function validarFechaLimite(fecha,error){
 
         if ((birthMonth < 1) || (birthMonth > 12))
         {
-            mostrarError( fecha, error, 'Error en la fecha ingresada 2');
+            mostrarError( fecha, error, 'Ingrese una fecha valida');
             return false;
         }
         else if ((birthDate < 1) || (birthDate> 31))
         {
-            mostrarError( fecha, error, 'Error en la fecha ingresada 3');
+            mostrarError( fecha, error, 'Ingrese una fecha valida');
             return false;
         }
         else if ((birthMonth==4 || birthMonth==6 || birthMonth==9 || birthMonth==11) && birthDate ==31)
         {
-            mostrarError( fecha, error, 'Error en la fecha ingresada 4');
+            mostrarError( fecha, error, 'Ingrese una fecha valida');
             return false;
         }
         else if (birthMonth == 2){
@@ -424,27 +448,27 @@ function validarFechaLimite(fecha,error){
 
             if (birthDate> 29 || (birthDate ==29 && !isleap))
             {
-                mostrarError( fecha, error, 'Error en la fecha ingresada 5');
+                mostrarError( fecha, error, 'Ingrese una fecha valida');
                 return false;
             }
         }
         else if((birthYear<presentYear))
             {
-                mostrarError( fecha, error, 'Error en la fecha ingresada 5');
+                mostrarError( fecha, error, 'Ingrese una fecha superior a la actual');
                 return false;
             }
         else if(birthYear==presentYear)
             {
             if(birthMonth<presentMonth+1)
                 {
-                    mostrarError( fecha, error, 'Error en la fecha ingresada 6');
+                    mostrarError( fecha, error, 'Ingrese una fecha superior a la actual');
                     return false;
                 }
             else if(birthMonth==presentMonth+1)
                 {
                 if(birthDate<=presentDate)
                     {
-                        mostrarError( fecha, error, 'Error en la fecha ingresada 7');
+                        mostrarError( fecha, error, 'Ingrese una fecha superior a la actual');
                         return false;
                     }
                 }
