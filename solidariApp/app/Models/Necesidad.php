@@ -27,12 +27,15 @@ class Necesidad extends Model
     //BUSCAR NECESIDAD POR FILTRO DE TEXTO
     public static function buscarNecesidad($filtroTexto, $idUsuario)
     {
-        return Necesidad::where("idUsuario",$idUsuario)
+        return Necesidad::select('necesidad.*', 'categoriaNecesidad.*')
+            ->where("necesidad.idUsuario",$idUsuario)
             ->where(function ($query) use ($filtroTexto) {
                 $query->where("descripcionNecesidad",'like', '%' . $filtroTexto . '%')
-                      ->orWhere("nombreCategoria",'like', '%' . $filtroTexto . '%');
+                      ->orWhere("nombreCategoria",'like', '%' . $filtroTexto . '%')
+                      ->orWhere("razonSocial",'like', '%' . $filtroTexto . '%');
             })
             ->join('categoriaNecesidad', 'categoriaNecesidad.idCategoria', '=', 'necesidad.idCategoriaNecesidad')    
+            ->join('organizacion', 'organizacion.idUsuario', '=', 'necesidad.idUsuario')    
             ->take(2)->get();
     }
 

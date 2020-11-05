@@ -89,7 +89,7 @@ Route::post('/actualizarDomicilio', 'App\Http\Controllers\DomicilioController@ac
 
 //NECESIDADES
 Route::get('/listarNecesidadesPantallaPrincipal/{idUsuario}', 'App\Http\Controllers\NecesidadController@listarNecesidadesPantallaPrincipal')->name('listarNecesidadesPantallaPrincipal');
-// Route::get('/buscarNecesidad/{filtroTexto}', 'App\Http\Controllers\NecesidadController@buscarNecesidad')->name('buscarNecesidad');
+Route::get('/buscarNecesidad/{filtroTexto}/{idUsuario}', 'App\Http\Controllers\NecesidadController@buscarNecesidad')->name('buscarNecesidad');
 Route::get('/getNecesidad/{idNecesidad}', 'App\Http\Controllers\NecesidadController@getNecesidad')->name('getNecesidad');
 Route::post('/bajaNecesidad','App\Http\Controllers\NecesidadController@bajaNecesidad')->name('bajaNecesidad');
 Route::post('/updateNecesidad','App\Http\Controllers\NecesidadController@updateNecesidad')->name('updateNecesidad');
