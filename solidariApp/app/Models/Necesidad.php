@@ -36,6 +36,17 @@ class Necesidad extends Model
             ->take(2)->get();
     }
 
+    //BUSCAR NECESIDAD POR CATEGORIA
+    public static function buscarNecesidadPorCategoria($filtroTexto, $idUsuario)
+    {
+        return Necesidad::where("idUsuario",$idUsuario)
+            ->where(function ($query) use ($filtroTexto) {
+                $query->where("nombreCategoria",'like', '%' . $filtroTexto . '%');
+            })
+            ->join('categoriaNecesidad', 'categoriaNecesidad.idCategoria', '=', 'necesidad.idCategoriaNecesidad')    
+            ->take(2)->get();
+    }
+
     public static function getNecesidad($idNecesidad)
     {
         return Necesidad::find($idNecesidad);

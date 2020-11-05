@@ -51,13 +51,13 @@
                 </div>
                 <div class="row d-flex justify-content-between mx-1 align-items-center border rounded">
                     <div class="col py-2">Filtrar por</div>
-                    <div class="col p-0 btn-group" role="group">
-                        <button class="btn btn-light" data-toggle="tooltip" data-placement="top" title="Filtrar por Alimentos"><i class="fas fa-utensils fa-sm"></i></button>
-                        <button class="btn btn-light" data-toggle="tooltip" data-placement="top" title="Filtrar por Ropa"><i class="fas fa-tshirt fa-sm"></i></button>
-                        <button class="btn btn-light" data-toggle="tooltip" data-placement="top" title="Filtrar por Dinero"><i class="fas fa-donate fa-sm"></i></button>
-                        <button class="btn btn-light" data-toggle="tooltip" data-placement="top" title="Filtrar por productos de limpieza"><i class="fas fa-spray-can fa-sm"></i></button>
-                        <button class="btn btn-light" data-toggle="tooltip" data-placement="top" title="Filtrar por Alimentos"><i class="fas fa-hands-helping fa-sm"></i></button>
-                        <button class="btn btn-light" data-toggle="tooltip" data-placement="top" title="Filtrar por Varios"><i class="fas fa-hand-holding-heart fa-sm"></i></button>
+                    <div class="col p-0 btn-group" id="filtrosCategoria" role="group">
+                        <button class="btn btn-light" data-toggle="tooltip" data-placement="top" title="Alimentos"><i class="fas fa-utensils fa-sm"></i></button>
+                        <button class="btn btn-light" data-toggle="tooltip" data-placement="top" title="Ropa"><i class="fas fa-tshirt fa-sm"></i></button>
+                        <button class="btn btn-light" data-toggle="tooltip" data-placement="top" title="Dinero"><i class="fas fa-donate fa-sm"></i></button>
+                        <button class="btn btn-light" data-toggle="tooltip" data-placement="top" title="Limpieza e higiene"><i class="fas fa-spray-can fa-sm"></i></button>
+                        <button class="btn btn-light" data-toggle="tooltip" data-placement="top" title="Servicios"><i class="fas fa-hands-helping fa-sm"></i></button>
+                        <button class="btn btn-light" data-toggle="tooltip" data-placement="top" title="Varios"><i class="fas fa-hand-holding-heart fa-sm"></i></button>
                     </div>
                 </div>
                 <div class="row px-2" id = "botonesRegistro">

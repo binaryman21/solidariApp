@@ -31,6 +31,9 @@ $( document ).ready(function() {
     //Evento click para buscar una necesidad
     $('#btnBuscarNeccesidades').on('click', buscarNecesidadPorTexto);
 
+    //Evento click para los filtros por categoria
+    $('#filtrosCategoria button').on('click', filtrarPorCategoria);
+
     //evento click en el btnCrearCuenta del modalRegistroColOrg
     $("#btnCrearCuenta").click(function(){
         //Deshabilito el boton y muestro el spinner
@@ -334,51 +337,62 @@ function llenarOrganizaciones( organizaciones ){
     // Borro los marcadores del mapa
     $(".leaflet-marker-icon").remove(); $(".leaflet-popup").remove();
     $(".leaflet-pane.leaflet-shadow-pane").remove();
+
     let divOrganizaciones = $('.listaOrganizaciones');
     divOrganizaciones.html('');
-    
-    organizaciones.forEach(org => {
-        if(org.necesidades.length>0){
-            let cardOrganizacion = `
-            <div class="card cardOrganizacion cardOrganizacion${org.idUsuario} shadow-sm border my-2" style="display: block; opacity: 1;">
-                <div class="card-header d-flex flex-row px-2 justify-content-star detalleOrganizacion align-items-center">
-                    <img class="rounded-circle imgPerfilOrg" src="${org.urlFotoPerfilUsuario || 'assets/img/imgUserProfile.png'}" alt="Avatar de la org ${org.razonSocial}">
-                    <div id="card-org-name" class="ml-2">
-                        <p>${org.razonSocial}</p>
-                        <p>${org.nombreTipoOrganizacion}</p>
-                    </div>
-                </div>
-                <div class="card-body p-0 listaNecesidades${org.idUsuario}">
-                
-                </div>
-                <div class="card-footer py-0 bg-transparent">
-                    <button class="btn w-100 btn-link ml-auto text-decoration-none">Ver todas</button>
-                </div>
+
+    //SI NO HAY ORGANIZACIONES CON NO LAS CARGO
+    if( organizaciones.length < 1){
+        divOrganizaciones.html(
+            `<div class="alert alert-danger" role="alert">
+                No se encontraron resultados
             </div>`
-
-            divOrganizaciones.append( cardOrganizacion );
-            org.necesidades.forEach( need => {
-                $(`.listaNecesidades${org.idUsuario}`).append(`
-                    <div class="${need.nombreCategoria.toLowerCase()}">
-                        <div class="class-body py-2 px-3">
-                            <div class="card-title"><h6>${need.nombreCategoria}</h6></div>
-                            <div class="card-subtitle text-muted">${need.descripcionNecesidad}</div>
-                        </div>
-                        <div class="card-footer d-flex align-items-end justify-content-end p-0">
-                            <button class="btn btn-link btnDetalleOrg btnDetalleOrg${need.idNecesidad} text-decoration-none" data-toggle="modal" data-target="#modalDetalleNecesidad">Me interesa</button>
+        );
+    }
+    else{
+        organizaciones.forEach(org => {
+            if(org.necesidades.length>0){
+                let cardOrganizacion = `
+                <div class="card cardOrganizacion cardOrganizacion${org.idUsuario} shadow-sm border my-2" style="display: block; opacity: 1;">
+                    <div class="card-header d-flex flex-row px-2 justify-content-star detalleOrganizacion align-items-center">
+                        <img class="rounded-circle imgPerfilOrg" src="${org.urlFotoPerfilUsuario || 'assets/img/imgUserProfile.png'}" alt="Avatar de la org ${org.razonSocial}">
+                        <div id="card-org-name" class="ml-2">
+                            <p>${org.razonSocial}</p>
+                            <p>${org.nombreTipoOrganizacion}</p>
                         </div>
                     </div>
-                `)
-
-                $(`.btnDetalleOrg${need.idNecesidad}`).on('click', function(){
-                    cargarDatosModalDetalleNecesidad(need);
+                    <div class="card-body p-0 listaNecesidades${org.idUsuario}">
+                    
+                    </div>
+                    <div class="card-footer py-0 bg-transparent">
+                        <button class="btn w-100 btn-link ml-auto text-decoration-none">Ver todas</button>
+                    </div>
+                </div>`
+    
+                divOrganizaciones.append( cardOrganizacion );
+                org.necesidades.forEach( need => {
+                    $(`.listaNecesidades${org.idUsuario}`).append(`
+                        <div class="${need.nombreCategoria.toLowerCase()}">
+                            <div class="class-body py-2 px-3">
+                                <div class="card-title"><h6>${need.nombreCategoria}</h6></div>
+                                <div class="card-subtitle text-muted">${need.descripcionNecesidad}</div>
+                            </div>
+                            <div class="card-footer d-flex align-items-end justify-content-end p-0">
+                                <button class="btn btn-link btnDetalleOrg btnDetalleOrg${need.idNecesidad} text-decoration-none" data-toggle="modal" data-target="#modalDetalleNecesidad">Me interesa</button>
+                            </div>
+                        </div>
+                    `)
+    
+                    $(`.btnDetalleOrg${need.idNecesidad}`).on('click', function(){
+                        cargarDatosModalDetalleNecesidad(need);
+                    })
                 })
-            })
-
-            cargarOrgEnMapa(org);
-        }
-    })
-    agregarPaginacionListaOrganizaciones(); 
+    
+                cargarOrgEnMapa(org);
+            }
+        })
+    }
+    agregarPaginacionListaOrganizaciones();
 }
 
 //CARGAR LAS NECESIDADES EN EL MODAL
@@ -401,13 +415,3 @@ function cargarDatosModalDetalleNecesidad( necesidad ){
         </div>`)
 }
 
-//BUSCAR UNA NECESIDAD POR EL FILTRO DEL CAMPO TEXTO
-function buscarNecesidadPorTexto( ){
-    let filtroBusqueda = $('#campoBuscarPorTexto').val();
-    fetch( "/buscarOrganizaciones/" + filtroBusqueda )
-        .then(response => response.json())
-        .then(data => {
-            let organizaciones = data.organizaciones;
-            llenarOrganizaciones( organizaciones );
-        })
-}
