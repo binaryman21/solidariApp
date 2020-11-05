@@ -4,10 +4,11 @@ isLoggedIn();
 $( document ).ready(function() {
     listarProvincias(1);
     listarTiposOrganizaciones();
+    agregarPaginacionUsuarios();
+
+    // EVENTOS
     $("#btnRegistrarseComoOrganizacion").on('click', mostrarRegistrarseComoOrganizacion);
     $("#btnRegistrarseComoColaborador").on('click', mostrarRegistrarseComoColaborador);
-
-    agregarPaginacionUsuarios();
 
     //Evento click del boton ingresar en el navbar
     $("#btnIngresar").click(function(){
@@ -17,19 +18,18 @@ $( document ).ready(function() {
         $("#tituloModalLogin").html("Ingresar a solidariApp"); //Seteo el titulo del modalLogin
     });
 
-
     //evento click del boton del modalLogin
     $("#btnLogin").click(clickBtnLogin);
 
     //evento change en el selectProvincia
     $("#selectProvincia").change(function(){
-
         let idProvincia = $("#selectProvincia").val();
         $("#selectLocalidad").html("");
         listarLocalidades(idProvincia,1);
     });
 
-
+    //Evento click para buscar una necesidad
+    $('#btnBuscarNeccesidades').on('click', buscarNecesidadPorTexto);
 
     //evento click en el btnCrearCuenta del modalRegistroColOrg
     $("#btnCrearCuenta").click(function(){
@@ -115,17 +115,6 @@ function clickBtnLogin()
     }
 }
 
-function listarTiposOrganizaciones()
-{
-    return axios.get('/listarTipoOrganizaciones')
-        .then((response)=>{
-            let tiposOrganizaciones = response.data.tipoOrganizaciones;
-            $.each(tiposOrganizaciones, function (indexInArray, tipoOrganizacion) {
-                $("#selectTipoOrganizacion").append("<option value = '" + tipoOrganizacion.idTipoOrganizacion + "'>" + tipoOrganizacion.nombreTipoOrganizacion +"</option");
-            });
-        });
-}
-
 
 function registrarOrganizacion()
 {
@@ -182,7 +171,6 @@ function registrarOrganizacion()
                     //{idLink:0,urlLink:"",tipoLink:{idTipoLink:0,nombreTipoLink:""}}
                 ]
             }
-        
             axios.post("/registrarOrganizacion",JSON.stringify(organizacion))
             .then((response)=>{
                 // alert(response.data.message);
@@ -199,9 +187,7 @@ function registrarOrganizacion()
                         idGoogle: organizacion.tokenGoogle,
                         pass:organizacion.claveUsuario
                     };
-        
                     login(datosLogin);
-        
                 }
                 else{
                     $("#modalRegistroColOrg").modal("hide");
@@ -265,7 +251,6 @@ function registrarColaborador()
                     //{idLink:0,urlLink:"",tipoLink:{idTipoLink:0,nombreTipoLink:""}}
                 ]
             }
-
             axios.post("/registrarColaborador",JSON.stringify(colaborador))
             .then((response)=>{
                 $("#btnCrearCuenta").html("Guardar");
@@ -283,19 +268,19 @@ function registrarColaborador()
                     };
 
                     login(datosLogin);
-
                 }
                 else{
                     $("#modalRegistroColOrg").modal("hide");
                     $("#msjResultadoRegistro").html("Algo fallo, intentalo mas tarde");
                     $("#modalResultadoRegistro").modal("show");
-
                 }
             });
         })
 }
 
+//PAGINAR LAS ORGANIZACIONES EN LA LISTA
 function agregarPaginacionListaOrganizaciones(){
+    $('#navListaOrganizaciones').html('');
     $('.listaOrganizaciones').after('<div id="navListaOrganizaciones"></div>');
     let organizacion = document.querySelectorAll('.cardOrganizacion')
     let filasMostradas = 2;
@@ -306,7 +291,6 @@ function agregarPaginacionListaOrganizaciones(){
         let numPag = i + 1;
         $('#navListaOrganizaciones').append('<a href="JavaScript:Void(0);" rel="' + i + '">' + numPag + '</a> ');
     }
-
     $( organizacion ).hide();
     $( organizacion ).slice(0, filasMostradas).show();
     $('#navListaOrganizaciones a:first').addClass('active');
@@ -321,99 +305,87 @@ function agregarPaginacionListaOrganizaciones(){
     });
 }
 
-function agregarPaginacionUsuarios(){
-    $('.usuarios').after('<div id="navUsuarios"></div>');
-    let usuario = document.querySelectorAll('.usuario')
-    let filasMostradas = 2;
-    let filasTotales = usuario.length;
 
-    let numPaginas = filasTotales/filasMostradas;
-    for(i = 0; i < numPaginas; i++) {
-        let numPag = i + 1;
-        $('#navUsuarios').append('<a href="#" class="closeLink" rel="' + i + '">' + numPag + '</a> ');
-    }
-
-    $( usuario ).hide();
-    $( usuario ).slice(0, filasMostradas).show();
-    $('#navUsuarios a:first').addClass('active');
-    $('#navUsuarios a').bind('click', function(){
-        $('#navUsuarios a').removeClass('active');
-        $(this).addClass('active');
-        let pagActual = $(this).attr('rel');
-        let primerItem = pagActual * filasMostradas;
-        let ultimoItem = primerItem + filasMostradas;
-        $( usuario ).css('opacity','0.0').hide().slice(primerItem, ultimoItem).
-            css('display','block').animate({opacity:1}, 300);
-    });
-}
-
+//MOSTRAR EL MODAL DE REGISTRO COMO ORGANIZACION
 function mostrarRegistrarseComoOrganizacion(){
     mostrarComo('organizacion')
 }
 
+//MOSTRAR EL MODAL DE REGISTRO COMO COLABORADOR
 function mostrarRegistrarseComoColaborador(){
     mostrarComo('colaborador')
 }
 
-function getOrganizaciones( ){
-    let divOrganizaciones = $('.listaOrganizaciones');
-    divOrganizaciones.html('');
+//TRAER TODAS LAS ORGANIZACIONES
+function getOrganizaciones(){
     fetch('/getOrganizaciones/')
         .then(response => response.json())
         .then(data => {
-        let organizaciones = data.organizaciones;
-        organizaciones.forEach(org => {
-            if(org.necesidades.length>0){
-                let cardOrganizacion = `
-                <div class="card cardOrganizacion cardOrganizacion${org.idUsuario} shadow-sm border my-2" style="display: block; opacity: 1;">
-                    <div class="card-header d-flex flex-row px-2 justify-content-star detalleOrganizacion align-items-center">
-                        <img class="rounded-circle imgPerfilOrg" src="${org.urlFotoPerfilUsuario || 'assets/img/imgUserProfile.png'}" alt="Avatar de la org ${org.razonSocial}">
-                        <div id="card-org-name" class="ml-2">
-                            <p>${org.razonSocial}</p>
-                            <p>${org.nombreTipoOrganizacion}</p>
-                        </div>
-                    </div>
-                    <div class="card-body p-0 listaNecesidades${org.idUsuario}">
-                    
-                    </div>
-                    <div class="card-footer py-0 bg-transparent">
-                        <button class="btn w-100 btn-link ml-auto text-decoration-none">Ver todas</button>
-                    </div>
-                </div>`
-
-                divOrganizaciones.append( cardOrganizacion );
-                org.necesidades.forEach( need => {
-                    $(`.listaNecesidades${org.idUsuario}`).append(`
-                        <div class="${need.categoria.nombreCategoria.toLowerCase()}">
-                            <div class="class-body py-2 px-3">
-                                <div class="card-title"><h6>${need.categoria.nombreCategoria}</h6></div>
-                                <div class="card-subtitle text-muted">${need.descripcionNecesidad}</div>
-                            </div>
-                            <div class="card-footer d-flex align-items-end justify-content-end p-0">
-                                <button class="btn btn-link btnDetalleOrg btnDetalleOrg${need.idNecesidad} text-decoration-none" data-toggle="modal" data-target="#modalDetalleNecesidad">Me interesa</button>
-                            </div>
-                        </div>
-                    `)
-
-                    $(`.btnDetalleOrg${need.idNecesidad}`).on('click', function(){
-                        cargarDatosModalDetalleNecesidad(need);
-                    })
-                })
-
-                cargarOrgEnMapa(org);
-            }
+            let organizaciones = data.organizaciones;
+            llenarOrganizaciones( organizaciones );
         })
-        agregarPaginacionListaOrganizaciones(); 
-    })
 }
 
+//CARGAR LAS ORGANIZACIONES EN LA LISTA
+function llenarOrganizaciones( organizaciones ){
+    // Borro los marcadores del mapa
+    $(".leaflet-marker-icon").remove(); $(".leaflet-popup").remove();
+    $(".leaflet-pane.leaflet-shadow-pane").remove();
+    let divOrganizaciones = $('.listaOrganizaciones');
+    divOrganizaciones.html('');
+    
+    organizaciones.forEach(org => {
+        if(org.necesidades.length>0){
+            let cardOrganizacion = `
+            <div class="card cardOrganizacion cardOrganizacion${org.idUsuario} shadow-sm border my-2" style="display: block; opacity: 1;">
+                <div class="card-header d-flex flex-row px-2 justify-content-star detalleOrganizacion align-items-center">
+                    <img class="rounded-circle imgPerfilOrg" src="${org.urlFotoPerfilUsuario || 'assets/img/imgUserProfile.png'}" alt="Avatar de la org ${org.razonSocial}">
+                    <div id="card-org-name" class="ml-2">
+                        <p>${org.razonSocial}</p>
+                        <p>${org.nombreTipoOrganizacion}</p>
+                    </div>
+                </div>
+                <div class="card-body p-0 listaNecesidades${org.idUsuario}">
+                
+                </div>
+                <div class="card-footer py-0 bg-transparent">
+                    <button class="btn w-100 btn-link ml-auto text-decoration-none">Ver todas</button>
+                </div>
+            </div>`
+
+            divOrganizaciones.append( cardOrganizacion );
+            org.necesidades.forEach( need => {
+                $(`.listaNecesidades${org.idUsuario}`).append(`
+                    <div class="${need.nombreCategoria.toLowerCase()}">
+                        <div class="class-body py-2 px-3">
+                            <div class="card-title"><h6>${need.nombreCategoria}</h6></div>
+                            <div class="card-subtitle text-muted">${need.descripcionNecesidad}</div>
+                        </div>
+                        <div class="card-footer d-flex align-items-end justify-content-end p-0">
+                            <button class="btn btn-link btnDetalleOrg btnDetalleOrg${need.idNecesidad} text-decoration-none" data-toggle="modal" data-target="#modalDetalleNecesidad">Me interesa</button>
+                        </div>
+                    </div>
+                `)
+
+                $(`.btnDetalleOrg${need.idNecesidad}`).on('click', function(){
+                    cargarDatosModalDetalleNecesidad(need);
+                })
+            })
+
+            cargarOrgEnMapa(org);
+        }
+    })
+    agregarPaginacionListaOrganizaciones(); 
+}
+
+//CARGAR LAS NECESIDADES EN EL MODAL
 function cargarDatosModalDetalleNecesidad( necesidad ){
         $('.detalleNecesidadModal').html(
-        `<div class="card necesidad ${necesidad.categoria.nombreCategoria.toLowerCase()}">
+        `<div class="card necesidad ${necesidad.nombreCategoria.toLowerCase()}">
             <div class="card-body">
                 <div class="container-fluid">
                     <div class="datosNecesidad">
-                        <p class="font-weight-bold">${necesidad.categoria.nombreCategoria}</p>
+                        <p class="font-weight-bold">${necesidad.nombreCategoria}</p>
                         <p>${necesidad.descripcionNecesidad}</p>
                         <p>Cantidad: ${necesidad.cantidadNecesidad}</p>
                         <p>Fecha limite: ${necesidad.fechaLimiteNecesidad}</p>
@@ -424,4 +396,15 @@ function cargarDatosModalDetalleNecesidad( necesidad ){
                 <button type="button" class="btn btnColaborar btn-block btn-outline-primary mt-4" data-toggle="modal" data-target="#modalColaborar"><i class="far fa-handshake"></i>COLABORAR</button>
             </div>
         </div>`)
+}
+
+//BUSCAR UNA NECESIDAD POR EL FILTRO DEL CAMPO TEXTO
+function buscarNecesidadPorTexto( ){
+    let filtroBusqueda = $('#campoBuscarPorTexto').val();
+    fetch( "/buscarOrganizaciones/" + filtroBusqueda )
+        .then(response => response.json())
+        .then(data => {
+            let organizaciones = data.organizaciones;
+            llenarOrganizaciones( organizaciones );
+        })
 }

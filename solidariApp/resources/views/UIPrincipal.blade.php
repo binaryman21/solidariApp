@@ -15,9 +15,9 @@
         <div class="row bg-white rounded justify-content-lg-center pb-3">
             <div class="col-xs-12 col-sm-4 col-lg-3 p-sm-1 p-md-2 mr-n3">
                 <div class="input-group my-2 mt-3 mt-lg-2">
-                    <input class="form-control border-secondary border-right-0" type="text" placeholder="Buscar ... ">
+                    <input class="form-control border-secondary border-right-0" type="text" id="campoBuscarPorTexto" placeholder="Buscar ... ">
                     <div class="input-group-append">
-                        <button class="btn btn-outline-secondary border-secondary border-left-0" type="button"><i class="fa fa-search fa-xs"></i></button>
+                        <button class="btn btn-outline-secondary border-secondary border-left-0" id="btnBuscarNeccesidades" type="button"><i class="fa fa-search fa-xs"></i></button>
                     </div>
                 </div>
                 <div class = "card listaOrganizaciones border-0" >

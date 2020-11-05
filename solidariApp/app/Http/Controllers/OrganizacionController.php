@@ -102,6 +102,26 @@ class OrganizacionController extends Controller
         ]);
     }
 
+    public function busquedaOrganizaciones($filtroTexto){
+        $organizaciones = Organizacion::getOrganizaciones();
+
+        foreach( $organizaciones as  $key => $organizacion ){
+            $necesidades = Necesidad::buscarNecesidad( $filtroTexto, $organizacion->idUsuario );
+            $json_array  = json_decode($necesidades, true);
+                $organizacion['necesidades'] = $necesidades;
+
+            // if( count($json_array) > 0 ){
+            // }
+            // else{
+            //     unset($organizaciones[$key]);
+            // }
+        }
+
+        return json_encode([
+            'organizaciones' => $organizaciones
+        ]);
+    }
+
     //Traerme todas las organizaciones
     public function getOrganizaciones(){
 
