@@ -90,7 +90,7 @@ function clickBtnLogin()
         if( validarRegistroGoogle() ){
             axios.post("/isUser",{email:$("#emailUsuario").val()})
             .then((response)=>{
-                alert(response.data.isUser);
+                // alert(response.data.isUser);
                 if(response.data.isUser)
                 {
                     limpiarCamposRegistro();
@@ -173,6 +173,7 @@ function registrarOrganizacion()
             }
             axios.post("/registrarOrganizacion",JSON.stringify(organizacion))
             .then((response)=>{
+                console.log('registrando..');
                 // alert(response.data.message);
                 $("#btnCrearCuenta").html("Guardar");
                 $("#btnCrearCuenta").attr("disabled", false);
@@ -255,11 +256,12 @@ function registrarColaborador()
             .then((response)=>{
                 $("#btnCrearCuenta").html("Guardar");
                 $("#btnCrearCuenta").attr("disabled", false);
-                alert(response.data.message);
+                // alert(response.data.message);
                 if(response.data.resultado == 1){
                     $("#modalRegistroColOrg").modal("hide");
-                    $("#msjResultadoRegistro").html("Registro exitoso!");
-                    $("#modalResultadoRegistro").modal("show");
+                    alertify.success('Registro exitoso!')
+                    // $("#msjResultadoRegistro").html("Registro exitoso!");
+                    // $("#modalResultadoRegistro").modal("show");
 
                     var datosLogin = {
                         email: colaborador.emailUsuario,
@@ -271,8 +273,9 @@ function registrarColaborador()
                 }
                 else{
                     $("#modalRegistroColOrg").modal("hide");
-                    $("#msjResultadoRegistro").html("Algo fallo, intentalo mas tarde");
-                    $("#modalResultadoRegistro").modal("show");
+                    alertify.error('Registro exitoso!')
+                    // $("#msjResultadoRegistro").html("Algo fallo, intentalo mas tarde");
+                    // $("#modalResultadoRegistro").modal("show");
                 }
             });
         })

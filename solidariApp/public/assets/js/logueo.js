@@ -90,7 +90,7 @@ function onSignIn(googleUser) {
         pass:""
     };
     $("#btnLogin").html("<span id = 'spinnerBtnLogin' class='spinner-border spinner-border-sm' role='status' aria-hidden='true'></span>Un momento...");
-    $("#btnLogin").attr("disabled", true);
+    // $("#btnLogin").attr("disabled", true);
 
     axios.post("/login",JSON.stringify(datosLogin))
     .then((response)=>{
