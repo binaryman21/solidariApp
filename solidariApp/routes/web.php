@@ -81,6 +81,8 @@ Route::post('/actualizarDescripcion', 'App\Http\Controllers\OrganizacionControll
 Route::post('/registrarTelefono', 'App\Http\Controllers\TelefonoController@registrarTelefono')->name('listarNecesidades');
 Route::post('/eliminarTelefono', 'App\Http\Controllers\TelefonoController@eliminarTelefono')->name('listarNecesidades');
 Route::post('/actualizarDomicilio', 'App\Http\Controllers\DomicilioController@actualizarDomicilio')->name('listarNecesidades');
+Route::post('/registrarColaboracion', 'App\Http\Controllers\ColaboracionController@registrarColaboracion')->name('registrarColaboracion');
+Route::get('/getColaboraciones/{idNecesidad}', 'App\Http\Controllers\ColaboracionController@getColaboraciones')->name('getColaboraciones');
 
 
 

@@ -99,16 +99,7 @@ class ColaboradorController extends Controller
 
         ]);
     }
-    /*
-    public function colaborar(Request $request){
 
-        $datos = json_decode($request->getContent());
-        session_start();
-        if($_SESSION['usuario']){
-            $registroCalificaciones = new RegistroCalificaciones;
-            $registroCalificaciones->idNecesidad = $datos->idNecesidad
-        }
 
-    }
-    */
+
 }
