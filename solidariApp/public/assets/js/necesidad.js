@@ -14,14 +14,16 @@ function registrarNecesidad(idUsuario)
 
     axios.post("/registrarNecesidad",necesidad)
     .then((response)=>{
-        // console.log( 'respuesta' + response.data.id);
+        console.log( 'respuesta' + response.data.id);
+        console.log( 'respuestaaa ' + response.data.message);
         // console.log(necesidad);
         necesidad.idNecesidad = response.data.id;
         desbloquearBoton($("#btnGuardarCambiosNecesidad"));
         let divNecesidades = $('.necesidades');
         divNecesidades.prepend(`<div class="col-md-6" id="necesidad${necesidad.idNecesidad}"></div>`);
-        crearCardNecesidad(necesidad);
+        crearCardNecesidad(necesidad, 0);
         agregarPaginacionNecesidades();
+        $('#navNecesidades a:first').trigger('click');
         alertify.success('Necesidad creada');
     });
 }
@@ -50,16 +52,17 @@ function updateNecesidad(necesidad){
     .then((response)=>{
         if(response.data.resultado){
             //cargarNecesidades(idUsuario);
-            crearCardNecesidad(necesidad);
+            crearCardNecesidad(necesidad, 0);
             agregarPaginacionNecesidades();
             $("#modalEditarNecesidad").modal('toggle');
             document.getElementById("formEditarNecesidad").reset();
             desbloquearBoton($("#btnGuardarCambiosNecesidad"));
+            $('#navNecesidades a:first').trigger('click');
             // alert(response.data.message);
             alertify.success('Necesidad modificada');
 
         }else{
-            alert(response.data.message);
+            alertify.error(response.data.message);
         }
     });
 }
@@ -76,6 +79,8 @@ function bajaNecesidad(idNecesidad){
             $("#modalEditarNecesidad").modal('toggle');
             document.getElementById("formEditarNecesidad").reset();
             alertify.error('Necesidad eliminada');
+            agregarPaginacionNecesidades();
+            $('#navNecesidades a:first').trigger('click');
 
         }else{
             alert(response.data.message);

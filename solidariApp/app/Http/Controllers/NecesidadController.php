@@ -32,7 +32,8 @@ class NecesidadController extends Controller
         {
             return response()->json([
                 'resultado' => 0,
-                'message' => $e->getMessage()
+                'message' => $e->getMessage(),
+                'id' => -1
             ]);
         }
 
