@@ -1,7 +1,16 @@
+
+
 getOrganizaciones();
 isLoggedIn();
 
 $( document ).ready(function() {
+
+    $(function() {
+        $(document).on('click', '.alert-close', function() {
+            $(this).parent().hide();
+        })
+     });
+
     listarProvincias(1);
     listarTiposOrganizaciones();
     $("#btnRegistrarseComoOrganizacion").on('click', mostrarRegistrarseComoOrganizacion);
@@ -407,25 +416,4 @@ function getOrganizaciones( ){
     })
 }
 
-function cargarDatosModalDetalleNecesidad( necesidad ){
-        $('.detalleNecesidadModal').html(
-        `<div class="card necesidad ${necesidad.categoria.nombreCategoria.toLowerCase()}">
-            <div class="card-body">
-                <div class="container-fluid">
-                    <div class="datosNecesidad">
-                        <p class="font-weight-bold">${necesidad.categoria.nombreCategoria}</p>
-                        <p>${necesidad.descripcionNecesidad}</p>
-                        <p>Cantidad: ${necesidad.cantidadNecesidad}</p>
-                        <p>Fecha limite: ${necesidad.fechaLimiteNecesidad}</p>
-                        <p>Estado: en proceso</p>
-                        <p>Colaboradores: 5</p>
-                    </div>
-                </div>
-                <button type="button" class="btn btnColaborar btn-block btn-outline-primary mt-4" data-toggle="modal" data-target="#modalColaborar"><i class="far fa-handshake"></i>COLABORAR</button>
-            </div>
-        </div>`);
-        $("#btnConfirmarColaboracion").unbind("click");
-        $("#btnConfirmarColaboracion").click(function(){
-            colaborar(necesidad.idNecesidad);
-        });
-}
+
