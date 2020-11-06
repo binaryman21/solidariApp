@@ -132,11 +132,38 @@ class OrganizacionController extends Controller
 
     public function busquedaOrganizacionesPorCategoria($filtroTexto){
         $organizaciones = Organizacion::getOrganizaciones();
+        $organizacionesConNecesidad = [];
 
         foreach( $organizaciones as  $key => $organizacion ){
             $necesidades = Necesidad::buscarNecesidadPorCategoria( $filtroTexto, $organizacion->idUsuario );
+            $json_array  = json_decode($necesidades, true);
             $organizacion['necesidades'] = $necesidades;
+            //Si hay necesidades entonces traigo esa organizacion, sino no
+            if( count($json_array) > 0 ){
+                array_push($organizacionesConNecesidad, $organizacion);
+            }
         }
+        $organizaciones = $organizacionesConNecesidad;
+
+        return json_encode([
+            'organizaciones' => $organizaciones
+        ]);
+    }
+
+    public function busquedaOrganizacionesPorUbicacion($ubicacion){
+        $organizaciones = Organizacion::buscarOrganizacionesPorUbicacion( $ubicacion );
+        $organizacionesConNecesidad = [];
+
+        foreach( $organizaciones as  $key => $organizacion ){
+            $necesidades = Necesidad::listarNecesidadesPantallaPrincipal( $organizacion->idUsuario );
+            $json_array  = json_decode($necesidades, true);
+            $organizacion['necesidades'] = $necesidades;
+            //Si hay necesidades entonces traigo esa organizacion, sino no
+            if( count($json_array) > 0 ){
+                array_push($organizacionesConNecesidad, $organizacion);
+            }
+        }
+        $organizaciones = $organizacionesConNecesidad;
 
         return json_encode([
             'organizaciones' => $organizaciones

@@ -219,3 +219,15 @@ function filtrarPorCategoria( e ){
             $('#filtrosCategoria button').attr('disabled', false); 
         })
 }
+
+//BUSCAR UNA ORGANIZACION POR FILTRO DE UBICACION
+function filtrarPorUbicacion(){
+    let filtroBusqueda = $('#ubicacion').val();
+    console.log( filtroBusqueda );
+    fetch( "/buscarOrganizacionesPorUbicacion/" + filtroBusqueda )
+        .then(response => response.json())
+        .then(data => {
+            let organizaciones = data.organizaciones;
+            llenarOrganizaciones( organizaciones );
+        })
+}
