@@ -380,7 +380,7 @@ function mostrarModalEditarNecesidad(necesidad){
     limpiarValidaciones($("#slctCategoria"), $("#errorCategoria"));
     let fecha = necesidad.fechaLimiteNecesidad;
     fecha = fecha.split(" ");
-    $("#slctCategoria").val(necesidad.categoria.idCategoria);
+    $("#slctCategoria").val(necesidad.idCategoria);
     $("#txtDescripcion").val(necesidad.descripcionNecesidad);
     $("#inpCantidad").val(necesidad.cantidadNecesidad);
     $("#inpFechaLimite").val(fecha[0]);
@@ -459,6 +459,7 @@ function crearCardNecesidad(necesidad,vistaVisitante)
         <a data-toggle="modal" href="#modalEditarNecesidad" id="editar${necesidad.idNecesidad}"><i class="far fa-edit"></i></a>
         </p>`;
     }
+    console.log( necesidad );
 
     $("#necesidad" + necesidad.idNecesidad).html("");
     let cantColaboraciones = necesidad.colaboraciones_count;

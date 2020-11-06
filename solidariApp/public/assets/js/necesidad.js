@@ -8,7 +8,8 @@ function registrarNecesidad(idUsuario)
         cantidadNecesidad: Number( $("#inpCantidad").val() ),
         fechaLimiteNecesidad: $("#inpFechaLimite").val(),
         fechaBajaNecesidad: "",
-        categoria: {idCategoria:$("#slctCategoria").val(),nombreCategoria:$("#slctCategoria option:selected").text()},
+        idCategoria:$("#slctCategoria").val(),
+        nombreCategoria:$("#slctCategoria option:selected").text(),
         idUsuario: idUsuario
     }
 
@@ -44,8 +45,8 @@ function updateNecesidad(necesidad){
     necesidad.cantidadNecesidad = Number( $("#inpCantidad").val() );
     necesidad.fechaLimiteNecesidad =  $("#inpFechaLimite").val();
     necesidad.fechaBajaNecesidad =  "";
-    necesidad.categoria.idCategoria = $("#slctCategoria").val();
-    necesidad.categoria.nombreCategoria = $("#slctCategoria option:selected").text();
+    necesidad.idCategoria = $("#slctCategoria").val();
+    necesidad.nombreCategoria = $("#slctCategoria option:selected").text();
     console.log($("#slctCategoria option :selected").text());
     JSON.stringify(necesidad);
     axios.post("/updateNecesidad",necesidad)
