@@ -470,7 +470,7 @@ function crearCardNecesidad(necesidad,vistaVisitante)
                 <div class="col-md-6 text-right d-flex flex-column justify-content-between">
                 `+ btnEditarNecesidad + `
                     <p class="ayudasRecibidas">
-                        <a href="#"><span class="nroAyudas">0</span><i class="fas fa-user-friends"></i></a>
+                        <a href="#" data-toggle="modal" data-target="#modalDetalleNecesidad" id = "btnDetalleNecesidad`+ necesidad.idNecesidad + `" ><span class="nroAyudas">`+ necesidad.colaboraciones_count + `</span><i class="fas fa-user-friends"></i></a>
                     </p>
                     <p class="estado">
                         <i class="fas fa-spinner"></i>
@@ -479,14 +479,27 @@ function crearCardNecesidad(necesidad,vistaVisitante)
             </div>
         </div>
     </div>`;
+
+
+
     $("#necesidad" + necesidad.idNecesidad).append(cardNecesidad);
 
     if(vistaVisitante == 0){
-    $("#editar" + necesidad.idNecesidad).unbind("click");
-     //evento click del btn editar necesidad
-     $("#editar" + necesidad.idNecesidad).click(()=>{
-        console.log("idNecesidad " + necesidad.idNecesidad);
-        mostrarModalEditarNecesidad(necesidad);
-    })
-}
+        $("#editar" + necesidad.idNecesidad).unbind("click");
+        //evento click del btn editar necesidad
+        $("#editar" + necesidad.idNecesidad).click(()=>{
+            console.log("idNecesidad " + necesidad.idNecesidad);
+            mostrarModalEditarNecesidad(necesidad);
+        });
+
+        $("#btnDetalleNecesidad"+ necesidad.idNecesidad).click(()=>{
+            cargarDatosModalDetalleNecesidad(necesidad, "organizacion");
+        });
+    }
+    else
+    {
+        $("#btnDetalleNecesidad"+ necesidad.idNecesidad).click(()=>{
+            cargarDatosModalDetalleNecesidad(necesidad);
+        });
+    }
 }

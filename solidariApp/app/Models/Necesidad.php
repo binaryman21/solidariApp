@@ -14,7 +14,7 @@ class Necesidad extends Model
 
     public static function listarNecesidades($idUsuario)
     {
-        return Necesidad::where("idUsuario",$idUsuario)->with('categoria')->get();
+        return Necesidad::where("idUsuario",$idUsuario)->with('categoria')->withCount('colaboraciones')->get();
     }
 
     public static function listarNecesidadesPantallaPrincipal($idUsuario)
@@ -30,6 +30,11 @@ class Necesidad extends Model
     public function categoria()
     {
         return $this->belongsTo('App\Models\CategoriaNecesidad','idCategoriaNecesidad','idCategoria');
+    }
+
+    public function colaboraciones()
+    {
+        return $this->hasMany('App\Models\Colaboracion','idNecesidad','idNecesidad');
     }
 
 }
