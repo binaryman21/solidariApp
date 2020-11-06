@@ -13,10 +13,11 @@ $( document ).ready(function() {
 
     listarProvincias(1);
     listarTiposOrganizaciones();
+    agregarPaginacionUsuarios();
+
+    // EVENTOS
     $("#btnRegistrarseComoOrganizacion").on('click', mostrarRegistrarseComoOrganizacion);
     $("#btnRegistrarseComoColaborador").on('click', mostrarRegistrarseComoColaborador);
-
-    agregarPaginacionUsuarios();
 
     //Evento click del boton ingresar en el navbar
     $("#btnIngresar").click(function(){
@@ -26,19 +27,21 @@ $( document ).ready(function() {
         $("#tituloModalLogin").html("Ingresar a solidariApp"); //Seteo el titulo del modalLogin
     });
 
-
     //evento click del boton del modalLogin
     $("#btnLogin").click(clickBtnLogin);
 
     //evento change en el selectProvincia
     $("#selectProvincia").change(function(){
-
         let idProvincia = $("#selectProvincia").val();
         $("#selectLocalidad").html("");
         listarLocalidades(idProvincia,1);
     });
 
+    //Evento click para buscar una necesidad
+    $('#btnBuscarNeccesidades').on('click', buscarNecesidadPorTexto);
 
+    //Evento click para los filtros por categoria
+    $('#filtrosCategoria button').on('click', filtrarPorCategoria);
 
     //evento click en el btnCrearCuenta del modalRegistroColOrg
     $("#btnCrearCuenta").click(function(){
@@ -99,7 +102,7 @@ function clickBtnLogin()
         if( validarRegistroGoogle() ){
             axios.post("/isUser",{email:$("#emailUsuario").val()})
             .then((response)=>{
-                alert(response.data.isUser);
+                // alert(response.data.isUser);
                 if(response.data.isUser)
                 {
                     limpiarCamposRegistro();
@@ -122,17 +125,6 @@ function clickBtnLogin()
         }
 
     }
-}
-
-function listarTiposOrganizaciones()
-{
-    return axios.get('/listarTipoOrganizaciones')
-        .then((response)=>{
-            let tiposOrganizaciones = response.data.tipoOrganizaciones;
-            $.each(tiposOrganizaciones, function (indexInArray, tipoOrganizacion) {
-                $("#selectTipoOrganizacion").append("<option value = '" + tipoOrganizacion.idTipoOrganizacion + "'>" + tipoOrganizacion.nombreTipoOrganizacion +"</option");
-            });
-        });
 }
 
 
@@ -191,9 +183,9 @@ function registrarOrganizacion()
                     //{idLink:0,urlLink:"",tipoLink:{idTipoLink:0,nombreTipoLink:""}}
                 ]
             }
-
             axios.post("/registrarOrganizacion",JSON.stringify(organizacion))
             .then((response)=>{
+                console.log('registrando..');
                 // alert(response.data.message);
                 $("#btnCrearCuenta").html("Guardar");
                 $("#btnCrearCuenta").attr("disabled", false);
@@ -208,9 +200,7 @@ function registrarOrganizacion()
                         idGoogle: organizacion.tokenGoogle,
                         pass:organizacion.claveUsuario
                     };
-
                     login(datosLogin);
-
                 }
                 else{
                     $("#modalRegistroColOrg").modal("hide");
@@ -274,16 +264,16 @@ function registrarColaborador()
                     //{idLink:0,urlLink:"",tipoLink:{idTipoLink:0,nombreTipoLink:""}}
                 ]
             }
-
             axios.post("/registrarColaborador",JSON.stringify(colaborador))
             .then((response)=>{
                 $("#btnCrearCuenta").html("Guardar");
                 $("#btnCrearCuenta").attr("disabled", false);
-                alert(response.data.message);
+                // alert(response.data.message);
                 if(response.data.resultado == 1){
                     $("#modalRegistroColOrg").modal("hide");
-                    $("#msjResultadoRegistro").html("Registro exitoso!");
-                    $("#modalResultadoRegistro").modal("show");
+                    alertify.success('Registro exitoso!')
+                    // $("#msjResultadoRegistro").html("Registro exitoso!");
+                    // $("#modalResultadoRegistro").modal("show");
 
                     var datosLogin = {
                         email: colaborador.emailUsuario,
@@ -292,19 +282,20 @@ function registrarColaborador()
                     };
 
                     login(datosLogin);
-
                 }
                 else{
                     $("#modalRegistroColOrg").modal("hide");
-                    $("#msjResultadoRegistro").html("Algo fallo, intentalo mas tarde");
-                    $("#modalResultadoRegistro").modal("show");
-
+                    alertify.error('Registro exitoso!')
+                    // $("#msjResultadoRegistro").html("Algo fallo, intentalo mas tarde");
+                    // $("#modalResultadoRegistro").modal("show");
                 }
             });
         })
 }
 
+//PAGINAR LAS ORGANIZACIONES EN LA LISTA
 function agregarPaginacionListaOrganizaciones(){
+    $('#navListaOrganizaciones').html('');
     $('.listaOrganizaciones').after('<div id="navListaOrganizaciones"></div>');
     let organizacion = document.querySelectorAll('.cardOrganizacion')
     let filasMostradas = 2;
@@ -315,7 +306,6 @@ function agregarPaginacionListaOrganizaciones(){
         let numPag = i + 1;
         $('#navListaOrganizaciones').append('<a href="JavaScript:Void(0);" rel="' + i + '">' + numPag + '</a> ');
     }
-
     $( organizacion ).hide();
     $( organizacion ).slice(0, filasMostradas).show();
     $('#navListaOrganizaciones a:first').addClass('active');
@@ -330,59 +320,57 @@ function agregarPaginacionListaOrganizaciones(){
     });
 }
 
-function agregarPaginacionUsuarios(){
-    $('.usuarios').after('<div id="navUsuarios"></div>');
-    let usuario = document.querySelectorAll('.usuario')
-    let filasMostradas = 2;
-    let filasTotales = usuario.length;
 
-    let numPaginas = filasTotales/filasMostradas;
-    for(i = 0; i < numPaginas; i++) {
-        let numPag = i + 1;
-        $('#navUsuarios').append('<a href="#" class="closeLink" rel="' + i + '">' + numPag + '</a> ');
-    }
-
-    $( usuario ).hide();
-    $( usuario ).slice(0, filasMostradas).show();
-    $('#navUsuarios a:first').addClass('active');
-    $('#navUsuarios a').bind('click', function(){
-        $('#navUsuarios a').removeClass('active');
-        $(this).addClass('active');
-        let pagActual = $(this).attr('rel');
-        let primerItem = pagActual * filasMostradas;
-        let ultimoItem = primerItem + filasMostradas;
-        $( usuario ).css('opacity','0.0').hide().slice(primerItem, ultimoItem).
-            css('display','block').animate({opacity:1}, 300);
-    });
-}
-
+//MOSTRAR EL MODAL DE REGISTRO COMO ORGANIZACION
 function mostrarRegistrarseComoOrganizacion(){
     mostrarComo('organizacion')
 }
 
+//MOSTRAR EL MODAL DE REGISTRO COMO COLABORADOR
 function mostrarRegistrarseComoColaborador(){
     mostrarComo('colaborador')
 }
 
-function getOrganizaciones( ){
+//TRAER TODAS LAS ORGANIZACIONES
+function getOrganizaciones(){
+    fetch('/getOrganizaciones/')
+        .then(response => response.json())
+        .then(data => {
+            let organizaciones = data.organizaciones;
+            llenarOrganizaciones( organizaciones );
+        })
+}
 
-    var icon = {
+//CARGAR LAS ORGANIZACIONES EN LA LISTA
+function llenarOrganizaciones( organizaciones ){
 
-        'alimentos': 'utensils',
-        'ropa': 'tshirt',
-        'dinero': 'donate',
-        'limpieza': 'spray-can',
-        'servicios': 'hands-helping',
-        'varios': 'hand-holding-heart'
-    }
+    // Borro los marcadores del mapa
+    $(".leaflet-marker-icon").remove(); $(".leaflet-popup").remove();
+    $(".leaflet-pane.leaflet-shadow-pane").remove();
 
     let divOrganizaciones = $('.listaOrganizaciones');
     divOrganizaciones.html('');
 
-    fetch('/getOrganizaciones/')
-        .then(response => response.json())
-        .then(data => {
-        let organizaciones = data.organizaciones;
+    //SI NO HAY ORGANIZACIONES CON NO LAS CARGO
+    if( organizaciones.length < 1){
+        divOrganizaciones.html(
+            `<div class="alert alert-danger" role="alert">
+                No se encontraron resultados
+            </div>`
+        );
+    }
+    else{
+
+        var icon = {
+
+            'alimentos': 'utensils',
+            'ropa': 'tshirt',
+            'dinero': 'donate',
+            'limpieza': 'spray-can',
+            'servicios': 'hands-helping',
+            'varios': 'hand-holding-heart'
+        }
+
         organizaciones.forEach(org => {
 
             if(org.necesidades.length>0){
@@ -431,6 +419,27 @@ function getOrganizaciones( ){
                 cargarOrgEnMapa(org);
             }
         })
-        agregarPaginacionListaOrganizaciones();
-    })
+    }
+    agregarPaginacionListaOrganizaciones();
 }
+
+//CARGAR LAS NECESIDADES EN EL MODAL
+function cargarDatosModalDetalleNecesidad( necesidad ){
+        $('.detalleNecesidadModal').html(
+        `<div class="card necesidad ${necesidad.nombreCategoria.toLowerCase()}">
+            <div class="card-body">
+                <div class="container-fluid">
+                    <div class="datosNecesidad">
+                        <p class="font-weight-bold">${necesidad.nombreCategoria}</p>
+                        <p>${necesidad.descripcionNecesidad}</p>
+                        <p>Cantidad: ${necesidad.cantidadNecesidad}</p>
+                        <p>Fecha limite: ${necesidad.fechaLimiteNecesidad}</p>
+                        <p>Estado: en proceso</p>
+                        <p>Colaboradores: 5</p>
+                    </div>
+                </div>
+                <button type="button" class="btn btnColaborar btn-block btn-outline-primary mt-4" data-toggle="modal" data-target="#modalColaborar"><i class="far fa-handshake"></i>COLABORAR</button>
+            </div>
+        </div>`)
+}
+

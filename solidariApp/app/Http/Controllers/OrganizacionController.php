@@ -111,6 +111,38 @@ class OrganizacionController extends Controller
         return view("UIPerfilOrganizacion",['datos'=>$datos]);*/
     }
 
+    public function busquedaOrganizaciones($filtroTexto){
+        $organizaciones = Organizacion::getOrganizaciones();
+        $organizacionesConNecesidad = [];
+
+        foreach( $organizaciones as  $key => $organizacion ){
+            $necesidades = Necesidad::buscarNecesidad( $filtroTexto, $organizacion->idUsuario );
+            $json_array  = json_decode($necesidades, true);
+            $organizacion['necesidades'] = $necesidades;
+            //Si hay necesidades entonces traigo esa organizacion, sino no
+            if( count($json_array) > 0 ){
+                array_push($organizacionesConNecesidad, $organizacion);
+            }
+        }
+        $organizaciones = $organizacionesConNecesidad;
+        return json_encode([
+            'organizaciones' => $organizaciones
+        ]);
+    }
+
+    public function busquedaOrganizacionesPorCategoria($filtroTexto){
+        $organizaciones = Organizacion::getOrganizaciones();
+
+        foreach( $organizaciones as  $key => $organizacion ){
+            $necesidades = Necesidad::buscarNecesidadPorCategoria( $filtroTexto, $organizacion->idUsuario );
+            $organizacion['necesidades'] = $necesidades;
+        }
+
+        return json_encode([
+            'organizaciones' => $organizaciones
+        ]);
+    }
+
     //Traerme todas las organizaciones
     public function getOrganizaciones(){
 
@@ -121,10 +153,7 @@ class OrganizacionController extends Controller
         }
 
         return json_encode([
-        // return response()->json([
             'organizaciones' => $organizaciones
-
-            // 'necesidades' => Necesidad::getOrganizaciones()
         ]);
     }
 

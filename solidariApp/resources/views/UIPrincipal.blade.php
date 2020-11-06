@@ -15,9 +15,9 @@
         <div class="row bg-white rounded justify-content-lg-center pb-3">
             <div class="col-xs-12 col-sm-4 col-lg-3 p-sm-1 p-md-2 mr-n3">
                 <div class="input-group my-2 mt-3 mt-lg-2">
-                    <input class="form-control border-secondary border-right-0" type="text" placeholder="Buscar ... ">
+                    <input class="form-control border-secondary border-right-0" type="text" id="campoBuscarPorTexto" placeholder="Categoría, descripción o nombre de la Org.">
                     <div class="input-group-append">
-                        <button class="btn btn-outline-secondary border-secondary border-left-0" type="button"><i class="fa fa-search fa-xs"></i></button>
+                        <button class="btn btn-outline-secondary border-secondary border-left-0" id="btnBuscarNeccesidades" type="button"><i class="fa fa-search fa-xs"></i></button>
                     </div>
                 </div>
                 <div class = "card listaOrganizaciones border-0" >
@@ -30,7 +30,7 @@
                         <small class="text-muted">Organizaciones en el radio de tu ubicacion</small>
                     </div>
                     <div class="col-8 col-lg-5 ml-2 ml-lg-auto pr-0 pl-2">
-                        <input type="text" id="ubicacion" class="form-control form-control-sm " placeholder="Mi ubicacion">
+                        <input type="text" id="ubicacion" class="form-control form-control-sm " placeholder="Buscar por localidad o direccion">
                     </div>
                     <div class="ml-auto mr-1">
                         <select class="custom-select border-0 mr-0" id="rangoDeVisualizacion">
@@ -51,13 +51,13 @@
                 </div>
                 <div class="row d-flex justify-content-between mx-1 align-items-center border rounded">
                     <div class="col py-2">Filtrar por</div>
-                    <div class="col p-0 btn-group" role="group">
-                        <button class="btn btn-light" data-toggle="tooltip" data-placement="top" title="Filtrar por Alimentos"><i class="fas fa-utensils fa-sm"></i></button>
-                        <button class="btn btn-light" data-toggle="tooltip" data-placement="top" title="Filtrar por Ropa"><i class="fas fa-tshirt fa-sm"></i></button>
-                        <button class="btn btn-light" data-toggle="tooltip" data-placement="top" title="Filtrar por Dinero"><i class="fas fa-donate fa-sm"></i></button>
-                        <button class="btn btn-light" data-toggle="tooltip" data-placement="top" title="Filtrar por productos de limpieza"><i class="fas fa-spray-can fa-sm"></i></button>
-                        <button class="btn btn-light" data-toggle="tooltip" data-placement="top" title="Filtrar por Alimentos"><i class="fas fa-hands-helping fa-sm"></i></button>
-                        <button class="btn btn-light" data-toggle="tooltip" data-placement="top" title="Filtrar por Varios"><i class="fas fa-hand-holding-heart fa-sm"></i></button>
+                    <div class="col p-0 btn-group" id="filtrosCategoria" role="group">
+                        <button class="btn btn-light" data-toggle="tooltip" data-placement="top" title="Alimentos"><i class="fas fa-utensils fa-sm"></i></button>
+                        <button class="btn btn-light" data-toggle="tooltip" data-placement="top" title="Ropa"><i class="fas fa-tshirt fa-sm"></i></button>
+                        <button class="btn btn-light" data-toggle="tooltip" data-placement="top" title="Dinero"><i class="fas fa-donate fa-sm"></i></button>
+                        <button class="btn btn-light" data-toggle="tooltip" data-placement="top" title="Limpieza e higiene"><i class="fas fa-spray-can fa-sm"></i></button>
+                        <button class="btn btn-light" data-toggle="tooltip" data-placement="top" title="Servicios"><i class="fas fa-hands-helping fa-sm"></i></button>
+                        <button class="btn btn-light" data-toggle="tooltip" data-placement="top" title="Varios"><i class="fas fa-hand-holding-heart fa-sm"></i></button>
                     </div>
                 </div>
                 <div class="row px-2" id = "botonesRegistro">

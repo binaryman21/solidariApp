@@ -19,7 +19,35 @@ class Necesidad extends Model
 
     public static function listarNecesidadesPantallaPrincipal($idUsuario)
     {
-        return Necesidad::where("idUsuario",$idUsuario)->with('categoria')->take(2)->get();
+        return Necesidad::where("idUsuario",$idUsuario)
+        ->join('categoriaNecesidad', 'categoriaNecesidad.idCategoria', '=', 'necesidad.idCategoriaNecesidad')    
+        ->take(2)->get();
+    }
+
+    //BUSCAR NECESIDAD POR FILTRO DE TEXTO
+    public static function buscarNecesidad($filtroTexto, $idUsuario)
+    {
+        return Necesidad::select('necesidad.*', 'categoriaNecesidad.*')
+            ->where("necesidad.idUsuario",$idUsuario)
+            ->where(function ($query) use ($filtroTexto) {
+                $query->where("descripcionNecesidad",'like', '%' . $filtroTexto . '%')
+                      ->orWhere("nombreCategoria",'like', '%' . $filtroTexto . '%')
+                      ->orWhere("razonSocial",'like', '%' . $filtroTexto . '%');
+            })
+            ->join('categoriaNecesidad', 'categoriaNecesidad.idCategoria', '=', 'necesidad.idCategoriaNecesidad')    
+            ->join('organizacion', 'organizacion.idUsuario', '=', 'necesidad.idUsuario')    
+            ->take(2)->get();
+    }
+
+    //BUSCAR NECESIDAD POR CATEGORIA
+    public static function buscarNecesidadPorCategoria($filtroTexto, $idUsuario)
+    {
+        return Necesidad::where("idUsuario",$idUsuario)
+            ->where(function ($query) use ($filtroTexto) {
+                $query->where("nombreCategoria",'like', '%' . $filtroTexto . '%');
+            })
+            ->join('categoriaNecesidad', 'categoriaNecesidad.idCategoria', '=', 'necesidad.idCategoriaNecesidad')    
+            ->take(2)->get();
     }
 
     public static function getNecesidad($idNecesidad)
