@@ -7,23 +7,21 @@
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <div class="modal-body p-5">
-        <form>
+      <form enctype="multipart/form-data" action="/updateFotoPerfil" method="POST">
+        <div class="modal-body p-5">
+
           <div>
             Seleccione su nueva foto de perfil.
             Se recomienda un tamaño de 256x256 px minimo.
           </div>
 
-          <form>
-            <div class="form-group">
-              <label for="formControlFile1">Seleccione su nueva foto de perfil:</label>
-              <input type="file" class="form-control-file" id="formControlFile1">
-            </div>
-          </form>
-
-
-          <button type="button" class="btn btn-primary btn-block my-4 " id="btnConfirmarFotoPerfil">Confirmar</button>
-      </div>
+          <div class="form-group">
+            <label for="formControlFile1">Seleccione su nueva foto de perfil:</label>
+            <input type="file" name="fotoPerfil" class="form-control-file" id="formControlFile1">
+          </div>
+          @csrf
+          <button type="submit" class="btn btn-primary btn-block my-4 " id="btnConfirmarFotoPerfil">Confirmar</button>
+        </div>
       </form>
     </div>
   </div>
