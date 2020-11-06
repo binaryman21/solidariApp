@@ -75,11 +75,19 @@ class UsuarioController extends Controller
 
     }
 
-      
-    /*Dar de baja al usuario logeado*/
-    public function updateFotoPerfil($urlFotoPerfil)    
+    /*Actualizar foto de perfil del usuario logeado*/
+    public function updateFotoPerfil()    
     {
-        
+        /*me traigo los archivos que recibo al realizar el submit*/
+        if ($_FILES['fotoPerfil']['error'] == 0) {
+            $fileName = $_FILES['fotoPerfil']['name'];
+            $ubicacionActual = $_FILES['fotoPerfil']['tmp_name'];
+            $urlFotoPerfil = storage_path()."/app/public/fotosPerfil/".$fileName ;
+            move_uploaded_file($ubicacionActual, $urlFotoPerfil);
+        }
+       
+        /*Preparo la url relativa para guardarla en la BDD*/
+        $urlFotoPerfil = "/storage/fotosPerfil/".$fileName ;
         try
         {
             session_start();
@@ -87,7 +95,6 @@ class UsuarioController extends Controller
                 /*Busco el ID del usuario logeado*/
                 $usuarioLogoeado = $_SESSION['usuario'];
                 Usuario::updateFotoPerfil($usuarioLogoeado->idUsuario,$urlFotoPerfil);
-                  
             }
 
             return response()->json([
@@ -95,6 +102,8 @@ class UsuarioController extends Controller
                 'message' => 'ejecucion exitosa'
             ]);
         }
+
+      
         catch (\Exception $e)
         {
             return response()->json([

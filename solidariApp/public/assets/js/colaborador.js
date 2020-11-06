@@ -25,7 +25,7 @@ document.addEventListener('DOMContentLoaded', () => {
     $("#editarMiPerfil").click(camposEditables);
     $("#guardarCambios").click(guardarCambios);
     $("#btnConfirmarDarmeDeBaja").click(bajaUsuario);
-    $("#btnConfirmarFotoPerfil").click(updateFotoPerfil);
+   /* $("#btnConfirmarFotoPerfil").click(updateFotoPerfil);*/
 
     //MODAL EDITAR DOMICILIO
     $("#selectProvincia").change(function(){
@@ -55,23 +55,28 @@ function bajaUsuario()
 }
 
 /*Actualizar foto de perfil de usuario logeado*/
+/*NOTA: se ejecuto esta accion sin js, directamente desde el submit del formulario ejecutando el backend.*/
+/*
 function updateFotoPerfil(urlFotoPerfil)
 {
-    /*rlFotoPerfil = 'https://lh3.googleusercontent.com/a-/AOh14GhTGY3nf9J3kD650nNV6TieHWdgU_wVpKDOMrK1wA=s96-c';*/
+   
+    archivo = $("#formControlFile1").val();
+    console.log(archivo);
+
      axios.post("/updateFotoPerfil/"+"'"+urlFotoPerfil+"'")
     .then((response)=>{
         if(response.data.resultado === 1 ){
            console.log(response.data.message);
 
         }else{
-            /*Ocurrio un error*/
+           
             alert("Ocurrio un error inesperado.");
             console.log(response.data.message);
         }
     });
 
 }
-
+*/
 
 /*Hace los campos editables al apretar boton "Editar"*/
 function camposEditables() {
@@ -228,7 +233,7 @@ function agregarTelefonoAlListado(telefono)
     <div class="col-1 col-mb-1 mb-1">
     <a class="text-danger" id="btnEliminarTelefono${telefono.idTelefono}">
 
-    <i class="fas fa-trash-alt tacho"></i>
+    <i class="fas fa-trash-alt tacho d-none"></i>
     </a>
     <a class="text-primary oculto" id="btnOkEliminarTelefono`+ telefono.idTelefono +`">
 
@@ -242,6 +247,7 @@ function agregarTelefonoAlListado(telefono)
 
     </div>
     </div>`);
+
 
     $("#btnEliminarTelefono" + telefono.idTelefono).click(function(){
         $("#btnEliminarTelefono"+ telefono.idTelefono).hide();
@@ -288,32 +294,11 @@ function agregarTelefono(idUsuario)
             $('#numeroTelefono').val('');
             limpiarValidaciones($('#numeroTelefono'), $('.errorNroTelefono'));
             alertify.success('Telefono agregado');
+            $('.tacho').removeClass('d-none');
         });
     }
 }
-/*
-function getTelefonosUsuario(idUsuario){
-    axios.get("/listarTelefonosUsuario/"+idUsuario)
-    .then((response)=>{
-        let telefonos = response.data.telefonos;
-       $.each(telefonos, function (indexInArray, telefono) {
-           $("#listadoTelefonos").html("");
-            $("#listadoTelefonos").append("<input type='text' class='form-control' value=("+ telefono.codAreaTelefono +")" + telefono.numeroTelefono + " disabled required></input>");
-       });
-    });
-}
 
-function getDomiciliosUsuario(idUsuario){
-    axios.get("/listarDomiciliosUsuario/"+idUsuario)
-    .then((response)=>{
-        let domicilios = response.data.domicilios;
-       $.each(domicilios, function (indexInArray, domicilio) {
-           $("#listadoDomicilios").html("");
-            $("#listadoDomicilios").append("<input type='text' class='form-control' value="+ domicilio.calle + " " + domicilio.numero + ", " + domicilio.localidad + " disabled required></input>");
-       });
-    });
-}
-*/
 function agregarPaginacionComentarios(){
     $('.comentarios').after('<div id="navComentarios"></div>');
     let comentario = document.querySelectorAll('.comentario')

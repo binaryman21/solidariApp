@@ -66,7 +66,6 @@ function updateNecesidad(necesidad){
 
 function bajaNecesidad(idNecesidad){
 
-
     axios.post("/bajaNecesidad",{idNecesidad:idNecesidad})
     .then((response)=>{
         desbloquearBoton($("#btnConfirmarEliminarNecesidad"));
@@ -82,6 +81,7 @@ function bajaNecesidad(idNecesidad){
             alert(response.data.message);
         }
     });
-
-
 }
+
+
+

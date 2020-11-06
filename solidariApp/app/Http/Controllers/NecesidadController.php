@@ -58,6 +58,13 @@ class NecesidadController extends Controller
         ]);
     }
 
+    public static function buscarNecesidad($filtroTexto, $idUsuario)
+    {
+        return response()->json([
+            'necesidades' => Necesidad::buscarNecesidad($filtroTexto, $idUsuario)
+        ]);
+    }
+
     public function getNecesidad($idNecesidad)
     {
         return response()->json([

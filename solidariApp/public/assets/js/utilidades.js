@@ -155,3 +155,80 @@ async function obtenerCoordenadas(calle, nro, localidad, provincia){
     // console.log( lat + lon );
     return coordenadas;
   }
+
+
+  function agregarPaginacionUsuarios(){
+    $('#navUsuarios').html('');
+    $('#listadoColaboraciones').after('<div id="navUsuarios"></div>');
+    let usuario = document.querySelectorAll('.usuario')
+    let filasMostradas = 2;
+    let filasTotales = usuario.length;
+    let numPaginas = filasTotales/filasMostradas;
+    for(i = 0; i < numPaginas; i++) {
+        let numPag = i + 1;
+        $('#navUsuarios').append('<a href="#" class="closeLink" rel="' + i + '">' + numPag + '</a> ');
+    }
+    $( usuario ).hide();
+    $( usuario ).slice(0, filasMostradas).show();
+    $('#navUsuarios a:first').addClass('active');
+    $('#navUsuarios a').bind('click', function(){
+        $('#navUsuarios a').removeClass('active');
+        $(this).addClass('active');
+        let pagActual = $(this).attr('rel');
+        let primerItem = pagActual * filasMostradas;
+        let ultimoItem = primerItem + filasMostradas;
+        $( usuario ).css('opacity','0.0').hide().slice(primerItem, ultimoItem).
+            css('display','block').animate({opacity:1}, 300);
+    });
+}
+
+function listarTiposOrganizaciones()
+{
+    return axios.get('/listarTipoOrganizaciones')
+        .then((response)=>{
+            let tiposOrganizaciones = response.data.tipoOrganizaciones;
+            $.each(tiposOrganizaciones, function (indexInArray, tipoOrganizacion) {
+                $("#selectTipoOrganizacion").append("<option value = '" + tipoOrganizacion.idTipoOrganizacion + "'>" + tipoOrganizacion.nombreTipoOrganizacion +"</option");
+            });
+        });
+}
+
+//BUSCAR UNA NECESIDAD POR EL FILTRO DEL CAMPO TEXTO
+function buscarNecesidadPorTexto( ){
+    let filtroBusqueda = $('#campoBuscarPorTexto').val();
+    fetch( "/buscarOrganizaciones/" + filtroBusqueda )
+        .then(response => response.json())
+        .then(data => {
+            let organizaciones = data.organizaciones;
+            llenarOrganizaciones( organizaciones );
+        })
+}
+
+//BUSCAR UNA NECESIDAD POR EL FILTRO DE CATEGORIA
+function filtrarPorCategoria( e ){
+    let target = e.target; // where was the click?
+    let filtroBusqueda = target.title;
+    if( filtroBusqueda === ''){
+        filtroBusqueda = target.parentElement.title
+    }
+    $('#filtrosCategoria button').attr('disabled', true);
+    fetch( "/buscarOrganizacionesPorCategoria/" + filtroBusqueda )
+        .then(response => response.json())
+        .then(data => {
+            let organizaciones = data.organizaciones;
+            llenarOrganizaciones( organizaciones );
+            $('#filtrosCategoria button').attr('disabled', false); 
+        })
+}
+
+//BUSCAR UNA ORGANIZACION POR FILTRO DE UBICACION
+function filtrarPorUbicacion(){
+    let filtroBusqueda = $('#ubicacion').val();
+    console.log( filtroBusqueda );
+    fetch( "/buscarOrganizacionesPorUbicacion/" + filtroBusqueda )
+        .then(response => response.json())
+        .then(data => {
+            let organizaciones = data.organizaciones;
+            llenarOrganizaciones( organizaciones );
+        })
+}
