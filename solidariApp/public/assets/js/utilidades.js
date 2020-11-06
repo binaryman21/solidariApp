@@ -158,7 +158,8 @@ async function obtenerCoordenadas(calle, nro, localidad, provincia){
 
 
   function agregarPaginacionUsuarios(){
-    $('.usuarios').after('<div id="navUsuarios"></div>');
+    $('#navUsuarios').html('');
+    $('#listadoColaboraciones').after('<div id="navUsuarios"></div>');
     let usuario = document.querySelectorAll('.usuario')
     let filasMostradas = 2;
     let filasTotales = usuario.length;

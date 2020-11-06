@@ -123,6 +123,7 @@ function getColaboraciones(idNecesidad,modo = "colaborador")
                             });
                         }
             });
+            agregarPaginacionUsuarios();
         }
         else
         {
