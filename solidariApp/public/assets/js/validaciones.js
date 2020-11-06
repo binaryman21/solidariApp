@@ -69,7 +69,7 @@ function validarRegistroOrganizacion( e ){
 
     validarNombreOrganizacion( nombreOrganizacion, errorNombreOrg ) ? contador++ : false;
     validarTipoOrganizacion( tipoOrg, errorTipoOrg ) ? contador++ : false;
-    validarTelefono() ? contador++ : false;
+    validarTelefono(' ') ? contador++ : false;
     validarDireccion() ? contador++ : false;
     if( contador === 4 ){
         return true;

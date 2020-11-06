@@ -90,7 +90,7 @@ function onSignIn(googleUser) {
         pass:""
     };
     $("#btnLogin").html("<span id = 'spinnerBtnLogin' class='spinner-border spinner-border-sm' role='status' aria-hidden='true'></span>Un momento...");
-    $("#btnLogin").attr("disabled", true);
+    // $("#btnLogin").attr("disabled", true);
 
     axios.post("/login",JSON.stringify(datosLogin))
     .then((response)=>{
@@ -98,25 +98,27 @@ function onSignIn(googleUser) {
         //estaba con lenght, tiene que ser con null!
         if(response.data.usuario === null)
         {
-        // Logica para cuando el usuario se loguea sin estar registrado
-
-            $("#idGoogle").val(profile.getId());
-            $("#urlFotoPerfilUsuario").val(profile.getImageUrl());
-            $("#emailUsuario").val(profile.getEmail());
-
-           if($("#modoRegistro").val() == "colaborador"){
-
-            $("#nombreColaborador").val(profile.getGivenName());
-            $("#apellidoColaborador").val(profile.getFamilyName());
-            $("#modalRegistroColOrg").modal("show");
-           }
-           else if($("#modoRegistro").val() == "organizacion")
-           {
-               $("#modalRegistroColOrg").modal("show");
+            // Logica para cuando el usuario se registra con Google 
+            if( $("#modoRegistro").val() !== "ingresar" ){
+                $("#idGoogle").val(profile.getId());
+                $("#urlFotoPerfilUsuario").val(profile.getImageUrl());
+                $("#emailUsuario").val(profile.getEmail());
+        
+                if($("#modoRegistro").val() == "colaborador"){
+                    $("#nombreColaborador").val(profile.getGivenName());
+                    $("#apellidoColaborador").val(profile.getFamilyName());
+                    $("#modalRegistroColOrg").modal("show");
+                }
+                else if($("#modoRegistro").val() == "organizacion"){
+                    $("#modalRegistroColOrg").modal("show");
+                }
             }
-            // alertify.error('No estas registrado!!');
+            else{
+                // Logica para cuando el usuario se loguea sin estar registrado
+                alertify.error('No estas registrado!!');
+                signOut();
+            }
             $("#modalLogin").modal("hide");
-            // signOut();
         }
         else{
             $("#modalLogin").modal("hide");

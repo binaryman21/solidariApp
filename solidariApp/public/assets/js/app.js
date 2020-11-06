@@ -1,6 +1,9 @@
+//FUNCIONALIDAD DE LOS MAPAS
+
 var map = L.map('mapa', {
     attributionControl: false
 });
+
 var markers = []
 
 document.addEventListener('DOMContentLoaded', ()=> {
@@ -61,11 +64,11 @@ function getLocation() {
               $('#modalOrganizaciones .modal-footer').append('<button class = "btn btn-link float-right">Ver todas</button>');
               organizacion.necesidades.forEach( necesidad => {
               $(`#modalOrganizaciones .listaNecesidades${organizacion.idUsuario}`).append(
-                  `<div class="card necesidad ${necesidad.categoria.nombreCategoria.toLowerCase()}">           
+                  `<div class="card necesidad ${necesidad.nombreCategoria.toLowerCase()}">           
                     <div class="card-body">
                       <div class="row">
                         <div class="col-md-6">
-                          <p class="font-weight-bold">${necesidad.categoria.nombreCategoria}</p>
+                          <p class="font-weight-bold">${necesidad.nombreCategoria}</p>
                           <p>${necesidad.descripcionNecesidad}</p>
                         </div>
                       <div class = "col-md-6 d-flex flex-row align-items-end justify-content-end">
