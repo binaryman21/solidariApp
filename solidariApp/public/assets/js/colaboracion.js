@@ -1,7 +1,5 @@
 function cargarDatosModalDetalleNecesidad( necesidad, modo = "colaborador")
 {
-
-
         $('.detalleNecesidadModal').html(
         `<div class="card necesidad ${necesidad.nombreCategoria.toLowerCase()}">
             <div class="card-body">

@@ -233,7 +233,7 @@ function agregarTelefonoAlListado(telefono)
     <div class="col-1 col-mb-1 mb-1">
     <a class="text-danger" id="btnEliminarTelefono${telefono.idTelefono}">
 
-    <i class="fas fa-trash-alt tacho"></i>
+    <i class="fas fa-trash-alt tacho d-none"></i>
     </a>
     <a class="text-primary oculto" id="btnOkEliminarTelefono`+ telefono.idTelefono +`">
 
@@ -247,6 +247,7 @@ function agregarTelefonoAlListado(telefono)
 
     </div>
     </div>`);
+
 
     $("#btnEliminarTelefono" + telefono.idTelefono).click(function(){
         $("#btnEliminarTelefono"+ telefono.idTelefono).hide();
@@ -293,32 +294,11 @@ function agregarTelefono(idUsuario)
             $('#numeroTelefono').val('');
             limpiarValidaciones($('#numeroTelefono'), $('.errorNroTelefono'));
             alertify.success('Telefono agregado');
+            $('.tacho').removeClass('d-none');
         });
     }
 }
-/*
-function getTelefonosUsuario(idUsuario){
-    axios.get("/listarTelefonosUsuario/"+idUsuario)
-    .then((response)=>{
-        let telefonos = response.data.telefonos;
-       $.each(telefonos, function (indexInArray, telefono) {
-           $("#listadoTelefonos").html("");
-            $("#listadoTelefonos").append("<input type='text' class='form-control' value=("+ telefono.codAreaTelefono +")" + telefono.numeroTelefono + " disabled required></input>");
-       });
-    });
-}
 
-function getDomiciliosUsuario(idUsuario){
-    axios.get("/listarDomiciliosUsuario/"+idUsuario)
-    .then((response)=>{
-        let domicilios = response.data.domicilios;
-       $.each(domicilios, function (indexInArray, domicilio) {
-           $("#listadoDomicilios").html("");
-            $("#listadoDomicilios").append("<input type='text' class='form-control' value="+ domicilio.calle + " " + domicilio.numero + ", " + domicilio.localidad + " disabled required></input>");
-       });
-    });
-}
-*/
 function agregarPaginacionComentarios(){
     $('.comentarios').after('<div id="navComentarios"></div>');
     let comentario = document.querySelectorAll('.comentario')

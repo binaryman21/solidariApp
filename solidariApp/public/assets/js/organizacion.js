@@ -210,7 +210,7 @@ function agregarTelefonoAlListado(telefono)
         </div>
         <div class="col-1 col-mb-1 mb-1">
             <a class="text-danger" id="btnEliminarTelefono${telefono.idTelefono}">
-                <i class="fas fa-trash-alt tacho"></i>
+                <i class="fas fa-trash-alt tacho d-none"></i>
             </a>
             <a class="text-primary oculto" id="btnOkEliminarTelefono${telefono.idTelefono}">
                 <i class="far fa-check-circle"></i>
@@ -277,6 +277,7 @@ function agregarTelefono(idUsuario)
             $('#numeroTelefono').val('');
             limpiarValidaciones($('#numeroTelefono'), $('.errorNroTelefono'));
             alertify.success('Telefono agregado');
+            $('.tacho').removeClass('d-none');
         });
 
 }
@@ -455,7 +456,7 @@ function crearCardNecesidad(necesidad,vistaVisitante)
     if(vistaVisitante == 0){
     btnEditarNecesidad = `<p class="editarNecesidad">
     <a data-toggle="modal" href="#modalEditarNecesidad" id="editar${necesidad.idNecesidad}"><i class="far fa-edit"></i></a>
-</p>`;
+    </p>`;
     }
 
     $("#necesidad" + necesidad.idNecesidad).html("");
