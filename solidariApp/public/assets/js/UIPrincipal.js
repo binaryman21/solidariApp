@@ -13,7 +13,7 @@ $( document ).ready(function() {
 
     listarProvincias(1);
     listarTiposOrganizaciones();
-    agregarPaginacionUsuarios();
+    // agregarPaginacionUsuarios();
 
     // EVENTOS
     $("#btnRegistrarseComoOrganizacion").on('click', mostrarRegistrarseComoOrganizacion);
@@ -417,7 +417,7 @@ function cargarDatosModalDetalleNecesidad( necesidad ){
                         <p class="font-weight-bold">${necesidad.nombreCategoria}</p>
                         <p>${necesidad.descripcionNecesidad}</p>
                         <p>Cantidad: ${necesidad.cantidadNecesidad}</p>
-                        <p>Fecha limite: ${necesidad.fechaLimiteNecesidad}</p>
+                        <p>Fecha limite: ${ new Date(necesidad.fechaLimiteNecesidad).toLocaleDateString('es-AR') }</p>
                         <p>Estado: en proceso</p>
                         <p>Colaboradores: 5</p>
                     </div>

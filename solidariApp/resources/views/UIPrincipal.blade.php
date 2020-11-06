@@ -1,5 +1,5 @@
 @extends("layouts.master")
-@section('title', 'Inicio')
+@section('title', 'SolidariApp')
 @section("meta")
     @parent
     <!-- Google

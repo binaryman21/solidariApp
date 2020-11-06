@@ -8,7 +8,7 @@ function cargarDatosModalDetalleNecesidad( necesidad, modo = "colaborador")
                         <p class="font-weight-bold">${necesidad.nombreCategoria}</p>
                         <p>${necesidad.descripcionNecesidad}</p>
                         <p>Cantidad: ${necesidad.cantidadNecesidad}</p>
-                        <p>Fecha limite: ${necesidad.fechaLimiteNecesidad}</p>
+                        <p>Fecha limite: ${ new Date(necesidad.fechaLimiteNecesidad).toLocaleDateString('es-AR') }</p>
                         <p>Estado: en proceso</p>
                     </div>
                 </div>

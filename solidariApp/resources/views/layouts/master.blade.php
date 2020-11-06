@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>@yield('title', 'SolidariAPP')</title>
     @yield("meta")
+    <link rel="icon" type="image/png" href="{{URL::asset('assets/img/app-logo/Logo - Medio.png')}}">
     <!-- Google -->
     <meta name="google-signin-scope" content="profile email">
     <meta name="google-signin-client_id" content="417738312803-p5r2efabrok2v72si97hoe2r0ctvrsg0.apps.googleusercontent.com">
