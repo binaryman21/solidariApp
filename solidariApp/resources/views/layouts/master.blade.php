@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>@yield('title', 'SolidariAPP')</title>
     @yield("meta")
-    <link rel="icon" type="image/png" href="{{URL::asset('assets/img/app-logo/Logo - Medio.png')}}">
+    <link rel="icon" type="image/png" href="{{URL::asset('assets/img/app-logo/Logo - Chico.png')}}">
     <!-- Google -->
     <meta name="google-signin-scope" content="profile email">
     <meta name="google-signin-client_id" content="417738312803-p5r2efabrok2v72si97hoe2r0ctvrsg0.apps.googleusercontent.com">
@@ -36,7 +36,7 @@
 <body class="d-flex flex-column h-100">
     <header>
         <nav class="navbar navbar-expand-lg navbar-light bg-light shadow-sm mb-md-3 bg-white pl-lg-5">
-            <a class="navbar-brand" href="{{url('/')}}">SolidariAPP</a>
+            <a class="navbar-brand" href="{{url('/')}}"><span class="mr-2"><img src="{{URL::asset('assets/img/app-logo/Logo - Chico.png')}}" alt="logo"></span>SolidariAPP</a>
             <button class="navbar-toggler border-0 collapsed" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <i class="fas fa-bars fa-sm"></i>
             </button>
