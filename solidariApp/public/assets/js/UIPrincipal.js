@@ -34,6 +34,9 @@ $( document ).ready(function() {
     //Evento click para los filtros por categoria
     $('#filtrosCategoria button').on('click', filtrarPorCategoria);
 
+    //Evento click para el filtro por ubicacion
+    $('#btnBuscarPorUbicacion').on('click', filtrarPorUbicacion);
+
     //evento click en el btnCrearCuenta del modalRegistroColOrg
     $("#btnCrearCuenta").click(function(){
         //Deshabilito el boton y muestro el spinner

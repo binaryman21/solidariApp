@@ -29,4 +29,16 @@ class Organizacion extends Model
                 ->take(30)
                 ->get();
     }
+
+    public static function buscarOrganizacionesPorUbicacion( $ubicacion )
+    {
+        return Organizacion::join('usuario', 'organizacion.idUsuario', '=', 'usuario.idUsuario')
+            ->join('tipoOrganizacion', 'tipoOrganizacion.idTipoOrganizacion', '=', 'organizacion.idTipoOrganizacion')    
+            ->join('domicilio', 'domicilio.idUsuario', '=', 'organizacion.idUsuario')    
+            ->join('localidad', 'domicilio.idLocalidad', '=', 'localidad.idLocalidad')    
+            ->where('domicilio.calle', 'like', '%' . $ubicacion . '%')
+            ->orWhere('localidad.nombreLocalidad', 'like', '%' . $ubicacion . '%')
+                ->take(30)
+                ->get();
+    }
 }
