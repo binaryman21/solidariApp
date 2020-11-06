@@ -4,10 +4,8 @@ $(document).ready(function(){
 });
 
 function login(datosLogin){
-
     axios.post("/login",JSON.stringify(datosLogin))
     .then((response)=>{
-
         if(response.data.usuario == null){
             $("#errorLogin").show();
             $("#emailUsuario").val("");
@@ -32,9 +30,8 @@ function isLoggedIn(funcionSuccess)
         {
             mostrarInterfazSesionIniciada(data.usuario);
             if(funcionSuccess != undefined){
-                funcionSuccess(data.usuario);
+                funcionSuccess(data.usuario.idUsuario);
             }
-
         }
     });
 }
@@ -51,8 +48,7 @@ function mostrarInterfazSesionIniciada(usuario)
 }
 
 function signOut() {
-
-    var auth2 = gapi.auth2.getAuthInstance();
+    let auth2 = gapi.auth2.getAuthInstance();
     auth2.signOut().then(function () {
       console.log('User signed out.');
     });
@@ -63,11 +59,17 @@ function cerrarSesion()
     signOut();
     axios.post("/logOut")
     .then((response)=>{
-
+        console.log( response.data );
+        console.log('chau');
         window.location= "/";
     });
-
 }
+
+function onLoad() {
+    gapi.load('auth2', function() {
+      gapi.auth2.init();
+    });
+  }
 
 function onSignIn(googleUser) {
     // Useful data for your client-side scripts:
@@ -81,8 +83,8 @@ function onSignIn(googleUser) {
 
     // The ID token you need to pass to your backend:
     let id_token = googleUser.getAuthResponse().id_token;
-    console.log("ID Token: " + id_token);
-    var datosLogin = {
+    // console.log("ID Token: " + id_token);
+    let datosLogin = {
         email: profile.getEmail(),
         idGoogle: profile.getId(),
         pass:""
@@ -93,23 +95,28 @@ function onSignIn(googleUser) {
     axios.post("/login",JSON.stringify(datosLogin))
     .then((response)=>{
 
-        if(response.data.usuario.length == 0)
+        //estaba con lenght, tiene que ser con null!
+        if(response.data.usuario === null)
         {
+        // Logica para cuando el usuario se loguea sin estar registrado
 
-            $("#idGoogle").val(profile.getId());
-            $("#urlFotoPerfilUsuario").val(profile.getImageUrl());
-            $("#emailUsuario").val(profile.getEmail());
+            // $("#idGoogle").val(profile.getId());
+            // $("#urlFotoPerfilUsuario").val(profile.getImageUrl());
+            // $("#emailUsuario").val(profile.getEmail());
 
-           if($("#modoRegistro").val() == "colaborador"){
+        //    if($("#modoRegistro").val() == "colaborador"){
 
-            $("#nombreColaborador").val(profile.getGivenName());
-            $("#apellidoColaborador").val(profile.getFamilyName());
-            $("#modalRegistroColOrg").modal("show");
-           }
-           else if($("#modoRegistro").val() == "organizacion")
-           {
-            $("#modalRegistroColOrg").modal("show");
-           }
+        //     $("#nombreColaborador").val(profile.getGivenName());
+        //     $("#apellidoColaborador").val(profile.getFamilyName());
+        //     $("#modalRegistroColOrg").modal("show");
+        //    }
+        //    else if($("#modoRegistro").val() == "organizacion")
+        //    {
+        // }
+        // $("#modalRegistroColOrg").modal("show");
+            alertify.error('No estas registrado!!');
+            $("#modalLogin").modal("hide");
+            signOut();
         }
         else{
             $("#modalLogin").modal("hide");

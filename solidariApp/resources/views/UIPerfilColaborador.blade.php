@@ -27,7 +27,7 @@
 
             </div>
             <div class="col-md-2">
-                <button class="btn btn-block btn-primary" type="button" id="editarMiPerfil">Editar <i class="far fa-edit"></i> </button>
+                <button class="btn btn-block btn-primary d-none" type="button" id="editarMiPerfil">Editar <i class="far fa-edit"></i> </button>
                 <button class="btn btn-block btn-primary d-none" type="button" id="guardarCambios">Guardar Cambios</button>
             </div>
         </div>

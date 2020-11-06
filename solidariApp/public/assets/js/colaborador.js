@@ -1,13 +1,31 @@
-isLoggedIn(cargarDatosPerfil);
+
 
 document.addEventListener('DOMContentLoaded', () => {
+
+     //Obtengo la url para saber el id de organizacion
+     var url = $(location).attr('href').split("/");
+     //alert(url);
+     if(url.length == 5 && url[4] != "" && !isNaN(url[4])){
+        isLoggedIn();
+         getColaborador(url[4],1);
+
+     }
+     else if(url.length == 4 || (url.length == 5 && url[4] == "")){
+        isLoggedIn(getColaborador);
+        $("#editarMiPerfil").removeClass("d-none");
+
+     }
+     else{
+         window.location = "/";
+     }
+
     agregarPaginacionComentarios();
     agregarPaginacionNecesidades();
 
     $("#editarMiPerfil").click(camposEditables);
     $("#guardarCambios").click(guardarCambios);
     $("#btnConfirmarDarmeDeBaja").click(bajaUsuario);
-    $("#btnConfirmarFotoPerfil").click(updateFotoPerfil);
+   /* $("#btnConfirmarFotoPerfil").click(updateFotoPerfil);*/
 
     //MODAL EDITAR DOMICILIO
     $("#selectProvincia").change(function(){
@@ -31,29 +49,34 @@ function bajaUsuario()
             /*Ocurrio un error*/
             alert("Ocurrio un error inesperado.");
             console.log(response.data.message);
-        }   
+        }
     });
 
 }
 
 /*Actualizar foto de perfil de usuario logeado*/
+/*NOTA: se ejecuto esta accion sin js, directamente desde el submit del formulario ejecutando el backend.*/
+/*
 function updateFotoPerfil(urlFotoPerfil)
 {
-    /*rlFotoPerfil = 'https://lh3.googleusercontent.com/a-/AOh14GhTGY3nf9J3kD650nNV6TieHWdgU_wVpKDOMrK1wA=s96-c';*/
+   
+    archivo = $("#formControlFile1").val();
+    console.log(archivo);
+
      axios.post("/updateFotoPerfil/"+"'"+urlFotoPerfil+"'")
     .then((response)=>{
         if(response.data.resultado === 1 ){
            console.log(response.data.message);
 
         }else{
-            /*Ocurrio un error*/
+           
             alert("Ocurrio un error inesperado.");
             console.log(response.data.message);
-        }   
+        }
     });
 
 }
-
+*/
 
 /*Hace los campos editables al apretar boton "Editar"*/
 function camposEditables() {
@@ -92,20 +115,16 @@ function guardarCambios() {
     $(".editarDom").addClass("d-none");
 }
 
+function getColaborador(idUsuario,vistaVisitante){
 
-function cargarDatosPerfil(usuario)
-{
 
-    getColaborador(usuario.idUsuario);
     $("#btnAgregarTelefono").click(function()
     {
-        agregarTelefono(usuario.idUsuario);
+        agregarTelefono(idUsuario);
     });
     //getTelefonosUsuario(usuario.idUsuario);
     //getDomiciliosUsuario(usuario.idUsuario);
-}
 
-function getColaborador(idUsuario){
     axios.get("/getColaborador/"+idUsuario)
     .then((response)=>{
         var colaborador = response.data.colaborador;
@@ -114,11 +133,17 @@ function getColaborador(idUsuario){
         $("#correo").html(colaborador.emailUsuario);
         $("#fechaAltaUsuario").html(colaborador.fechaAltaUsuario);
         $.each(response.data.domicilios, function (indexInArray, domicilio) {
+            var piso = "Piso";
+            var depto = "Depto";
+
+            if(domicilio.piso == '') piso = '';
+            if(domicilio.depto == '') depto = '';
+
             $("#listadoDomicilios").html("");
              $("#listadoDomicilios").append(`<div class="form-row" >
              <div class = "d-flex flex-row m-2  domicilio w-100 rounded p-1 justify-content-between">
              <div class = "d-flex flex-column m-2 " id ="domicilio` + domicilio.idDomicilio + `">
-                <p class = "m-1 domicilioInfo1">` + domicilio.calle + ` ` + domicilio.numero + ` Piso ` + domicilio.piso + ` Depto ` + domicilio.depto + `</p>
+                <p class = "m-1 domicilioInfo1">` + domicilio.calle + ` ` + domicilio.numero + ` ` + piso + ` ` + domicilio.piso + ` ` + depto + ` ` + domicilio.depto + `</p>
                 <p class = "m-1">` + domicilio.nombreLocalidad + `, ` + domicilio.nombreProvincia + `</p>
             </div>
             <a class="ml-2" id="btnEditarDomicilio` + domicilio.idDomicilio + `" data-toggle="modal" href="#modalEditarDomicilio"><i class="far fa-edit editarDom d-none"></i></a>
@@ -149,6 +174,7 @@ function cargarDatosModalDomicilio(domicilio){
         if( validarDireccion() ){
             $("#btnGuardarDomicilio").html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>Un momento');
             actualizarDomicilio(domicilio);
+            $("#modalEditarDomicilio").modal("toggle");
         }
     });
 }
@@ -171,11 +197,17 @@ function actualizarDomicilio(domicilio)
         domicilio.nombreProvincia = $("#selectProvincia option:selected").text(),
         domicilio.latitud = coordenadas.lat,
         domicilio.longitud = coordenadas.lon
-        
+
         axios.post("/actualizarDomicilio",domicilio)
         .then((response)=>{
+            var piso = "Piso";
+            var depto = "Depto";
+
+            if(domicilio.piso == '') piso = '';
+            if(domicilio.depto == '') depto = '';
+
             $("#btnGuardarDomicilio").html('Guardar');
-            $("#domicilio" + domicilio.idDomicilio).html(`<p class = "m-1 domicilioInfo1">` + domicilio.calle + ` ` + domicilio.numero + ` Piso ` + domicilio.piso + ` Depto ` + domicilio.depto + `</p>
+            $("#domicilio" + domicilio.idDomicilio).html(`<p class = "m-1 domicilioInfo1">` + domicilio.calle + ` ` + domicilio.numero + ` ` + piso + ` ` + domicilio.piso + ` ` + depto + ` ` + domicilio.depto + `</p>
             <p class = "m-1">` + domicilio.nombreLocalidad + `, ` + domicilio.nombreProvincia + `</p>`);
 
             $("#btnEditarDomicilio"+ domicilio.idDomicilio).click(function(){
@@ -201,7 +233,7 @@ function agregarTelefonoAlListado(telefono)
     <div class="col-1 col-mb-1 mb-1">
     <a class="text-danger" id="btnEliminarTelefono${telefono.idTelefono}">
 
-    <i class="fas fa-trash-alt tacho d-none"></i>
+    <i class="fas fa-trash-alt tacho"></i>
     </a>
     <a class="text-primary oculto" id="btnOkEliminarTelefono`+ telefono.idTelefono +`">
 
@@ -242,12 +274,13 @@ function eliminarTelefono(idTelefono)
     axios.post("/eliminarTelefono",{idTelefono:idTelefono})
     .then((response)=>{
         $("#telefono" + idTelefono).remove();
+        alertify.error('Telefono eliminado');
     });
 }
 
 function agregarTelefono(idUsuario)
 {
-    if( validarTelefono() ){
+    if( validarTelefono('') ){
         $("#btnAgregarTelefono").html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>');
         var telefono = {idTelefono:0,codAreaTelefono:$("#codArea").val(),numeroTelefono:$("#numeroTelefono").val(),esCelular:0,idUsuario:idUsuario}
         axios.post("/registrarTelefono",telefono)
@@ -255,6 +288,11 @@ function agregarTelefono(idUsuario)
             $("#btnAgregarTelefono").html('<i class="fas fa-plus-circle agregarNecesidad"></i>');
             telefono.idTelefono = response.data.idTelefono;
             agregarTelefonoAlListado(telefono);
+            $('#codArea').val('');
+            limpiarValidaciones($('#codArea'), $('.errorCodArea'));
+            $('#numeroTelefono').val('');
+            limpiarValidaciones($('#numeroTelefono'), $('.errorNroTelefono'));
+            alertify.success('Telefono agregado');
         });
     }
 }

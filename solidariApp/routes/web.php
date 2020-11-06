@@ -28,9 +28,9 @@ Route::get('/colaborador', function()
 
 })->name('UIColaborador');
 
-Route::get('/colaborador/visitante', function(){return view('UIPerfilColaboradorVisitante');})->name('UIColaboradorVisitante');
-Route::get('/organizacion/visitante', function(){return view('UIPerfilOrganizacionVisitante');})->name('UIOrganizacionVisitante');
-
+Route::get('/colaborador/{idUsuario}', function($idUsuario){return view('UIPerfilColaborador');})->name('UIColaboradorVisitante');
+Route::get('/organizacion/{idUsuario}', function($idUsuario){return view('UIPerfilOrganizacion');})->name('UIOrganizacionVisitante');
+//Route::get('/organizacion/{idUsuario}', 'App\Http\Controllers\OrganizacionController@getOrganizacion')->name('getOrganizacion');
 Route::get('/organizacion', function()
 {
     session_start();
@@ -72,7 +72,7 @@ Route::get('/listarDomiciliosUsuario/{idUsuario}', 'App\Http\Controllers\Domicil
 Route::get ('/listarTelefonosUsuario/{idUsuario}', 'App\Http\Controllers\TelefonoController@listarTelefonosUsuario')->name('listarTelefonosUsuario');
 Route::get('/listarNecesidades/{idUsuario}', 'App\Http\Controllers\NecesidadController@listarNecesidades')->name('listarNecesidades');
 Route::post('/bajaUsuario','App\Http\Controllers\UsuarioController@bajaUsuario')->name('bajaUsuario');
-Route::post('/updateFotoPerfil/{urlFotoPerfil}','App\Http\Controllers\UsuarioController@updateFotoPerfil')->name('updateFotoPerfil');
+Route::post('/updateFotoPerfil','App\Http\Controllers\UsuarioController@updateFotoPerfil')->name('updateFotoPerfil');
 Route::get('/listarNecesidadesPantallaPrincipal/{idUsuario}', 'App\Http\Controllers\NecesidadController@listarNecesidadesPantallaPrincipal')->name('listarNecesidadesPantallaPrincipal');
 Route::get('/getNecesidad/{idNecesidad}', 'App\Http\Controllers\NecesidadController@getNecesidad')->name('getNecesidad');
 Route::post('/bajaNecesidad','App\Http\Controllers\NecesidadController@bajaNecesidad')->name('bajaNecesidad');
@@ -81,6 +81,8 @@ Route::post('/actualizarDescripcion', 'App\Http\Controllers\OrganizacionControll
 Route::post('/registrarTelefono', 'App\Http\Controllers\TelefonoController@registrarTelefono')->name('listarNecesidades');
 Route::post('/eliminarTelefono', 'App\Http\Controllers\TelefonoController@eliminarTelefono')->name('listarNecesidades');
 Route::post('/actualizarDomicilio', 'App\Http\Controllers\DomicilioController@actualizarDomicilio')->name('listarNecesidades');
+Route::post('/registrarColaboracion', 'App\Http\Controllers\ColaboracionController@registrarColaboracion')->name('registrarColaboracion');
+Route::get('/getColaboraciones/{idNecesidad}', 'App\Http\Controllers\ColaboracionController@getColaboraciones')->name('getColaboraciones');
 
 
 

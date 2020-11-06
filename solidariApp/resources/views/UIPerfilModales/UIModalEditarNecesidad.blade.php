@@ -19,14 +19,16 @@
                     <div class="form-group">
                         <label for="txtDescripcion">Necesito:</label>
                         <textarea name="txtDescripcion" id="txtDescripcion" class="form-control" cols="30" rows="8"  required></textarea>
+                        <span class="text-danger" id="errorDescripcion"></span>
                     </div>
                     <div class="form-group">
                         <label for="inpCantidad">Cantidad:</label>
-                        <input type="number" name="inpCantidad" id="inpCantidad" class="form-control" min="0">
+                        <input type="number" name="inpCantidad" id="inpCantidad" class="form-control" min="0" val="0">
+                        <span class="text-danger" id="errorCantidad"></span>
                     </div>
                     <div class="form-group">
                         <label for="inpFechaLimite">Fecha limite:</label>
-                        <input type="date" name="inpFechaLimite" id="inpFechaLimite" class="form-control">
+                        <input type="date" name="inpFechaLimite" id="inpFechaLimite" class="form-control" required>
                         <span class="text-danger" id="errorFechaLimite"></span>
                     </div>
                     <br>

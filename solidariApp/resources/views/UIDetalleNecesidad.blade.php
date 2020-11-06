@@ -9,118 +9,28 @@
           </button>
         </div>
         <div class="modal-body">
+            <div class="alert alert-success" role="alert" id = "alertDetalleNecesidad">
+                <button type="button" class="close alert-close"  aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                <h4 class="alert-heading" id = "tituloAlert">alert title</h4>
+                <p id = "mensajeAlert">alert msj</p>
+              </div>
             <div class="row">
                 <div class="col-md-6 detalleNecesidadModal">
 
                 </div>
                 <div class="col-md-6">
-                    <p class="lead">
-                        Ayudando en esta necesidad <span>5</span> colaboradores.
+                    <p class="lead" id = "cantDeColaboraciones2">
+
                     </p>
-                    <div class="busqueda mt-2 mb-2">
+                    <div class="busqueda mt-2 mb-2 d-none" id = "inputBuscarColaboraciones">
                         <input class="form-control" type="search" placeholder="Buscar" aria-label="Search">
-                    </div> 
-                    <div class="usuarios">
-                        <div class="usuario">
-                            <div class="alert alert-secondary" role="alert">
-                                <div class="row align-items-center">
-                                    <div class="col-md-2">
-                                        <img class="rounded-circle imgPerfilOrg" style="height: 50px;"src="{{URL::asset('assets/img/user.png')}}" alt="imagen de usuario">
-                                    </div>
-                                    <div class="col-md-3">
-                                        <p class="lead">
-                                            Usuario
-                                        </p>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <p>Cantidad: 2</p>
-                                    </div>
-                                    <div class="col-md-3">
-                                        <a href="#">Ver perfil</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div> <!-- usuario -->
-                        <div class="usuario">
-                            <div class="alert alert-secondary" role="alert">
-                                <div class="row align-items-center">
-                                    <div class="col-md-2">
-                                        <img class="rounded-circle imgPerfilOrg" style="height: 50px;"src="{{URL::asset('assets/img/user.png')}}" alt="imagen de usuario">
-                                    </div>
-                                    <div class="col-md-3">
-                                        <p class="lead">
-                                            Usuario
-                                        </p>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <p>Cantidad: 2</p>
-                                    </div>
-                                    <div class="col-md-3">
-                                        <a href="#">Ver perfil</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div> <!-- usuario -->
-                        <div class="usuario">
-                            <div class="alert alert-secondary" role="alert">
-                                <div class="row align-items-center">
-                                    <div class="col-md-2">
-                                        <img class="rounded-circle imgPerfilOrg" style="height: 50px;"src="{{URL::asset('assets/img/user.png')}}" alt="imagen de usuario">
-                                    </div>
-                                    <div class="col-md-3">
-                                        <p class="lead">
-                                            Usuario
-                                        </p>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <p>Cantidad: 2</p>
-                                    </div>
-                                    <div class="col-md-3">
-                                        <a href="#">Ver perfil</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div> <!-- usuario -->
-                        <div class="usuario">
-                            <div class="alert alert-secondary" role="alert">
-                                <div class="row align-items-center">
-                                    <div class="col-md-2">
-                                        <img class="rounded-circle imgPerfilOrg" style="height: 50px;"src="{{URL::asset('assets/img/user.png')}}" alt="imagen de usuario">
-                                    </div>
-                                    <div class="col-md-3">
-                                        <p class="lead">
-                                            Usuario
-                                        </p>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <p>Cantidad: 2</p>
-                                    </div>
-                                    <div class="col-md-3">
-                                        <a href="#">Ver perfil</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div> <!-- usuario -->
-                        <div class="usuario">
-                            <div class="alert alert-secondary" role="alert">
-                                <div class="row align-items-center">
-                                    <div class="col-md-2">
-                                        <img class="rounded-circle imgPerfilOrg" style="height: 50px;"src="{{URL::asset('assets/img/user.png')}}" alt="imagen de usuario">
-                                    </div>
-                                    <div class="col-md-3">
-                                        <p class="lead">
-                                            Usuario
-                                        </p>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <p>Cantidad: 2</p>
-                                    </div>
-                                    <div class="col-md-3">
-                                        <a href="#">Ver perfil</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div> <!-- usuario -->
+                    </div>
+                    <div class="usuarios" id = "listadoColaboraciones">
+                        <div class="spinner-border text-primary" role="status">
+                            <span class="sr-only">Loading...</span>
+                          </div>
                     </div> <!-- usuarios -->
                 </div>
             </div>
@@ -149,7 +59,7 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-          <button type="button" class="btn btn-primary">Aceptar</button>
+          <button type="button" class="btn btn-primary" id = "btnConfirmarColaboracion">Aceptar</button>
         </div>
       </div>
     </div>

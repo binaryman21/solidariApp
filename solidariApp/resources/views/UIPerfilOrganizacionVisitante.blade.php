@@ -23,7 +23,7 @@
                 </div>
             </div>
             <div class="col-md-2">
-                
+
                 <button class="btn btn-block btn-success" type="button" data-toggle="modal" href="#modalSubscribirse">Subscribirse</button>
                 <button class="btn btn-block btn-primary" type="button" data-toggle="modal" href="#modalCalificar">Calificar</button>
             </div>
@@ -129,7 +129,7 @@
                     <!--<a href="#" class="text-secondary">Editar datos</a>
                     <a href="#" class="text-danger">Darme de baja</a>-->
                     <a href="#" class="text-danger" data-toggle="modal" data-target="#modalReportar">Reportar Colaborador</a>
-                    
+
 
                 </div>
             </div>

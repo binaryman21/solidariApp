@@ -8,6 +8,7 @@ use App\Models\Usuario;
 use App\Models\Link;
 use App\Models\Colaborador;
 use App\Models\Domicilio;
+use App\Models\RegistroCalificaciones;
 use App\Models\Telefono;
 class ColaboradorController extends Controller
 {
@@ -98,4 +99,7 @@ class ColaboradorController extends Controller
 
         ]);
     }
+
+
+
 }

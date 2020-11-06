@@ -1,6 +1,24 @@
-isLoggedIn(cargarDatosPerfil);
+
 
 document.addEventListener('DOMContentLoaded', ()=>{
+
+    //Obtengo la url para saber el id de organizacion
+    var url = $(location).attr('href').split("/");
+    //alert(url);
+    if(url.length == 5 && url[4] != "" && !isNaN(url[4])){
+        isLoggedIn();
+        getOrganizacion(url[4],1);
+        $("#btnSuscribirse").removeClass("d-none");
+        $("#btnCalificar").removeClass("d-none");
+    }
+    else if(url.length == 4 || (url.length == 5 && url[4] == "")){
+        isLoggedIn(getOrganizacion);
+        $("#editarMiPerfil").removeClass("d-none");
+    }
+    else{
+        window.location = "/";
+    }
+
     listarCategorias();
     agregarPaginacionComentarios();
     $("#editarMiPerfil").click(camposEditables);
@@ -24,7 +42,6 @@ document.addEventListener('DOMContentLoaded', ()=>{
         $("#btnGuardarDescripcion").show();
         $("#descripcionOrganizacion").attr("contenteditable","true");
         $("#descripcionOrganizacion").focus();
-
     });
 
     $("#btnEditarDescripcion").click(function()
@@ -33,37 +50,37 @@ document.addEventListener('DOMContentLoaded', ()=>{
         $("#btnGuardarDescripcion").show();
         $("#descripcionOrganizacion").attr("contenteditable","true");
         $("#descripcionOrganizacion").focus();
-
     });
 
-
-    // cargarNecesidades(necesidades);
     agregarPaginacionNecesidades();
+
     //MODAL EDITAR DOMICILIO
     $("#selectProvincia").change(function(){
-
         let idProvincia = $("#selectProvincia").val();
         $("#selectLocalidad").html("");
         listarLocalidades(idProvincia,1);
     });
 
-    //cargarNecesidades(necesidades);
-    // agregarPaginacionNecesidades();
-
 })
 
-function cargarDatosPerfil(usuario)
-{
+function getOrganizacion(idUsuario, vistaVisitante = 0){
+
+    if(vistaVisitante == 0){
     $("#btnNuevaNecesidad").click(function(){
+        limpiarValidaciones($("#inpFechaLimite"),  $("#errorFechaLimite") );
+        limpiarValidaciones($("#slctCategoria"), $("#errorCategoria"));
+        limpiarValidaciones($("#inpCantidad"), $("#errorCantidad"));
+        limpiarValidaciones($("#txtDescripcion"), $("#errorDescripcion"));
         document.getElementById("formEditarNecesidad").reset();
         $("#modalEditarNecesidad .modal-content").removeClass($("#categoriaActual").val());
         $("#btnGuardarCambiosNecesidad").unbind( "click" );
         $("#btnGuardarCambiosNecesidad").click(function(e){
-
             e.preventDefault();
-            bloquearBoton($("#btnGuardarCambiosNecesidad"));
-            registrarNecesidad(usuario.idUsuario);
-                });
+            if( validarNecesidad() ){
+                bloquearBoton($("#btnGuardarCambiosNecesidad"));
+                registrarNecesidad(usuario.idUsuario);
+            }
+        });
     });
     $("#btnGuardarDescripcion").click(function()
     {
@@ -75,17 +92,14 @@ function cargarDatosPerfil(usuario)
             agregarTelefono(usuario.idUsuario);
         }
     });
-    getOrganizacion(usuario.idUsuario);
-}
-
-function getOrganizacion(idUsuario){
-
+    }
     //CARGAR NECESIDADES
-    cargarNecesidades( idUsuario );
+    cargarNecesidades( idUsuario, vistaVisitante );
     fetch("/getOrganizacion/"+idUsuario)
     .then(response => response.json())
     .then(data => {
-        var organizacion = data.organizacion;
+        let organizacion = data.organizacion;
+
         $("#nombreOrganizacion").html(organizacion.razonSocial);
         $("#tipoOrganizacion").html(organizacion.nombreTipoOrganizacion);
         $("#urlFotoPerfilOrganizacion").attr("src",organizacion.urlFotoPerfilUsuario);
@@ -97,14 +111,20 @@ function getOrganizacion(idUsuario){
         $("#descripcionOrganizacion").html(organizacion.descripcionOrganizacion);
         $("#fechaAltaUsuario").html(organizacion.fechaAltaUsuario);
         $.each(data.domicilios, function (indexInArray, domicilio) {
+            let piso = "Piso";
+            let depto = "Depto";
+
+            if(domicilio.piso == '') piso = '';
+            if(domicilio.depto == '') depto = '';
+
             $("#listadoDomicilios").html("");
              $("#listadoDomicilios").append(`<div class="form-row" >
              <div class = "d-flex flex-row m-2  domicilio w-100 rounded p-1 justify-content-between">
-             <div class = "d-flex flex-column m-2 " id ="domicilio` + domicilio.idDomicilio + `">
-                <p class = "m-1 domicilioInfo1">` + domicilio.calle + ` ` + domicilio.numero + ` Piso ` + domicilio.piso + ` Depto ` + domicilio.depto + `</p>
-                <p class = "m-1">` + domicilio.nombreLocalidad + `, ` + domicilio.nombreProvincia + `</p>
+             <div class = "d-flex flex-column m-2 " id ="domicilio${domicilio.idDomicilio}">
+                <p class = "m-1 domicilioInfo1">${domicilio.calle} ${domicilio.numero} Piso ${domicilio.piso} Depto ${domicilio.depto}</p>
+                <p class = "m-1">${domicilio.nombreLocalidad} ,  ${domicilio.nombreProvincia}</p>
             </div>
-            <a class="ml-2" id="btnEditarDomicilio` + domicilio.idDomicilio + `" data-toggle="modal" href="#modalEditarDomicilio"><i class="far fa-edit editarDom d-none"></i></a>
+            <a class="ml-2" id="btnEditarDomicilio${domicilio.idDomicilio}" data-toggle="modal" href="#modalEditarDomicilio"><i class="far fa-edit editarDom d-none"></i></a>
             </div>
          </div>`);
 
@@ -131,6 +151,7 @@ function cargarDatosModalDomicilio(domicilio){
          if( validarDireccion() ){
             $("#btnGuardarDomicilio").html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>Un momento');
             actualizarDomicilio(domicilio);
+            $("#modalEditarDomicilio").modal("toggle");
         }
     });
 }
@@ -156,10 +177,16 @@ function actualizarDomicilio(domicilio)
             axios
             .post("/actualizarDomicilio",domicilio)
             .then((response)=>{
-                $("#btnGuardarDomicilio").html('Guardar');
-                $("#domicilio" + domicilio.idDomicilio).html(`<p class = "m-1 domicilioInfo1">` + domicilio.calle + ` ` + domicilio.numero + ` Piso ` + domicilio.piso + ` Depto ` + domicilio.depto + `</p>
-                <p class = "m-1">` + domicilio.nombreLocalidad + `, ` + domicilio.nombreProvincia + `</p>`);
+                var piso = "Piso";
+                var depto = "Depto";
 
+                if(domicilio.piso == '') piso = '';
+                if(domicilio.depto == '') depto = '';
+
+                $("#btnGuardarDomicilio").html('Guardar');
+                $("#domicilio" + domicilio.idDomicilio).html(`<p class = "m-1 domicilioInfo1">` + domicilio.calle + ` ` + domicilio.numero + ` ` + piso + ` ` + domicilio.piso + ` ` + depto + ` ` + domicilio.depto + `</p>
+                <p class = "m-1">` + domicilio.nombreLocalidad + `, ` + domicilio.nombreProvincia + `</p>`);
+                alertify.success('Domicilio modificado');
                 $("#btnEditarDomicilio"+ domicilio.idDomicilio).click(function(){
                     cargarDatosModalDomicilio(domicilio);
                 });
@@ -231,6 +258,7 @@ function eliminarTelefono(idTelefono)
     axios.post("/eliminarTelefono",{idTelefono:idTelefono})
     .then((response)=>{
         $("#telefono" + idTelefono).remove();
+        alertify.error('Telefono eliminado');
     });
 }
 
@@ -243,6 +271,11 @@ function agregarTelefono(idUsuario)
             $("#btnAgregarTelefono").html('<i class="fas fa-plus-circle agregarNecesidad"></i>');
             telefono.idTelefono = response.data.idTelefono;
             agregarTelefonoAlListado(telefono);
+            $('#codArea').val('');
+            limpiarValidaciones($('#codArea'), $('.errorCodArea'));
+            $('#numeroTelefono').val('');
+            limpiarValidaciones($('#numeroTelefono'), $('.errorNroTelefono'));
+            alertify.success('Telefono agregado');
         });
 
 }
@@ -343,7 +376,6 @@ function agregarPaginacionNecesidades(){
 function mostrarModalEditarNecesidad(necesidad){
     limpiarValidaciones($("#inpFechaLimite"),  $("#errorFechaLimite") );
     limpiarValidaciones($("#slctCategoria"), $("#errorCategoria"));
-
     let fecha = necesidad.fechaLimiteNecesidad;
     fecha = fecha.split(" ");
     $("#slctCategoria").val(necesidad.categoria.idCategoria);
@@ -363,15 +395,15 @@ function mostrarModalEditarNecesidad(necesidad){
 
         document.getElementById("formEditarNecesidad").reset();
 
-          })
+    })
     //Click Guardar necesidad editada
     $("#btnGuardarCambiosNecesidad").unbind( "click" );
     $("#btnGuardarCambiosNecesidad").click((e)=>{
 
         e.preventDefault();
         if(necesidad.idNecesidad != 0){
-
             if(validarNecesidad()) {
+                console.log(necesidad);
                 bloquearBoton($("#btnGuardarCambiosNecesidad"));
                 updateNecesidad(necesidad);
             }
@@ -394,7 +426,7 @@ function mostrarModalEditarNecesidad(necesidad){
 
 
 // Cargar necesidades dinamicamente desde la BD
-function cargarNecesidades ( idUsuario ){
+function cargarNecesidades ( idUsuario, vistaVisitante){
     fetch(`/listarNecesidades/${ idUsuario }`)
         .then(response => response.json())
         .then(data => {
@@ -408,7 +440,7 @@ function cargarNecesidades ( idUsuario ){
             // console.log( necesidad );
             if(necesidad.fechaBajaNecesidad == null){
                 divNecesidades.append(`<div class="col-md-6" id="necesidad${necesidad.idNecesidad}"></div>`);
-                crearCardNecesidad(necesidad);
+                crearCardNecesidad(necesidad,vistaVisitante);
             }
 
         })
@@ -416,8 +448,15 @@ function cargarNecesidades ( idUsuario ){
     })
 }
 
-function crearCardNecesidad(necesidad)
+function crearCardNecesidad(necesidad,vistaVisitante)
 {
+    var btnEditarNecesidad = "";
+    if(vistaVisitante == 0){
+    btnEditarNecesidad = `<p class="editarNecesidad">
+    <a data-toggle="modal" href="#modalEditarNecesidad" id="editar${necesidad.idNecesidad}"><i class="far fa-edit"></i></a>
+</p>`;
+    }
+
     $("#necesidad" + necesidad.idNecesidad).html("");
         let cardNecesidad =   `<div class="card necesidad ${necesidad.categoria.nombreCategoria.toLowerCase()}">
         <div class="card-body">
@@ -429,11 +468,9 @@ function crearCardNecesidad(necesidad)
                     <p>Fecha limite: ${ new Date(necesidad.fechaLimiteNecesidad).toLocaleDateString('es-AR') }</p>
                 </div>
                 <div class="col-md-6 text-right d-flex flex-column justify-content-between">
-                    <p class="editarNecesidad">
-                        <a data-toggle="modal" href="#modalEditarNecesidad" id="editar${necesidad.idNecesidad}"><i class="far fa-edit"></i></a>
-                    </p>
+                `+ btnEditarNecesidad + `
                     <p class="ayudasRecibidas">
-                        <a href="#"><span class="nroAyudas">0</span><i class="fas fa-user-friends"></i></a>
+                        <a href="#" data-toggle="modal" data-target="#modalDetalleNecesidad" id = "btnDetalleNecesidad`+ necesidad.idNecesidad + `" ><span class="nroAyudas">`+ necesidad.colaboraciones_count + `</span><i class="fas fa-user-friends"></i></a>
                     </p>
                     <p class="estado">
                         <i class="fas fa-spinner"></i>
@@ -442,11 +479,27 @@ function crearCardNecesidad(necesidad)
             </div>
         </div>
     </div>`;
+
+
+
     $("#necesidad" + necesidad.idNecesidad).append(cardNecesidad);
-    $("#editar" + necesidad.idNecesidad).unbind("click");
-     //evento click del btn editar necesidad
-     $("#editar" + necesidad.idNecesidad).click(()=>{
-        console.log("idNecesidad " + necesidad.idNecesidad);
-        mostrarModalEditarNecesidad(necesidad);
-    })
+
+    if(vistaVisitante == 0){
+        $("#editar" + necesidad.idNecesidad).unbind("click");
+        //evento click del btn editar necesidad
+        $("#editar" + necesidad.idNecesidad).click(()=>{
+            console.log("idNecesidad " + necesidad.idNecesidad);
+            mostrarModalEditarNecesidad(necesidad);
+        });
+
+        $("#btnDetalleNecesidad"+ necesidad.idNecesidad).click(()=>{
+            cargarDatosModalDetalleNecesidad(necesidad, "organizacion");
+        });
+    }
+    else
+    {
+        $("#btnDetalleNecesidad"+ necesidad.idNecesidad).click(()=>{
+            cargarDatosModalDetalleNecesidad(necesidad);
+        });
+    }
 }
