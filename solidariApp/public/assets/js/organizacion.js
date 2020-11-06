@@ -122,7 +122,7 @@ function getOrganizacion(idUsuario, vistaVisitante = 0){
              $("#listadoDomicilios").append(`<div class="form-row" >
              <div class = "d-flex flex-row m-2  domicilio w-100 rounded p-1 justify-content-between">
              <div class = "d-flex flex-column m-2 " id ="domicilio${domicilio.idDomicilio}">
-                <p class = "m-1 domicilioInfo1">${domicilio.calle} ${domicilio.numero} Piso ${domicilio.piso} Depto ${domicilio.depto}</p>
+                <p class = "m-1 domicilioInfo1">${domicilio.calle} ${domicilio.numero}` +` `+ piso +` `+ `${domicilio.piso} `+` `+ depto +` `+` ${domicilio.depto}</p>
                 <p class = "m-1">${domicilio.nombreLocalidad} ,  ${domicilio.nombreProvincia}</p>
             </div>
             <a class="ml-2" id="btnEditarDomicilio${domicilio.idDomicilio}" data-toggle="modal" href="#modalEditarDomicilio"><i class="far fa-edit editarDom d-none"></i></a>
