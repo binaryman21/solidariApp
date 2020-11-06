@@ -78,18 +78,18 @@ function getOrganizacion(idUsuario, vistaVisitante = 0){
             e.preventDefault();
             if( validarNecesidad() ){
                 bloquearBoton($("#btnGuardarCambiosNecesidad"));
-                registrarNecesidad(usuario.idUsuario);
+                registrarNecesidad(idUsuario);
             }
         });
     });
     $("#btnGuardarDescripcion").click(function()
     {
-        actualizarDescripcion(usuario.idUsuario);
+        actualizarDescripcion(idUsuario);
     });
     $("#btnAgregarTelefono").click(function()
     {
         if( validarTelefono( '' ) ){
-            agregarTelefono(usuario.idUsuario);
+            agregarTelefono(idUsuario);
         }
     });
     }

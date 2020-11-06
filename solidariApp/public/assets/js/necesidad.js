@@ -20,7 +20,7 @@ function registrarNecesidad(idUsuario)
         desbloquearBoton($("#btnGuardarCambiosNecesidad"));
         let divNecesidades = $('.necesidades');
         divNecesidades.prepend(`<div class="col-md-6" id="necesidad${necesidad.idNecesidad}"></div>`);
-        crearCardNecesidad(necesidad);
+        crearCardNecesidad(necesidad,0);
         agregarPaginacionNecesidades();
         alertify.success('Necesidad creada');
     });
