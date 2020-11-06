@@ -27,8 +27,10 @@
             </div>
         </div>
             <div class="col-md-2">
-                <button class="btn btn-block btn-primary btn-sm" type="button" id="editarMiPerfil">Editar <i class="far fa-edit"></i> </button>
-                <button class="btn btn-block btn-primary d-none btn-sm" type="button" id="guardarCambios">Guardar Cambios</button>
+                <button class="btn btn-block btn-primary d-none" type="button" id="editarMiPerfil">Editar <i class="far fa-edit"></i> </button>
+                <button class="btn btn-block btn-primary d-none" type="button" id="guardarCambios">Guardar Cambios</button>
+                <button class="btn btn-block btn-success d-none" type="button" data-toggle="modal" href="#modalSubscribirse" id = "btnSuscribirse">Subscribirse</button>
+                <button class="btn btn-block btn-primary d-none" type="button" data-toggle="modal" href="#modalCalificar"  id = "btnCalificar">Calificar</button>
             </div>
         </div>
     </div>
