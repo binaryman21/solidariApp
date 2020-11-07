@@ -129,6 +129,7 @@ function getColaboraciones(idNecesidad,modo = "colaborador")
         else
         {
             $("#listadoColaboraciones").html("");
+            $('#navUsuarios').html('');
             $("#cantDeColaboraciones2").html("Aun no hay colaboraciones, animate y se el primero!");
         }
     });
