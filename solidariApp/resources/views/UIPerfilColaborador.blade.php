@@ -235,5 +235,6 @@
 <script type="text/javascript" src="{{URL::asset('assets/js/logueo.js')}}"></script>
 <script type="text/javascript" src="{{URL::asset('assets/js/colaborador.js')}}"></script>
 <script type="text/javascript" src="{{URL::asset('assets/js/validaciones.js')}}"></script>
+<script type="text/javascript" src="{{URL::asset('assets/js/usuario.js')}}"></script>
 <script src="https://apis.google.com/js/platform.js?onload=onLoad" async defer></script>
 @endsection

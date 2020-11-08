@@ -24,6 +24,27 @@ function validarLogin(){
     return false;
 }
 
+function validarClavesCambio(){
+    let contador = 0;
+    let claveVieja = $('#claveVieja');
+    let claveNueva = $('#claveNueva');
+    let claveNuevaConfirmacion = $('#confirmacionClaveNueva');
+    let errorClaveNuevaConfirmacion = $('#errorClaveNuevaConfirmacion');
+    let errorClaveNueva = $('#errorClaveNueva');
+    let errorClaveVieja = $('#errorClaveVieja');
+    validarPassLogin( claveVieja, errorClaveVieja ) ? contador++ : false;
+    validarPassLogin( claveNuevaConfirmacion, errorClaveNuevaConfirmacion ) ? contador++ : false;
+    if ( validarPass (claveNueva, errorClaveNueva ) ){
+        contador++;
+        validarPassNueva( claveNueva, claveNuevaConfirmacion, errorClaveNueva, errorClaveNuevaConfirmacion ) ? contador++ : false;
+    } 
+        
+    if( contador === 4 ){
+        return true;
+    }
+    return false;
+}
+
 function validarRegistroGoogle( e ) {
     let contador = 0;
 
@@ -124,6 +145,18 @@ function validarPassLogin( pass, error ) {
         return false;
     }
     quitarError( pass, error );
+    return true;
+}
+
+function validarPassNueva( pass1, pass2, error1, error2 ) {
+
+    if( pass1.val() !== pass2.val() ){
+        mostrarError( pass1, error1, 'Las claves no coinciden.');
+        mostrarError( pass2, error2, 'Las claves no coinciden.');
+        return false;
+    }
+    quitarError( pass1, error1 );
+    quitarError( pass2, error2 );
     return true;
 }
 

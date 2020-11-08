@@ -9,6 +9,7 @@ class UsuarioController extends Controller
 {
     public function login(Request $request){
         $datosLogin = json_decode($request->getContent());
+        $datosLogin->pass = hash( 'sha256',  $datosLogin->pass );
         $usuario = Usuario::login($datosLogin);
         if($usuario != null){
             session_start();
@@ -23,7 +24,7 @@ class UsuarioController extends Controller
         $datos = json_decode($request->getContent());
         return response()->json([
             'isUser' => Usuario::isUser($datos->email)
-            ]);
+        ]);
     }
 
     public function isLoggedIn(){
@@ -31,13 +32,13 @@ class UsuarioController extends Controller
         if(isset($_SESSION['usuario'])){
             return response()->json([
                 'usuario' => $_SESSION['usuario']
-                ]);
+            ]);
 
         }
         else{
             return response()->json([
                 'usuario' =>  null
-                ]);
+            ]);
 
         }
     }
@@ -55,8 +56,8 @@ class UsuarioController extends Controller
             session_start();
             if(isset($_SESSION['usuario'])){
                 /*Busco el ID del usuario logeado*/
-                $usuarioLogoeado = $_SESSION['usuario'];
-                Usuario::bajaUser($usuarioLogoeado->idUsuario);
+                $usuarioLogueado = $_SESSION['usuario'];
+                Usuario::bajaUser($usuarioLogueado->idUsuario);
                   
             }
 
@@ -81,7 +82,7 @@ class UsuarioController extends Controller
         session_start();
         if(isset($_SESSION['usuario'])){
             /*Busco el ID del usuario logeado*/
-            $usuarioLogoeado = $_SESSION['usuario'];
+            $usuarioLogueado = $_SESSION['usuario'];
           
         }
 
@@ -90,17 +91,17 @@ class UsuarioController extends Controller
             $fileName = $_FILES['fotoPerfil']['name'];
             $ubicacionActual = $_FILES['fotoPerfil']['tmp_name'];
             /*Concateno el ID usuario al nombre del archivo*/
-            $urlFotoPerfil = storage_path()."/app/public/fotosPerfil/".$usuarioLogoeado->idUsuario.$fileName ; 
+            $urlFotoPerfil = storage_path()."/app/public/fotosPerfil/".$usuarioLogueado->idUsuario.$fileName ; 
             move_uploaded_file($ubicacionActual, $urlFotoPerfil);
         }
        
         /*Preparo la url relativa para guardarla en la BDD*/
-        $urlFotoPerfil = "/storage/fotosPerfil/".$usuarioLogoeado->idUsuario.$fileName ;
+        $urlFotoPerfil = "/storage/fotosPerfil/".$usuarioLogueado->idUsuario.$fileName ;
         
         try
         {
             if(isset($_SESSION['usuario'])){
-                Usuario::updateFotoPerfil($usuarioLogoeado->idUsuario,$urlFotoPerfil);
+                Usuario::updateFotoPerfil($usuarioLogueado->idUsuario,$urlFotoPerfil);
             }
 
             return redirect()->route('UIColaborador');
@@ -125,30 +126,61 @@ class UsuarioController extends Controller
     {
         try
         {
-                $datosUsuario = json_decode($request->getContent());
+            $datosUsuario = json_decode($request->getContent());
 
-                $usuario = new Usuario;
+            $usuario = new Usuario;
 
-                $usuario->claveUsuario = $datosUsuario->claveUsuario;
-                $usuario->emailUsuario = $datosUsuario->emailUsuario;
-                $usuario->tokenGoogle = $datosUsuario->tokenGoogle;
-                $usuario->urlFotoPerfilUsuario = $datosUsuario->urlFotoPerfilUsuario;
-                $usuario->idRolUsuario = $datosUsuario->idRolUsuario;
-                $usuario->idEstadoUsuario = 1;
-                $usuario->save();
+            $usuario->claveUsuario = hash( 'sha256', $datosUsuario->claveUsuario );
+            $usuario->emailUsuario = $datosUsuario->emailUsuario;
+            $usuario->tokenGoogle = $datosUsuario->tokenGoogle;
+            $usuario->urlFotoPerfilUsuario = $datosUsuario->urlFotoPerfilUsuario;
+            $usuario->idRolUsuario = $datosUsuario->idRolUsuario;
+            $usuario->idEstadoUsuario = 1;
+            $usuario->save();
 
             return response()->json([
                 'message' => "Registro exitoso"
 
             ]);
         }
-            catch (\Exception $e)
-            {
+        catch (\Exception $e)
+        {
+            return response()->json([
+                'message' => $e->getMessage()
+            ]);
+        }
+
+    }   
+
+    public function cambiarClave( Request $request ){
+        try
+        {
+            $datosClaves = json_decode($request->getContent());
+            $datosClaves->claveVieja = hash( 'sha256', $datosClaves->claveVieja );
+            $datosClaves->claveNueva = hash( 'sha256', $datosClaves->claveNueva );
+            $user = Usuario::comprobarClave( $datosClaves );
+            if ( $user ){
+                Usuario::cambiarClave( $datosClaves );
+            }
+            else{
                 return response()->json([
-                    'message' => $e->getMessage()
+                    'resultado' => 0,
+                    'message' => "clave incorrecta" 
                 ]);
             }
-
         }
+        catch (\Exception $e)
+        {
+            return response()->json([
+                'resultado' => 0,
+                'message' => $e->getMessage()
+            ]);
+        }
+
+        return response()->json([
+            'resultado' => 1,
+            'message' => "cambio de clave exitoso!"
+        ]);
+    }
 
 }
