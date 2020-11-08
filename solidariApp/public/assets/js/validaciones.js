@@ -45,6 +45,24 @@ function validarClavesCambio(){
     return false;
 }
 
+function validarDenuncia(){
+    let contador = 0;
+    let fechaIncidente = $('#fechaIncidente');
+    let motivoReporte = $('#motivoReporte');
+    let textoDescripcion = $('#textoDescripcion');
+    let errorFechaIncidente = $('#errorFechaIncidente');
+    let errorMotivoReporte = $('#errorMotivoReporte');
+    let errorTextoDescripcion = $('#errorTextoDescripcion');
+    validarFechaDenuncia( fechaIncidente, errorFechaIncidente ) ? contador++ : false;
+    validarDescripcion( textoDescripcion, errorTextoDescripcion ) ? contador++ : false;
+    validarMotivoDenuncia( motivoReporte, errorMotivoReporte ) ? contador ++ : false;
+        
+    if( contador === 3 ){
+        return true;
+    }
+    return false;
+}
+
 function validarRegistroGoogle( e ) {
     let contador = 0;
 
@@ -377,6 +395,17 @@ function validarLocalidad( localidad, error ){
     return true;
 }
 
+function validarMotivoDenuncia( motivo, error ){
+
+    if( motivo.val() === null ){
+        mostrarError( motivo, error, 'Seleccione un motivo.');
+        return false;
+    }
+
+    quitarError( motivo, error );
+    return true;
+}
+
 function validarTipoOrganizacion( tipoOrg, error ){
 
     if( tipoOrg.val() === null ){
@@ -436,6 +465,16 @@ function validarCantidad(cantidad, error){
         return false;
     }
     quitarError( cantidad, error );
+    return true;
+}
+
+function validarFechaDenuncia(fecha,error){
+    if (fecha.val() == 0)
+    {
+        mostrarError( fecha, error, 'Ingrese una fecha');
+        return false;
+    }
+    quitarError( fecha, error );
     return true;
 }
 
