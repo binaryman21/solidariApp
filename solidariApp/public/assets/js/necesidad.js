@@ -50,7 +50,7 @@ function updateNecesidad(necesidad){
     .then((response)=>{
         if(response.data.resultado){
             //cargarNecesidades(idUsuario);
-            crearCardNecesidad(necesidad);
+            crearCardNecesidad(necesidad,0);
             agregarPaginacionNecesidades();
             $("#modalEditarNecesidad").modal('toggle');
             document.getElementById("formEditarNecesidad").reset();

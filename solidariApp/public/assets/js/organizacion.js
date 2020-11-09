@@ -95,12 +95,11 @@ function getOrganizacion(idUsuario, vistaVisitante = 0){
     }
     //CARGAR NECESIDADES
     cargarNecesidades( idUsuario, vistaVisitante );
-    console.log( idUsuario );
     fetch("/getOrganizacion/"+idUsuario)
     .then(response => response.json())
     .then(data => {
         let organizacion = data.organizacion;
-        console.log( organizacion.razonSocial );
+
         $("#nombreOrganizacion").html(organizacion.razonSocial);
         $("#tipoOrganizacion").html(organizacion.nombreTipoOrganizacion);
         $("#urlFotoPerfilOrganizacion").attr("src",organizacion.urlFotoPerfilUsuario);
@@ -210,7 +209,7 @@ function agregarTelefonoAlListado(telefono)
         </div>
         <div class="col-1 col-mb-1 mb-1">
             <a class="text-danger" id="btnEliminarTelefono${telefono.idTelefono}">
-                <i class="fas fa-trash-alt tacho d-none"></i>
+                <i class="fas fa-trash-alt tacho"></i>
             </a>
             <a class="text-primary oculto" id="btnOkEliminarTelefono${telefono.idTelefono}">
                 <i class="far fa-check-circle"></i>
@@ -277,7 +276,6 @@ function agregarTelefono(idUsuario)
             $('#numeroTelefono').val('');
             limpiarValidaciones($('#numeroTelefono'), $('.errorNroTelefono'));
             alertify.success('Telefono agregado');
-            $('.tacho').removeClass('d-none');
         });
 
 }
@@ -367,7 +365,9 @@ function agregarPaginacionNecesidades(){
     $('#navNecesidades a').bind('click', function(){
         $('#navNecesidades a').removeClass('active');
         $(this).addClass('active');
+
         let pagActual = $(this).attr('rel');
+
         let primerItem = pagActual * filasMostradas;
         let ultimoItem = primerItem + filasMostradas;
         $( necesidad ).css('opacity','0.0').hide().slice(primerItem, ultimoItem).
@@ -456,7 +456,7 @@ function crearCardNecesidad(necesidad,vistaVisitante)
     if(vistaVisitante == 0){
     btnEditarNecesidad = `<p class="editarNecesidad">
     <a data-toggle="modal" href="#modalEditarNecesidad" id="editar${necesidad.idNecesidad}"><i class="far fa-edit"></i></a>
-    </p>`;
+</p>`;
     }
 
     $("#necesidad" + necesidad.idNecesidad).html("");
