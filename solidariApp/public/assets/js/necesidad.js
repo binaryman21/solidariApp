@@ -53,11 +53,7 @@ function updateNecesidad(necesidad){
     .then((response)=>{
         if(response.data.resultado){
             //cargarNecesidades(idUsuario);
-<<<<<<< HEAD
-            crearCardNecesidad(necesidad,0);
-=======
             crearCardNecesidad(necesidad, 0);
->>>>>>> 6c706e12a4834702b24f6b70f2f0fe462ab4c9b4
             agregarPaginacionNecesidades();
             $("#modalEditarNecesidad").modal('toggle');
             document.getElementById("formEditarNecesidad").reset();

@@ -95,10 +95,7 @@ function getOrganizacion(idUsuario, vistaVisitante = 0){
     }
     //CARGAR NECESIDADES
     cargarNecesidades( idUsuario, vistaVisitante );
-<<<<<<< HEAD
-=======
     // console.log( idUsuario );
->>>>>>> 6c706e12a4834702b24f6b70f2f0fe462ab4c9b4
     fetch("/getOrganizacion/"+idUsuario)
     .then(response => response.json())
     .then(data => {
@@ -459,15 +456,9 @@ function crearCardNecesidad(necesidad,vistaVisitante)
     // console.log( vistaVisitante );
     var btnEditarNecesidad = "";
     if(vistaVisitante == 0){
-<<<<<<< HEAD
-    btnEditarNecesidad = `<p class="editarNecesidad">
-    <a data-toggle="modal" href="#modalEditarNecesidad" id="editar${necesidad.idNecesidad}"><i class="far fa-edit"></i></a>
-</p>`;
-=======
         btnEditarNecesidad = `<p class="editarNecesidad">
         <a data-toggle="modal" href="#modalEditarNecesidad" id="editar${necesidad.idNecesidad}"><i class="far fa-edit"></i></a>
         </p>`;
->>>>>>> 6c706e12a4834702b24f6b70f2f0fe462ab4c9b4
     }
     console.log( necesidad );
 
