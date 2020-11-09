@@ -96,6 +96,7 @@ Route::get('/buscarNecesidad/{filtroTexto}/{idUsuario}', 'App\Http\Controllers\N
 Route::get('/getNecesidad/{idNecesidad}', 'App\Http\Controllers\NecesidadController@getNecesidad')->name('getNecesidad');
 Route::post('/bajaNecesidad','App\Http\Controllers\NecesidadController@bajaNecesidad')->name('bajaNecesidad');
 Route::post('/updateNecesidad','App\Http\Controllers\NecesidadController@updateNecesidad')->name('updateNecesidad');
+Route::post('/registrarCalificacion','App\Http\Controllers\CalificacionController@registrarCalificacion')->name('registrarCalificacion');
 
 
 

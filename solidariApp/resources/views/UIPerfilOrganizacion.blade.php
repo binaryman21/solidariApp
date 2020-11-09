@@ -178,6 +178,7 @@
 <script type="text/javascript" src="{{URL::asset('assets/js/logueo.js')}}"></script>
 <script type="text/javascript" src="{{URL::asset('assets/js/organizacion.js')}}"></script>
 <script type="text/javascript" src="{{URL::asset('assets/js/necesidad.js')}}"></script>
+<script type="text/javascript" src="{{URL::asset('assets/js/calificacion.js')}}"></script>
 <script type="text/javascript" src="{{URL::asset('assets/js/colaboracion.js')}}"></script>
 <script type="text/javascript" src="{{URL::asset('assets/js/validaciones.js')}}"></script>
 <script src="https://apis.google.com/js/platform.js?onload=onLoad" async defer></script>
