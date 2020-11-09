@@ -14,13 +14,19 @@ class Necesidad extends Model
 
     public static function listarNecesidades($idUsuario)
     {
-        return Necesidad::where("idUsuario",$idUsuario)->with('categoria')->withCount('colaboraciones')->get();
+        return Necesidad::select('necesidad.*', 'categoriaNecesidad.*')
+        ->where("idUsuario",$idUsuario)
+        ->join('categoriaNecesidad', 'categoriaNecesidad.idCategoria', '=', 'necesidad.idCategoriaNecesidad')
+        ->withCount('colaboraciones')
+        ->orderBy('fechaLimiteNecesidad', 'ASC')
+        ->get();
     }
 
     public static function listarNecesidadesPantallaPrincipal($idUsuario)
     {
         return Necesidad::where("idUsuario",$idUsuario)
-        ->join('categoriaNecesidad', 'categoriaNecesidad.idCategoria', '=', 'necesidad.idCategoriaNecesidad')    
+        ->join('categoriaNecesidad', 'categoriaNecesidad.idCategoria', '=', 'necesidad.idCategoriaNecesidad')
+        ->orderBy('fechaLimiteNecesidad', 'ASC')    
         ->take(2)->get();
     }
 
@@ -36,6 +42,7 @@ class Necesidad extends Model
             })
             ->join('categoriaNecesidad', 'categoriaNecesidad.idCategoria', '=', 'necesidad.idCategoriaNecesidad')    
             ->join('organizacion', 'organizacion.idUsuario', '=', 'necesidad.idUsuario')    
+            ->orderBy('fechaLimiteNecesidad', 'ASC')
             ->take(2)->get();
     }
 
@@ -47,6 +54,7 @@ class Necesidad extends Model
                 $query->where("nombreCategoria",'like', '%' . $filtroTexto . '%');
             })
             ->join('categoriaNecesidad', 'categoriaNecesidad.idCategoria', '=', 'necesidad.idCategoriaNecesidad')    
+            ->orderBy('fechaLimiteNecesidad', 'ASC')
             ->take(2)->get();
     }
 

@@ -78,29 +78,37 @@ class UsuarioController extends Controller
     /*Actualizar foto de perfil del usuario logeado*/
     public function updateFotoPerfil()    
     {
+        session_start();
+        if(isset($_SESSION['usuario'])){
+            /*Busco el ID del usuario logeado*/
+            $usuarioLogoeado = $_SESSION['usuario'];
+          
+        }
+
         /*me traigo los archivos que recibo al realizar el submit*/
         if ($_FILES['fotoPerfil']['error'] == 0) {
             $fileName = $_FILES['fotoPerfil']['name'];
             $ubicacionActual = $_FILES['fotoPerfil']['tmp_name'];
-            $urlFotoPerfil = storage_path()."/app/public/fotosPerfil/".$fileName ;
+            /*Concateno el ID usuario al nombre del archivo*/
+            $urlFotoPerfil = storage_path()."/app/public/fotosPerfil/".$usuarioLogoeado->idUsuario.$fileName ; 
             move_uploaded_file($ubicacionActual, $urlFotoPerfil);
         }
        
         /*Preparo la url relativa para guardarla en la BDD*/
-        $urlFotoPerfil = "/storage/fotosPerfil/".$fileName ;
+        $urlFotoPerfil = "/storage/fotosPerfil/".$usuarioLogoeado->idUsuario.$fileName ;
+        
         try
         {
-            session_start();
             if(isset($_SESSION['usuario'])){
-                /*Busco el ID del usuario logeado*/
-                $usuarioLogoeado = $_SESSION['usuario'];
                 Usuario::updateFotoPerfil($usuarioLogoeado->idUsuario,$urlFotoPerfil);
             }
 
+            return redirect()->route('UIColaborador');
+            /*
             return response()->json([
                 'resultado' => 1,
                 'message' => 'ejecucion exitosa'
-            ]);
+            ]);*/
         }
 
       

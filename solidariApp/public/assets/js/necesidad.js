@@ -8,20 +8,23 @@ function registrarNecesidad(idUsuario)
         cantidadNecesidad: Number( $("#inpCantidad").val() ),
         fechaLimiteNecesidad: $("#inpFechaLimite").val(),
         fechaBajaNecesidad: "",
-        categoria: {idCategoria:$("#slctCategoria").val(),nombreCategoria:$("#slctCategoria option:selected").text()},
+        idCategoria:$("#slctCategoria").val(),
+        nombreCategoria:$("#slctCategoria option:selected").text(),
         idUsuario: idUsuario
     }
 
     axios.post("/registrarNecesidad",necesidad)
     .then((response)=>{
-        // console.log( 'respuesta' + response.data.id);
+        console.log( 'respuesta' + response.data.id);
+        console.log( 'respuestaaa ' + response.data.message);
         // console.log(necesidad);
         necesidad.idNecesidad = response.data.id;
         desbloquearBoton($("#btnGuardarCambiosNecesidad"));
         let divNecesidades = $('.necesidades');
         divNecesidades.prepend(`<div class="col-md-6" id="necesidad${necesidad.idNecesidad}"></div>`);
-        crearCardNecesidad(necesidad,0);
+        crearCardNecesidad(necesidad, 0);
         agregarPaginacionNecesidades();
+        $('#navNecesidades a:first').trigger('click');
         alertify.success('Necesidad creada');
     });
 }
@@ -42,24 +45,29 @@ function updateNecesidad(necesidad){
     necesidad.cantidadNecesidad = Number( $("#inpCantidad").val() );
     necesidad.fechaLimiteNecesidad =  $("#inpFechaLimite").val();
     necesidad.fechaBajaNecesidad =  "";
-    necesidad.categoria.idCategoria = $("#slctCategoria").val();
-    necesidad.categoria.nombreCategoria = $("#slctCategoria option:selected").text();
+    necesidad.idCategoria = $("#slctCategoria").val();
+    necesidad.nombreCategoria = $("#slctCategoria option:selected").text();
     console.log($("#slctCategoria option :selected").text());
     JSON.stringify(necesidad);
     axios.post("/updateNecesidad",necesidad)
     .then((response)=>{
         if(response.data.resultado){
             //cargarNecesidades(idUsuario);
+<<<<<<< HEAD
             crearCardNecesidad(necesidad,0);
+=======
+            crearCardNecesidad(necesidad, 0);
+>>>>>>> 6c706e12a4834702b24f6b70f2f0fe462ab4c9b4
             agregarPaginacionNecesidades();
             $("#modalEditarNecesidad").modal('toggle');
             document.getElementById("formEditarNecesidad").reset();
             desbloquearBoton($("#btnGuardarCambiosNecesidad"));
+            $('#navNecesidades a:first').trigger('click');
             // alert(response.data.message);
             alertify.success('Necesidad modificada');
 
         }else{
-            alert(response.data.message);
+            alertify.error(response.data.message);
         }
     });
 }
@@ -76,6 +84,8 @@ function bajaNecesidad(idNecesidad){
             $("#modalEditarNecesidad").modal('toggle');
             document.getElementById("formEditarNecesidad").reset();
             alertify.error('Necesidad eliminada');
+            agregarPaginacionNecesidades();
+            $('#navNecesidades a:first').trigger('click');
 
         }else{
             alert(response.data.message);
