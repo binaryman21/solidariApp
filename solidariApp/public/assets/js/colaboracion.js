@@ -120,7 +120,7 @@ function getColaboraciones(idNecesidad,modo = "colaborador")
                             $("#btnCalificar"+colaboracion.idColaboracion).removeClass("d-none");
                             $("#btnCalificar"+colaboracion.idColaboracion).click(function(){
                                 $("#modalDetalleNecesidad").modal("hide");
-                                configModalCalificar(colaboracion);
+                                configModalCalificar(1,colaboracion.idColaboracion,colaboracion.idNecesidad);
                             });
                         }
             });
@@ -135,7 +135,4 @@ function getColaboraciones(idNecesidad,modo = "colaborador")
     });
 }
 
-function configModalCalificar(idCalificacion)
-{
 
-}
