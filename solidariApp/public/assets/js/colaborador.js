@@ -381,14 +381,14 @@ function crearCardColaboracion( colaboracion )
                 <p class="text-right">Colaboro el dia: ${colaboracion.fechaColaboracion}</p>
                 <div class="row">
                     <div class="col-md-3">
-                        <img class="rounded-circle imgNecesidad" src="${colaboracion.urlFotoPerfilUsuario}" alt="imagen de usuario">
+                        <img class="rounded-circle imgNecesidad" src="${colaboracion.urlFotoPerfilUsuario}" alt="img usr">
                     </div>
                     <div class="col-md-9">
-                        <h5 class="card-title"><a href="/organizacion/${colaboracion.idUsuario}">${colaboracion.razonSocial}</a></h5>
-                        <p class="card-text">${colaboracion.nombreCategoria}</p>
+                        <p class="card-text h5">${colaboracion.nombreCategoria}</p>
+                        <p class="mt-2">${colaboracion.descripcionNecesidad}</p>
                     </div>
                 </div>
-                <p class="mt-2">${colaboracion.descripcionNecesidad}</p>
+                <h5 class="card-title"><a href="/organizacion/${colaboracion.idUsuario}">${colaboracion.razonSocial}</a></h5>
             </div>
         </div>
     </div>`;

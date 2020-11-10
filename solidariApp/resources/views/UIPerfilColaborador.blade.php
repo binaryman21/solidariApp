@@ -145,9 +145,9 @@
 
     <div class="alert alert-success mt-4" role="alert">
         <h4 class="alert-heading">Ayuda a las organizaciones para obtener nuevas insignias</h4>
-        <p>Aww yeah, you successfully read this important alert message. This example text is going to run a bit longer so that you can see how spacing within an alert works with this kind of content.</p>
+        <p>Con tu colaboracion podes ayudar a construir un mundo mejor para todos.</p>
         <hr>
-        <p class="mb-0">¡Segui ayudando!</p>
+        <p class="mb-0"><a href="/">¡Segui ayudando!</a></p>
     </div>
 
 </div> <!-- container -->
