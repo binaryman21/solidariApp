@@ -380,7 +380,7 @@ function llenarOrganizaciones( organizaciones ){
                         <button class="btn w-100 btn-link ml-auto text-decoration-none">Ver todas</button>
                     </div>
                 </div>`
-    
+
                 divOrganizaciones.append( cardOrganizacion );
                 org.necesidades.forEach( need => {
                     $(`.listaNecesidades${org.idUsuario}`).append(`
@@ -394,12 +394,12 @@ function llenarOrganizaciones( organizaciones ){
                             </div>
                         </div>
                     `)
-    
+
                     $(`.btnDetalleOrg${need.idNecesidad}`).on('click', function(){
                         cargarDatosModalDetalleNecesidad(need);
                     })
                 })
-    
+
                 cargarOrgEnMapa(org);
             }
         })

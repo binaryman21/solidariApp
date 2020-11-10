@@ -118,3 +118,16 @@ div.g-signin2 > .abcRioButtonLightBlue{
 .domicilio{
     background-color:lightgray;
 }
+
+.sinPaddingBotton{
+    padding-bottom: 0;
+}
+
+.sombra:hover{
+    background-color: #616161;
+    opacity: 0.8;
+}
+
+.dropdown-item:hover{
+    box-shadow: 0 0 11px rgba(33,33,33,.3);
+}

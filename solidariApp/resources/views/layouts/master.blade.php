@@ -37,9 +37,11 @@
     <header>
         <nav class="navbar navbar-expand-lg navbar-light bg-light shadow-sm mb-md-3 bg-white pl-lg-5">
             <a class="navbar-brand" href="{{url('/')}}"><span class="mr-2"><img src="{{URL::asset('assets/img/app-logo/Logo - Chico.png')}}" alt="logo"></span>SolidariAPP</a>
-            <button class="navbar-toggler border-0 collapsed" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+
+            <button class="navbar-toggler ml-auto border-0 collapsed" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <i class="fas fa-bars fa-sm"></i>
             </button>
+
             <div class="navbar-collapse collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav ml-auto pr-3 align-items-center">
                     <li class="nav-item px-3" id="navInicio">
@@ -51,6 +53,7 @@
                     <li class="nav-item px-3" id="navAcerca">
                         <a class="nav-link" href="{{url('/acerca')}}">Acerca de</a>
                     </li>
+
                     <button class="btn btn-outline-primary my-2 my-sm-0 px-5" data-toggle="modal" data-target="#modalLogin"  id = "btnIngresar">Ingresar</button>
                     <li class="nav-item dropdown oculto" id = "dropDownUsuario">
                         <a class="nav-link" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -63,6 +66,54 @@
                         </div>
                     </li>
                 </ul>
+            </div>
+            <div class="d-none" id="notificaciones">
+                <div class="dropdown dropleft">
+                    <a class="btn" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id="logoNotificacion">
+                        <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-bell-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M8 16a2 2 0 0 0 2-2H6a2 2 0 0 0 2 2zm.995-14.901a1 1 0 1 0-1.99 0A5.002 5.002 0 0 0 3 6c0 1.098-.5 6-2 7h14c-1.5-1-2-5.902-2-7 0-2.42-1.72-4.44-4.005-4.901z"/>
+                        </svg>
+                    </a>
+                    <div class="dropdown-menu">
+                        <div class="dropdown-header">
+                            <div class="d-flex flex-row">
+                                <div>
+                                    <h5>Notificaciones</h5>
+                                </div>
+                                <div class="card-text align-self-center pl-1">
+
+                                </div>
+                            </div>
+                            <div class="dropdown-divider"></div>
+                        </div>
+                        <div class="dropdown-item">
+                            <div class="d-flex flex-row">
+                                <div>
+                                    <img class="rounded-circle imgPerfilOrg" src="{{URL::asset('assets/img/user.png')}}" alt="">
+                                </div>
+                                <div class="card-text align-self-center pl-1">
+                                    <p>10/11/2020</p>
+                                    <a class="font-weight-bold text-dark text-decoration-none" href="">Nombre colaborador</a>
+                                    <p>esta interesado en ayudar con</p>
+                                    <a class="font-weight-bold text-dark text-decoration-none" href="">Necesidad</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="dropdown-item">
+                            <div class="d-flex flex-row">
+                                <div>
+                                    <img class="rounded-circle imgPerfilOrg" src="{{URL::asset('assets/img/user.png')}}" alt="">
+                                </div>
+                                <div class="card-text align-self-center pl-1">
+                                    <p>10/11/2020</p>
+                                    <a class="font-weight-bold text-dark text-decoration-none" href="">Nombre colaborador</a>
+                                    <p>esta interesado en ayudar con</p>
+                                    <a class="font-weight-bold text-dark text-decoration-none" href="">Necesidad</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </nav>
     </header>

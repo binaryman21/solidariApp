@@ -45,6 +45,10 @@ function mostrarInterfazSesionIniciada(usuario)
     $("#mapa").removeClass("mapa");
     $("#mapa").addClass("mapaExtendido");
     $("#btnVerMiPerfil").attr("href","./"+ usuario.rol.nombreRol);
+    $("#notificaciones").removeClass("d-none");
+
+    console.log("usuario "+usuario.idUsuario);
+    cargarNotificaciones(usuario);
 }
 
 function signOut() {
@@ -98,12 +102,12 @@ function onSignIn(googleUser) {
         //estaba con lenght, tiene que ser con null!
         if(response.data.usuario === null)
         {
-            // Logica para cuando el usuario se registra con Google 
+            // Logica para cuando el usuario se registra con Google
             if( $("#modoRegistro").val() !== "ingresar" ){
                 $("#idGoogle").val(profile.getId());
                 $("#urlFotoPerfilUsuario").val(profile.getImageUrl());
                 $("#emailUsuario").val(profile.getEmail());
-        
+
                 if($("#modoRegistro").val() == "colaborador"){
                     $("#nombreColaborador").val(profile.getGivenName());
                     $("#apellidoColaborador").val(profile.getFamilyName());
@@ -126,4 +130,7 @@ function onSignIn(googleUser) {
         }
     });
 
+
 }
+
+
