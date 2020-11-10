@@ -18,7 +18,6 @@ class OrganizacionController extends Controller
 
         try
         {
-
             $datosOrganizacion = json_decode($request->getContent());
             $usuario = new Usuario;
             if(Usuario::isUser($usuario->emailUsuario))
@@ -29,7 +28,7 @@ class OrganizacionController extends Controller
             }
             $organizacion = new Organizacion;
             DB::beginTransaction();
-            $usuario->claveUsuario = $datosOrganizacion->claveUsuario;
+            $usuario->claveUsuario = hash( 'sha256', $datosOrganizacion->claveUsuario );
             $usuario->emailUsuario = $datosOrganizacion->emailUsuario;
             $usuario->tokenGoogle = $datosOrganizacion->tokenGoogle;
             if($datosOrganizacion->urlFotoPerfilUsuario != ""){
@@ -132,11 +131,38 @@ class OrganizacionController extends Controller
 
     public function busquedaOrganizacionesPorCategoria($filtroTexto){
         $organizaciones = Organizacion::getOrganizaciones();
+        $organizacionesConNecesidad = [];
 
         foreach( $organizaciones as  $key => $organizacion ){
             $necesidades = Necesidad::buscarNecesidadPorCategoria( $filtroTexto, $organizacion->idUsuario );
+            $json_array  = json_decode($necesidades, true);
             $organizacion['necesidades'] = $necesidades;
+            //Si hay necesidades entonces traigo esa organizacion, sino no
+            if( count($json_array) > 0 ){
+                array_push($organizacionesConNecesidad, $organizacion);
+            }
         }
+        $organizaciones = $organizacionesConNecesidad;
+
+        return json_encode([
+            'organizaciones' => $organizaciones
+        ]);
+    }
+
+    public function busquedaOrganizacionesPorUbicacion($ubicacion){
+        $organizaciones = Organizacion::buscarOrganizacionesPorUbicacion( $ubicacion );
+        $organizacionesConNecesidad = [];
+
+        foreach( $organizaciones as  $key => $organizacion ){
+            $necesidades = Necesidad::listarNecesidadesPantallaPrincipal( $organizacion->idUsuario );
+            $json_array  = json_decode($necesidades, true);
+            $organizacion['necesidades'] = $necesidades;
+            //Si hay necesidades entonces traigo esa organizacion, sino no
+            if( count($json_array) > 0 ){
+                array_push($organizacionesConNecesidad, $organizacion);
+            }
+        }
+        $organizaciones = $organizacionesConNecesidad;
 
         return json_encode([
             'organizaciones' => $organizaciones

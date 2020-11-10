@@ -60,7 +60,7 @@ function cerrarSesion()
     axios.post("/logOut")
     .then((response)=>{
         console.log( response.data );
-        console.log('chau');
+        // console.log('chau');
         window.location= "/";
     });
 }

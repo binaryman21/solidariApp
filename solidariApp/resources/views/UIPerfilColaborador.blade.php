@@ -29,6 +29,7 @@
             <div class="col-md-2">
                 <button class="btn btn-block btn-primary d-none" type="button" id="editarMiPerfil">Editar <i class="far fa-edit"></i> </button>
                 <button class="btn btn-block btn-primary d-none" type="button" id="guardarCambios">Guardar Cambios</button>
+                <button class="btn btn-block btn-primary" type="button" data-toggle="modal" href="#modalCalificar">Calificar</button>
             </div>
         </div>
 
@@ -227,6 +228,8 @@
 @include("UIPerfilModales/UIDarmeDeBaja")
 @include("UIPerfilModales/UIModificarFotoPerfil")
 @include("UIPerfilModales/UIEditarDomicilio")
+@include("UIPerfilModales/UIModalCalificar")
+@include("UIPerfilModales/UIModalReportar")
 @endsection
 
 @section('scripts')
@@ -235,5 +238,6 @@
 <script type="text/javascript" src="{{URL::asset('assets/js/logueo.js')}}"></script>
 <script type="text/javascript" src="{{URL::asset('assets/js/colaborador.js')}}"></script>
 <script type="text/javascript" src="{{URL::asset('assets/js/validaciones.js')}}"></script>
+<script type="text/javascript" src="{{URL::asset('assets/js/usuario.js')}}"></script>
 <script src="https://apis.google.com/js/platform.js?onload=onLoad" async defer></script>
 @endsection

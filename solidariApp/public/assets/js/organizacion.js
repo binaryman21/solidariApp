@@ -78,23 +78,24 @@ function getOrganizacion(idUsuario, vistaVisitante = 0){
             e.preventDefault();
             if( validarNecesidad() ){
                 bloquearBoton($("#btnGuardarCambiosNecesidad"));
-                registrarNecesidad(usuario.idUsuario);
+                registrarNecesidad(idUsuario);
             }
         });
     });
     $("#btnGuardarDescripcion").click(function()
     {
-        actualizarDescripcion(usuario.idUsuario);
+        actualizarDescripcion(idUsuario);
     });
     $("#btnAgregarTelefono").click(function()
     {
         if( validarTelefono( '' ) ){
-            agregarTelefono(usuario.idUsuario);
+            agregarTelefono(idUsuario);
         }
     });
     }
     //CARGAR NECESIDADES
     cargarNecesidades( idUsuario, vistaVisitante );
+    // console.log( idUsuario );
     fetch("/getOrganizacion/"+idUsuario)
     .then(response => response.json())
     .then(data => {
@@ -365,7 +366,9 @@ function agregarPaginacionNecesidades(){
     $('#navNecesidades a').bind('click', function(){
         $('#navNecesidades a').removeClass('active');
         $(this).addClass('active');
+
         let pagActual = $(this).attr('rel');
+
         let primerItem = pagActual * filasMostradas;
         let ultimoItem = primerItem + filasMostradas;
         $( necesidad ).css('opacity','0.0').hide().slice(primerItem, ultimoItem).
@@ -378,7 +381,7 @@ function mostrarModalEditarNecesidad(necesidad){
     limpiarValidaciones($("#slctCategoria"), $("#errorCategoria"));
     let fecha = necesidad.fechaLimiteNecesidad;
     fecha = fecha.split(" ");
-    $("#slctCategoria").val(necesidad.categoria.idCategoria);
+    $("#slctCategoria").val(necesidad.idCategoria);
     $("#txtDescripcion").val(necesidad.descripcionNecesidad);
     $("#inpCantidad").val(necesidad.cantidadNecesidad);
     $("#inpFechaLimite").val(fecha[0]);
@@ -450,19 +453,25 @@ function cargarNecesidades ( idUsuario, vistaVisitante){
 
 function crearCardNecesidad(necesidad,vistaVisitante)
 {
+    // console.log( vistaVisitante );
     var btnEditarNecesidad = "";
     if(vistaVisitante == 0){
-    btnEditarNecesidad = `<p class="editarNecesidad">
-    <a data-toggle="modal" href="#modalEditarNecesidad" id="editar${necesidad.idNecesidad}"><i class="far fa-edit"></i></a>
-</p>`;
+        btnEditarNecesidad = `<p class="editarNecesidad">
+        <a data-toggle="modal" href="#modalEditarNecesidad" id="editar${necesidad.idNecesidad}"><i class="far fa-edit"></i></a>
+        </p>`;
     }
+    console.log( necesidad );
 
     $("#necesidad" + necesidad.idNecesidad).html("");
-        let cardNecesidad =   `<div class="card necesidad ${necesidad.categoria.nombreCategoria.toLowerCase()}">
+    let cantColaboraciones = necesidad.colaboraciones_count;
+    if( cantColaboraciones === undefined ){
+        cantColaboraciones = 0;
+    }
+        let cardNecesidad =   `<div class="card necesidad ${necesidad.nombreCategoria.toLowerCase()}">
         <div class="card-body">
             <div class="row">
                 <div class="col-md-6">
-                    <p class="font-weight-bold">${necesidad.categoria.nombreCategoria}</p>
+                    <p class="font-weight-bold">${necesidad.nombreCategoria}</p>
                     <p>${necesidad.descripcionNecesidad}</p>
                     <p>Cantidad: ${necesidad.cantidadNecesidad}</p>
                     <p>Fecha limite: ${ new Date(necesidad.fechaLimiteNecesidad).toLocaleDateString('es-AR') }</p>
@@ -470,7 +479,7 @@ function crearCardNecesidad(necesidad,vistaVisitante)
                 <div class="col-md-6 text-right d-flex flex-column justify-content-between">
                 `+ btnEditarNecesidad + `
                     <p class="ayudasRecibidas">
-                        <a href="#" data-toggle="modal" data-target="#modalDetalleNecesidad" id = "btnDetalleNecesidad`+ necesidad.idNecesidad + `" ><span class="nroAyudas">`+ necesidad.colaboraciones_count + `</span><i class="fas fa-user-friends"></i></a>
+                        <a href="#" data-toggle="modal" data-target="#modalDetalleNecesidad" id = "btnDetalleNecesidad`+ necesidad.idNecesidad + `" ><span class="nroAyudas">`+ cantColaboraciones + `</span><i class="fas fa-user-friends"></i></a>
                     </p>
                     <p class="estado">
                         <i class="fas fa-spinner"></i>
@@ -479,8 +488,6 @@ function crearCardNecesidad(necesidad,vistaVisitante)
             </div>
         </div>
     </div>`;
-
-
 
     $("#necesidad" + necesidad.idNecesidad).append(cardNecesidad);
 

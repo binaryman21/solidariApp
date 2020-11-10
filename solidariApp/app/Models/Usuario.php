@@ -56,6 +56,20 @@ class Usuario extends Model
     {
         Usuario::where('idUsuario', $idUsuario)->update(array('urlFotoPerfilUsuario' => $urlFotoPerfil));
     }
+
+    public static function comprobarClave( $datosClaves )
+    {
+        return Usuario::where('idUsuario', $datosClaves->idUsuario )
+                ->where('claveUsuario', $datosClaves->claveVieja )
+                // ->get();
+                ->count();
+    }
+
+    public static function cambiarClave( $datosClaves )
+    {
+        Usuario::where('idUsuario', $datosClaves->idUsuario)
+            ->update(['claveUsuario'=>$datosClaves->claveNueva]);
+    }
  
 }
 

@@ -1,7 +1,6 @@
 function cargarDatosModalDetalleNecesidad( necesidad, modo = "colaborador")
 {
-
-
+    console.log( necesidad );
         $('.detalleNecesidadModal').html(
         `<div class="card necesidad ${necesidad.nombreCategoria.toLowerCase()}">
             <div class="card-body">
@@ -10,7 +9,7 @@ function cargarDatosModalDetalleNecesidad( necesidad, modo = "colaborador")
                         <p class="font-weight-bold">${necesidad.nombreCategoria}</p>
                         <p>${necesidad.descripcionNecesidad}</p>
                         <p>Cantidad: ${necesidad.cantidadNecesidad}</p>
-                        <p>Fecha limite: ${necesidad.fechaLimiteNecesidad}</p>
+                        <p>Fecha limite: ${ new Date(necesidad.fechaLimiteNecesidad).toLocaleDateString('es-AR') }</p>
                         <p>Estado: en proceso</p>
                     </div>
                 </div>
@@ -125,10 +124,12 @@ function getColaboraciones(idNecesidad,modo = "colaborador")
                             });
                         }
             });
+            agregarPaginacionUsuarios();
         }
         else
         {
             $("#listadoColaboraciones").html("");
+            $('#navUsuarios').html('');
             $("#cantDeColaboraciones2").html("Aun no hay colaboraciones, animate y se el primero!");
         }
     });

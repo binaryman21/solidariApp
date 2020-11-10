@@ -138,8 +138,9 @@ async function obtenerCoordenadas(calle, nro, localidad, provincia){
     if(provincia == 'Buenos Aires-GBA' || provincia == 'Capital Federal'){
         provincia = 'Buenos Aires';
     }
-
-    let url = `https://nominatim.openstreetmap.org/search?q=${calle}+${nro},+${localidad},+${provincia}&format=json&polygon_geojson=1&addressdetails=1`;
+    console.log( calle, nro, localidad, provincia );
+    // let url = `https://nominatim.openstreetmap.org/search?q=${calle}+${nro},+${localidad},+${provincia}&format=json&polygon_geojson=1&addressdetails=1`;
+    let url = `https://nominatim.openstreetmap.org/search.php?street=${calle}+${nro}&city=${localidad}&state=${provincia}&country=argentina&polygon_geojson=1&dedupe=0&format=jsonv2`;
     
     let respuesta = await fetch( url );
     let data = await respuesta.json();
@@ -153,12 +154,14 @@ async function obtenerCoordenadas(calle, nro, localidad, provincia){
         coordenadas.lon = data[0].lon;
     }
     // console.log( lat + lon );
+    console.log( coordenadas );
     return coordenadas;
   }
 
 
   function agregarPaginacionUsuarios(){
-    $('.usuarios').after('<div id="navUsuarios"></div>');
+    $('#navUsuarios').html('');
+    $('#listadoColaboraciones').after('<div id="navUsuarios"></div>');
     let usuario = document.querySelectorAll('.usuario')
     let filasMostradas = 2;
     let filasTotales = usuario.length;
@@ -217,5 +220,17 @@ function filtrarPorCategoria( e ){
             let organizaciones = data.organizaciones;
             llenarOrganizaciones( organizaciones );
             $('#filtrosCategoria button').attr('disabled', false); 
+        })
+}
+
+//BUSCAR UNA ORGANIZACION POR FILTRO DE UBICACION
+function filtrarPorUbicacion(){
+    let filtroBusqueda = $('#ubicacion').val();
+    console.log( filtroBusqueda );
+    fetch( "/buscarOrganizacionesPorUbicacion/" + filtroBusqueda )
+        .then(response => response.json())
+        .then(data => {
+            let organizaciones = data.organizaciones;
+            llenarOrganizaciones( organizaciones );
         })
 }

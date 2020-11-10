@@ -1,5 +1,5 @@
 @extends("layouts.master")
-@section('title', 'Inicio')
+@section('title', 'SolidariApp')
 @section("meta")
     @parent
     <!-- Google
@@ -29,19 +29,11 @@
                         <h6 class="mb-0">Mapa de las organizaciones</h6>
                         <small class="text-muted">Organizaciones en el radio de tu ubicacion</small>
                     </div>
-                    <div class="col-8 col-lg-5 ml-2 ml-lg-auto pr-0 pl-2">
-                        <input type="text" id="ubicacion" class="form-control form-control-sm " placeholder="Buscar por localidad o direccion">
-                    </div>
-                    <div class="ml-auto mr-1">
-                        <select class="custom-select border-0 mr-0" id="rangoDeVisualizacion">
-                            <option value="5" selected="">5 KM</option>
-                            <option value="10">10 KM</option>
-                            <option value="15">15 KM</option>
-                            <option value="20">20 KM</option>
-                            <option value="25">25 KM</option>
-                            <option value="30">30 KM</option>
-                            <option value="35">35 KM</option>
-                        </select>
+                    <div class="col-12 col-lg-6 ml-2 mr-2 ml-lg-auto pr-0 pl-2 input-group">
+                        <input type="text" id="ubicacion" class="form-control border-secondary border-right-0 " placeholder="Buscar por localidad o direccion">
+                        <div class="input-group-append">
+                            <button class="btn btn-outline-secondary border-secondary border-left-0" id="btnBuscarPorUbicacion" type="button"><i class="fa fa-search fa-xs"></i></button>
+                        </div>
                     </div>
                 </div>
                 <div class="row p-2" >
