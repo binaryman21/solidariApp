@@ -17,11 +17,11 @@
                 <div class="input-group my-2 mt-3 mt-lg-2">
                     <input class="form-control border-secondary border-right-0" type="text" id="campoBuscarPorTexto" placeholder="Categoría, descripción o nombre de la Org.">
                     <div class="input-group-append">
-                        <div class="dropdown show">
-                            <button type="button" class="btn btn-outline-secondary rounded-0 border-left-0 border-right-0" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" id="filtros">
+                        <div class="dropdown">
+                            <button type="button" class="btn btn-outline-secondary rounded-0 border-left-0 border-right-0" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id="filtros">
                                 <i class="fas fa-filter fa-xs"></i>
                             </button>
-                            <div class="dropdown-menu dropdown-menu-right show" id="filtrosCategoria" aria-labelledby="filtros" style="position: absolute; transform: translate3d(-124px, 38px, 0px); top: 0px; left: 0px; will-change: transform;" x-placement="bottom-end">
+                            <div class="dropdown-menu dropdown-menu-right" id="filtrosCategoria" aria-labelledby="filtros" style="position: absolute; transform: translate3d(-124px, 38px, 0px); top: 0px; left: 0px; will-change: transform;" x-placement="bottom-end">
                                 <button class="dropdown-item" data-toggle="tooltip" data-placement="top" title="Alimentos" type="button">
                                     <i class="fas fa-utensils fa-xs ml-n2 mr-3"></i><span>Alimentos</span></button>
                                 <button class="dropdown-item" data-toggle="tooltip" data-placement="top" title="Ropa" type="button">
