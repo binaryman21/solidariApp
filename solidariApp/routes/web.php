@@ -19,7 +19,7 @@ Route::get('/colaborador', function()
     session_start();
     if(!isset($_SESSION['usuario']) || $_SESSION['usuario']->rol->nombreRol != 'colaborador')
     {
-        return redirect('/');
+        return view('Error403');
     }
     else
     {
@@ -36,7 +36,7 @@ Route::get('/organizacion', function()
     session_start();
     if(!isset($_SESSION['usuario']) || $_SESSION['usuario']->rol->nombreRol != 'organizacion')
     {
-        return redirect('/');
+        return view('Error403');
     }
     else
     {
@@ -45,9 +45,30 @@ Route::get('/organizacion', function()
 
 })->name('UIOrganizacion');
 
+Route::get('/administrador', function(){
+    session_start();
+    if(!isset($_SESSION['usuario']) || $_SESSION['usuario']->rol->nombreRol != 'administrador')
+    {
+        return view('Error403');
+    }
+    else
+    {
+        return view('UIPerfilAdministrador');
+    }
+})->name('UIAdministracion');
+
 //RUTAS GENERALES
-Route::get('/administrador', function(){return view('UIPerfilAdministrador');})->name('UIAdministracion');
-Route::get('/administrador/reportes', function(){return view('UIReporteDenuncias');})->name('UIReporteDenuncias');
+Route::get('/administrador/reportes', function(){
+    session_start();
+    if(!isset($_SESSION['usuario']) || $_SESSION['usuario']->rol->nombreRol != 'administrador')
+    {
+        return view('Error403');
+    }
+    else
+    {
+        return view('UIReporteDenuncias');
+    }
+})->name('UIReporteDenuncias');
 Route::get('/contacto', function(){return view('UIContacto');})->name('UIContacto');
 
 //LISTAR
