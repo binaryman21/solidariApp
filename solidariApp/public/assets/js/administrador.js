@@ -1,6 +1,6 @@
 
 document.addEventListener('DOMContentLoaded', () => {
-
+  isLoggedIn();
 
   $("#seleccionCategoria").on('change', function () {
     seleccionaCrearNuevaCategoria();

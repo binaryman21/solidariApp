@@ -27,7 +27,7 @@
                         <div class="card">
                             <div class="card-body">
                                 <h5 class="card-title">ABM Categorias</h5>
-                                <p class="card-text">Permite realizar el Alta, Baja y Modificacion de Categorias de las Necesidades.</p>
+                                <p class="card-text">Permite realizar el Alta, Baja y Modificacion de Categorias de las Necesidades. Tambien se pueden modificar las prioridades de las Categorias</p>
                                 <br>
                                 <a data-toggle="modal" href="#modalABMCategorias" class="btn btn-primary" id="btnABMCategorias">ABM Categorias</a>
                             </div>
@@ -37,19 +37,9 @@
                         <div class="card">
                             <div class="card-body">
                                 <h5 class="card-title">Visualizar reporte de denuncias</h5>
-                                <p class="card-text">Permite Visualizar todos los reportes con posibilidad de confirmarlos.</p>
+                                <p class="card-text">Permite visualizar todos los reportes de denuncias con posibilidad de confirmarlos, dando como resultado el bloqueo del usuario denunciado.</p>
                                 <br>
                                 <a href="{{url('administrador/reportes')}}" class="btn btn-primary">Ver Reporte</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-sm-6">
-                        <div class="card">
-                            <div class="card-body">
-                                <h5 class="card-title">Special title treatment</h5>
-                                <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                                <br>
-                                <a href="#" class="btn btn-primary">Go somewhere</a>
                             </div>
                         </div>
                     </div>
@@ -67,4 +57,5 @@
 @parent
 <!-- JS -->
 <script type="text/javascript" src="{{URL::asset('assets/js/administrador.js')}}"></script>
+<script type="text/javascript" src="{{URL::asset('assets/js/logueo.js')}}"></script>
 @endsection
