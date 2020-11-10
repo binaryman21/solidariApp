@@ -106,6 +106,8 @@ function getColaboraciones(idNecesidad,modo = "colaborador")
                                         </div>
                                         <div class="col-md-4">
                                         <a href= "#" class = "d-none" data-toggle="modal" data-target="#modalCalificar" id = "btnCalificar`+colaboracion.idColaboracion+`">Calificar</a>
+                                        <a href= "#" class = "d-none" data-toggle="modal" data-target="#modalCalificar" id = "btnVerCalificacion`+colaboracion.idColaboracion+`">Ver calificacion</a>
+
                                         </div>
                                         <div class="col-md-3">
                                             <a href= "colaborador/`+colaboracion.idUsuario+`">Ver perfil</a>
@@ -117,12 +119,26 @@ function getColaboraciones(idNecesidad,modo = "colaborador")
 
                         if(modo === "organizacion")
                         {
-                            $("#btnCalificar"+colaboracion.idColaboracion).removeClass("d-none");
-                            $("#btnCalificar"+colaboracion.idColaboracion).click(function(){
-                                $("#modalDetalleNecesidad").modal("hide");
-                                configModalCalificar(1,colaboracion.idColaboracion,colaboracion.idNecesidad);
-                            });
+
+
+                                $("#btnCalificar"+colaboracion.idColaboracion).removeClass("d-none");
+                                $("#btnCalificar"+colaboracion.idColaboracion).click(function(){
+                                    $("#modalDetalleNecesidad").modal("hide");
+                                    configModalCalificar(1,colaboracion.idColaboracion,colaboracion.idNecesidad);
+                                });
+
+
                         }
+
+                        /*if(colaboracion.calificaciones.length  > 0)
+                        {
+                            if( || colaboracion.calificaciones[0].idRolCalificado == 1)
+                            $("#btnVerCalificacion"+colaboracion.idColaboracion).removeClass("d-none");
+                            $("#btnVerCalificacion"+colaboracion.idColaboracion).click(function(){
+                                $("#modalDetalleNecesidad").modal("hide");
+                                configModalDetalleCalificacion(1,colaboracion.idColaboracion,colaboracion.idNecesidad);
+                            });
+                        }*/
             });
             agregarPaginacionUsuarios();
         }

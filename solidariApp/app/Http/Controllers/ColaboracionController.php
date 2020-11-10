@@ -69,7 +69,7 @@ class ColaboracionController extends Controller
     }
 
     public function getColaboraciones($idNecesidad){
-        $colaboraciones = Colaboracion::where("idNecesidad",$idNecesidad)
+        $colaboraciones = Colaboracion::where("idNecesidad",$idNecesidad)->with("calificaciones")
         ->join("colaborador","colaborador.idUsuario","=","colaboraciones.idColaborador")
         ->join("usuario","usuario.idUsuario","=","colaboraciones.idColaborador")
         ->get();
