@@ -9,13 +9,14 @@
     --ropa-color: #C7C6F5;
     --limpieza-color: #d4f1f5;
     --varios-color: #F5B4B4;
-    --servicios-color: #C8D2D9;
+    --servicios-color: #afc7e0;
     --dinero-color: #A6E9A5;
 }
 
 body {
     background-color: #e5e5e5;
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='36' height='72' viewBox='0 0 36 72'%3E%3Cg fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.4'%3E%3Cpath d='M2 6h12L8 18 2 6zm18 36h12l-6 12-6-12z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    min-width: 310px;
     /* min-height: 100vh; */
 }
 
@@ -45,14 +46,12 @@ p {
 
 .alimentos {
     background-color: var(--alimentos-color);
-    color: rgb(146 118 76);
 }
 .ropa {
     background-color: var(--ropa-color);
 }
 .limpieza {
     background-color: var(--limpieza-color);
-    color: #629798;
 }
 .varios {
     background-color: var(--varios-color);
@@ -64,6 +63,53 @@ p {
     background-color: var(--dinero-color);
 }
 
+.cardOrganizacion {
+
+    border: 1px solid #a5a5a5;
+}
+
+.need{
+
+    border-bottom: 1px solid #b7b7b7;
+}
+
+.need.alimentos{
+
+    box-shadow: inset 5px 0px 0 0 var(--alimentos-color), inset 6px 0px 0 0 #a5a5a5;
+    background-color: white;
+    color: #92764c;
+}
+.need.ropa{
+
+    box-shadow: inset 5px 0px 0 0 var(--ropa-color), inset 6px 0px 0 0 #a5a5a5;
+    background-color: white;
+    color: #8b88ff;
+}
+.need.varios{
+
+    box-shadow: inset 5px 0px 0 0 var(--varios-color), inset 6px 0px 0 0 #a5a5a5;
+    background-color: white;
+    color: #a06f6f;
+}
+.need.servicios{
+
+    box-shadow: inset 5px 0px 0 0 var(--servicios-color), inset 6px 0px 0 0 #a5a5a5;
+    background-color: white;
+    color: #688098;
+}
+.need.dinero{
+
+    box-shadow: inset 5px 0px 0 0 var(--dinero-color), inset 6px 0px 0 0 #a5a5a5;
+    background-color: white;
+    color: #549253;
+}
+.need.limpieza{
+
+    box-shadow: inset 5px 0px 0 0 var(--limpieza-color), inset 6px 0px 0 0 #a5a5a5;
+    background-color: white;
+    color: #629798;
+}
+
 i {
     font-size: 1.5em;
 }
@@ -73,13 +119,22 @@ i {
     font-size: 2em;
 }
 
-#card-org-name p:first-child{
+.card-title .card-category {
+    font-size: .9rem;
+    font-weight: 600;
+    margin-left: 4px;
+    text-transform:capitalize;
+}
+
+#card-org-name a:first-child{
+
+    display: block;
     font-size:85%;
     font-weight: 700;
     color: #616161;
 }
 
-#card-org-name p:last-child{
+#card-org-name a:last-child{
     font-size:85%;
     color: #4c4c4c;
 }
