@@ -14,7 +14,7 @@
                          <label for="seleccionCategoria">Selecciona la categoria</label>
                          <select id="seleccionCategoria" class="form-control" required>
                              <option value="0" selected class="font-weight-bold">Nueva Categoria</option>
-                            <!--Las categorias se rellenan por-->
+                            <!--Las categorias se rellenan por JS-->
                          </select>
                          <span class="error text-danger" id="errorCategoria"> </span>
                      </div>
@@ -32,10 +32,22 @@
                              <span class="error text-danger" id="errorNombre"> </span>
                          </div>
                      </div>
+                     <div class="form-group mb-3">
+                         <label for="seleccionPrioridad">Selecciona la prioridad</label>
+                         <select id="seleccionPrioridad" class="form-control" required>
+                             <option value="0" selected class="font-weight-bold">Seleccione Prioridad</option>
+                             <option value="1"  class="font-weight-bold">Alta</option>
+                             <option value="2"  class="font-weight-bold">Media</option>
+                             <option value="3"  class="font-weight-bold">Baja</option>
+                            <!--Las priridades se rellenan por JS-->
+                         </select>
+                         <span class="error text-danger" id="errorPrioridad"> </span>
+                     </div>
 
                      <div class="modal-footer row">
                          <button type="button" id="btnDeshabilitar" class="btn btn btn-danger d-none">Deshabilitar</button>
-                         <button type="submit" id="btnAgregar" class="btn btn-primary">Agregar/Modificar</button>
+                         <button type="submit" id="btnAgregar" class="btn btn-primary">Agregar</button>
+                         <button type="submit" id="btnModificar" class="btn btn-primary d-none">Modificar</button>
                          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
                      </div>
                  </div>
