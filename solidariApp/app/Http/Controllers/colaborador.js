@@ -22,3 +22,63 @@ var colaborador =
         {idLink:0,urlLink:"",tipoLink:{idTipoLink:0,nombreTipoLink:""}}
     ]
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*
+
+function cargarNecesidades(idOrganizacion)
+{
+
+    var necesidades;
+
+    $.each(necesidades, function (indexInArray, necesidad) {
+
+
+        '<a data-toggle="modal" href="#modalEditarNecesidad" id = editar'+necesidad.idNecesidad+'><i class="far fa-edit"></i></a>'
+        $("#editar" + necesidad.idNecesidad).click(function(){llenarModalEditarNecesidad(necesidad)});
+
+}
+
+function llenarModalEditarNecesidad(necesidad)
+{
+
+    $("#txtDescipcion") = necesidad.descripcionNecesidad;
+}
+*/
+
+
+
+
+
+
+
+
+
+
+
+
+

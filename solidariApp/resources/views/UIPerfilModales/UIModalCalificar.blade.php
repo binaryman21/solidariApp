@@ -12,12 +12,17 @@
                  <div class="modal-body text-center">
                     <p>¿Se concreto la ayuda?</p>
                     <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="radioConcretoAyuda" id="siConcreto" value="true" checked>
+                        <input class="form-check-input" type="radio" name="radioConcretoAyuda" id="siConcreto" value="1" checked>
                         <label class="form-check-label" for="siConcreto"><i class="far fa-check-circle"></i></label>
                     </div>
                     <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="radioConcretoAyuda" id="noConcreto" value="false">
+                        <input class="form-check-input" type="radio" name="radioConcretoAyuda" id="noConcreto" value="0">
                         <label class="form-check-label" for="noConcreto"><i class="far fa-times-circle"></i></label>
+                    </div>
+                    <div class="form-group mt-4">
+                        <label for="cantidadRecibida">Cantidad recibida</label>
+                        <input class="form-control col-6 offset-3" type="number" id="cantidadRecibida">
+
                     </div>
                     <p class="mt-4">¿Como fue el trato recibido?</p>
                     <div class="form-check form-check-inline">
@@ -39,7 +44,7 @@
                 </div>
                 <div class="modal-footer justify-content-between">
                     <button type="button" class="btn btn-lg btn-outline-danger" data-toggle="modal" href="#modalReportar" data-dismiss="modal">Ayuda</button>
-                    <button type="submit" class="btn btn-lg btn-primary">Calificar</button>
+                    <button type="submit" class="btn btn-lg btn-primary" id = "btnEnviarCalificacion">Calificar</button>
                 </div>
             </form>
         </div>
