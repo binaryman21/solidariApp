@@ -65,7 +65,6 @@ Route::post('/logOut', 'App\Http\Controllers\UsuarioController@logout')->name('l
 Route::post('/isUser', 'App\Http\Controllers\UsuarioController@isUser')->name('isUser');
 Route::get('/isLoggedIn', 'App\Http\Controllers\UsuarioController@isLoggedIn')->name('isLoggedIn');
 Route::post('/registrarUsuario', 'App\Http\Controllers\UsuarioController@registrarUsuario')->name('registrarUsuario');
-Route::post('/registrarNecesidad', 'App\Http\Controllers\NecesidadController@registrarNecesidad')->name('registrarNecesidad');
 
 //ORGANIZACIONES
 Route::get('/getOrganizacion/{idUsuario}', 'App\Http\Controllers\OrganizacionController@getOrganizacion')->name('getOrganizacion');
@@ -89,6 +88,7 @@ Route::post('/actualizarDescripcion', 'App\Http\Controllers\OrganizacionControll
 Route::post('/registrarTelefono', 'App\Http\Controllers\TelefonoController@registrarTelefono')->name('registrarTelefono');
 Route::post('/eliminarTelefono', 'App\Http\Controllers\TelefonoController@eliminarTelefono')->name('eliminarTelefono');
 Route::post('/actualizarDomicilio', 'App\Http\Controllers\DomicilioController@actualizarDomicilio')->name('actualizarDomicilio');
+Route::post('/cambiarClave', 'App\Http\Controllers\UsuarioController@cambiarClave')->name('cambiarClave');
 
 //NECESIDADES
 Route::get('/listarNecesidadesPantallaPrincipal/{idUsuario}', 'App\Http\Controllers\NecesidadController@listarNecesidadesPantallaPrincipal')->name('listarNecesidadesPantallaPrincipal');
@@ -97,7 +97,12 @@ Route::get('/getNecesidad/{idNecesidad}', 'App\Http\Controllers\NecesidadControl
 Route::post('/bajaNecesidad','App\Http\Controllers\NecesidadController@bajaNecesidad')->name('bajaNecesidad');
 Route::post('/updateNecesidad','App\Http\Controllers\NecesidadController@updateNecesidad')->name('updateNecesidad');
 Route::post('/registrarCalificacion','App\Http\Controllers\CalificacionController@registrarCalificacion')->name('registrarCalificacion');
+Route::post('/registrarNecesidad', 'App\Http\Controllers\NecesidadController@registrarNecesidad')->name('registrarNecesidad');
 
+//REPORTE DE DENUNCIA
+Route::get('/getMotivos', 'App\Http\Controllers\MotivoDenunciaController@getMotivos')->name('getMotivos');
+Route::get('/getDenuncias', 'App\Http\Controllers\DenunciaController@getDenuncias')->name('getDenuncias');
+Route::post('/altaDenuncia', 'App\Http\Controllers\DenunciaController@altaDenuncia')->name('altaDenuncia');
 
 
 

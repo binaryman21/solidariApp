@@ -13,24 +13,23 @@
                     <div class="form-group">
                         <label for="fechaIncidente">Fecha del incidente</label>
                         <input type="date" class="form-control" id="fechaIncidente" required>
+                        <span class="error text-danger" id ="errorFechaIncidente"></span>
                     </div>
                     <div class="form-group">
                         <label for="motivoReporte">Motivo del reporte</label>
                         <select class="form-control" id="motivoReporte" required>
-                            <option>Estafa</option>
-                            <option>Robo</option>
-                            <option>Suplantacion de identidad</option>
-                            <option>Abuso</option>
-                            <option>Otro</option>
+
                         </select>
+                        <span class="error text-danger" id ="errorMotivoReporte"></span>
                     </div>
                     <div class="form-group">
                         <label for="textoDescripcion">Descripcion</label>
                         <textarea class="form-control" id="textoDescripcion" rows="5" required></textarea>
+                        <span class="error text-danger" id ="errorTextoDescripcion"></span>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="submit" class="btn btn-block btn-outline-danger">Reportar</button>
+                    <button type="submit" class="btn btn-block btn-outline-danger" id="btnConfirmarReporte">Reportar</button>
                 </div>
             </form>
         </div>

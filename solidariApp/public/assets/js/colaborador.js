@@ -13,7 +13,6 @@ document.addEventListener('DOMContentLoaded', () => {
      else if(url.length == 4 || (url.length == 5 && url[4] == "")){
         isLoggedIn(getColaborador);
         $("#editarMiPerfil").removeClass("d-none");
-
      }
      else{
          window.location = "/";
