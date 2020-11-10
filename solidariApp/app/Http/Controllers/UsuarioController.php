@@ -57,13 +57,18 @@ class UsuarioController extends Controller
                 /*Busco el ID del usuario logeado*/
                 $usuarioLogoeado = $_SESSION['usuario'];
                 Usuario::bajaUser($usuarioLogoeado->idUsuario);
+                /*Log out */
+                unset($_SESSION['usuario']);
                   
             }
-
+            /*Redirecciono a pagina de inicio*/
+            return redirect()->route('UIPrincipal');
+          
+            /*
             return response()->json([
                 'resultado' => 1,
                 'message' => 'ejecucion exitosa'
-            ]);
+            ]);*/
         }
         catch (\Exception $e)
         {
