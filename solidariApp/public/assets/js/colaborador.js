@@ -8,7 +8,6 @@ document.addEventListener('DOMContentLoaded', () => {
      if(url.length == 5 && url[4] != "" && !isNaN(url[4])){
         isLoggedIn();
          getColaborador(url[4],1);
-
      }
      else if(url.length == 4 || (url.length == 5 && url[4] == "")){
         isLoggedIn(getColaborador);
@@ -18,7 +17,7 @@ document.addEventListener('DOMContentLoaded', () => {
          window.location = "/";
      }
 
-    listarColaboraciones();
+    // listarColaboraciones();
     agregarPaginacionComentarios();
     // agregarPaginacionNecesidades();
 
@@ -117,6 +116,7 @@ function guardarCambios() {
 
 function getColaborador(idUsuario,vistaVisitante){
 
+    listarColaboraciones( idUsuario );
 
     $("#btnAgregarTelefono").click(function()
     {
@@ -352,8 +352,11 @@ function agregarPaginacionNecesidades() {
 }
 
 // Cargar colaboraciones dinamicamente desde la BD
-function listarColaboraciones ( ){
-    let idUsuario = $(location).attr('href').split("/")[4];
+function listarColaboraciones ( idUsuario  ){
+    // let idUsuario = $(location).attr('href').split("/")[4];
+    // if( !idUsuario ){
+    //     idUsuario = 
+    // }
     fetch(`/getColaboracionesPorUsuario/${ idUsuario }`)
         .then(response => response.json())
         .then(data => {
