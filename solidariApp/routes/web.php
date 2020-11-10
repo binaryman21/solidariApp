@@ -77,6 +77,7 @@ Route::get('/buscarOrganizacionesPorCategoria/{filtro}', 'App\Http\Controllers\O
 Route::get('/getColaborador/{idUsuario}', 'App\Http\Controllers\ColaboradorController@getColaborador')->name('getColaborador');
 Route::post('/registrarColaboracion', 'App\Http\Controllers\ColaboracionController@registrarColaboracion')->name('registrarColaboracion');
 Route::get('/getColaboraciones/{idNecesidad}', 'App\Http\Controllers\ColaboracionController@getColaboraciones')->name('getColaboraciones');
+Route::get('/getColaboracionesPorUsuario/{idUsuario}', 'App\Http\Controllers\ColaboracionController@getColaboracionesPorUsuario')->name('getColaboracionesPorUsuario');
 
 //DATOS USUARIOS
 Route::get('/listarDomiciliosUsuario/{idUsuario}', 'App\Http\Controllers\DomicilioController@listarDomiciliosUsuario')->name('listarDomiciliosUsuario');

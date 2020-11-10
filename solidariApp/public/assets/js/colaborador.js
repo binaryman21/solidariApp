@@ -18,8 +18,9 @@ document.addEventListener('DOMContentLoaded', () => {
          window.location = "/";
      }
 
+    listarColaboraciones();
     agregarPaginacionComentarios();
-    agregarPaginacionNecesidades();
+    // agregarPaginacionNecesidades();
 
     $("#editarMiPerfil").click(camposEditables);
     $("#guardarCambios").click(guardarCambios);
@@ -348,4 +349,49 @@ function agregarPaginacionNecesidades() {
         $(necesidad).css('opacity', '0.0').hide().slice(primerItem, ultimoItem).
             css('display', 'block').animate({ opacity: 1 }, 300);
     });
+}
+
+// Cargar colaboraciones dinamicamente desde la BD
+function listarColaboraciones ( ){
+    let idUsuario = $(location).attr('href').split("/")[4];
+    fetch(`/getColaboracionesPorUsuario/${ idUsuario }`)
+        .then(response => response.json())
+        .then(data => {
+        // console.log( response.data );
+        let colaboraciones = data.colaboraciones;
+
+        let divNecesidades = $('.necesidades');
+        divNecesidades.html("");
+        colaboraciones.forEach(colaboracion => {
+            crearCardColaboracion( colaboracion );
+        })
+    agregarPaginacionNecesidades();
+    })
+}
+
+
+// MOSTRAR LAS COLABORACIONES
+function crearCardColaboracion( colaboracion )
+{
+    console.log( colaboracion );
+    let cardColaboracion =
+    `<div class="col-md-6" id="colaboracion${colaboracion.idColaboracion}">
+        <div class="card necesidad ${colaboracion.nombreCategoria.toLowerCase()}">
+            <div class="card-body">
+                <p class="text-right">Colaboro el dia: ${colaboracion.fechaColaboracion}</p>
+                <div class="row">
+                    <div class="col-md-3">
+                        <img class="rounded-circle imgNecesidad" src="${colaboracion.urlFotoPerfilUsuario}" alt="imagen de usuario">
+                    </div>
+                    <div class="col-md-9">
+                        <h5 class="card-title"><a href="/organizacion/${colaboracion.idUsuario}">${colaboracion.razonSocial}</a></h5>
+                        <p class="card-text">${colaboracion.nombreCategoria}</p>
+                    </div>
+                </div>
+                <p class="mt-2">${colaboracion.descripcionNecesidad}</p>
+            </div>
+        </div>
+    </div>`;
+
+    $(".necesidades").append(cardColaboracion);
 }
