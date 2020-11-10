@@ -28,6 +28,7 @@ class CalificacionController extends Controller
                 $necesidad = Necesidad::find($datos->idNecesidad);
                 $necesidad->cantidadRecibida += $datos->cantidadRecibida;
                 $necesidad->save();
+
                 DB::commit();
                 return response()->json([
                     'resultado' => 1,
