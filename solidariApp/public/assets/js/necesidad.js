@@ -15,8 +15,8 @@ function registrarNecesidad(idUsuario)
 
     axios.post("/registrarNecesidad",necesidad)
     .then((response)=>{
-        console.log( 'respuesta' + response.data.id);
-        console.log( 'respuestaaa ' + response.data.message);
+        // console.log( 'respuesta' + response.data.id);
+        // console.log( 'respuestaaa ' + response.data.message);
         // console.log(necesidad);
         necesidad.idNecesidad = response.data.id;
         desbloquearBoton($("#btnGuardarCambiosNecesidad"));

@@ -10,22 +10,20 @@ use App\Models\Colaborador;
 use App\Models\Domicilio;
 use App\Models\RegistroCalificaciones;
 use App\Models\Telefono;
+
 class ColaboradorController extends Controller
 {
     public function registrarColaborador(Request $request)
     {
-
-
         try
         {
             DB::beginTransaction();
             $datosColaborador = json_decode($request->getContent());
 
-
             $usuario = new Usuario;
             $colaborador = new Colaborador;
 
-            $usuario->claveUsuario = $datosColaborador->claveUsuario;
+            $usuario->claveUsuario = hash( 'sha256', $datosColaborador->claveUsuario );
             $usuario->emailUsuario = $datosColaborador->emailUsuario;
             $usuario->tokenGoogle = $datosColaborador->tokenGoogle;
             if($datosColaborador->urlFotoPerfilUsuario != ""){
@@ -96,10 +94,6 @@ class ColaboradorController extends Controller
             'colaborador'=>Colaborador::getColaborador($idUsuario),
             'domicilios' => Domicilio::listarDomiciliosUsuario($idUsuario),
             'telefonos' => Telefono::listarTelefonosUsuario($idUsuario)
-
         ]);
     }
-
-
-
 }
