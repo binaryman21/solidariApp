@@ -13,6 +13,13 @@ class Denuncia extends Model
     public $timestamps = false;
 
     public static function getDenuncias(){
-        return Denuncia::All();
+        return Denuncia::join('motivoDenuncia', 'motivoDenuncia.idMotivoDenuncia','denuncia.idMotivoDenuncia')
+        ->where('denuncia.confirmada','0')
+        ->get();
+    }
+
+    public static function confirmarDenuncia( $idDenuncia ){
+        Denuncia::where('denuncia.idDenuncia', $idDenuncia)
+        ->update(['confirmada'=>'1']);
     }
 }

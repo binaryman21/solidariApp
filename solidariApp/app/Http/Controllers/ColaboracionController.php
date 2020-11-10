@@ -77,4 +77,16 @@ class ColaboracionController extends Controller
             'colaboraciones' => $colaboraciones
         ]);
     }
+
+    public function getColaboracionesPorUsuario($idUsuario){
+        $colaboraciones = Colaboracion::where("idColaborador",$idUsuario)
+        ->join("necesidad","necesidad.idNecesidad","=","colaboraciones.idNecesidad")
+        ->join("categoriaNecesidad","categoriaNecesidad.idCategoria","=","necesidad.idCategoriaNecesidad")
+        ->join("organizacion","necesidad.idUsuario","=","organizacion.idUsuario")
+        ->join("usuario","usuario.idUsuario","=","organizacion.idUsuario")
+        ->get();
+        return response()->json([
+            'colaboraciones' => $colaboraciones
+        ]);
+    }
 }

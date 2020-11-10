@@ -19,7 +19,7 @@ Route::get('/colaborador', function()
     session_start();
     if(!isset($_SESSION['usuario']) || $_SESSION['usuario']->rol->nombreRol != 'colaborador')
     {
-        return redirect('/');
+        return view('Error403');
     }
     else
     {
@@ -36,7 +36,7 @@ Route::get('/organizacion', function()
     session_start();
     if(!isset($_SESSION['usuario']) || $_SESSION['usuario']->rol->nombreRol != 'organizacion')
     {
-        return redirect('/');
+        return view('Error403');
     }
     else
     {
@@ -45,9 +45,30 @@ Route::get('/organizacion', function()
 
 })->name('UIOrganizacion');
 
+Route::get('/administrador', function(){
+    session_start();
+    if(!isset($_SESSION['usuario']) || $_SESSION['usuario']->rol->nombreRol != 'administrador')
+    {
+        return view('Error403');
+    }
+    else
+    {
+        return view('UIPerfilAdministrador');
+    }
+})->name('UIAdministracion');
+
 //RUTAS GENERALES
-Route::get('/administrador', function(){return view('UIPerfilAdministrador');})->name('UIAdministracion');
-Route::get('/administrador/reportes', function(){return view('UIReporteDenuncias');})->name('UIReporteDenuncias');
+Route::get('/administrador/reportes', function(){
+    session_start();
+    if(!isset($_SESSION['usuario']) || $_SESSION['usuario']->rol->nombreRol != 'administrador')
+    {
+        return view('Error403');
+    }
+    else
+    {
+        return view('UIReporteDenuncias');
+    }
+})->name('UIReporteDenuncias');
 Route::get('/contacto', function(){return view('UIContacto');})->name('UIContacto');
 
 //LISTAR
@@ -79,6 +100,7 @@ Route::get('/buscarOrganizacionesPorCategoria/{filtro}', 'App\Http\Controllers\O
 Route::get('/getColaborador/{idUsuario}', 'App\Http\Controllers\ColaboradorController@getColaborador')->name('getColaborador');
 Route::post('/registrarColaboracion', 'App\Http\Controllers\ColaboracionController@registrarColaboracion')->name('registrarColaboracion');
 Route::get('/getColaboraciones/{idNecesidad}', 'App\Http\Controllers\ColaboracionController@getColaboraciones')->name('getColaboraciones');
+Route::get('/getColaboracionesPorUsuario/{idUsuario}', 'App\Http\Controllers\ColaboracionController@getColaboracionesPorUsuario')->name('getColaboracionesPorUsuario');
 
 //DATOS USUARIOS
 Route::get('/listarDomiciliosUsuario/{idUsuario}', 'App\Http\Controllers\DomicilioController@listarDomiciliosUsuario')->name('listarDomiciliosUsuario');
@@ -104,6 +126,7 @@ Route::post('/registrarNecesidad', 'App\Http\Controllers\NecesidadController@reg
 Route::get('/getMotivos', 'App\Http\Controllers\MotivoDenunciaController@getMotivos')->name('getMotivos');
 Route::get('/getDenuncias', 'App\Http\Controllers\DenunciaController@getDenuncias')->name('getDenuncias');
 Route::post('/altaDenuncia', 'App\Http\Controllers\DenunciaController@altaDenuncia')->name('altaDenuncia');
+Route::post('/confirmarDenuncia', 'App\Http\Controllers\DenunciaController@confirmarDenuncia')->name('confirmarDenuncia');
 
 
 
