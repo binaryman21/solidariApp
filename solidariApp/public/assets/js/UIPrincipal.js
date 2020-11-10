@@ -346,6 +346,7 @@ function getOrganizaciones(){
 
 //CARGAR LAS ORGANIZACIONES EN LA LISTA
 function llenarOrganizaciones( organizaciones ){
+
     // Borro los marcadores del mapa
     $(".leaflet-marker-icon").remove(); $(".leaflet-popup").remove();
     $(".leaflet-pane.leaflet-shadow-pane").remove();
@@ -362,44 +363,64 @@ function llenarOrganizaciones( organizaciones ){
         );
     }
     else{
+
+        var icon = {
+
+            'alimentos': 'utensils',
+            'ropa': 'tshirt',
+            'dinero': 'donate',
+            'limpieza': 'spray-can',
+            'servicios': 'hands-helping',
+            'varios': 'hand-holding-heart'
+        }
+
         organizaciones.forEach(org => {
+
             if(org.necesidades.length>0){
                 let cardOrganizacion = `
-                <div class="card cardOrganizacion cardOrganizacion${org.idUsuario} shadow-sm border my-2" style="display: block; opacity: 1;">
+                <div class="card cardOrganizacion cardOrganizacion${org.idUsuario} shadow-sm my-2" style="display: block; opacity: 1;">
                     <div class="card-header d-flex flex-row px-2 justify-content-star detalleOrganizacion align-items-center">
                         <img class="rounded-circle imgPerfilOrg" src="${org.urlFotoPerfilUsuario || 'assets/img/imgUserProfile.png'}" alt="Avatar de la org ${org.razonSocial}">
                         <div id="card-org-name" class="ml-2">
-                            <p>${org.razonSocial}</p>
-                            <p>${org.nombreTipoOrganizacion}</p>
+                            <a href="organizacion/${org.idUsuario}">${org.razonSocial}</a>
+                            <a href="#">${org.nombreTipoOrganizacion}</a>
                         </div>
                     </div>
                     <div class="card-body p-0 listaNecesidades${org.idUsuario}">
 
                     </div>
                     <div class="card-footer py-0 bg-transparent">
-                        <button class="btn w-100 btn-link ml-auto text-decoration-none">Ver todas</button>
+                        <button class="btn btn-sm w-100 btn-link ml-auto text-decoration-none text-muted">Ver todas</button>
                     </div>
                 </div>`
-    
+
                 divOrganizaciones.append( cardOrganizacion );
                 org.necesidades.forEach( need => {
+
+                    $category = need.nombreCategoria.split(' ')[0].toLowerCase();
+
                     $(`.listaNecesidades${org.idUsuario}`).append(`
-                        <div class="${need.nombreCategoria.toLowerCase()}">
-                            <div class="class-body py-2 px-3">
-                                <div class="card-title"><h6>${need.nombreCategoria}</h6></div>
+                        <div class="need ${$category}">
+                            <div class="card-body py-2 px-3">
+                                <div class="card-title">
+                                    <i class="fas fa-${icon[$category]} fa-xs"></i>
+                                    <a title="${$category}" href="#" class="card-category">${need.nombreCategoria}</a>
+                                </div>
                                 <div class="card-subtitle text-muted">${need.descripcionNecesidad}</div>
                             </div>
                             <div class="card-footer d-flex align-items-end justify-content-end p-0">
-                                <button class="btn btn-link btnDetalleOrg btnDetalleOrg${need.idNecesidad} text-decoration-none" data-toggle="modal" data-target="#modalDetalleNecesidad">Me interesa</button>
+                                <button class="btn btn-link btn-sm btnDetalleOrg btnDetalleOrg${need.idNecesidad} text-decoration-none" data-toggle="modal" data-target="#modalDetalleNecesidad">Me interesa</button>
                             </div>
                         </div>
-                    `)
-    
+                    `);
+
                     $(`.btnDetalleOrg${need.idNecesidad}`).on('click', function(){
                         cargarDatosModalDetalleNecesidad(need);
                     })
+
+                    $()
                 })
-    
+
                 cargarOrgEnMapa(org);
             }
         })

@@ -17,6 +17,25 @@
                 <div class="input-group my-2 mt-3 mt-lg-2">
                     <input class="form-control border-secondary border-right-0" type="text" id="campoBuscarPorTexto" placeholder="Categoría, descripción o nombre de la Org.">
                     <div class="input-group-append">
+                        <div class="dropdown show">
+                            <button type="button" class="btn btn-outline-secondary rounded-0 border-left-0 border-right-0" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" id="filtros">
+                                <i class="fas fa-filter fa-xs"></i>
+                            </button>
+                            <div class="dropdown-menu dropdown-menu-right show" id="filtrosCategoria" aria-labelledby="filtros" style="position: absolute; transform: translate3d(-124px, 38px, 0px); top: 0px; left: 0px; will-change: transform;" x-placement="bottom-end">
+                                <button class="dropdown-item" data-toggle="tooltip" data-placement="top" title="Alimentos" type="button">
+                                    <i class="fas fa-utensils fa-xs ml-n2 mr-3"></i><span>Alimentos</span></button>
+                                <button class="dropdown-item" data-toggle="tooltip" data-placement="top" title="Ropa" type="button">
+                                    <i class="fas fa-tshirt fa-xs ml-n2 mr-2"></i><span>Ropa</span></button>
+                                <button class="dropdown-item" data-toggle="tooltip" data-placement="top" title="Dinero">
+                                    <i class="fas fa-donate fa-sm ml-n2 mr-2"></i><span>Dinero</span></button>
+                                <button class="dropdown-item" data-toggle="tooltip" data-placement="top" title="Limpieza e higiene">
+                                    <i class="fas fa-spray-can fa-sm ml-n2 mr-2"></i><span>Limpieza e higiene</span></button>
+                                <button class="dropdown-item" data-toggle="tooltip" data-placement="top" title="Servicios">
+                                    <i class="fas fa-hands-helping fa-sm ml-n2 mr-2"></i><span>Servicios</span></button>
+                                <button class="dropdown-item" data-toggle="tooltip" data-placement="top" title="Varios">
+                                    <i class="fas fa-hand-holding-heart fa-sm ml-n2 mr-2"></i><span>Varios</span></button>
+                            </div>
+                        </div>
                         <button class="btn btn-outline-secondary border-secondary border-left-0" id="btnBuscarNeccesidades" type="button"><i class="fa fa-search fa-xs"></i></button>
                     </div>
                 </div>
@@ -39,17 +58,6 @@
                 <div class="row p-2" >
                     <div class = "d-flex flex-column rounded p-2" style = "width:100%;height:100%;">
                         <div id="mapa" class = "mapa"></div>
-                    </div>
-                </div>
-                <div class="row d-flex justify-content-between mx-1 align-items-center border rounded">
-                    <div class="col py-2">Filtrar por</div>
-                    <div class="col p-0 btn-group" id="filtrosCategoria" role="group">
-                        <button class="btn btn-light" data-toggle="tooltip" data-placement="top" title="Alimentos"><i class="fas fa-utensils fa-sm"></i></button>
-                        <button class="btn btn-light" data-toggle="tooltip" data-placement="top" title="Ropa"><i class="fas fa-tshirt fa-sm"></i></button>
-                        <button class="btn btn-light" data-toggle="tooltip" data-placement="top" title="Dinero"><i class="fas fa-donate fa-sm"></i></button>
-                        <button class="btn btn-light" data-toggle="tooltip" data-placement="top" title="Limpieza e higiene"><i class="fas fa-spray-can fa-sm"></i></button>
-                        <button class="btn btn-light" data-toggle="tooltip" data-placement="top" title="Servicios"><i class="fas fa-hands-helping fa-sm"></i></button>
-                        <button class="btn btn-light" data-toggle="tooltip" data-placement="top" title="Varios"><i class="fas fa-hand-holding-heart fa-sm"></i></button>
                     </div>
                 </div>
                 <div class="row px-2" id = "botonesRegistro">

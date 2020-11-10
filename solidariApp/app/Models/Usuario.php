@@ -25,6 +25,23 @@ class Usuario extends Model
         return $usuario;
     }
 
+    public static function getUsuario($idUsuario){
+        $usuario = Usuario::with('rol')->where('usuario.idUsuario', $idUsuario)->get();
+        // if( $usuario->rol->idRol == '1' ){
+        //     $usuario['nombre'] = Usuario::select('colaborador.nombreColaborador')
+        //                         ->join('colaborador', 'usuario.idUsuario', 'colaborador.idUsuario')
+        //                         ->where('usuario.idUsuario', $idUsuario)
+        //                         ->get();
+        // }
+        // else{
+        //     $usuario['nombre'] = Usuario::select('organizacion.razonSocial')
+        //                         ->join('organizacion', 'usuario.idUsuario', 'organizacion.idUsuario')
+        //                         ->where('usuario.idUsuario', $idUsuario)
+        //                         ->get();
+        // }
+        return $usuario;
+    }
+
     public static function isUser($email){
         /*TODO: agregar condicion: idEstadoUsuario = 1 */
         return Usuario::where('emailUsuario',$email)->exists();
@@ -50,6 +67,13 @@ class Usuario extends Model
       /*TODO: Si el usuario es de tipo Organizacion tengo que setear
       todas sus necesidades como resueltas*/
 
+    }
+
+    //bloquear usuario por denuncia
+    public static function bloquearUsuario($idUsuario)
+    {
+      Usuario::where('idUsuario', $idUsuario)
+            ->update(['idEstadoUsuario'=>'3']);
     }
 
     public static function updateFotoPerfil($idUsuario, $urlFotoPerfil)

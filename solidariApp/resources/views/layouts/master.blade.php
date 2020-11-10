@@ -66,10 +66,10 @@
             </div>
         </nav>
     </header>
-    <main role="main" class="flex-shrink-0">
+    <main role="main" class="d-flex flex-shrink-0">
         @yield("contenido")
     </main>
-    <footer class="footer py-3 text-center text-white bg-dark my-auto">
+    <footer class="footer py-3 text-center text-white bg-dark mt-auto">
         <div class="container">
             <p>SolidariAPP© - 2020</p>
         </div>
