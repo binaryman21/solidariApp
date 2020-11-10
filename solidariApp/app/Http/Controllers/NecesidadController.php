@@ -11,7 +11,6 @@ class NecesidadController extends Controller
 {
     public function registrarNecesidad(Request $request)
     {
-
         try
         {
             $datosNecesidad = json_decode($request->getContent());

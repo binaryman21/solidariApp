@@ -11,20 +11,19 @@
         <form>
             <div class="form-group mb-3">
                 <label for="passActual">Contraseña actual</label>
-                <input type="password" id="passActual" class="form-control" required="">
-                <span class="error text-danger"></span>
+                <input type="password" id="claveVieja" class="form-control" required="">
+                <span class="error text-danger" id ="errorClaveVieja"></span>
             </div>
             <div class="form-group mb-3">
                 <label for="passNueva">Contraseña nueva</label>
-                <input type="password" id="passNueva" class="form-control" required="">
-                <span class="error text-danger"></span>
+                <input type="password" id="claveNueva" class="form-control" required="">
+                <span class="error text-danger" id ="errorClaveNueva"></span>
             </div>
             <div class="form-group mb-3">
                 <label for="confirmacionPassNueva">Repetir contraseña nueva</label>
-                <input type="password" id="confirmacionPassNueva" class="form-control" required="">
-                <span class="error text-danger"></span>
+                <input type="password" id="confirmacionClaveNueva" class="form-control" required="">
+                <span class="error text-danger" id ="errorClaveNuevaConfirmacion"></span>
             </div>
-
             <button type="button" class="btn btn-primary btn-block my-4" id="btnConfirmarPassNuevo">Confirmar</button>
             </div>
         </form>

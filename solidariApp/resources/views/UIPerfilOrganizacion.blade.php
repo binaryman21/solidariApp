@@ -167,6 +167,7 @@
 @include("UIPerfilModales/UIEditarDomicilio")
 @include("UIPerfilModales/UIModalBajaNecesidad")
 @include("UIPerfilModales/UIModalCalificar")
+@include("UIPerfilModales/UIModalReportar")
 @include("UIDetalleNecesidad")
 
 @endsection
@@ -179,5 +180,6 @@
 <script type="text/javascript" src="{{URL::asset('assets/js/necesidad.js')}}"></script>
 <script type="text/javascript" src="{{URL::asset('assets/js/colaboracion.js')}}"></script>
 <script type="text/javascript" src="{{URL::asset('assets/js/validaciones.js')}}"></script>
+<script type="text/javascript" src="{{URL::asset('assets/js/usuario.js')}}"></script>
 <script src="https://apis.google.com/js/platform.js?onload=onLoad" async defer></script>
 @endsection

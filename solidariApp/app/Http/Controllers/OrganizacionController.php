@@ -18,7 +18,6 @@ class OrganizacionController extends Controller
 
         try
         {
-
             $datosOrganizacion = json_decode($request->getContent());
             $usuario = new Usuario;
             if(Usuario::isUser($usuario->emailUsuario))
@@ -29,7 +28,7 @@ class OrganizacionController extends Controller
             }
             $organizacion = new Organizacion;
             DB::beginTransaction();
-            $usuario->claveUsuario = $datosOrganizacion->claveUsuario;
+            $usuario->claveUsuario = hash( 'sha256', $datosOrganizacion->claveUsuario );
             $usuario->emailUsuario = $datosOrganizacion->emailUsuario;
             $usuario->tokenGoogle = $datosOrganizacion->tokenGoogle;
             if($datosOrganizacion->urlFotoPerfilUsuario != ""){
