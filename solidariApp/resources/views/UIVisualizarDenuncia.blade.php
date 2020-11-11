@@ -15,11 +15,11 @@
                 <hr/>
                 <div>Motivo: <span id="spnMotivoDenuncia"></span></div>
                 <hr/>
-                <div class="d-flex flex-wrap">Denunciante: <span id="spnDenunciante"></span>
+                <div class="d-flex flex-wrap">Denunciante: <span id="spnNombreDenunciante"></span><span id="spnDenunciante" class="d-none"></span>
                     <a class="ml-auto" id="verPerfilDenunciante" href="#">ver perfil</a>
                 </div>
                 <hr/>
-                <div class="d-flex flex-wrap">Denunciado: <span id="spnDenunciado"></span>
+                <div class="d-flex flex-wrap">Denunciado: <span id="spnNombreDenunciado"></span><span id="spnDenunciado" class="d-none"></span>
                     <a class="ml-auto" id="verPerfilDenunciado" href="#">ver perfil</a>
                 </div>
                 <hr/>
