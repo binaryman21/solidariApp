@@ -13,6 +13,7 @@ $( document ).ready(function() {
 
     listarProvincias(1);
     listarTiposOrganizaciones();
+    listarCategoriasNecesidad();
     // agregarPaginacionUsuarios();
 
     // EVENTOS
@@ -70,14 +71,6 @@ $( document ).ready(function() {
             }
         }
     });
-
-    //evento al mostrar los flitros disponibles
-    $('#dropdownFilters').on('show.bs.dropdown', function (e) {
-        if(!$('#filtrosCategoria').children().length){
-
-            listarCategoriasNecesidad();
-        }
-    })
 });
 
 
