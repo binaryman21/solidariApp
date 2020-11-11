@@ -40,9 +40,6 @@ $( document ).ready(function() {
     //Evento click para buscar una necesidad
     $('#btnBuscarNeccesidades').on('click', buscarNecesidadPorTexto);
 
-    //Evento click para los filtros por categoria
-    $('#filtrosCategoria button').on('click', filtrarPorCategoria);
-
     //Evento click para el filtro por ubicacion
     $('#btnBuscarPorUbicacion').on('click', filtrarPorUbicacion);
 
@@ -73,6 +70,14 @@ $( document ).ready(function() {
             }
         }
     });
+
+    //evento al mostrar los flitros disponibles
+    $('#dropdownFilters').on('show.bs.dropdown', function (e) {
+        if(!$('#filtrosCategoria').children().length){
+
+            listarCategoriasNecesidad();
+        }
+    })
 });
 
 
@@ -364,16 +369,6 @@ function llenarOrganizaciones( organizaciones ){
     }
     else{
 
-        var icon = {
-
-            'alimentos': 'utensils',
-            'ropa': 'tshirt',
-            'dinero': 'donate',
-            'limpieza': 'spray-can',
-            'servicios': 'hands-helping',
-            'varios': 'hand-holding-heart'
-        }
-
         organizaciones.forEach(org => {
 
             if(org.necesidades.length>0){
@@ -402,10 +397,7 @@ function llenarOrganizaciones( organizaciones ){
                     $(`.listaNecesidades${org.idUsuario}`).append(`
                         <div class="need ${$category}">
                             <div class="card-body py-2 px-3">
-                                <div class="card-title">
-                                    <i class="fas fa-${icon[$category]} fa-xs"></i>
-                                    <a title="${$category}" href="#" class="card-category">${need.nombreCategoria}</a>
-                                </div>
+                                <div class="card-title"><a title="${$category}" href="#" class="card-category">${need.nombreCategoria}</a></div>
                                 <div class="card-subtitle text-muted">${need.descripcionNecesidad}</div>
                             </div>
                             <div class="card-footer d-flex align-items-end justify-content-end p-0">
@@ -448,3 +440,39 @@ function cargarDatosModalDetalleNecesidad( necesidad ){
         </div>`)
 }
 
+
+
+function listarCategoriasNecesidad() {
+    fetch('/listarCategoriasNecesidad/')
+    .then(response => response.json())
+    .then(data => {
+
+        var CategoriasNecesidad = data.CategoriasNecesidad;
+        llenarFiltrosDeCategoria(CategoriasNecesidad);
+    })
+    .catch(error => console.log(error));
+}
+
+
+function llenarFiltrosDeCategoria(CategoriasNecesidad){
+
+    var FiltersFragent = document.createDocumentFragment();
+    CategoriasNecesidad.forEach(category => {
+
+        if(category.activo){
+
+            let btnCateogoryTemplate = 
+            `<button class="dropdown-item" title="${category.nombreCategoria}" type="button">
+                <span>${category.nombreCategoria}</span>
+            </button>`
+
+            let dropdwonItem = document.createRange().createContextualFragment(btnCateogoryTemplate);
+            FiltersFragent.appendChild(dropdwonItem);
+        }
+    })
+
+    document.querySelector('#filtrosCategoria').appendChild(FiltersFragent);
+
+    //Evento click para los filtros por categoria
+    $('#filtrosCategoria button').on('click', filtrarPorCategoria);
+}
