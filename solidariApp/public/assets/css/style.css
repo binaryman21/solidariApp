@@ -120,18 +120,18 @@ i {
 }
 
 .card-title .card-category {
-    font-size: .9rem;
-    font-weight: 600;
-    margin-left: 4px;
-    text-transform:capitalize;
+    font-size: 0.87rem;
+    font-weight: bold;
+    color: inherit;
 }
 
 #card-org-name a:first-child{
 
     display: block;
-    font-size:85%;
+    font-size: 88%;
     font-weight: 700;
-    color: #616161;
+    color: #676767;
+    line-height: 10px;
 }
 
 #card-org-name a:last-child{
@@ -172,4 +172,23 @@ div.g-signin2 > .abcRioButtonLightBlue{
 
 .domicilio{
     background-color:lightgray;
+}
+
+div#filtrosCategoria:empty {
+    width: inherit;
+    height: 300px;
+    background-image: linear-gradient( 100deg, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.5) 50%, rgba(255, 255, 255, 0) 80% ),
+     linear-gradient( #f5f5f5 20px, transparent 0 );
+    background-size: 30px 40px, 80% 34px;
+    background-position: 0 0, 15px 10px;
+    background-repeat: repeat-y;
+    animation: shine 1s infinite;
+}
+
+@keyframes shine {
+    to {
+        background-position:
+            100% 0, /* move highlight to right */
+            15px 10px;
+    }
 }
