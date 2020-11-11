@@ -5,15 +5,32 @@ document.addEventListener('DOMContentLoaded', () => {
   $("#seleccionCategoria").on('change', function () {
     seleccionaCrearNuevaCategoria();
   })
-  
+  listarCategoriasNecesidades();
+  $("#btnAgregar").on('click', altaCategoriaNecesidad);
 
- /* $("#btnABMCategorias").on('mouseup', function () {*/
-    listarCategoriasNecesidades();
-/*  })*/
- 
- 
+
 })
-   
+
+/*Alta de nueva CategoriaNecesidad*/
+function altaCategoriaNecesidad() {
+  let CategoriaNecesidad = {
+    nombreCategoria: $("#nombreCategoria").val(),
+    idPrioridad: $("#seleccionPrioridad").val()
+  }
+  axios.post("/nuevaCategoriaNecesidad", JSON.stringify(CategoriaNecesidad))
+    .then((response) => {
+      if (response.data.resultado == 1) {
+        $("#modalABMCategorias").modal("hide");
+        alertify.success('Se agrego categoria con exito!')
+      } else {
+        alertify.error('Error!')
+
+      }
+    });
+
+}
+
+
 /*Obtener la prioridad de una categoria*/
 function setearPrioridad(categoria) {
   axios.get('/listarCategoriasNecesidad')
@@ -22,21 +39,21 @@ function setearPrioridad(categoria) {
 
       $.each(Categorias, function () {
         if (this.idCategoria == categoria) {
-            $("#seleccionPrioridad").val(Number(this.idPrioridad));
-          }
+          $("#seleccionPrioridad").val(Number(this.idPrioridad));
+        }
       })
 
     })
     .catch(e => {
       // Podemos mostrar los errores en la consola
       console.log(e);
-  });
-}     
+    });
+}
 
 /*Cuando elijo una categoria existente entonces habilito el boton "Deshabilitar", si no lo oculto*/
 function seleccionaCrearNuevaCategoria() {
   if ($("#seleccionCategoria").val() != 0) {
-    /*Eligio una categoria ya existente*/ 
+    /*Eligio una categoria ya existente*/
     $("#btnAgregar").addClass('d-none');
     $("#btnDeshabilitar").removeClass('d-none');
     $("#btnModificar").removeClass('d-none');
@@ -49,7 +66,7 @@ function seleccionaCrearNuevaCategoria() {
     $("#btnDeshabilitar").addClass('d-none');
     $("#btnModificar").addClass('d-none');
     $("#btnAgregar").removeClass('d-none');
-    $("#idCategoria").val(Number($('#seleccionCategoria option:last').val())+1);
+    $("#idCategoria").val(Number($('#seleccionCategoria option:last').val()) + 1);
     $("#nombreCategoria").val("");
     $("#seleccionPrioridad").val(0);
   }
@@ -60,18 +77,18 @@ function listarCategoriasNecesidades() {
   axios.get('/listarCategoriasNecesidad')
     .then((response) => {
       let Categorias = response.data.CategoriasNecesidad;
-         
+
       $.each(Categorias, function () {
         let idActual = this.idCategoria;
         let categoriaActual = this.nombreCategoria;
-        $("#seleccionCategoria").append($("<option value='" + this.idCategoria+ "' >"+ this.nombreCategoria + "</option>"));
-    })
-    /*A modo ilustrativo muestro cual va a ser el siguiente id disponible*/
-    $("#idCategoria").val(Number($('#seleccionCategoria option:last').val())+1);
+        $("#seleccionCategoria").append($("<option value='" + this.idCategoria + "' >" + this.nombreCategoria + "</option>"));
+      })
+      /*A modo ilustrativo muestro cual va a ser el siguiente id disponible*/
+      $("#idCategoria").val(Number($('#seleccionCategoria option:last').val()) + 1);
     })
     .catch(e => {
       // Podemos mostrar los errores en la consola
       console.log(e);
-  });
+    });
 }
 
