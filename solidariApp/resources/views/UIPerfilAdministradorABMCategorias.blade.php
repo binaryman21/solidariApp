@@ -46,8 +46,8 @@
 
                      <div class="modal-footer row">
                          <button type="button" id="btnDeshabilitar" class="btn btn btn-danger d-none">Deshabilitar</button>
-                         <button type="submit" id="btnAgregar" class="btn btn-primary">Agregar</button>
-                         <button type="submit" id="btnModificar" class="btn btn-primary d-none">Modificar</button>
+                         <button type="button" id="btnAgregar" class="btn btn-primary">Agregar</button>
+                         <button type="button" id="btnModificar" class="btn btn-primary d-none">Modificar</button>
                          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
                      </div>
                  </div>

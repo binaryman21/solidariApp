@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\CategoriaNecesidad;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class CategoriaNecesidadController extends Controller
 {
@@ -14,6 +15,38 @@ class CategoriaNecesidadController extends Controller
 
         return response()->json([
             'CategoriasNecesidad' => $categoriaNecesidad
+        ]);
+    }
+
+    public function nuevaCategoriaNecesidad(Request $request)
+    {
+        try
+        {
+            DB::beginTransaction();
+
+            $datosCategoriaNueva = json_decode($request->getContent());
+
+            $nuevaCategoria = new CategoriaNecesidad;
+
+            $nuevaCategoria->nombreCategoria = $datosCategoriaNueva->nombreCategoria;
+            $nuevaCategoria->idPrioridad = $datosCategoriaNueva->idPrioridad;
+            $nuevaCategoria->activo = 1;
+            $nuevaCategoria->save();
+         
+            DB::commit();
+        }
+        catch (\Exception $e)
+        {
+            return response()->json([
+                'resultado' => 0,
+                'message' => $e->getMessage()
+            ]);
+        }
+
+        return response()->json([
+            'resultado' => 1,
+            'message' => "alta exitosa!"
+
         ]);
     }
 }
