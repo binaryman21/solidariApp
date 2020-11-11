@@ -49,4 +49,38 @@ class CategoriaNecesidadController extends Controller
 
         ]);
     }
+
+    public function modificarCategoria(Request $request)
+    {
+        try
+        {
+            DB::beginTransaction();
+
+            $datosCategoriaNueva = json_decode($request->getContent());
+
+            $categoria = CategoriaNecesidad::find($datosCategoriaNueva->idCategoria);
+
+            $categoria->nombreCategoria = $datosCategoriaNueva->nombreCategoria;
+            $categoria->idPrioridad = $datosCategoriaNueva->idPrioridad;
+            $categoria->activo = $datosCategoriaNueva->activo;
+            $categoria->save();
+         
+            DB::commit();
+        }
+        catch (\Exception $e)
+        {
+            return response()->json([
+                'resultado' => 0,
+                'message' => $e->getMessage()
+            ]);
+        }
+
+        return response()->json([
+            'resultado' => 1,
+            'message' => "actualizacion exitosa!"
+
+        ]);
+    }
+
+
 }
