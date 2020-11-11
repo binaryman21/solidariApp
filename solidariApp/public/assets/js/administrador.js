@@ -5,10 +5,12 @@ document.addEventListener('DOMContentLoaded', () => {
   $("#seleccionCategoria").on('change', function () {
     seleccionaCrearNuevaCategoria();
   })
+    
   listarCategoriasNecesidades();
   $("#btnAgregar").on('click', altaCategoriaNecesidad);
-
-
+  $("#btnModificar").on('click', modificarCategoria);
+  $("#btnDeshabilitar").on('click', bajaCategoria);
+  
 })
 
 /*Alta de nueva CategoriaNecesidad*/
@@ -30,6 +32,49 @@ function altaCategoriaNecesidad() {
 
 }
 
+/*Modificar una Categoria*/
+function modificarCategoria() {
+  let CategoriaNecesidad = {
+    idCategoria: Number($("#seleccionCategoria").val()),
+    nombreCategoria: $("#nombreCategoria").val(),
+    idPrioridad: $("#seleccionPrioridad").val(),
+    activo: 1
+  }
+  console.log(CategoriaNecesidad.idCategoria);
+  axios.post("/modificarCategoria", JSON.stringify(CategoriaNecesidad))
+    .then((response) => {
+      if (response.data.resultado == 1) {
+        $("#modalABMCategorias").modal("hide");
+        alertify.success('Se actualizo categoria con exito!');
+      } else {
+        alertify.error(response.data.message);
+
+      }
+    });
+
+}
+
+/*baja de una Categoria*/
+function bajaCategoria() {
+  let CategoriaNecesidad = {
+    idCategoria: Number($("#seleccionCategoria").val()),
+    nombreCategoria: $("#nombreCategoria").val(),
+    idPrioridad: $("#seleccionPrioridad").val(),
+    activo: 0
+  }
+  console.log(CategoriaNecesidad.idCategoria);
+  axios.post("/modificarCategoria", JSON.stringify(CategoriaNecesidad))
+    .then((response) => {
+      if (response.data.resultado == 1) {
+        $("#modalABMCategorias").modal("hide");
+        alertify.success('Se actualizo categoria con exito!');
+      } else {
+        alertify.error(response.data.message);
+
+      }
+    });
+
+}
 
 /*Obtener la prioridad de una categoria*/
 function setearPrioridad(categoria) {
