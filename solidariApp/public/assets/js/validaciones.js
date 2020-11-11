@@ -37,8 +37,8 @@ function validarClavesCambio(){
     if ( validarPass (claveNueva, errorClaveNueva ) ){
         contador++;
         validarPassNueva( claveNueva, claveNuevaConfirmacion, errorClaveNueva, errorClaveNuevaConfirmacion ) ? contador++ : false;
-    } 
-        
+    }
+
     if( contador === 4 ){
         return true;
     }
@@ -56,7 +56,7 @@ function validarDenuncia(){
     validarFechaDenuncia( fechaIncidente, errorFechaIncidente ) ? contador++ : false;
     validarDescripcion( textoDescripcion, errorTextoDescripcion ) ? contador++ : false;
     validarMotivoDenuncia( motivoReporte, errorMotivoReporte ) ? contador ++ : false;
-        
+
     if( contador === 3 ){
         return true;
     }
@@ -461,6 +461,15 @@ function validarDescripcion(descripcion, error){
 
 function validarCantidad(cantidad, error){
     if(cantidad.val() < 0){
+        mostrarError( cantidad, error, 'Ingrese una cantidad valida');
+        return false;
+    }
+    quitarError( cantidad, error );
+    return true;
+}
+
+function validarCantidadRecibida(cantidad, error){
+    if(cantidad.val() <= 0){
         mostrarError( cantidad, error, 'Ingrese una cantidad valida');
         return false;
     }

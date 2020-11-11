@@ -13,3 +13,4 @@ class Calificacion extends Model
     use HasFactory;
 
 }
+
