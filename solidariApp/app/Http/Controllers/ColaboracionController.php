@@ -15,7 +15,7 @@ class ColaboracionController extends Controller
             session_start();
             if(isset($_SESSION['usuario']))
             {
-                if($_SESSION['usuario']->rol->nombreRol == "colaborador")
+                if(UsuarioController::tienePermisoPara("colaborar"))
                 {
                     $resultado = Colaboracion::where("idNecesidad",$datos->idNecesidad)
                     ->where("idColaborador",$_SESSION['usuario']->idUsuario)
@@ -63,7 +63,8 @@ class ColaboracionController extends Controller
         {
             return response()->json([
                 'resultado' => 0,
-                'message' => 'Accion no disponible. Intente mas tarde'
+                //'message' => 'Accion no disponible. Intente mas tarde'
+                'message' => $e->getMessage()
             ]);
         }
     }

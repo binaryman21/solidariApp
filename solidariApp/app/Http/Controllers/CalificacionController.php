@@ -16,7 +16,7 @@ class CalificacionController extends Controller
 
             $datos = json_decode($request->getContent());
             session_start();
-            if(isset($_SESSION['usuario']))
+            if(UsuarioController::tienePermisoPara("calificarColaborador") || UsuarioController::tienePermisoPara("calificarOrganizacion"))
             {
                 $resultado = Calificacion::where('idColaboracion',$datos->idColaboracion)->where('idRolCalificado',$datos->idRolCalificado)->first();
 
@@ -70,7 +70,7 @@ class CalificacionController extends Controller
             {
                 return response()->json([
                     'resultado' => 0,
-                    'message' => 'notLoggedIn'
+                    'message' => 'ACCION NO PERMITIDA'
                 ]);
             }
 
