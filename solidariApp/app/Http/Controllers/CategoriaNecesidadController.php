@@ -20,14 +20,27 @@ class CategoriaNecesidadController extends Controller
 
     public function nuevaCategoriaNecesidad(Request $request)
     {
+        $datosCategoriaNueva = json_decode($request->getContent());
+        
+        /*validaciones*/
+        if (is_numeric($datosCategoriaNueva->nombreCategoria)){
+            return response()->json([
+                'resultado' => 0,
+                'message' => 'el nombre de la categoria no puede ser un numero'
+            ]);
+        }
+
+        if (!is_numeric($datosCategoriaNueva->idPrioridad) || $datosCategoriaNueva->idPrioridad <= 0 || $datosCategoriaNueva->idPrioridad > 3  ){
+            return response()->json([
+                'resultado' => 0,
+                'message' => 'el id de la prioridad debe ser numerico'
+            ]);
+        }
+
         try
         {
             DB::beginTransaction();
-
-            $datosCategoriaNueva = json_decode($request->getContent());
-
             $nuevaCategoria = new CategoriaNecesidad;
-
             $nuevaCategoria->nombreCategoria = $datosCategoriaNueva->nombreCategoria;
             $nuevaCategoria->idPrioridad = $datosCategoriaNueva->idPrioridad;
             $nuevaCategoria->activo = 1;
