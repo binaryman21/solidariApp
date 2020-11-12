@@ -6,11 +6,14 @@ document.addEventListener('DOMContentLoaded', () => {
     seleccionaCrearNuevaCategoria();
   })
 
-  listarCategoriasNecesidades();
+  //listarCategoriasNecesidades();
+  $("#btnABMCategorias").on('click', listarCategoriasNecesidades);
   $("#btnAgregar").on('click', altaCategoriaNecesidad);
   $("#btnModificar").on('click', modificarCategoria);
   $("#btnDeshabilitar").on('click', bajaCategoria);
   $("#btnHabilitar").on('click', activarCategoria);
+ 
+
 
 })
 
@@ -68,7 +71,7 @@ function modificarCategoria() {
     idPrioridad: $("#seleccionPrioridad").val(),
     activo: 1
   }
-  console.log(CategoriaNecesidad.idCategoria);
+  
   axios.post("/modificarCategoria", JSON.stringify(CategoriaNecesidad))
     .then((response) => {
       if (response.data.resultado == 1) {
@@ -90,7 +93,7 @@ function bajaCategoria() {
     idPrioridad: $("#seleccionPrioridad").val(),
     activo: 0
   }
-  console.log(CategoriaNecesidad.idCategoria);
+  
   axios.post("/modificarCategoria", JSON.stringify(CategoriaNecesidad))
     .then((response) => {
       if (response.data.resultado == 1) {
@@ -112,7 +115,7 @@ function activarCategoria() {
     idPrioridad: $("#seleccionPrioridad").val(),
     activo: 1
   }
-  console.log(CategoriaNecesidad.idCategoria);
+  
   axios.post("/modificarCategoria", JSON.stringify(CategoriaNecesidad))
     .then((response) => {
       if (response.data.resultado == 1) {
@@ -202,6 +205,15 @@ function seleccionaCrearNuevaCategoria() {
 
 /*Cargar lista con las categorias existentes*/
 function listarCategoriasNecesidades() {
+  /*Borro el contenido previo del combo Categorias*/
+  $("#seleccionCategoria")
+    .find("option")
+    .remove()
+    .end()
+    .append("<option value='0' selected class='font-weight-bold'>Nueva Categoria</option>")
+    .val(0)
+  ;
+
   axios.get('/listarCategoriasNecesidad')
     .then((response) => {
       let Categorias = response.data.CategoriasNecesidad;
