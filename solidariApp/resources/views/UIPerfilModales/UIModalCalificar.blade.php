@@ -9,7 +9,12 @@
                 </button>
             </div>
             <form action="">
+                <h4 class = "text-center">Calificando a</h4>
+                <div id = "usuarioCalificado"></div>
+                <h4 class = "text-center">por su colaboración en</h4>
+                <div id = "necesidadCalificada"></div>
                  <div class="modal-body text-center">
+
                     <p>¿Se concreto la ayuda?</p>
                     <div class="form-check form-check-inline">
                         <input class="form-check-input" type="radio" name="radioConcretoAyuda" id="siConcreto" value="1" checked>
@@ -22,7 +27,7 @@
                     <div class="form-group mt-4">
                         <label for="cantidadRecibida">Cantidad recibida</label>
                         <input class="form-control col-6 offset-3" type="number" id="cantidadRecibida">
-
+                        <span class="text-danger" id="errorCantidadRecibida"></span>
                     </div>
                     <p class="mt-4">¿Como fue el trato recibido?</p>
                     <div class="form-check form-check-inline">

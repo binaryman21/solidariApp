@@ -5,12 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Calificacion extends Model
+class RolPermiso extends Model
 {
-    protected $table = 'calificacion';
-    protected $primaryKey = 'idCalificacion';
+    protected $table = 'permisosRoles';
+    protected $primaryKey = 'idPermisoRol';
     public $timestamps = false;
     use HasFactory;
-
 }
+
 

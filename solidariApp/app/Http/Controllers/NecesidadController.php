@@ -13,19 +13,30 @@ class NecesidadController extends Controller
     {
         try
         {
-            $datosNecesidad = json_decode($request->getContent());
-            $necesidad = new Necesidad;
-            $necesidad->descripcionNecesidad = $datosNecesidad ->descripcionNecesidad;
-            $necesidad->cantidadNecesidad = $datosNecesidad ->cantidadNecesidad;
-            $necesidad->fechaLimiteNecesidad = $datosNecesidad ->fechaLimiteNecesidad;
-            $necesidad->idCategoriaNecesidad = $datosNecesidad ->idCategoria;
-            $necesidad->idUsuario = $datosNecesidad ->idUsuario;
-            $necesidad->save();
-            return response()->json([
-                'resultado' => 1,
-                'message' => 'registro exitoso',
-                'id' => $necesidad->idNecesidad
-            ]);
+            if(UsuarioController::tienePermisoPara("registrarNecesidad"))
+            {
+                $datosNecesidad = json_decode($request->getContent());
+                $necesidad = new Necesidad;
+                $necesidad->descripcionNecesidad = $datosNecesidad ->descripcionNecesidad;
+                $necesidad->cantidadNecesidad = $datosNecesidad ->cantidadNecesidad;
+                $necesidad->fechaLimiteNecesidad = $datosNecesidad ->fechaLimiteNecesidad;
+                $necesidad->idCategoriaNecesidad = $datosNecesidad ->idCategoria;
+                $necesidad->idUsuario = $datosNecesidad ->idUsuario;
+                $necesidad->save();
+                return response()->json([
+                    'resultado' => 1,
+                    'message' => 'registro exitoso',
+                    'id' => $necesidad->idNecesidad
+                ]);
+            }
+            else
+            {
+                return response()->json([
+                    'resultado' => 0,
+                    'message' => "ACCION NO PERMITIDA",
+                    'id' => -1
+                ]);
+            }
         }
         catch (\Exception $e)
         {
@@ -77,19 +88,29 @@ class NecesidadController extends Controller
 
         try
         {
-            $datosNecesidad = json_decode($request->getContent());
+            if(UsuarioController::tienePermisoPara("editarNecesidad"))
+            {
+                $datosNecesidad = json_decode($request->getContent());
 
-            $necesidad = Necesidad::find($datosNecesidad->idNecesidad);
-            $necesidad->descripcionNecesidad = $datosNecesidad ->descripcionNecesidad;
-            $necesidad->cantidadNecesidad = $datosNecesidad ->cantidadNecesidad;
-            $necesidad->fechaLimiteNecesidad = $datosNecesidad ->fechaLimiteNecesidad;
-            $necesidad->idCategoriaNecesidad = $datosNecesidad ->idCategoria;
-            $necesidad->save();
+                $necesidad = Necesidad::find($datosNecesidad->idNecesidad);
+                $necesidad->descripcionNecesidad = $datosNecesidad ->descripcionNecesidad;
+                $necesidad->cantidadNecesidad = $datosNecesidad ->cantidadNecesidad;
+                $necesidad->fechaLimiteNecesidad = $datosNecesidad ->fechaLimiteNecesidad;
+                $necesidad->idCategoriaNecesidad = $datosNecesidad ->idCategoria;
+                $necesidad->save();
 
-            return response()->json([
-                'resultado' => 1,
-                'message' => 'registro exitoso'
-            ]);
+                return response()->json([
+                    'resultado' => 1,
+                    'message' => 'registro exitoso'
+                ]);
+            }
+            else
+            {
+                return response()->json([
+                    'resultado' => 0,
+                    'message' => "ACCION NO PERMITIDA"
+                ]);
+            }
         }
         catch (\Exception $e)
         {
@@ -105,17 +126,27 @@ class NecesidadController extends Controller
     {
         try
         {
-            $fechaBaja = Carbon::now();
-            $datosNecesidad = json_decode($request->getContent());
+            if(UsuarioController::tienePermisoPara("editarNecesidad"))
+            {
+                $fechaBaja = Carbon::now();
+                $datosNecesidad = json_decode($request->getContent());
 
-            $necesidad = Necesidad::find($datosNecesidad->idNecesidad);
-            $necesidad->fechaBajaNecesidad = $fechaBaja;
-            $necesidad->save();
+                $necesidad = Necesidad::find($datosNecesidad->idNecesidad);
+                $necesidad->fechaBajaNecesidad = $fechaBaja;
+                $necesidad->save();
 
-            return response()->json([
-                'resultado' => 1,
-                'message' => 'La necesidad se ha eliminado'
-            ]);
+                return response()->json([
+                    'resultado' => 1,
+                    'message' => 'La necesidad se ha eliminado'
+                ]);
+            }
+            else
+            {
+                return response()->json([
+                'resultado' => 0,
+                'message' => 'ACCION NO PERMITIDA'
+                ]);
+            }
         }
         catch (\Exception $e)
         {

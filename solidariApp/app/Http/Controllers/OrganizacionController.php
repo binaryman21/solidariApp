@@ -10,7 +10,7 @@ use App\Models\Link;
 use App\Models\Organizacion;
 use App\Models\Domicilio;
 use App\Models\Telefono;
-
+use App\Models\Rol;
 class OrganizacionController extends Controller
 {
     public function registrarorganizacion(Request $request)
