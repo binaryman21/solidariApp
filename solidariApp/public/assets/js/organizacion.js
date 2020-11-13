@@ -442,7 +442,12 @@ function cargarNecesidades ( idUsuario, vistaVisitante){
             // console.log( necesidad );
             if(necesidad.fechaBajaNecesidad == null){
                 divNecesidades.append(`<div class="col-md-6" id="necesidad${necesidad.idNecesidad}"></div>`);
-                crearCardNecesidad(necesidad,vistaVisitante);
+                if( vistaVisitante != 0){
+                    crearCardNecesidad(necesidad,idUsuario);
+                }
+                else{
+                    crearCardNecesidad(necesidad,vistaVisitante);
+                }
             }
 
         })
@@ -477,6 +482,7 @@ function crearCardNecesidad(necesidad,vistaVisitante)
                 </div>
                 <div class="col-md-6 text-right d-flex flex-column justify-content-between">
                 `+ btnEditarNecesidad + `
+                    <div class="fb-share-button" data-href='https://solidariapp.com.ar/organizacion/${vistaVisitante}/necesidad/${necesidad.idNecesidad}' data-layout="button" data-size="small"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdevelopers.facebook.com%2Fdocs%2Fplugins%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">Compartir</a></div>
                     <p class="ayudasRecibidas">
                         <a href="#" data-toggle="modal" data-target="#modalDetalleNecesidad" id = "btnDetalleNecesidad`+ necesidad.idNecesidad + `" ><span class="nroAyudas">`+ cantColaboraciones + `</span><i class="fas fa-user-friends"></i></a>
                     </p>

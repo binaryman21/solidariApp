@@ -1,7 +1,16 @@
 @extends("layouts.master")
-
+@section("meta")
+    @parent
+    <meta property="og:url"                content="https://www.solidariapp.com.ar" />
+    <meta property="og:type"               content="website" />
+    <meta property="og:title"              content="SolidariApp" />
+    <meta property="og:description"        content="Descripcion de la pag" />
+    <meta property="og:image"              content="http://static01.nyt.com/images/2015/02/19/arts/international/19iht-btnumbers19A/19iht-btnumbers19A-facebookJumbo-v2.jpg" />
+@endsection
 @section("contenido")
 @parent
+<div id="fb-root"></div>
+<script async defer crossorigin="anonymous" src="https://connect.facebook.net/es_LA/sdk.js#xfbml=1&version=v9.0" nonce="hChYh6rj"></script>
 <div class="container p-2">
     <div class="jumbotron">
         <div class="row align-middle">
