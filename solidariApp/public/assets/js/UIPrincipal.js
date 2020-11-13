@@ -390,11 +390,11 @@ function llenarOrganizaciones( organizaciones ){
                     $(`.listaNecesidades${org.idUsuario}`).append(`
                         <div class="need ${$category}">
                             <div class="card-body py-2 px-3">
-                                <div class="card-title"><a title="${$category}" href="#" class="card-category">${need.nombreCategoria[0].toUpperCase()+need.nombreCategoria.slice(1)}</a></div>
-                                <div class="card-subtitle text-muted">${need.descripcionNecesidad}</div>
+                                <div class="card-title"><a title="${$category}" href="#" class="card-category">${capitalize(need.nombreCategoria)}</a></div>
+                                <div class="card-subtitle text-muted">${capitalize(need.descripcionNecesidad)}</div>
                             </div>
                             <div class="card-footer d-flex align-items-center p-0">
-                                <small class="ml-3 mr-auto align-items-center">${$diffDate[0].toUpperCase()+$diffDate.slice(1)}</small>
+                                <small class="ml-3 mr-auto align-items-center">${$diffDate}</small>
                                 <button class="btn btn-link btn-sm btnDetalleOrg btnDetalleOrg${need.idNecesidad} text-decoration-none pl-0" data-toggle="modal" data-target="#modalDetalleNecesidad">Me interesa</button>
                             </div>
                         </div>
@@ -418,7 +418,7 @@ function llenarOrganizaciones( organizaciones ){
 function cargarDatosModalDetalleNecesidad( necesidad ){
         $('.detalleNecesidadModal').html(
         `<div class="card necesidad ${necesidad.nombreCategoria.toLowerCase()}">
-            <div class="card-body">
+            <div class="card-body">d
                 <div class="container-fluid">
                     <div class="datosNecesidad">
                         <p class="font-weight-bold">${necesidad.nombreCategoria}</p>

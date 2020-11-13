@@ -82,9 +82,6 @@
     integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
     crossorigin=""></script>
     <script type="text/javascript" src="{{URL::asset('assets/js/app.js')}}"></script>
-    <!-- Memento -->
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/locale/es.min.js"></script>
     <!-- JS -->
     <script type="text/javascript" src="{{URL::asset('assets/js/logueo.js')}}"></script>
     <script type="text/javascript" src="{{URL::asset('assets/js/UIPrincipal.js')}}"></script>

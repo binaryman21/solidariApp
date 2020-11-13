@@ -234,3 +234,9 @@ function filtrarPorUbicacion(){
             llenarOrganizaciones( organizaciones );
         })
 }
+
+function capitalize(text){
+
+    let FirstLetterCap = text[0].toUpperCase();
+    return FirstLetterCap+text.slice(1);
+}
