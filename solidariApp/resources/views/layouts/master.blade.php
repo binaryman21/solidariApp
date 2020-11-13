@@ -16,7 +16,6 @@
     <link rel="stylesheet" href="{{URL::asset('assets/css/style.css')}}">
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
-
     <!-- Alertify -->
     <!-- JavaScript -->
     <script src="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
@@ -85,6 +84,9 @@
     <!-- Google JS-->
     <script src="https://apis.google.com/js/platform.js" async defer></script>
     <script type="text/javascript" src="{{URL::asset('assets/js/google.js')}}"></script>
+    <!-- Memento -->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/locale/es.min.js"></script>
     @yield('scripts')
 </body>
 </html>

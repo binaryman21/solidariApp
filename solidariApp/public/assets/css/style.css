@@ -28,10 +28,21 @@ footer .container{
 
     background-color: inherit;
 }
+#cover{
+
+    height: inherit;
+}
 
 .imgPerfilCol,.imgPerfilOrg{
     width: 40px;
 }
+
+img#urlFotoPerfilOrganizacion, img#imgPerfilColaborador {
+
+    width: 125px;
+    border: 4px solid rgb(255 255 255);
+}
+
 .imgNecesidad{
     height: 80px;
 }
@@ -161,6 +172,87 @@ div.g-signin2 > .abcRioButtonLightBlue{
     padding-right: 8px;
 }
 
+
+.cointainer.perfil{
+
+    max-width: 960px;
+}
+
+.card-user .card-img-block{
+
+    height: 190px;
+    overflow: hidden;
+}
+
+.card-user .card-body{
+
+    position: relative;
+}
+
+.card-user .media{
+
+    position: absolute;
+    top: -85px;
+    left: 17px;
+}
+
+.card-user .user-action{
+
+    position: relative;
+    top: -35px;
+    text-transform: uppercase;
+    font-weight: 500;
+    color: #6d6d6d;
+}
+
+.ldg-w-lg:empty{
+
+    width: 100% !important;
+}
+
+.ldg-w-md:empty{
+
+    width: 75% !important;
+}
+
+.ldg-w-sm:empty{
+
+    width: 50% !important;
+}
+
+.ldg-block:empty{
+
+    height: 40px !important;
+}
+
+.ldg-block-lg:empty{
+
+    height: 190px !important;
+    margin-bottom: 20px;
+}
+
+.loading:empty{
+
+    width: 25%;
+    height: 20px;
+
+    background-image:
+        linear-gradient( 100deg, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.5) 50%, rgba(255, 255, 255, 0) 80% ),
+        linear-gradient(#f5f5f5  20px, transparent 0 );
+
+    background-repeat: repeat-y;
+
+    background-size:
+        50px 20px, /* highlight */
+        100% 20px;
+
+    background-position:
+        0 0, /* highlight */
+        0 100%;
+
+    animation: loading 1s infinite;
+}
+
 [contenteditable] {
     outline: 0px solid transparent;
   }
@@ -174,6 +266,12 @@ div.g-signin2 > .abcRioButtonLightBlue{
     background-color:lightgray;
 }
 
+#campoBuscarPorTexto::placeholder{
+
+    font-size: 85%;
+    color: #868686;
+}
+
 div#filtrosCategoria:empty {
     width: inherit;
     height: 300px;
@@ -185,10 +283,182 @@ div#filtrosCategoria:empty {
     animation: shine 1s infinite;
 }
 
+div.necesidades:empty{
+
+    margin-top: 20px;
+    width: 100%;
+    height: 600px; /* change height to see repeat-y behavior */
+    --card-height: 152px;
+    --card-header-color: rgb(0 0 0 / 8%);
+    --card-body-color: rgb(0 0 0 / 0.02);
+    --card-action-color: rgb(171 171 171 / 13%);
+    --card-text-color: #efeeee;
+    --card-text-secondary-color: #f1f1f1;
+
+    background-image:
+        linear-gradient( 100deg, rgb(0 0 0 / 0), hsl(0 0% 100% / 0.30) 50%, rgba(255, 255, 255, 0) 80% ),
+        linear-gradient( var(--card-header-color) 17px, transparent 0 ),/*card-need-category*/
+        linear-gradient( var(--card-text-secondary-color) 12px, transparent 0 ),/*card-need-state*/
+        linear-gradient( var(--card-text-color) 25px, transparent 0 ),/*card-need-description*/
+        linear-gradient( var(--card-text-secondary-color) 10px, transparent 0 ),/*card-need-count*/
+        linear-gradient( var(--card-header-color) 10px, transparent 0 ),/*card-need-limit*/
+        linear-gradient( var(--card-header-color) 10px, transparent 0 ),/*card-need-colab*/
+        repeating-linear-gradient(
+            var(--card-body-color), var(--card-body-color) 0,
+            var(--card-body-color), var(--card-body-color) 108px,
+            var(--card-action-color), var(--card-action-color) 108px,
+            var(--card-action-color), var(--card-action-color) 132px,
+            transparent, transparent 132px,
+            transparent, transparent 152px
+        );
+
+
+    background-repeat: repeat-y;
+
+    background-size:
+        50px var(--card-height), /* highlight */
+        45% var(--card-height),/*card-need-category*/
+        60% var(--card-height),/*card-need-state*/
+        90% var(--card-height),/*card-need-description*/
+        35% var(--card-height),/*card-need-count*/
+        40% var(--card-height),
+        8% var(--card-height),
+        100% var(--card-height);
+
+    background-position:
+        0 0, /* highlight */
+        20px 8px,/*card-need-category*/
+        20px 30px,/*card-need-state*/
+        20px 55px,/*card-need-description*/
+        20px 90px,/*card-need-count*/
+        20px 114px,
+        95% 114px,
+        0px 152px;
+        
+    animation: shine-card-need 1s infinite;
+}
+
+@keyframes shine-card-need{
+
+    to {
+        background-position:
+        100% 0, /* move highlight to right */
+        20px 8px,/*card-need-category*/
+        20px 30px,/*card-need-state*/
+        20px 55px,/*card-need-description*/
+        20px 90px,/*card-need-count*/
+        20px 114px,
+        95% 114px,
+        0px 152px;
+    }
+}
+
+div.listaOrganizaciones:empty{
+
+    margin-top: 20px;
+    width: 100%;
+    height: 640px; /* change height to see repeat-y behavior */
+    --card-height: 320px;
+    --card-header-color: rgb(0 0 0 / 4%);
+    --card-body-color: rgb(0 0 0 / 0.01);
+    --card-action-color: rgb(191 191 191 / 13%);
+    --card-text-color: #e6e6e6;
+    --card-text-secondary-color: #f3f3f3;
+
+    background-image:
+        radial-gradient( circle 20px at 30px 30px, var(--card-text-color) 99%, #ffffff61 0 ),
+        linear-gradient( 100deg, rgba(255, 255, 255, 0), rgb(255 255 255 / 16%) 50%, rgba(255, 255, 255, 0) 80% ),
+        linear-gradient( var(--card-text-color) 13px, transparent 0 ),/*card-org-name*/
+        linear-gradient( var(--card-text-color) 10px, transparent 0 ),/*card-org-type*/
+        linear-gradient( var(--card-text-color) 12px, transparent 0 ),/*card-need-category*/
+        linear-gradient( var(--card-text-secondary-color) 25px, transparent 0 ),/*card-need-description*/
+        linear-gradient( var(--card-text-color) 12px, transparent 0 ),/*card-need-category*/
+        linear-gradient( var(--card-text-secondary-color) 25px, transparent 0 ),/*card-need-description*/
+        repeating-linear-gradient(
+            var(--card-header-color), var(--card-header-color) 60px,
+            var(--card-body-color), var(--card-body-color)60px,
+            var(--card-body-color), var(--card-body-color) 135px,
+            var(--card-action-color), var(--card-action-color) 135px,
+            var(--card-action-color), var(--card-action-color) 160px,
+            var(--card-body-color), var(--card-body-color) 160px,
+            var(--card-body-color), var(--card-body-color) 235px,
+            var(--card-action-color), var(--card-action-color) 235px,
+            var(--card-action-color), var(--card-action-color) 260px,
+            var(--card-body-color), var(--card-body-color) 260px,
+            var(--card-body-color), var(--card-body-color) 300px,
+            transparent, transparent 10px,
+            transparent, transparent 640px
+        );
+
+    background-repeat: repeat-y;
+
+    background-size:
+        100% var(--card-height), /* circle */
+        50px var(--card-height), /* highlight */
+        50% var(--card-height),/*card-org-name*/
+        30% var(--card-height),/*card-org-type*/
+        35% var(--card-height),/*card-need-category*/
+        90% var(--card-height),/*card-need-description*/
+        35% var(--card-height),/*card-need-category*/
+        90% var(--card-height),/*card-need-description*/
+        100% var(--card-height),
+        1px var(--card-height);
+
+    background-position:
+        5px 0, /* circle */
+        0 0, /* highlight */
+        70px 15px,/*card-org-name*/
+        70px 35px,/*card-org-type*/
+        15px 75px,
+        15px 100px,
+        15px 175px,
+        15px 200px,
+        5px 320px;
+
+    animation: shine-card-org 1s infinite;
+}
+
+@keyframes shine-card-org{
+
+    to {
+        background-position:
+        5px 0,
+        100% 0, /* move highlight to right */
+        70px 15px,
+        70px 35px,
+        15px 75px,
+        15px 100px,
+        15px 175px,
+        15px 200px,
+        5px 320px;
+    }
+}
+
 @keyframes shine {
     to {
         background-position:
             100% 0, /* move highlight to right */
             15px 10px;
+    }
+}
+
+#filtros{
+
+    padding-bottom: 7px;
+}
+
+@media only screen and (min-width: 900px){
+
+    #filtros{
+
+        padding-bottom: 6px;
+    }
+}
+
+@keyframes loading {
+    to {
+        background-position:
+            100% 0, /* move highlight to right */
+            100% 0;
     }
 }

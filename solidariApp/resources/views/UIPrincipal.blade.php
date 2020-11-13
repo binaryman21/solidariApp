@@ -27,8 +27,7 @@
                         <button class="btn btn-outline-secondary border-secondary border-left-0" id="btnBuscarNeccesidades" type="button"><i class="fa fa-search fa-xs"></i></button>
                     </div>
                 </div>
-                <div class = "card listaOrganizaciones border-0" >
-                </div>
+                <div class = "card listaOrganizaciones border-0" ></div>
             </div>
             <div class="col mr-n2">
                 <div class="row px-2 pt-3 justify-content-between align-items-center">
@@ -92,8 +91,6 @@
     <script type="text/javascript" src="{{URL::asset('assets/js/validaciones.js')}}" defer></script>
     <!-- Utilidades -->
     <script type="text/javascript" src="{{URL::asset('assets/js/utilidades.js')}}" defer></script>
-
-
 
 @endsection
 
