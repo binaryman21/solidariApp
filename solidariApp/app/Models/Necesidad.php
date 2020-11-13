@@ -58,6 +58,15 @@ class Necesidad extends Model
             ->take(2)->get();
     }
 
+    //TRAER NECESIDAD
+    public static function traerNecesidad($idNecesidad)
+    {
+        return Necesidad::where("idNecesidad",$idNecesidad)
+            ->join('categoriaNecesidad', 'categoriaNecesidad.idCategoria', '=', 'necesidad.idCategoriaNecesidad')    
+            ->orderBy('fechaLimiteNecesidad', 'ASC')
+            ->get();
+    }
+
     public static function getNecesidad($idNecesidad)
     {
         return Necesidad::find($idNecesidad);

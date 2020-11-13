@@ -12,7 +12,11 @@ use App\Http\Controllers\ProvinciaController;
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::get('/', function(){return view('UIPrincipal');})->name('UIPrincipal');
+Route::get('/', function(){
+    $idOrganizacion = '';
+    $idNecesidad = '';
+    return view('UIPrincipal',compact('idNecesidad', 'idOrganizacion'));
+})->name('UIPrincipal');
 
 Route::get('/colaborador', function()
 {
@@ -89,10 +93,12 @@ Route::post('/registrarUsuario', 'App\Http\Controllers\UsuarioController@registr
 
 //ORGANIZACIONES
 Route::get('/getOrganizacion/{idUsuario}', 'App\Http\Controllers\OrganizacionController@getOrganizacion')->name('getOrganizacion');
+Route::get('/traerOrganizacion/{idOrganizacion}/{idNecesidad}', 'App\Http\Controllers\OrganizacionController@traerOrganizacion')->name('traerOrganizacion');
 Route::get('/getOrganizaciones', 'App\Http\Controllers\OrganizacionController@getOrganizaciones')->name('getOrganizaciones');
 Route::get('/buscarOrganizacionesPorUbicacion/{ubicacion}', 'App\Http\Controllers\OrganizacionController@busquedaOrganizacionesPorUbicacion')->name('busquedaOrganizacionesPorUbicacion');
 Route::get('/buscarOrganizaciones/{filtro}', 'App\Http\Controllers\OrganizacionController@busquedaOrganizaciones')->name('busquedaOrganizaciones');
 Route::get('/buscarOrganizacionesPorCategoria/{filtro}', 'App\Http\Controllers\OrganizacionController@busquedaOrganizacionesPorCategoria')->name('busquedaOrganizacionesPorCategoria');
+Route::get('/organizacion/{idOrganizacion}/necesidad/{idNecesidad}', 'App\Http\Controllers\NecesidadController@necesidad')->name('necesidad');
 
 //COLABORADOR
 Route::get('/getColaborador/{idUsuario}', 'App\Http\Controllers\ColaboradorController@getColaborador')->name('getColaborador');
