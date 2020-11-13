@@ -1,5 +1,3 @@
-
-
 getOrganizaciones();
 isLoggedIn();
 
@@ -362,6 +360,7 @@ function llenarOrganizaciones( organizaciones ){
     }
     else{
 
+        moment.locale('es');
         organizaciones.forEach(org => {
 
             if(org.necesidades.length>0){
@@ -386,15 +385,17 @@ function llenarOrganizaciones( organizaciones ){
                 org.necesidades.forEach( need => {
 
                     $category = need.nombreCategoria.split(' ')[0].toLowerCase();
+                    $diffDate = moment(need.fechaCreacionNecesidad, "YYYY-MM-DD HH:mm:ss").startOf('day').fromNow();
 
                     $(`.listaNecesidades${org.idUsuario}`).append(`
                         <div class="need ${$category}">
                             <div class="card-body py-2 px-3">
-                                <div class="card-title"><a title="${$category}" href="#" class="card-category">${need.nombreCategoria}</a></div>
+                                <div class="card-title"><a title="${$category}" href="#" class="card-category">${need.nombreCategoria[0].toUpperCase()+need.nombreCategoria.slice(1)}</a></div>
                                 <div class="card-subtitle text-muted">${need.descripcionNecesidad}</div>
                             </div>
-                            <div class="card-footer d-flex align-items-end justify-content-end p-0">
-                                <button class="btn btn-link btn-sm btnDetalleOrg btnDetalleOrg${need.idNecesidad} text-decoration-none" data-toggle="modal" data-target="#modalDetalleNecesidad">Me interesa</button>
+                            <div class="card-footer d-flex align-items-center p-0">
+                                <small class="ml-3 mr-auto align-items-center">${$diffDate[0].toUpperCase()+$diffDate.slice(1)}</small>
+                                <button class="btn btn-link btn-sm btnDetalleOrg btnDetalleOrg${need.idNecesidad} text-decoration-none pl-0" data-toggle="modal" data-target="#modalDetalleNecesidad">Me interesa</button>
                             </div>
                         </div>
                     `);
