@@ -16,5 +16,9 @@ class Colaboracion extends Model
     {
         return $this->hasMany('App\Models\Calificacion','idColaboracion','idColaboracion');
     }
+    public function necesidad()
+    {
+        return $this->belongsTo('App\Models\Necesidad','idNecesidad','idNecesidad');
+    }
 
 }

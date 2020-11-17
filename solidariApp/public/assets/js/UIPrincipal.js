@@ -3,11 +3,11 @@ isLoggedIn();
 
 $( document ).ready(function() {
 
-    $(function() {
+    // $(function() {
         $(document).on('click', '.alert-close', function() {
             $(this).parent().hide();
         })
-     });
+    //  });
 
     listarProvincias(1);
     listarTiposOrganizaciones();
@@ -404,7 +404,7 @@ function llenarOrganizaciones( organizaciones ){
                         cargarDatosModalDetalleNecesidad(need);
                     })
 
-                    $()
+
                 })
 
                 cargarOrgEnMapa(org);
@@ -469,4 +469,11 @@ function llenarFiltrosDeCategoria(CategoriasNecesidad){
 
     //Evento click para los filtros por categoria
     $('#filtrosCategoria button').on('click', filtrarPorCategoria);
+}
+
+
+function capitalize(text){
+
+    let FirstLetterCap = text[0].toUpperCase();
+    return FirstLetterCap+text.slice(1);
 }

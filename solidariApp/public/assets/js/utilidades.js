@@ -131,9 +131,9 @@ function desbloquearBoton(boton){
     boton.html(textoBoton);
     boton.attr("disabled",false);
 }
-   
 
-//OBTENGO LAS COORDENADAS DESDE LA API   
+
+//OBTENGO LAS COORDENADAS DESDE LA API
 async function obtenerCoordenadas(calle, nro, localidad, provincia){
     if(provincia == 'Buenos Aires-GBA' || provincia == 'Capital Federal'){
         provincia = 'Buenos Aires';
@@ -141,7 +141,7 @@ async function obtenerCoordenadas(calle, nro, localidad, provincia){
     console.log( calle, nro, localidad, provincia );
     // let url = `https://nominatim.openstreetmap.org/search?q=${calle}+${nro},+${localidad},+${provincia}&format=json&polygon_geojson=1&addressdetails=1`;
     let url = `https://nominatim.openstreetmap.org/search.php?street=${calle}+${nro}&city=${localidad}&state=${provincia}&country=argentina&polygon_geojson=1&dedupe=0&format=jsonv2`;
-    
+
     let respuesta = await fetch( url );
     let data = await respuesta.json();
     let coordenadas = {
@@ -219,7 +219,7 @@ function filtrarPorCategoria( e ){
         .then(data => {
             let organizaciones = data.organizaciones;
             llenarOrganizaciones( organizaciones );
-            $('#filtrosCategoria button').attr('disabled', false); 
+            $('#filtrosCategoria button').attr('disabled', false);
         })
 }
 
@@ -233,10 +233,4 @@ function filtrarPorUbicacion(){
             let organizaciones = data.organizaciones;
             llenarOrganizaciones( organizaciones );
         })
-}
-
-function capitalize(text){
-
-    let FirstLetterCap = text[0].toUpperCase();
-    return FirstLetterCap+text.slice(1);
 }
