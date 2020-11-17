@@ -19,10 +19,13 @@
                 <p class="lead" id="apellidoColaborador">
                 </p>
                 <div>
-                    <i class="fas fa-snowplow"></i>
-                    <i class="fas fa-hand-holding-heart"></i>
                     <i class="fas fa-handshake"></i>
+                    <i class="fas fa-truck"></i>
                     <i class="fas fa-hand-holding-usd"></i>
+                    <i class="fas fa-tshirt"></i>
+                    <i class="fas fa-utensils"></i>
+                    <i class="fas fa-pump-soap"></i>
+                    <i class="fas fa-crown"></i>
                 </div>
 
             </div>
@@ -140,7 +143,7 @@
         </form>
     </nav>
     <div class="necesidades row">
-    
+
     </div>
 
     <div class="alert alert-success mt-4" role="alert">
