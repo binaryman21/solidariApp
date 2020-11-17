@@ -455,7 +455,7 @@ function llenarFiltrosDeCategoria(CategoriasNecesidad){
 
         if(category.activo){
 
-            let btnCateogoryTemplate = 
+            let btnCateogoryTemplate =
             `<button class="dropdown-item" title="${category.nombreCategoria}" type="button">
                 <span>${category.nombreCategoria}</span>
             </button>`
@@ -469,4 +469,11 @@ function llenarFiltrosDeCategoria(CategoriasNecesidad){
 
     //Evento click para los filtros por categoria
     $('#filtrosCategoria button').on('click', filtrarPorCategoria);
+}
+
+
+function capitalize(text){
+
+    let FirstLetterCap = text[0].toUpperCase();
+    return FirstLetterCap+text.slice(1);
 }
