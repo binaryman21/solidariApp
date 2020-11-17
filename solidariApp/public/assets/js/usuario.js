@@ -10,7 +10,7 @@ function cambiarPassWord( e ){
     e.preventDefault();
     if ( validarClavesCambio() ){
         isLoggedIn( cambiarPass );
-    } 
+    }
 }
 
 function cambiarPass( idUsuario ){
@@ -51,7 +51,7 @@ function cargarMotivosDenuncia(){
             });
         })
     // $('#motivoReporte');
-    
+
 }
 
 function reportar( e ){
@@ -64,7 +64,7 @@ function reportar( e ){
 function confirmarReporte( idDenunciante ){
     let datosReporte = {
         idDenunciante,
-        idDenunciado: $(location).attr('href').split("/")[4],
+        idDenunciado: $("#inpIdDenunciado").val(),
         fecha: $('#fechaIncidente').val(),
         motivo: $('#motivoReporte option:selected').val(),
         descripcion: $('#textoDescripcion').val()

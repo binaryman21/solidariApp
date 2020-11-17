@@ -23,6 +23,7 @@ function configModalCalificar(idRolCalificado,colaboracion,necesidad)
                                 <div class="alert alert-secondary" role="alert">
                                     <div class="row align-items-center">
                                         <div class="col-md-2">
+                                            <input type = "hidden" id = "inpIdDenunciado" value = "${colaboracion.idUsuario}">
                                             <img class="rounded-circle imgPerfilOrg" style="height: 50px;"src="`+colaboracion.urlFotoPerfilUsuario +`" alt="imagen de usuario">
                                         </div>
                                         <div class="col-md-3">
