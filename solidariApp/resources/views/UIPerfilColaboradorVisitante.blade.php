@@ -6,7 +6,7 @@
     <div class="jumbotron">
         <div class="row align-middle">
             <div class="col-md-2">
-                <img class="rounded-circle imgPerfilCol" src="{{URL::asset('assets/img/user.png')}}" alt="imagen de usuario">
+                <img class="rounded-circle imgPerfilCol" src="{{URL::asset('assets/img/imgUserProfile.png')}}" alt="imagen de usuario">
             </div>
             <div class="col-md-8 align-self-center">
                 <p class="lead" id="nombreColaborador">
@@ -165,7 +165,7 @@
                         <p class="text-right">18/10/2020</p>
                         <div class="row">
                             <div class="col-md-3">
-                                <img class="rounded-circle imgNecesidad" src="{{URL::asset('assets/img/user.png')}}" alt="imagen de usuario">
+                                <img class="rounded-circle imgNecesidad" src="{{URL::asset('assets/img/imgUserProfile.png')}}" alt="imagen de usuario">
                             </div>
                             <div class="col-md-9">
                                 <h5 class="card-title">Nombre organizacion</h5>
@@ -182,7 +182,7 @@
                         <p class="text-right">18/10/2020</p>
                         <div class="row">
                             <div class="col-md-3">
-                                <img class="rounded-circle imgNecesidad" src="{{URL::asset('assets/img/user.png')}}" alt="imagen de usuario">
+                                <img class="rounded-circle imgNecesidad" src="{{URL::asset('assets/img/imgUserProfile.png')}}" alt="imagen de usuario">
                             </div>
                             <div class="col-md-9">
                                 <h5 class="card-title">Nombre organizacion</h5>
@@ -202,7 +202,7 @@
                         <p class="text-right">18/10/2020</p>
                         <div class="row">
                             <div class="col-md-3">
-                                <img class="rounded-circle imgNecesidad" src="{{URL::asset('assets/img/user.png')}}" alt="imagen de usuario">
+                                <img class="rounded-circle imgNecesidad" src="{{URL::asset('assets/img/imgUserProfile.png')}}" alt="imagen de usuario">
                             </div>
                             <div class="col-md-9">
                                 <h5 class="card-title">Nombre organizacion</h5>
@@ -219,7 +219,7 @@
                         <p class="text-right">18/10/2020</p>
                         <div class="row">
                             <div class="col-md-3">
-                                <img class="rounded-circle imgNecesidad" src="{{URL::asset('assets/img/user.png')}}" alt="imagen de usuario">
+                                <img class="rounded-circle imgNecesidad" src="{{URL::asset('assets/img/imgUserProfile.png')}}" alt="imagen de usuario">
                             </div>
                             <div class="col-md-9">
                                 <h5 class="card-title">Nombre organizacion</h5>

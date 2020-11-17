@@ -47,9 +47,9 @@ class UsuarioController extends Controller
         unset($_SESSION['usuario']);
     }
 
-  
+
     /*Dar de baja al usuario logeado*/
-    public function bajaUsuario()    
+    public function bajaUsuario()
     {
         try
         {
@@ -62,11 +62,11 @@ class UsuarioController extends Controller
                 unset($_SESSION['usuario']);
                 $usuarioLogueado = $_SESSION['usuario'];
                 Usuario::bajaUser($usuarioLogueado->idUsuario);
-                  
+
             }
             /*Redirecciono a pagina de inicio*/
             return redirect()->route('UIPrincipal');
-          
+
             /*
             return response()->json([
                 'resultado' => 1,
@@ -84,13 +84,13 @@ class UsuarioController extends Controller
     }
 
     /*Actualizar foto de perfil del usuario logeado*/
-    public function updateFotoPerfil()    
+    public function updateFotoPerfil()
     {
         session_start();
         if(isset($_SESSION['usuario'])){
             /*Busco el ID del usuario logeado*/
             $usuarioLogueado = $_SESSION['usuario'];
-          
+
         }
 
         /*me traigo los archivos que recibo al realizar el submit*/
@@ -98,13 +98,13 @@ class UsuarioController extends Controller
             $fileName = $_FILES['fotoPerfil']['name'];
             $ubicacionActual = $_FILES['fotoPerfil']['tmp_name'];
             /*Concateno el ID usuario al nombre del archivo*/
-            $urlFotoPerfil = storage_path()."/app/public/fotosPerfil/".$usuarioLogueado->idUsuario.$fileName ; 
+            $urlFotoPerfil = storage_path()."/app/public/fotosPerfil/".$usuarioLogueado->idUsuario.$fileName ;
             move_uploaded_file($ubicacionActual, $urlFotoPerfil);
         }
-       
+
         /*Preparo la url relativa para guardarla en la BDD*/
         $urlFotoPerfil = "/storage/fotosPerfil/".$usuarioLogueado->idUsuario.$fileName ;
-        
+
         try
         {
             if(isset($_SESSION['usuario'])){
@@ -119,7 +119,7 @@ class UsuarioController extends Controller
             ]);*/
         }
 
-      
+
         catch (\Exception $e)
         {
             return response()->json([
@@ -128,7 +128,7 @@ class UsuarioController extends Controller
             ]);
         }
     }
-    
+
     public function registrarUsuario(Request $request)
     {
         try
@@ -157,7 +157,7 @@ class UsuarioController extends Controller
             ]);
         }
 
-    }   
+    }
 
     public function cambiarClave( Request $request ){
         try
@@ -172,7 +172,7 @@ class UsuarioController extends Controller
             else{
                 return response()->json([
                     'resultado' => 0,
-                    'message' => "clave incorrecta" 
+                    'message' => "clave incorrecta"
                 ]);
             }
         }
@@ -188,6 +188,32 @@ class UsuarioController extends Controller
             'resultado' => 1,
             'message' => "cambio de clave exitoso!"
         ]);
+    }
+
+    public static function tienePermisoPara($pStringPermiso)
+    {
+        if (session_status() == PHP_SESSION_NONE)
+        {
+            session_start();
+        }
+        if(isset($_SESSION['usuario']))
+        {
+            $usuario = $_SESSION['usuario'];
+            $rolUsuario = $usuario->rol;
+            $permisos = $rolUsuario->permisos;
+            foreach ($permisos as $permiso)
+            {
+                if($permiso->nombrePermiso === $pStringPermiso)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+        else
+        {
+            return false;
+        }
     }
 
 }

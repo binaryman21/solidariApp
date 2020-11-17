@@ -15,7 +15,7 @@ class ColaboracionController extends Controller
             session_start();
             if(isset($_SESSION['usuario']))
             {
-                if($_SESSION['usuario']->rol->nombreRol == "colaborador")
+                if(UsuarioController::tienePermisoPara("colaborar"))
                 {
                     $resultado = Colaboracion::where("idNecesidad",$datos->idNecesidad)
                     ->where("idColaborador",$_SESSION['usuario']->idUsuario)
@@ -63,15 +63,28 @@ class ColaboracionController extends Controller
         {
             return response()->json([
                 'resultado' => 0,
-                'message' => 'Accion no disponible. Intente mas tarde'
+                //'message' => 'Accion no disponible. Intente mas tarde'
+                'message' => $e->getMessage()
             ]);
         }
     }
 
     public function getColaboraciones($idNecesidad){
-        $colaboraciones = Colaboracion::where("idNecesidad",$idNecesidad)
+        $colaboraciones = Colaboracion::where("idNecesidad",$idNecesidad)->with("calificaciones")
         ->join("colaborador","colaborador.idUsuario","=","colaboraciones.idColaborador")
         ->join("usuario","usuario.idUsuario","=","colaboraciones.idColaborador")
+        ->get();
+        return response()->json([
+            'colaboraciones' => $colaboraciones
+        ]);
+    }
+
+    public function getColaboracionesPorUsuario($idUsuario){
+        $colaboraciones = Colaboracion::where("idColaborador",$idUsuario)
+        ->join("necesidad","necesidad.idNecesidad","=","colaboraciones.idNecesidad")
+        ->join("categoriaNecesidad","categoriaNecesidad.idCategoria","=","necesidad.idCategoriaNecesidad")
+        ->join("organizacion","necesidad.idUsuario","=","organizacion.idUsuario")
+        ->join("usuario","usuario.idUsuario","=","organizacion.idUsuario")
         ->get();
         return response()->json([
             'colaboraciones' => $colaboraciones

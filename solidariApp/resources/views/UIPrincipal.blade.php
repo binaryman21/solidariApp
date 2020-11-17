@@ -17,11 +17,17 @@
                 <div class="input-group my-2 mt-3 mt-lg-2">
                     <input class="form-control border-secondary border-right-0" type="text" id="campoBuscarPorTexto" placeholder="Categoría, descripción o nombre de la Org.">
                     <div class="input-group-append">
+                        <div id="dropdownFilters" class="dropdown">
+                            <button type="button" class="btn btn-outline-secondary rounded-0 border-left-0 border-right-0" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id="filtros">
+                                <i class="fas fa-filter fa-xs"></i>
+                            </button>
+                            <div class="dropdown-menu dropdown-menu-right" id="filtrosCategoria" 
+                            aria-labelledby="filtros" x-placement="bottom-end"></div>
+                        </div>
                         <button class="btn btn-outline-secondary border-secondary border-left-0" id="btnBuscarNeccesidades" type="button"><i class="fa fa-search fa-xs"></i></button>
                     </div>
                 </div>
-                <div class = "card listaOrganizaciones border-0" >
-                </div>
+                <div class = "card listaOrganizaciones border-0" ></div>
             </div>
             <div class="col mr-n2">
                 <div class="row px-2 pt-3 justify-content-between align-items-center">
@@ -39,17 +45,6 @@
                 <div class="row p-2" >
                     <div class = "d-flex flex-column rounded p-2" style = "width:100%;height:100%;">
                         <div id="mapa" class = "mapa"></div>
-                    </div>
-                </div>
-                <div class="row d-flex justify-content-between mx-1 align-items-center border rounded">
-                    <div class="col py-2">Filtrar por</div>
-                    <div class="col p-0 btn-group" id="filtrosCategoria" role="group">
-                        <button class="btn btn-light" data-toggle="tooltip" data-placement="top" title="Alimentos"><i class="fas fa-utensils fa-sm"></i></button>
-                        <button class="btn btn-light" data-toggle="tooltip" data-placement="top" title="Ropa"><i class="fas fa-tshirt fa-sm"></i></button>
-                        <button class="btn btn-light" data-toggle="tooltip" data-placement="top" title="Dinero"><i class="fas fa-donate fa-sm"></i></button>
-                        <button class="btn btn-light" data-toggle="tooltip" data-placement="top" title="Limpieza e higiene"><i class="fas fa-spray-can fa-sm"></i></button>
-                        <button class="btn btn-light" data-toggle="tooltip" data-placement="top" title="Servicios"><i class="fas fa-hands-helping fa-sm"></i></button>
-                        <button class="btn btn-light" data-toggle="tooltip" data-placement="top" title="Varios"><i class="fas fa-hand-holding-heart fa-sm"></i></button>
                     </div>
                 </div>
                 <div class="row px-2" id = "botonesRegistro">
@@ -96,8 +91,6 @@
     <script type="text/javascript" src="{{URL::asset('assets/js/validaciones.js')}}" defer></script>
     <!-- Utilidades -->
     <script type="text/javascript" src="{{URL::asset('assets/js/utilidades.js')}}" defer></script>
-
-
 
 @endsection
 

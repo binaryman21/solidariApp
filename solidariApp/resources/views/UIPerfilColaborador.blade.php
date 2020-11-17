@@ -6,7 +6,7 @@
     <div class="jumbotron">
         <div class="row align-middle">
             <div class="col-md-2">
-                <img id = "imgPerfilColaborador" class="rounded-circle imgPerfilCol" src="{{URL::asset('assets/img/user.png')}}" alt="imagen de usuario">
+                <img id = "imgPerfilColaborador" class="rounded-circle imgPerfilCol" src="{{URL::asset('assets/img/imgUserProfile.png')}}" alt="imagen de usuario">
                 <button type="button" class="btn btn-success btn-sm d-none" data-toggle="modal" data-target="#modalModificarFotoPerfil" id="btnModificarImgPerfil">Modificar Foto </button>
 
             </div>
@@ -139,88 +139,15 @@
             <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Buscar</button>
         </form>
     </nav>
-    <div class="necesidades">
-        <div class="row">
-            <div class="col-md-6">
-                <div class="card necesidad alimentos">
-                    <div class="card-body">
-                        <p class="text-right">18/10/2020</p>
-                        <div class="row">
-                            <div class="col-md-3">
-                                <img class="rounded-circle imgNecesidad" src="{{URL::asset('assets/img/user.png')}}" alt="imagen de usuario">
-                            </div>
-                            <div class="col-md-9">
-                                <h5 class="card-title">Nombre organizacion</h5>
-                                <p class="card-text">Alimentos.</p>
-                            </div>
-                        </div>
-                        <p class="mt-2">Descripcion de la necesidad</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div class="card necesidad ropa">
-                    <div class="card-body">
-                        <p class="text-right">18/10/2020</p>
-                        <div class="row">
-                            <div class="col-md-3">
-                                <img class="rounded-circle imgNecesidad" src="{{URL::asset('assets/img/user.png')}}" alt="imagen de usuario">
-                            </div>
-                            <div class="col-md-9">
-                                <h5 class="card-title">Nombre organizacion</h5>
-                                <p class="card-text">Ropa.</p>
-                            </div>
-                        </div>
-                        <p class="mt-2">Descripcion de la necesidad</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!--row -->
-        <div class="row">
-            <div class="col-md-6">
-                <div class="card necesidad limpieza">
-                    <div class="card-body">
-                        <p class="text-right">18/10/2020</p>
-                        <div class="row">
-                            <div class="col-md-3">
-                                <img class="rounded-circle imgNecesidad" src="{{URL::asset('assets/img/user.png')}}" alt="imagen de usuario">
-                            </div>
-                            <div class="col-md-9">
-                                <h5 class="card-title">Nombre organizacion</h5>
-                                <p class="card-text">Limpieza.</p>
-                            </div>
-                        </div>
-                        <p class="mt-2">Descripcion de la necesidad</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div class="card necesidad varios">
-                    <div class="card-body">
-                        <p class="text-right">18/10/2020</p>
-                        <div class="row">
-                            <div class="col-md-3">
-                                <img class="rounded-circle imgNecesidad" src="{{URL::asset('assets/img/user.png')}}" alt="imagen de usuario">
-                            </div>
-                            <div class="col-md-9">
-                                <h5 class="card-title">Nombre organizacion</h5>
-                                <p class="card-text">Varios.</p>
-                            </div>
-                        </div>
-                        <p class="mt-2">Descripcion de la necesidad</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!--row -->
+    <div class="necesidades row">
+    
     </div>
 
     <div class="alert alert-success mt-4" role="alert">
         <h4 class="alert-heading">Ayuda a las organizaciones para obtener nuevas insignias</h4>
-        <p>Aww yeah, you successfully read this important alert message. This example text is going to run a bit longer so that you can see how spacing within an alert works with this kind of content.</p>
+        <p>Con tu colaboracion podes ayudar a construir un mundo mejor para todos.</p>
         <hr>
-        <p class="mb-0">¡Segui ayudando!</p>
+        <p class="mb-0"><a href="/">¡Segui ayudando!</a></p>
     </div>
 
 </div> <!-- container -->

@@ -7,7 +7,7 @@
     <div class="jumbotron">
         <div class="row align-middle">
             <div class="col-md-2">
-                <img id = "urlFotoPerfilOrganizacion" class="rounded-circle imgPerfilOrg" src="{{URL::asset('assets/img/user.png')}}" alt="imagen de usuario">
+                <img id = "urlFotoPerfilOrganizacion" class="rounded-circle imgPerfilOrg" src="{{URL::asset('assets/img/imgUserProfile.png')}}" alt="imagen de usuario">
                 <button type="button" class="btn btn-success btn-sm d-none" data-toggle="modal" data-target="#modalModificarFotoPerfil" id="btnModificarImgPerfil">Modificar Foto </button>
             </div>
             <div class="col-md-8 align-self-center">
@@ -179,6 +179,7 @@
 <script type="text/javascript" src="{{URL::asset('assets/js/logueo.js')}}"></script>
 <script type="text/javascript" src="{{URL::asset('assets/js/organizacion.js')}}"></script>
 <script type="text/javascript" src="{{URL::asset('assets/js/necesidad.js')}}"></script>
+<script type="text/javascript" src="{{URL::asset('assets/js/calificacion.js')}}"></script>
 <script type="text/javascript" src="{{URL::asset('assets/js/colaboracion.js')}}"></script>
 <script type="text/javascript" src="{{URL::asset('assets/js/validaciones.js')}}"></script>
 <script type="text/javascript" src="{{URL::asset('assets/js/usuario.js')}}"></script>
