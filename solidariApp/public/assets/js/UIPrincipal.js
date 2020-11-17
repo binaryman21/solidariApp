@@ -3,11 +3,11 @@ isLoggedIn();
 
 $( document ).ready(function() {
 
-    $(function() {
+    // $(function() {
         $(document).on('click', '.alert-close', function() {
             $(this).parent().hide();
         })
-     });
+    //  });
 
     listarProvincias(1);
     listarTiposOrganizaciones();
@@ -404,7 +404,7 @@ function llenarOrganizaciones( organizaciones ){
                         cargarDatosModalDetalleNecesidad(need);
                     })
 
-                    $()
+
                 })
 
                 cargarOrgEnMapa(org);
