@@ -26,7 +26,7 @@ class Necesidad extends Model
     {
         return Necesidad::where("idUsuario",$idUsuario)
         ->join('categoriaNecesidad', 'categoriaNecesidad.idCategoria', '=', 'necesidad.idCategoriaNecesidad')
-        ->orderBy('fechaLimiteNecesidad', 'ASC')    
+        ->orderBy('fechaLimiteNecesidad', 'ASC')
         ->take(2)->get();
     }
 
@@ -40,8 +40,8 @@ class Necesidad extends Model
                       ->orWhere("nombreCategoria",'like', '%' . $filtroTexto . '%')
                       ->orWhere("razonSocial",'like', '%' . $filtroTexto . '%');
             })
-            ->join('categoriaNecesidad', 'categoriaNecesidad.idCategoria', '=', 'necesidad.idCategoriaNecesidad')    
-            ->join('organizacion', 'organizacion.idUsuario', '=', 'necesidad.idUsuario')    
+            ->join('categoriaNecesidad', 'categoriaNecesidad.idCategoria', '=', 'necesidad.idCategoriaNecesidad')
+            ->join('organizacion', 'organizacion.idUsuario', '=', 'necesidad.idUsuario')
             ->orderBy('fechaLimiteNecesidad', 'ASC')
             ->take(2)->get();
     }
@@ -53,7 +53,7 @@ class Necesidad extends Model
             ->where(function ($query) use ($filtroTexto) {
                 $query->where("nombreCategoria",'like', '%' . $filtroTexto . '%');
             })
-            ->join('categoriaNecesidad', 'categoriaNecesidad.idCategoria', '=', 'necesidad.idCategoriaNecesidad')    
+            ->join('categoriaNecesidad', 'categoriaNecesidad.idCategoria', '=', 'necesidad.idCategoriaNecesidad')
             ->orderBy('fechaLimiteNecesidad', 'ASC')
             ->take(2)->get();
     }

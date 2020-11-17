@@ -455,7 +455,7 @@ function llenarFiltrosDeCategoria(CategoriasNecesidad){
 
         if(category.activo){
 
-            let btnCateogoryTemplate = 
+            let btnCateogoryTemplate =
             `<button class="dropdown-item" title="${category.nombreCategoria}" type="button">
                 <span>${category.nombreCategoria}</span>
             </button>`

@@ -36,9 +36,11 @@
     <header>
         <nav class="navbar navbar-expand-lg navbar-light bg-light shadow-sm mb-md-3 bg-white pl-lg-5">
             <a class="navbar-brand" href="{{url('/')}}"><span class="mr-2"><img src="{{URL::asset('assets/img/app-logo/Logo - Chico.png')}}" alt="logo"></span>SolidariAPP</a>
-            <button class="navbar-toggler border-0 collapsed" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+
+            <button class="navbar-toggler ml-auto border-0 collapsed" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <i class="fas fa-bars fa-sm"></i>
             </button>
+
             <div class="navbar-collapse collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav ml-auto pr-3 align-items-center">
                     <li class="nav-item px-3" id="navInicio">
@@ -50,6 +52,7 @@
                     <li class="nav-item px-3" id="navAcerca">
                         <a class="nav-link" href="{{url('/acerca')}}">Acerca de</a>
                     </li>
+
                     <button class="btn btn-outline-primary my-2 my-sm-0 px-5" data-toggle="modal" data-target="#modalLogin"  id = "btnIngresar">Ingresar</button>
                     <li class="nav-item dropdown oculto" id = "dropDownUsuario">
                         <a class="nav-link" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -63,10 +66,21 @@
                     </li>
                 </ul>
             </div>
+            <div class="d-none" id="notificaciones">
+                <div class="">
+                    <a class="btn" type="button" data-toggle="modal"  href="#modalNotificaciones" id="logoNotificacion">
+                        <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true" id="spinnerNotif"></span>
+                        <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-bell-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M8 16a2 2 0 0 0 2-2H6a2 2 0 0 0 2 2zm.995-14.901a1 1 0 1 0-1.99 0A5.002 5.002 0 0 0 3 6c0 1.098-.5 6-2 7h14c-1.5-1-2-5.902-2-7 0-2.42-1.72-4.44-4.005-4.901z"/>
+                        </svg>
+                    </a>
+                </div>
+            </div>
         </nav>
     </header>
     <main role="main" class="d-flex flex-shrink-0">
         @yield("contenido")
+
     </main>
     <footer class="footer py-3 text-center text-white bg-dark mt-auto">
         <div class="container">
@@ -74,7 +88,9 @@
         </div>
     </footer>
     <!-- JS -->
+    <script type="text/javascript" src="{{URL::asset('assets/js/notificacion.js')}}"></script>
     <script type="text/javascript" src="{{URL::asset('assets/js/master.js')}}"></script>
+    <script type="text/javascript" src="{{URL::asset('assets/js/UIPrincipal.js')}}"></script>
     <!-- JQuery -->
     <script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>    <!-- Bootstrap JS -->
     <!-- Bootstrap JS -->
@@ -84,9 +100,9 @@
     <!-- Google JS-->
     <script src="https://apis.google.com/js/platform.js" async defer></script>
     <script type="text/javascript" src="{{URL::asset('assets/js/google.js')}}"></script>
-    <!-- Memento -->
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/locale/es.min.js"></script>
+    @include("../UIPerfilModales/UIModalNotificaciones")
+    @include("/UIDetalleNecesidad")
     @yield('scripts')
 </body>
+
 </html>

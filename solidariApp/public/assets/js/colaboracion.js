@@ -35,7 +35,8 @@ function cargarDatosModalDetalleNecesidad( necesidad, modo = "colaborador")
 function registrarColaboracion(necesidad)
 {
     bloquearBoton($("#btnConfirmarColaboracion"));
-    axios.post("/registrarColaboracion",{idNecesidad:necesidad.idNecesidad})
+    let idNecesidad = necesidad.idNecesidad;
+    axios.post("/registrarColaboracion",{idNecesidad:idNecesidad})
     .then((response)=>{
         desbloquearBoton($("#btnConfirmarColaboracion"));
         $("#modalColaborar").modal("hide");
@@ -46,7 +47,8 @@ function registrarColaboracion(necesidad)
             $("#tituloAlert").html("Gracias!");
             $("#mensajeAlert").html(response.data.message);
             $("#alertDetalleNecesidad").show();
-            getColaboraciones(necesidad);
+            getColaboraciones(idNecesidad);
+            crearNotificacionColaboracion(necesidad);
             //alert(response.data.message);
         }
         else

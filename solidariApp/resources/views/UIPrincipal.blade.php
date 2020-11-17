@@ -69,7 +69,7 @@
 
     @include("UIPrincipalRegistroGoogle")
     @include("UIPrincipalRegistro")
-    @include("UIDetalleNecesidad")
+    {{-- @include("UIDetalleNecesidad") --}}
     @include("UIPrincipalResultadoRegistro")
     @include("UIPrincipalModalOrganizaciones")
 @endsection

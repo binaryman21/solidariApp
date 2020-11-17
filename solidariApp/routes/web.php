@@ -80,6 +80,8 @@ Route::get('/listarLocalidades/{idProvincia}', 'App\Http\Controllers\ProvinciaCo
 Route::get('/listarTipoOrganizaciones', 'App\Http\Controllers\TipoOrganizacionController@listarTipoOrganizaciones')->name('listarTipoOrganizaciones');
 Route::get('/listarTipoLinks', 'App\Http\Controllers\TipoLinkController@listarTipoLinks')->name('listarTipoLinks');
 Route::get('/listarCategoriasNecesidad', 'App\Http\Controllers\CategoriaNecesidadController@listarCategoriasNecesidad')->name('listarCategoriasNecesidad');
+Route::get('/listarNotificaciones/{idUsuario}', 'App\Http\Controllers\NotificacionController@listarNotificaciones')->name('listarNotificaciones');
+Route::post('/upDateNotificacion', 'App\Http\Controllers\NotificacionController@upDateNotificacione')->name('upDateNotificacion');
 
 //REGISTRO Y LOGIN
 Route::post('/registrarColaborador', 'App\Http\Controllers\ColaboradorController@registrarColaborador')->name('registrarColaborador');
@@ -127,6 +129,7 @@ Route::post('/registrarCalificacion','App\Http\Controllers\CalificacionControlle
 Route::post('/registrarNecesidad', 'App\Http\Controllers\NecesidadController@registrarNecesidad')->name('registrarNecesidad');
 Route::post('/nuevaCategoriaNecesidad', 'App\Http\Controllers\CategoriaNecesidadController@nuevaCategoriaNecesidad')->name('nuevaCategoriaNecesidad');
 Route::post('/modificarCategoria', 'App\Http\Controllers\CategoriaNecesidadController@modificarCategoria')->name('modificarCategoria');
+Route::post('/crearNotificacionColaboracion','App\Http\Controllers\NotificacionController@crearNotificacionColaboracion')->name('crearNotificacionColaboracion');
 
 //REPORTE DE DENUNCIA
 Route::get('/getMotivos', 'App\Http\Controllers\MotivoDenunciaController@getMotivos')->name('getMotivos');
