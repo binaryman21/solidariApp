@@ -168,7 +168,7 @@
 @include("UIPerfilModales/UIModalBajaNecesidad")
 @include("UIPerfilModales/UIModalCalificar")
 @include("UIPerfilModales/UIModalReportar")
-@include("UIDetalleNecesidad")
+{{-- @include("UIDetalleNecesidad") --}}
 
 @endsection
 

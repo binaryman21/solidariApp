@@ -14,15 +14,21 @@ class Notificacion extends Model
 
     public static function listarNotificaciones($idUsuario)
     {
-        return Notificacion::select("notificacion.*")
-        ->where("idReceptor",$idUsuario)
+        return Notificacion::where("idReceptor",$idUsuario)
         ->join('usuario', 'usuario.idusuario', '=', 'notificacion.idEmisor')
         ->join('mensajeNotificacion','mensajeNotificacion.idMensaje', '=','notificacion.idMensaje')
-        // ->join('colaborador as emisor','colaborador.idUsuario', '=', 'notificacion.idEmisor')
+        // ->join('colaborador','colaborador.idUsuario', '=', 'notificacion.idEmisor')
         // ->where('usuario.idRolUsuario','=', 1 )
-        // ->join('organizacion as emisor','organizacion.idUsuario', '=', 'notificacion.idEmisor')
+        // ->join('organizacion','organizacion.idUsuario', '=', 'notificacion.idEmisor')
         // ->where('usuario.idRolUsuario','=', 2 )
-        ->orderBy('fechaNotificacion', 'ASC')
+        ->orderBy('fechaNotificacion', 'DESC')
         ->get();
     }
+
+    public static function getNotificacion($idNotificacion)
+    {
+        return Notificacion::find($idNotificacion);
+    }
+
+
 }

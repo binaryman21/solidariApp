@@ -20,26 +20,30 @@ class NotificacionController extends Controller
         {
             $notificaciones = Notificacion::listarNotificaciones($idUsuario);
             $noLeidas = 0;
+
             foreach($notificaciones as $notificacion){
 
-
-                if($notificacion->usuario->idRolUsuario == '1')
+                if($notificacion->idRolUsuario == '1')
                 {
-                    $notificacion['emisor'] = Colaborador::getColaborador($notificacion->idEmisor);
+                    $colaborador = Colaborador::getColaborador($notificacion->idEmisor);
+                    $notificacion['emisor'] = $colaborador;
                 }else
                 {
-                    $notificacion['emisor'] = Organizacion::getOrganizacion($notificacion->idEmisor);
+                    $organizacion = Organizacion::getOrganizacion($notificacion->idEmisor);
+                    $notificacion['emisor'] = $organizacion;
                 }
-
                 if($notificacion->leido == '0') $noLeidas++;
-                $notificacion['necesidad'] = Necesidad::getNecesidad($notificacion->idNecesidad);
-                $notificacion->necesidad['categoria'] = CategoriaNecesidad::getCategoria($notificacion->necesidad->idCategoriaNecesidad);
-            }
-            $notificaciones['noLeidas'] = $noLeidas;
+                $necesidad = Necesidad::getNecesidad($notificacion->idNecesidad);
+                $categoria = CategoriaNecesidad::getCategoria($necesidad->idCategoriaNecesidad);
+                $tipoNecesidad = $categoria->nombreCategoria;
+                $notificacion['tipoNecesidad'] = $tipoNecesidad;
+                $notificacion['necesidad'] = $necesidad;
 
+            }
 
             return response()->json([
                 'notificaciones' => $notificaciones,
+                'noLeidas' => $noLeidas,
                 'result' => 1
             ]);
         }
@@ -49,6 +53,60 @@ class NotificacionController extends Controller
                 'result' => 0,
                 'message' => 'Error al cargar notificaciones',
             ]);
+        }
+    }
+
+    public function upDateNotificacione(Request $request)
+    {
+        try
+        {
+            $datosNotificacion = json_decode($request->getContent());
+
+            $notificacion = Notificacion::find($datosNotificacion->idNotificacion);
+            $notificacion->leido = $datosNotificacion ->leido;
+            $notificacion->save();
+
+            return response()->json([
+                'resultado' => 1,
+                'message' => 'registro exitoso'
+            ]);
+        }
+        catch (\Exception $e)
+        {
+            return response()->json([
+                'resultado' => 0,
+                'message' => $e->getMessage()
+            ]);
+        }
+    }
+
+    public function crearNotificacionColaboracion(Request $request)
+    {
+        try
+        {
+            $datos = json_decode($request->getContent());
+            session_start();
+            if(isset($_SESSION['usuario']))
+            {
+                $notificacion = new Notificacion;
+                $notificacion->idMensaje = "1";
+                $notificacion->idEmisor = $_SESSION['usuario']->idUsuario;
+                $notificacion->idReceptor = $datos->idUsuario;
+                $notificacion->leido = "0";
+                $notificacion->idNecesidad = $datos->idNecesidad;
+                $notificacion->save();
+                return response()->json([
+                    'resultado' => 1,
+                ]);
+            }
+        }
+        catch(\Exception $e)
+        {
+            return response()->json([
+                'resultado' => 0,
+                'message' => $e->getMessage()
+            ]);
+
         }
     }
 }

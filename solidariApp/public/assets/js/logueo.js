@@ -34,6 +34,7 @@ function isLoggedIn(funcionSuccess)
             }
         }
     });
+
 }
 
 function mostrarInterfazSesionIniciada(usuario)

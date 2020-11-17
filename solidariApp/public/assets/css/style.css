@@ -123,11 +123,28 @@ div.g-signin2 > .abcRioButtonLightBlue{
     padding-bottom: 0;
 }
 
-.sombra:hover{
+/* .sombra:hover{
     background-color: #616161;
     opacity: 0.8;
+} */
+
+.sombra:hover{
+    /* box-shadow: 0 0 11px rgba(33,33,33,.3); */
+    background-color: rgb(209, 206, 206);
 }
 
-.dropdown-item:hover{
-    box-shadow: 0 0 11px rgba(33,33,33,.3);
+.noLeida{
+    background-color: rgb(253, 251, 115);
+}
+
+.modal-dialog,
+#modalContent.modal-content {
+       /* 80% of window height */
+       height: 95%;
+}
+
+#dropNotificaciones {
+       /* 100% = dialog height, 120px = header + footer */
+       max-height: 100%;
+       overflow-y: scroll;
 }

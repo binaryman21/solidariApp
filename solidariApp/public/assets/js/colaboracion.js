@@ -26,15 +26,17 @@ function cargarDatosModalDetalleNecesidad( necesidad, modo = "colaborador")
             getColaboraciones(necesidad.idNecesidad);
             $("#btnConfirmarColaboracion").unbind("click");
             $("#btnConfirmarColaboracion").click(function(){
-                registrarColaboracion(necesidad.idNecesidad);
+                registrarColaboracion(necesidad);
+
             });
         }
 
 }
 
-function registrarColaboracion(idNecesidad)
+function registrarColaboracion(necesidad)
 {
     bloquearBoton($("#btnConfirmarColaboracion"));
+    let idNecesidad = necesidad.idNecesidad;
     axios.post("/registrarColaboracion",{idNecesidad:idNecesidad})
     .then((response)=>{
         desbloquearBoton($("#btnConfirmarColaboracion"));
@@ -47,6 +49,7 @@ function registrarColaboracion(idNecesidad)
             $("#mensajeAlert").html(response.data.message);
             $("#alertDetalleNecesidad").show();
             getColaboraciones(idNecesidad);
+            crearNotificacionColaboracion(necesidad);
             //alert(response.data.message);
         }
         else

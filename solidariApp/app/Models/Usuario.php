@@ -46,7 +46,7 @@ class Usuario extends Model
     {
       /*Seteo idEstadoUsuario en 2 */
       Usuario::where('idUsuario', $idUsuario)->update(array('idEstadoUsuario' => '2'));
-    
+
       /*TODO: Si el usuario es de tipo Organizacion tengo que setear
       todas sus necesidades como resueltas*/
 
@@ -57,20 +57,11 @@ class Usuario extends Model
         Usuario::where('idUsuario', $idUsuario)->update(array('urlFotoPerfilUsuario' => $urlFotoPerfil));
     }
 
-    public static function comprobarClave( $datosClaves )
+    public static function getUsuario($idUsuario)
     {
-        return Usuario::where('idUsuario', $datosClaves->idUsuario )
-                ->where('claveUsuario', $datosClaves->claveVieja )
-                // ->get();
-                ->count();
+        Usuario::find($idUsuario);
     }
 
-    public static function cambiarClave( $datosClaves )
-    {
-        Usuario::where('idUsuario', $datosClaves->idUsuario)
-            ->update(['claveUsuario'=>$datosClaves->claveNueva]);
-    }
- 
 }
 
 

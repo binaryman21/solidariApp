@@ -68,57 +68,21 @@
                 </ul>
             </div>
             <div class="d-none" id="notificaciones">
-                <div class="dropdown dropleft">
-                    <a class="btn" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id="logoNotificacion">
+                <div class="">
+                    <a class="btn" type="button" data-toggle="modal"  href="#modalNotificaciones" id="logoNotificacion">
+                        <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true" id="spinnerNotif"></span>
                         <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-bell-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                             <path d="M8 16a2 2 0 0 0 2-2H6a2 2 0 0 0 2 2zm.995-14.901a1 1 0 1 0-1.99 0A5.002 5.002 0 0 0 3 6c0 1.098-.5 6-2 7h14c-1.5-1-2-5.902-2-7 0-2.42-1.72-4.44-4.005-4.901z"/>
                         </svg>
                     </a>
-                    <div class="dropdown-menu">
-                        <div class="dropdown-header">
-                            <div class="d-flex flex-row">
-                                <div>
-                                    <h5>Notificaciones</h5>
-                                </div>
-                                <div class="card-text align-self-center pl-1">
-
-                                </div>
-                            </div>
-                            <div class="dropdown-divider"></div>
-                        </div>
-                        <div class="dropdown-item">
-                            <div class="d-flex flex-row">
-                                <div>
-                                    <img class="rounded-circle imgPerfilOrg" src="{{URL::asset('assets/img/user.png')}}" alt="">
-                                </div>
-                                <div class="card-text align-self-center pl-1">
-                                    <p>10/11/2020</p>
-                                    <a class="font-weight-bold text-dark text-decoration-none" href="">Nombre colaborador</a>
-                                    <p>esta interesado en ayudar con</p>
-                                    <a class="font-weight-bold text-dark text-decoration-none" href="">Necesidad</a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="dropdown-item">
-                            <div class="d-flex flex-row">
-                                <div>
-                                    <img class="rounded-circle imgPerfilOrg" src="{{URL::asset('assets/img/user.png')}}" alt="">
-                                </div>
-                                <div class="card-text align-self-center pl-1">
-                                    <p>10/11/2020</p>
-                                    <a class="font-weight-bold text-dark text-decoration-none" href="">Nombre colaborador</a>
-                                    <p>esta interesado en ayudar con</p>
-                                    <a class="font-weight-bold text-dark text-decoration-none" href="">Necesidad</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
                 </div>
             </div>
         </nav>
     </header>
+
     <main role="main" class="flex-shrink-0">
         @yield("contenido")
+
     </main>
     <footer class="footer py-3 text-center text-white bg-dark my-auto">
         <div class="container">
@@ -126,7 +90,9 @@
         </div>
     </footer>
     <!-- JS -->
+    <script type="text/javascript" src="{{URL::asset('assets/js/notificacion.js')}}"></script>
     <script type="text/javascript" src="{{URL::asset('assets/js/master.js')}}"></script>
+    <script type="text/javascript" src="{{URL::asset('assets/js/UIPrincipal.js')}}"></script>
     <!-- JQuery -->
     <script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>    <!-- Bootstrap JS -->
     <!-- Bootstrap JS -->
@@ -136,6 +102,9 @@
     <!-- Google JS-->
     <script src="https://apis.google.com/js/platform.js" async defer></script>
     <script type="text/javascript" src="{{URL::asset('assets/js/google.js')}}"></script>
+    @include("../UIPerfilModales/UIModalNotificaciones")
+    @include("/UIDetalleNecesidad")
     @yield('scripts')
 </body>
+
 </html>
