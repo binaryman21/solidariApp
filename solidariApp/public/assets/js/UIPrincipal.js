@@ -1,21 +1,26 @@
 
 
-getOrganizaciones();
 isLoggedIn();
 
 $( document ).ready(function() {
 
-    $(function() {
-        $(document).on('click', '.alert-close', function() {
-            $(this).parent().hide();
-        })
-     });
-
+    
     listarProvincias(1);
     listarTiposOrganizaciones();
+    if( $('#necesidadOculta').text() == '' && $('#organizacionOculta').text() == ''  ){
+        getOrganizaciones();
+    }
+    else{
+        let idOrganizacion = $('#organizacionOculta').text();
+        let idNecesidad = $('#necesidadOculta').text();
+        traerOrganizacion( idOrganizacion, idNecesidad );
+    }
     // agregarPaginacionUsuarios();
-
     // EVENTOS
+    $(document).on('click', '.alert-close', function() {
+        $(this).parent().hide();
+    })
+    
     $("#btnRegistrarseComoOrganizacion").on('click', mostrarRegistrarseComoOrganizacion);
     $("#btnRegistrarseComoColaborador").on('click', mostrarRegistrarseComoColaborador);
 
@@ -340,6 +345,17 @@ function getOrganizaciones(){
         .then(response => response.json())
         .then(data => {
             let organizaciones = data.organizaciones;
+            llenarOrganizaciones( organizaciones );
+        })
+}
+
+//TRAER LA ORGANIZACION DEL LINK
+function traerOrganizacion(idOrganizacion, idNecesidad){
+    fetch(`/traerOrganizacion/${idOrganizacion}/${idNecesidad}`)
+        .then(response => response.json())
+        .then(data => {
+            let organizaciones = data.organizaciones;
+            console.log( organizaciones );
             llenarOrganizaciones( organizaciones );
         })
 }

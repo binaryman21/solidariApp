@@ -11,6 +11,8 @@
     crossorigin=""/>
 @endsection
 @section("contenido")
+    <div id="necesidadOculta" class="d-none">{{$idNecesidad}}</div>
+    <div id="organizacionOculta" class="d-none">{{$idOrganizacion}}</div>
     <div class="container-fluid px-sm-3 px-lg-5">
         <div class="row bg-white rounded justify-content-lg-center pb-3">
             <div class="col-xs-12 col-sm-4 col-lg-3 p-sm-1 p-md-2 mr-n3">

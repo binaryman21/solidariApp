@@ -30,6 +30,15 @@ class Organizacion extends Model
                 ->get();
     }
 
+    public static function traerOrganizacion($idOrganizacion)
+    {
+        return Organizacion::join('usuario', 'organizacion.idUsuario', '=', 'usuario.idUsuario')
+            ->join('tipoOrganizacion', 'tipoOrganizacion.idTipoOrganizacion', '=', 'organizacion.idTipoOrganizacion')    
+            ->join('domicilio', 'domicilio.idUsuario', '=', 'organizacion.idUsuario')    
+            ->where('organizacion.idUsuario','=',$idOrganizacion)    
+            ->get();
+    }
+
     public static function buscarOrganizacionesPorUbicacion( $ubicacion )
     {
         return Organizacion::join('usuario', 'organizacion.idUsuario', '=', 'usuario.idUsuario')

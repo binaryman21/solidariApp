@@ -38,8 +38,8 @@ class DenunciaController extends Controller
     public function getDenuncias(){
         $denuncias = Denuncia::getDenuncias();
         foreach ($denuncias as $key => $denuncia) {
-            $denuncia['denunciante'] = Usuario::getUsuario( $denuncia->idDenunciante);
-            $denuncia['denunciado'] = Usuario::getUsuario( $denuncia->idDenunciado);
+            $denuncia['denunciante'] = Usuario::getUsuario( $denuncia->idDenunciante );
+            $denuncia['denunciado'] = Usuario::getUsuario( $denuncia->idDenunciado );
         }
         return response()->json([
             'denuncias' => $denuncias
