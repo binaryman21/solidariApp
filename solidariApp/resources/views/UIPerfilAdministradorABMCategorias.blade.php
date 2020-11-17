@@ -39,15 +39,25 @@
                              <option value="1"  class="font-weight-bold">Alta</option>
                              <option value="2"  class="font-weight-bold">Media</option>
                              <option value="3"  class="font-weight-bold">Baja</option>
-                            <!--Las priridades se rellenan por JS-->
                          </select>
                          <span class="error text-danger" id="errorPrioridad"> </span>
                      </div>
 
+                     <div class="form-group mb-3">
+                         <label for="seleccionEstado">Estado</label>
+                         <select id="seleccionEstado" class="form-control" disabled required>
+                             <option value="2"  class="font-weight-bold">Estado</option>
+                             <option value="1"  selected class="font-weight-bold">Habilitado</option>
+                             <option value="0"  class="font-weight-bold">Deshabilitado</option>
+                         </select>
+                         <span class="error text-danger" id="errorEstado"> </span>
+                     </div>
+
                      <div class="modal-footer row">
                          <button type="button" id="btnDeshabilitar" class="btn btn btn-danger d-none">Deshabilitar</button>
-                         <button type="submit" id="btnAgregar" class="btn btn-primary">Agregar</button>
-                         <button type="submit" id="btnModificar" class="btn btn-primary d-none">Modificar</button>
+                         <button type="button" id="btnHabilitar" class="btn btn btn-success d-none">Habilitar</button>
+                         <button type="button" id="btnAgregar" class="btn btn-primary">Agregar</button>
+                         <button type="button" id="btnModificar" class="btn btn-primary d-none">Modificar</button>
                          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
                      </div>
                  </div>

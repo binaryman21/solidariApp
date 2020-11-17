@@ -1,12 +1,8 @@
-
-
 isLoggedIn();
 
 $( document ).ready(function() {
 
     
-    listarProvincias(1);
-    listarTiposOrganizaciones();
     if( $('#necesidadOculta').text() == '' && $('#organizacionOculta').text() == ''  ){
         getOrganizaciones();
     }
@@ -15,6 +11,15 @@ $( document ).ready(function() {
         let idNecesidad = $('#necesidadOculta').text();
         traerOrganizacion( idOrganizacion, idNecesidad );
     }
+    // $(function() {
+        $(document).on('click', '.alert-close', function() {
+            $(this).parent().hide();
+        })
+    //  });
+
+    listarProvincias(1);
+    listarTiposOrganizaciones();
+    listarCategoriasNecesidad();
     // agregarPaginacionUsuarios();
     // EVENTOS
     $(document).on('click', '.alert-close', function() {
@@ -44,9 +49,6 @@ $( document ).ready(function() {
 
     //Evento click para buscar una necesidad
     $('#btnBuscarNeccesidades').on('click', buscarNecesidadPorTexto);
-
-    //Evento click para los filtros por categoria
-    $('#filtrosCategoria button').on('click', filtrarPorCategoria);
 
     //Evento click para el filtro por ubicacion
     $('#btnBuscarPorUbicacion').on('click', filtrarPorUbicacion);
@@ -380,16 +382,7 @@ function llenarOrganizaciones( organizaciones ){
     }
     else{
 
-        var icon = {
-
-            'alimentos': 'utensils',
-            'ropa': 'tshirt',
-            'dinero': 'donate',
-            'limpieza': 'spray-can',
-            'servicios': 'hands-helping',
-            'varios': 'hand-holding-heart'
-        }
-
+        moment.locale('es');
         organizaciones.forEach(org => {
 
             if(org.necesidades.length>0){
@@ -414,18 +407,17 @@ function llenarOrganizaciones( organizaciones ){
                 org.necesidades.forEach( need => {
 
                     $category = need.nombreCategoria.split(' ')[0].toLowerCase();
+                    $diffDate = moment(need.fechaCreacionNecesidad, "YYYY-MM-DD HH:mm:ss").startOf('day').fromNow();
 
                     $(`.listaNecesidades${org.idUsuario}`).append(`
                         <div class="need ${$category}">
                             <div class="card-body py-2 px-3">
-                                <div class="card-title">
-                                    <i class="fas fa-${icon[$category]} fa-xs"></i>
-                                    <a title="${$category}" href="#" class="card-category">${need.nombreCategoria}</a>
-                                </div>
-                                <div class="card-subtitle text-muted">${need.descripcionNecesidad}</div>
+                                <div class="card-title"><a title="${$category}" href="#" class="card-category">${capitalize(need.nombreCategoria)}</a></div>
+                                <div class="card-subtitle text-muted">${capitalize(need.descripcionNecesidad)}</div>
                             </div>
-                            <div class="card-footer d-flex align-items-end justify-content-end p-0">
-                                <button class="btn btn-link btn-sm btnDetalleOrg btnDetalleOrg${need.idNecesidad} text-decoration-none" data-toggle="modal" data-target="#modalDetalleNecesidad">Me interesa</button>
+                            <div class="card-footer d-flex align-items-center p-0">
+                                <small class="ml-3 mr-auto align-items-center">${$diffDate}</small>
+                                <button class="btn btn-link btn-sm btnDetalleOrg btnDetalleOrg${need.idNecesidad} text-decoration-none pl-0" data-toggle="modal" data-target="#modalDetalleNecesidad">Me interesa</button>
                             </div>
                         </div>
                     `);
@@ -434,7 +426,7 @@ function llenarOrganizaciones( organizaciones ){
                         cargarDatosModalDetalleNecesidad(need);
                     })
 
-                    $()
+
                 })
 
                 cargarOrgEnMapa(org);
@@ -448,7 +440,7 @@ function llenarOrganizaciones( organizaciones ){
 function cargarDatosModalDetalleNecesidad( necesidad ){
         $('.detalleNecesidadModal').html(
         `<div class="card necesidad ${necesidad.nombreCategoria.toLowerCase()}">
-            <div class="card-body">
+            <div class="card-body">d
                 <div class="container-fluid">
                     <div class="datosNecesidad">
                         <p class="font-weight-bold">${necesidad.nombreCategoria}</p>
@@ -464,3 +456,46 @@ function cargarDatosModalDetalleNecesidad( necesidad ){
         </div>`)
 }
 
+
+
+function listarCategoriasNecesidad() {
+    fetch('/listarCategoriasNecesidad/')
+    .then(response => response.json())
+    .then(data => {
+
+        var CategoriasNecesidad = data.CategoriasNecesidad;
+        llenarFiltrosDeCategoria(CategoriasNecesidad);
+    })
+    .catch(error => console.log(error));
+}
+
+
+function llenarFiltrosDeCategoria(CategoriasNecesidad){
+
+    var FiltersFragent = document.createDocumentFragment();
+    CategoriasNecesidad.forEach(category => {
+
+        if(category.activo){
+
+            let btnCateogoryTemplate =
+            `<button class="dropdown-item" title="${category.nombreCategoria}" type="button">
+                <span>${category.nombreCategoria}</span>
+            </button>`
+
+            let dropdwonItem = document.createRange().createContextualFragment(btnCateogoryTemplate);
+            FiltersFragent.appendChild(dropdwonItem);
+        }
+    })
+
+    document.querySelector('#filtrosCategoria').appendChild(FiltersFragent);
+
+    //Evento click para los filtros por categoria
+    $('#filtrosCategoria button').on('click', filtrarPorCategoria);
+}
+
+
+function capitalize(text){
+
+    let FirstLetterCap = text[0].toUpperCase();
+    return FirstLetterCap+text.slice(1);
+}

@@ -34,6 +34,7 @@ function isLoggedIn(funcionSuccess)
             }
         }
     });
+
 }
 
 function mostrarInterfazSesionIniciada(usuario)
@@ -45,6 +46,10 @@ function mostrarInterfazSesionIniciada(usuario)
     $("#mapa").removeClass("mapa");
     $("#mapa").addClass("mapaExtendido");
     $("#btnVerMiPerfil").attr("href","./"+ usuario.rol.nombreRol);
+    $("#notificaciones").removeClass("d-none");
+
+    console.log("usuario "+usuario.idUsuario);
+    cargarNotificaciones(usuario);
 }
 
 function signOut() {
@@ -120,4 +125,7 @@ function onSignIn(googleUser) {
         }
     });
 
+
 }
+
+

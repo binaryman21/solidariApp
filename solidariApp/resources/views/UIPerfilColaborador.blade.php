@@ -6,7 +6,7 @@
     <div class="jumbotron">
         <div class="row align-middle">
             <div class="col-md-2">
-                <img id = "imgPerfilColaborador" class="rounded-circle imgPerfilCol" src="{{URL::asset('assets/img/user.png')}}" alt="imagen de usuario">
+                <img id = "imgPerfilColaborador" class="rounded-circle imgPerfilCol" src="{{URL::asset('assets/img/imgUserProfile.png')}}" alt="imagen de usuario">
                 <button type="button" class="btn btn-success btn-sm d-none" data-toggle="modal" data-target="#modalModificarFotoPerfil" id="btnModificarImgPerfil">Modificar Foto </button>
 
             </div>
@@ -19,10 +19,13 @@
                 <p class="lead" id="apellidoColaborador">
                 </p>
                 <div>
-                    <i class="fas fa-snowplow"></i>
-                    <i class="fas fa-hand-holding-heart"></i>
                     <i class="fas fa-handshake"></i>
+                    <i class="fas fa-truck"></i>
                     <i class="fas fa-hand-holding-usd"></i>
+                    <i class="fas fa-tshirt"></i>
+                    <i class="fas fa-utensils"></i>
+                    <i class="fas fa-pump-soap"></i>
+                    <i class="fas fa-crown"></i>
                 </div>
 
             </div>
@@ -140,7 +143,7 @@
         </form>
     </nav>
     <div class="necesidades row">
-    
+
     </div>
 
     <div class="alert alert-success mt-4" role="alert">

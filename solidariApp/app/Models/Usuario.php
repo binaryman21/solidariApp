@@ -16,10 +16,10 @@ class Usuario extends Model
         $email = $datosLogin->email;
         $pass = $datosLogin->pass;
         $idGoogle = $datosLogin->idGoogle;
-        $usuario = Usuario::with('rol')->where('emailUsuario', $email)->where('claveUsuario',$pass)->first();
+        $usuario = Usuario::with('rol.permisos')->where('emailUsuario', $email)->where('claveUsuario',$pass)->first();
         if($idGoogle != 0)
         {
-            $usuario = Usuario::with('rol')->where('emailUsuario', $email)->where('tokenGoogle',$idGoogle)->first();
+            $usuario = Usuario::with('rol.permisos')->where('emailUsuario', $email)->where('tokenGoogle',$idGoogle)->first();
         }
 
         return $usuario;
@@ -65,7 +65,7 @@ class Usuario extends Model
     {
       /*Seteo idEstadoUsuario en 2 */
       Usuario::where('idUsuario', $idUsuario)->update(array('idEstadoUsuario' => '2'));
-    
+
       /*TODO: Si el usuario es de tipo Organizacion tengo que setear
       todas sus necesidades como resueltas*/
 
@@ -83,20 +83,17 @@ class Usuario extends Model
         Usuario::where('idUsuario', $idUsuario)->update(array('urlFotoPerfilUsuario' => $urlFotoPerfil));
     }
 
-    public static function comprobarClave( $datosClaves )
-    {
-        return Usuario::where('idUsuario', $datosClaves->idUsuario )
-                ->where('claveUsuario', $datosClaves->claveVieja )
-                // ->get();
-                ->count();
-    }
+    // public static function getUsuario($idUsuario)
+    // {
+    //     Usuario::find($idUsuario);
+    // }
 
     public static function cambiarClave( $datosClaves )
     {
         Usuario::where('idUsuario', $datosClaves->idUsuario)
             ->update(['claveUsuario'=>$datosClaves->claveNueva]);
     }
- 
+
 }
 
 

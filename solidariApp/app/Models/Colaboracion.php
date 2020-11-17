@@ -11,4 +11,14 @@ class Colaboracion extends Model
     protected $primaryKey = 'idColaboracion';
     public $timestamps = false;
     use HasFactory;
+
+    public function calificaciones()
+    {
+        return $this->hasMany('App\Models\Calificacion','idColaboracion','idColaboracion');
+    }
+    public function necesidad()
+    {
+        return $this->belongsTo('App\Models\Necesidad','idNecesidad','idNecesidad');
+    }
+
 }

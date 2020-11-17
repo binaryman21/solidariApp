@@ -34,6 +34,9 @@ Route::get('/colaborador', function()
 
 Route::get('/colaborador/{idUsuario}', function($idUsuario){return view('UIPerfilColaborador');})->name('UIColaboradorVisitante');
 Route::get('/organizacion/{idUsuario}', function($idUsuario){return view('UIPerfilOrganizacion');})->name('UIOrganizacionVisitante');
+//lo dejo de momento en otra ruta para no interferir en otras funcionalidades.
+Route::get('/ver-colaborador/{idUsuario}', function($idUsuario){return view('UIPerfilVisitanteDeColaborador');})->name('UIColaboradorVisitante');
+Route::get('/ver-organizacion/{idUsuario}', function($idUsuario){return view('UIPerfilVisitanteDeOrganizacion');})->name('UIOrganizacionVisitante');
 //Route::get('/organizacion/{idUsuario}', 'App\Http\Controllers\OrganizacionController@getOrganizacion')->name('getOrganizacion');
 Route::get('/organizacion', function()
 {
@@ -81,6 +84,8 @@ Route::get('/listarLocalidades/{idProvincia}', 'App\Http\Controllers\ProvinciaCo
 Route::get('/listarTipoOrganizaciones', 'App\Http\Controllers\TipoOrganizacionController@listarTipoOrganizaciones')->name('listarTipoOrganizaciones');
 Route::get('/listarTipoLinks', 'App\Http\Controllers\TipoLinkController@listarTipoLinks')->name('listarTipoLinks');
 Route::get('/listarCategoriasNecesidad', 'App\Http\Controllers\CategoriaNecesidadController@listarCategoriasNecesidad')->name('listarCategoriasNecesidad');
+Route::get('/listarNotificaciones/{idUsuario}', 'App\Http\Controllers\NotificacionController@listarNotificaciones')->name('listarNotificaciones');
+Route::post('/upDateNotificacion', 'App\Http\Controllers\NotificacionController@upDateNotificacione')->name('upDateNotificacion');
 
 //REGISTRO Y LOGIN
 Route::post('/registrarColaborador', 'App\Http\Controllers\ColaboradorController@registrarColaborador')->name('registrarColaborador');
@@ -128,12 +133,18 @@ Route::post('/bajaNecesidad','App\Http\Controllers\NecesidadController@bajaNeces
 Route::post('/updateNecesidad','App\Http\Controllers\NecesidadController@updateNecesidad')->name('updateNecesidad');
 Route::post('/registrarCalificacion','App\Http\Controllers\CalificacionController@registrarCalificacion')->name('registrarCalificacion');
 Route::post('/registrarNecesidad', 'App\Http\Controllers\NecesidadController@registrarNecesidad')->name('registrarNecesidad');
+Route::post('/nuevaCategoriaNecesidad', 'App\Http\Controllers\CategoriaNecesidadController@nuevaCategoriaNecesidad')->name('nuevaCategoriaNecesidad');
+Route::post('/modificarCategoria', 'App\Http\Controllers\CategoriaNecesidadController@modificarCategoria')->name('modificarCategoria');
+Route::post('/crearNotificacionColaboracion','App\Http\Controllers\NotificacionController@crearNotificacionColaboracion')->name('crearNotificacionColaboracion');
 
 //REPORTE DE DENUNCIA
 Route::get('/getMotivos', 'App\Http\Controllers\MotivoDenunciaController@getMotivos')->name('getMotivos');
 Route::get('/getDenuncias', 'App\Http\Controllers\DenunciaController@getDenuncias')->name('getDenuncias');
 Route::post('/altaDenuncia', 'App\Http\Controllers\DenunciaController@altaDenuncia')->name('altaDenuncia');
 Route::post('/confirmarDenuncia', 'App\Http\Controllers\DenunciaController@confirmarDenuncia')->name('confirmarDenuncia');
+
+//Route::get('/tienePermisoPara/{pStringPermiso}', 'App\Http\Controllers\UsuarioController@tienePermisoPara')->name('confirmarDenuncia');
+Route::get('/actualizarInsignias/{idUsuario}', 'App\Http\Controllers\CalificacionController@actualizarInsignias')->name('confirmarDenuncia');
 
 
 

@@ -20,21 +20,22 @@ function cargarDatosModalDetalleNecesidad( necesidad, modo = "colaborador")
         if(modo === "organizacion")
         {
             $("#btnColaborar").addClass("d-none");
-            getColaboraciones(necesidad.idNecesidad,"organizacion");
+            getColaboraciones(necesidad,"organizacion");
         }
         else{
-            getColaboraciones(necesidad.idNecesidad);
+            getColaboraciones(necesidad);
             $("#btnConfirmarColaboracion").unbind("click");
             $("#btnConfirmarColaboracion").click(function(){
-                registrarColaboracion(necesidad.idNecesidad);
+                registrarColaboracion(necesidad);
             });
         }
 
 }
 
-function registrarColaboracion(idNecesidad)
+function registrarColaboracion(necesidad)
 {
     bloquearBoton($("#btnConfirmarColaboracion"));
+    let idNecesidad = necesidad.idNecesidad;
     axios.post("/registrarColaboracion",{idNecesidad:idNecesidad})
     .then((response)=>{
         desbloquearBoton($("#btnConfirmarColaboracion"));
@@ -47,6 +48,7 @@ function registrarColaboracion(idNecesidad)
             $("#mensajeAlert").html(response.data.message);
             $("#alertDetalleNecesidad").show();
             getColaboraciones(idNecesidad);
+            crearNotificacionColaboracion(necesidad);
             //alert(response.data.message);
         }
         else
@@ -71,7 +73,7 @@ function registrarColaboracion(idNecesidad)
     });
 }
 
-function getColaboraciones(idNecesidad,modo = "colaborador")
+function getColaboraciones(necesidad,modo = "colaborador")
 {
 
     $("#alertDetalleNecesidad").hide();
@@ -81,7 +83,7 @@ function getColaboraciones(idNecesidad,modo = "colaborador")
     <span class="sr-only">Loading...</span>
   </div>`);
 
-    axios.get("/getColaboraciones/"+ idNecesidad)
+    axios.get("/getColaboraciones/"+ necesidad.idNecesidad)
     .then((response)=>
     {
 
@@ -95,6 +97,7 @@ function getColaboraciones(idNecesidad,modo = "colaborador")
             $.each(response.data.colaboraciones, function (indexInArray, colaboracion) {
                 $("#listadoColaboraciones").append(`<div class="usuario">
                                 <div class="alert alert-secondary" role="alert">
+                                <div class = "font-weight-bold" id = "estadoColaboracion`+colaboracion.idColaboracion +`"></div>
                                     <div class="row align-items-center">
                                         <div class="col-md-2">
                                             <img class="rounded-circle imgPerfilOrg" style="height: 50px;"src="`+colaboracion.urlFotoPerfilUsuario +`" alt="imagen de usuario">
@@ -106,6 +109,8 @@ function getColaboraciones(idNecesidad,modo = "colaborador")
                                         </div>
                                         <div class="col-md-4">
                                         <a href= "#" class = "d-none" data-toggle="modal" data-target="#modalCalificar" id = "btnCalificar`+colaboracion.idColaboracion+`">Calificar</a>
+                                        <a href= "#" class = "d-none" data-toggle="modal" data-target="#modalCalificar" id = "btnVerCalificacion`+colaboracion.idColaboracion+`">Ver calificacion</a>
+
                                         </div>
                                         <div class="col-md-3">
                                             <a href= "colaborador/`+colaboracion.idUsuario+`">Ver perfil</a>
@@ -117,11 +122,32 @@ function getColaboraciones(idNecesidad,modo = "colaborador")
 
                         if(modo === "organizacion")
                         {
-                            $("#btnCalificar"+colaboracion.idColaboracion).removeClass("d-none");
-                            $("#btnCalificar"+colaboracion.idColaboracion).click(function(){
-                                $("#modalDetalleNecesidad").modal("hide");
-                                configModalCalificar(1,colaboracion.idColaboracion,colaboracion.idNecesidad);
-                            });
+
+                            if(colaboracion.estadoColaboracion == 0)
+                            {
+                                $("#btnCalificar"+colaboracion.idColaboracion).removeClass("d-none");
+                                $("#btnCalificar"+colaboracion.idColaboracion).click(function(){
+                                    $("#modalDetalleNecesidad").modal("hide");
+                                    configModalCalificar(1,colaboracion,necesidad);
+                                });
+                            }
+
+                        }
+
+                        if(colaboracion.estadoColaboracion  == 0)
+                        {
+                            $("#estadoColaboracion" + colaboracion.idColaboracion).html("Colaboracion pendiente");
+                            $("#estadoColaboracion" + colaboracion.idColaboracion).addClass("text-warning");
+                        }
+                        else if(colaboracion.estadoColaboracion == 1)
+                        {
+                            $("#estadoColaboracion" + colaboracion.idColaboracion).html("Colaboracion concretada");
+                            $("#estadoColaboracion" + colaboracion.idColaboracion).addClass("text-success");
+                        }
+                        else
+                        {
+                            $("#estadoColaboracion" + colaboracion.idColaboracion).html("Colaboracion no concretada");
+                            $("#estadoColaboracion" + colaboracion.idColaboracion).addClass("text-danger");
                         }
             });
             agregarPaginacionUsuarios();

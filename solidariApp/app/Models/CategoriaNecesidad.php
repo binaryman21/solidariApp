@@ -16,4 +16,8 @@ class CategoriaNecesidad extends Model
     {
         return CategoriaNecesidad::All();
     }
+    public static function getCategoria($idCategoria)
+    {
+        return CategoriaNecesidad::find($idCategoria);
+    }
 }
