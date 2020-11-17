@@ -90,4 +90,6 @@ class ColaboracionController extends Controller
             'colaboraciones' => $colaboraciones
         ]);
     }
+
+
 }

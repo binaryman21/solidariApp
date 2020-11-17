@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Calificacion;
 use App\Models\Colaboracion;
+use App\Models\Insignia;
+use App\Models\InsigniaUsuario;
 use App\Models\Necesidad;
 use Illuminate\Support\Facades\DB;
 class CalificacionController extends Controller
@@ -49,7 +51,7 @@ class CalificacionController extends Controller
                     }
 
                     $colaboracion->save();
-
+                    $this->actualizarInsignias($colaboracion->idColaborador);
                     DB::commit();
                     return response()->json([
                         'resultado' => 1,
@@ -81,6 +83,43 @@ class CalificacionController extends Controller
                 'resultado' => 0,
                 'message' => $e->getMessage()
             ]);
+        }
+    }
+
+    public function actualizarInsignias($idUsuario)
+    {
+        $insignias = Insignia::listarInsignias();
+
+        foreach ($insignias as $key => $insignia)
+        {
+            if($insignia->idCategoria == null)
+            {
+                $cantidadColaboraciones = Colaboracion::where("idColaborador",$idUsuario)->where("estadoColaboracion",1)->count();
+                echo $cantidadColaboraciones."----";
+            }
+            else
+            {
+                $cantidadColaboraciones = Colaboracion::where("idColaborador",$idUsuario)->whereHas("necesidad",function($q)use ($insignia){
+                    $q->where('idCategoriaNecesidad', '=', $insignia->idCategoria);
+                })->where("estadoColaboracion",1)->count();
+                echo $cantidadColaboraciones."----";
+
+            }
+
+            if($cantidadColaboraciones == $insignia->cantidadRequerida)
+            {
+                try
+                {
+                    $nuevaInsignia = new InsigniaUsuario;
+                    $nuevaInsignia->idUsuario = $idUsuario;
+                    $nuevaInsignia->idInsignia = $insignia->idInsignia;
+                    $nuevaInsignia->save();
+                }
+                catch(\Exception $e)
+                {
+                    throw $e;
+                }
+            }
         }
     }
 }

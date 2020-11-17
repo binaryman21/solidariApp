@@ -470,3 +470,10 @@ function llenarFiltrosDeCategoria(CategoriasNecesidad){
     //Evento click para los filtros por categoria
     $('#filtrosCategoria button').on('click', filtrarPorCategoria);
 }
+
+
+function capitalize(text){
+
+    let FirstLetterCap = text[0].toUpperCase();
+    return FirstLetterCap+text.slice(1);
+}
