@@ -130,6 +130,7 @@ function getColaborador(idUsuario,vistaVisitante){
     //getTelefonosUsuario(usuario.idUsuario);
     //getDomiciliosUsuario(usuario.idUsuario);
     cargarInsignias( idUsuario );
+    cargarComentarios( idUsuario );
     
     axios.get("/getColaborador/"+idUsuario)
     .then((response)=>{
@@ -368,13 +369,22 @@ function listarColaboraciones ( idUsuario  ){
         .then(data => {
         // console.log( response.data );
         let colaboraciones = data.colaboraciones;
-
         let divNecesidades = $('.necesidades');
-        divNecesidades.html("");
-        colaboraciones.forEach(colaboracion => {
-            crearCardColaboracion( colaboracion );
-        })
-    agregarPaginacionNecesidades();
+
+        if( colaboraciones.length > 0 ){
+            divNecesidades.html("");
+            colaboraciones.forEach(colaboracion => {
+                crearCardColaboracion( colaboracion );
+            })
+            agregarPaginacionNecesidades();
+        }
+        else{
+            let mensaje = 
+            `<div class="alert alert-secondary" role="alert">
+                Aun no tiene colaboraciones.
+            </div>`
+            divNecesidades.parent().append( mensaje );
+        }
     })
 }
 

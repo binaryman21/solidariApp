@@ -101,6 +101,7 @@ function getOrganizacion(idUsuario, vistaVisitante = 0){
     //CARGAR NECESIDADES
     cargarNecesidades( idUsuario, vistaVisitante );
     cargarInsignias( idUsuario );
+    cargarComentarios( idUsuario );
     // console.log( idUsuario );
     fetch("/getOrganizacion/"+idUsuario)
     .then(response => response.json())

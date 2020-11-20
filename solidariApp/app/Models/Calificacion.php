@@ -12,5 +12,11 @@ class Calificacion extends Model
     public $timestamps = false;
     use HasFactory;
 
+    public static function getCalificaciones( $idUsuario )
+    {
+        return Calificacion::where('colaboraciones.idColaborador', '=', $idUsuario)
+        ->join('colaboraciones', 'calificacion.idColaboracion', 'colaboraciones.idColaboracion')
+        ->get();
+    }
 }
 

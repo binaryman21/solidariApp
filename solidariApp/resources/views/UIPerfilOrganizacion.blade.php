@@ -36,13 +36,9 @@
                     Tipo de organizacion
                 </p>
 
-                <div>
-                    <i class="fas fa-snowplow"></i>
-                    <i class="fas fa-hand-holding-heart"></i>
-                    <i class="fas fa-handshake"></i>
-                    <i class="fas fa-hand-holding-usd"></i>
+                <div class="insignias">
 
-            </div>
+                </div>
         </div>
             <div class="col-md-2">
                 <button class="btn btn-block btn-primary btn-sm soloOrganizacion" type="button" id="editarMiPerfil">Editar <i class="far fa-edit"></i> </button>
@@ -155,26 +151,9 @@
 
     <hr>
 
-    <div class="comentarios  text-center mt-4">
-        <h4>Comentarios</h4>
-        <div class="card comentario">
-            <div class="card-body">
-                <h5 class="card-title d-flex justify-content-between"> <span class="tituloComentario">Gran ayuda</span> <span class="fechaComentario">15/07/2020</span></h5>
-                <p class="card-text">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quis molestias adipisci asperiores doloribus, soluta nostrum ab ea quasi ducimus aliquam. Illo accusamus rerum dignissimos aliquid culpa aperiam vitae ullam sunt.</p>
-            </div>
-        </div>
-        <div class="card comentario">
-            <div class="card-body">
-                <h5 class="card-title d-flex justify-content-between"> <span class="tituloComentario">Dudoso</span> <span class="fechaComentario">15/07/2020</span></h5>
-                <p class="card-text">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Tempora quasi, fuga voluptates accusamus odit id quam alias sint officia harum, explicabo veniam incidunt, repellat molestiae quaerat eum delectus eligendi beatae!</p>
-            </div>
-        </div>
-        <div class="card comentario">
-            <div class="card-body">
-                <h5 class="card-title d-flex justify-content-between"> <span class="tituloComentario">Confiable</span> <span class="fechaComentario">15/07/2020</span></h5>
-                <p class="card-text">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ducimus in praesentium fugiat itaque laboriosam provident totam sed omnis reprehenderit! Inventore culpa enim ad nihil corrupti aperiam eos nisi nulla dolore?</p>
-            </div>
-        </div>
+    <p class="h4 text-center">Comentarios</p>
+    <div class="comentarios text-center mt-4">
+    
     </div>
 
 </div> <!-- container -->

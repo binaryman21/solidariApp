@@ -122,4 +122,23 @@ class CalificacionController extends Controller
             }
         }
     }
+
+
+    public function getCalificaciones($idUsuario)
+    {
+        try
+        {
+            return response()->json([
+                'resultado' => 1,
+                'calificaciones' => Calificacion::getCalificaciones($idUsuario)
+            ]);
+        }
+        catch (\Exception $e)
+        {
+            return response()->json([
+                'resultado' => 0,
+                'message' => $e->getMessage(),
+            ]);
+        }
+    }
 }

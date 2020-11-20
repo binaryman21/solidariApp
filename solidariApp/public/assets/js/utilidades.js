@@ -257,3 +257,39 @@ function llenarInsignias( insignias ){
         divInsignias.append(icono);
     });
 }
+
+//TRAER LOS COMENTARIOS DE UN USUARIO
+function cargarComentarios( idUsuario ){
+    fetch( "/getCalificaciones/" + idUsuario )
+        .then(response => response.json())
+        .then(data => {
+            let comentarios = data.calificaciones;
+            llenarComentarios( comentarios );
+        })
+}
+
+function llenarComentarios( comentarios ){
+    // console.log( insignias );
+    let divComentarios = $('.comentarios');
+    divComentarios.html('');
+    if( comentarios.length > 0 ){
+        comentarios.forEach(comentario => {
+            let coment = 
+            `<div class="card comentario">
+                <div class="card-body">
+                    <h5 class="card-title d-flex justify-content-between"> <span class="fechaComentario">${comentario.fechaCalificacion}</span></h5>
+                    <p class="card-text">${comentario.comentario}</p>
+                </div>
+            </div>`
+            divComentarios.append( coment );
+        });
+        agregarPaginacionComentarios();
+    }
+    else{
+        let coment = 
+        `<div class="alert alert-secondary" role="alert">
+            Aun no tiene comentarios.
+        </div>`
+        divComentarios.append( coment );
+    }
+}
