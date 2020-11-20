@@ -7,11 +7,16 @@ document.addEventListener('DOMContentLoaded', () => {
      //alert(url);
      if(url.length == 5 && url[4] != "" && !isNaN(url[4])){
         isLoggedIn();
-         getColaborador(url[4],1);
+        getColaborador(url[4],1);
+        //  $("#editarMiPerfil").addClass("d-none");
+        $('.soloColaborador').addClass('d-none');
+        $('.soloVisitante').removeClass('d-none');
      }
      else if(url.length == 4 || (url.length == 5 && url[4] == "")){
         isLoggedIn(getColaborador);
-        $("#editarMiPerfil").removeClass("d-none");
+        // $("#editarMiPerfil").removeClass("d-none");
+        $('.soloVisitante').addClass('d-none');
+        $('.soloColaborador').removeClass('d-none');
      }
      else{
          window.location = "/";
@@ -124,7 +129,8 @@ function getColaborador(idUsuario,vistaVisitante){
     });
     //getTelefonosUsuario(usuario.idUsuario);
     //getDomiciliosUsuario(usuario.idUsuario);
-
+    cargarInsignias( idUsuario );
+    
     axios.get("/getColaborador/"+idUsuario)
     .then((response)=>{
         var colaborador = response.data.colaborador;

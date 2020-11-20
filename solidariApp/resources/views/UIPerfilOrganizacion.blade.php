@@ -45,10 +45,10 @@
             </div>
         </div>
             <div class="col-md-2">
-                <button class="btn btn-block btn-primary btn-sm" type="button" id="editarMiPerfil">Editar <i class="far fa-edit"></i> </button>
+                <button class="btn btn-block btn-primary btn-sm soloOrganizacion" type="button" id="editarMiPerfil">Editar <i class="far fa-edit"></i> </button>
                 <button class="btn btn-block btn-primary d-none btn-sm" type="button" id="guardarCambios">Guardar Cambios</button>
-                <button class="btn btn-block btn-success d-none" type="button" data-toggle="modal" href="#modalSubscribirse" id = "btnSuscribirse">Subscribirse</button>
-                <button class="btn btn-block btn-primary d-none" type="button" data-toggle="modal" href="#modalCalificar"  id = "btnCalificar">Calificar</button>
+                <button class="btn btn-block btn-success d-none soloVisitante" type="button" data-toggle="modal" href="#modalSubscribirse" id = "btnSuscribirse">Subscribirse</button>
+                <button class="btn btn-block btn-primary d-none soloVisitante" type="button" data-toggle="modal" href="#modalCalificar"  id = "btnCalificar">Calificar</button>
             </div>
         </div>
     </div>
@@ -125,8 +125,8 @@
                     </div>
                     <hr>
                     <div class="d-flex opciones justify-content-between">
-                        <a href="#" class="text-primary" data-toggle="modal" data-target="#modalCambiarPass">Cambiar clave</a>
-                        <a href="#" class="text-primary" data-toggle="modal" data-target="#modalDarmeDeBaja">Darme de Baja</a>
+                        <a href="#" class="text-primary soloOrganizacion" data-toggle="modal" data-target="#modalCambiarPass">Cambiar clave</a>
+                        <a href="#" class="text-primary soloOrganizacion" data-toggle="modal" data-target="#modalDarmeDeBaja">Darme de Baja</a>
                     </div>
                 </form>
             </div>
@@ -136,13 +136,13 @@
 
     <nav class="navbar navbar-light bg-light justify-content-between">
         <a class="navbar-brand ">Necesidades</a>
-        <form class="form-inline">
+        <!-- <form class="form-inline">
             <div class="busqueda">
                 <input class="form-control mr-sm-2" type="search" placeholder="Buscar" aria-label="Search">
                 <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Buscar</button>
             </div>
-        </form>
-        <a data-toggle="modal" href="#modalEditarNecesidad" id = "btnNuevaNecesidad">
+        </form> -->
+        <a data-toggle="modal"  class="soloOrganizacion" href="#modalEditarNecesidad" id = "btnNuevaNecesidad">
             <i class="fas fa-plus-circle agregarNecesidad"></i>
         </a>
     </nav>

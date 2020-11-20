@@ -8,12 +8,17 @@ document.addEventListener('DOMContentLoaded', ()=>{
     if(url.length == 5 && url[4] != "" && !isNaN(url[4])){
         isLoggedIn();
         getOrganizacion(url[4],1);
-        $("#btnSuscribirse").removeClass("d-none");
-        $("#btnCalificar").removeClass("d-none");
+        // $("#btnSuscribirse").removeClass("d-none");
+        // $("#btnCalificar").removeClass("d-none");
+        // $("#editarMiPerfil").addClass("d-none");
+        $('.soloOrganizacion').addClass('d-none');
+        $('.soloVisitante').removeClass('d-none');
     }
     else if(url.length == 4 || (url.length == 5 && url[4] == "")){
         isLoggedIn(getOrganizacion);
-        $("#editarMiPerfil").removeClass("d-none");
+        // $("#editarMiPerfil").removeClass("d-none");
+        $('.soloVisitante').addClass('d-none');
+        $('.soloOrganizacion').removeClass('d-none');
     }
     else{
         window.location = "/";
@@ -95,6 +100,7 @@ function getOrganizacion(idUsuario, vistaVisitante = 0){
     }
     //CARGAR NECESIDADES
     cargarNecesidades( idUsuario, vistaVisitante );
+    cargarInsignias( idUsuario );
     // console.log( idUsuario );
     fetch("/getOrganizacion/"+idUsuario)
     .then(response => response.json())
@@ -210,7 +216,7 @@ function agregarTelefonoAlListado(telefono)
         </div>
         <div class="col-1 col-mb-1 mb-1">
             <a class="text-danger" id="btnEliminarTelefono${telefono.idTelefono}">
-                <i class="fas fa-trash-alt tacho"></i>
+                <i class="fas fa-trash-alt tacho d-none"></i>
             </a>
             <a class="text-primary oculto" id="btnOkEliminarTelefono${telefono.idTelefono}">
                 <i class="far fa-check-circle"></i>
@@ -277,6 +283,7 @@ function agregarTelefono(idUsuario)
             $('#numeroTelefono').val('');
             limpiarValidaciones($('#numeroTelefono'), $('.errorNroTelefono'));
             alertify.success('Telefono agregado');
+            $('.tacho').removeClass('d-none');
         });
 
 }
@@ -443,12 +450,7 @@ function cargarNecesidades ( idUsuario, vistaVisitante){
             // console.log( necesidad );
             if(necesidad.fechaBajaNecesidad == null){
                 divNecesidades.append(`<div class="col-md-6" id="necesidad${necesidad.idNecesidad}"></div>`);
-                if( vistaVisitante != 0){
-                    crearCardNecesidad(necesidad,idUsuario);
-                }
-                else{
-                    crearCardNecesidad(necesidad,vistaVisitante);
-                }
+                crearCardNecesidad(necesidad,vistaVisitante);
             }
 
         })
@@ -459,20 +461,20 @@ function cargarNecesidades ( idUsuario, vistaVisitante){
 function crearCardNecesidad(necesidad,vistaVisitante)
 {
     // console.log( vistaVisitante );
-    var btnEditarNecesidad = "";
+    let btnEditarNecesidad = "";
     if(vistaVisitante == 0){
         btnEditarNecesidad = `<p class="editarNecesidad">
         <a data-toggle="modal" href="#modalEditarNecesidad" id="editar${necesidad.idNecesidad}"><i class="far fa-edit"></i></a>
         </p>`;
     }
-    console.log( necesidad );
+    // console.log( necesidad );
 
     $("#necesidad" + necesidad.idNecesidad).html("");
     let cantColaboraciones = necesidad.colaboraciones_count;
     if( cantColaboraciones === undefined ){
         cantColaboraciones = 0;
     }
-        let cardNecesidad =   `<div class="card necesidad ${necesidad.nombreCategoria.toLowerCase()}">
+    let cardNecesidad =   `<div class="card necesidad ${necesidad.nombreCategoria.toLowerCase()}">
         <div class="card-body">
             <div class="row">
                 <div class="col-md-6">
@@ -483,7 +485,7 @@ function crearCardNecesidad(necesidad,vistaVisitante)
                 </div>
                 <div class="col-md-6 text-right d-flex flex-column justify-content-between">
                 `+ btnEditarNecesidad + `
-                    <div class="fb-share-button" data-href='https://solidariapp.com.ar/organizacion/${vistaVisitante}/necesidad/${necesidad.idNecesidad}' data-layout="button" data-size="small"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdevelopers.facebook.com%2Fdocs%2Fplugins%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">Compartir</a></div>
+                    <div class="fb-share-button" data-href='https://solidariapp.com.ar/organizacion/${necesidad.idUsuario}/necesidad/${necesidad.idNecesidad}' data-layout="button" data-size="small"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://solidariapp.com.ar/organizacion/${necesidad.idUsuario}/necesidad/${necesidad.idNecesidad}" class="fb-xfbml-parse-ignore">Compartir</a></div>
                     <p class="ayudasRecibidas">
                         <a href="#" data-toggle="modal" data-target="#modalDetalleNecesidad" id = "btnDetalleNecesidad`+ necesidad.idNecesidad + `" ><span class="nroAyudas">`+ cantColaboraciones + `</span><i class="fas fa-user-friends"></i></a>
                     </p>

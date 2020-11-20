@@ -113,7 +113,7 @@ function getColaboraciones(necesidad,modo = "colaborador")
 
                                         </div>
                                         <div class="col-md-3">
-                                            <a href= "colaborador/`+colaboracion.idUsuario+`">Ver perfil</a>
+                                            <a href= "/colaborador/`+colaboracion.idUsuario+`">Ver perfil</a>
                                         </div>
                                     </div>
                                 </div>

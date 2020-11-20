@@ -18,21 +18,15 @@
                 </p>
                 <p class="lead" id="apellidoColaborador">
                 </p>
-                <div>
-                    <i class="fas fa-handshake"></i>
-                    <i class="fas fa-truck"></i>
-                    <i class="fas fa-hand-holding-usd"></i>
-                    <i class="fas fa-tshirt"></i>
-                    <i class="fas fa-utensils"></i>
-                    <i class="fas fa-pump-soap"></i>
-                    <i class="fas fa-crown"></i>
+                <div class="insignias">
+
                 </div>
 
             </div>
             <div class="col-md-2">
-                <button class="btn btn-block btn-primary d-none" type="button" id="editarMiPerfil">Editar <i class="far fa-edit"></i> </button>
+                <button class="btn btn-block btn-primary d-none soloColaborador" type="button" id="editarMiPerfil">Editar <i class="far fa-edit"></i> </button>
                 <button class="btn btn-block btn-primary d-none" type="button" id="guardarCambios">Guardar Cambios</button>
-                <button class="btn btn-block btn-primary" type="button" data-toggle="modal" href="#modalCalificar">Calificar</button>
+                <button class="btn btn-block btn-primary soloVisitante" type="button" data-toggle="modal" href="#modalCalificar">Calificar</button>
             </div>
         </div>
 
@@ -127,8 +121,8 @@
                 <div class="d-flex opciones justify-content-between">
                     <!--<a href="#" class="text-secondary">Editar datos</a>
                     <a href="#" class="text-danger">Darme de baja</a>-->
-                    <a href="#" class="text-primary" data-toggle="modal" data-target="#modalCambiarPass">Cambiar Contraseña</a>
-                    <a href="#" class="text-primary" data-toggle="modal" data-target="#modalDarmeDeBaja">Darme de Baja</a>
+                    <a href="#" class="text-primary soloColaborador" data-toggle="modal" data-target="#modalCambiarPass">Cambiar Contraseña</a>
+                    <a href="#" class="text-primary soloColaborador" data-toggle="modal" data-target="#modalDarmeDeBaja">Darme de Baja</a>
                 </div>
             </div>
         </div>
@@ -137,16 +131,16 @@
 
     <nav class="navbar navbar-light bg-light justify-content-between mt-4">
         <a class="navbar-brand">Colaboraciones</a>
-        <form class="form-inline">
+        <!-- <form class="form-inline">
             <input class="form-control mr-sm-2" type="search" placeholder="Buscar" aria-label="Search">
             <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Buscar</button>
-        </form>
+        </form> -->
     </nav>
     <div class="necesidades row">
 
     </div>
 
-    <div class="alert alert-success mt-4" role="alert">
+    <div class="alert alert-success mt-4 soloColaborador" role="alert">
         <h4 class="alert-heading">Ayuda a las organizaciones para obtener nuevas insignias</h4>
         <p>Con tu colaboracion podes ayudar a construir un mundo mejor para todos.</p>
         <hr>

@@ -234,3 +234,26 @@ function filtrarPorUbicacion(){
             llenarOrganizaciones( organizaciones );
         })
 }
+
+//TRAER LAS INSIGNIAS DE UN USUARIO
+function cargarInsignias( idUsuario ){
+    fetch( "/getInsignias/" + idUsuario )
+        .then(response => response.json())
+        .then(data => {
+            let insignias = data.insignias;
+            llenarInsignias( insignias );
+        })
+}
+
+function llenarInsignias( insignias ){
+    // console.log( insignias );
+    let divInsignias = $('.insignias');
+    divInsignias.html('');
+    insignias.forEach(insignia => {
+        let icono = document.createElement('i');
+        $(icono).addClass( insignia.icono );
+        $(icono).attr('title', insignia.descripcionInsignia);
+        console.log( icono );
+        divInsignias.append(icono);
+    });
+}
