@@ -111,12 +111,16 @@ class UsuarioController extends Controller
                 Usuario::updateFotoPerfil($usuarioLogueado->idUsuario,$urlFotoPerfil);
             }
 
-            return redirect()->route('UIColaborador');
-            /*
-            return response()->json([
-                'resultado' => 1,
-                'message' => 'ejecucion exitosa'
-            ]);*/
+            /**Si es un colaborador, vuelvo a UIColaborador  */
+            if($usuarioLogueado->idRolUsuario == '1'){
+              return redirect()->route('UIColaborador');
+            }
+
+            /**Si es un Organizacion, vuelvo a UIOrganizacion  */
+            if($usuarioLogueado->idRolUsuario == '2'){
+                return redirect()->route('UIOrganizacion');
+            }
+
         }
 
 
