@@ -42,8 +42,8 @@ function bajaUsuario()
      axios.post("/bajaUsuario")
     .then((response)=>{
         if(response.data.resultado === 1 ){
-           console.log(response.data.message);
-
+           /*Redireccionar a pagina principal*/
+           document.location.href="/";
         }else{
             /*Ocurrio un error*/
             alert("Ocurrio un error inesperado.");
