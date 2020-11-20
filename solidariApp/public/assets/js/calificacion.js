@@ -78,6 +78,8 @@ function registrarCalificacion(idRolCalificado,idColaboracion,idNecesidad)
 
     axios.post("/registrarCalificacion",calificacion)
     .then((response)=>{
+        console.log( response.data );
+        console.log( response.data.resultado );
         desbloquearBoton($("#btnEnviarCalificacion"));
         if(response.data.resultado)
         {

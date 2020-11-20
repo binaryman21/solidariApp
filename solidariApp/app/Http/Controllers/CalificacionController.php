@@ -55,7 +55,7 @@ class CalificacionController extends Controller
                     DB::commit();
                     return response()->json([
                         'resultado' => 1,
-                        'message' => 'Se ha enviado la calificación'
+                        'message' => 'Se ha enviado la calificacion'
                     ]);
                 }
                 else
@@ -95,14 +95,14 @@ class CalificacionController extends Controller
             if($insignia->idCategoria == null)
             {
                 $cantidadColaboraciones = Colaboracion::where("idColaborador",$idUsuario)->where("estadoColaboracion",1)->count();
-                echo $cantidadColaboraciones."----";
+                // echo $cantidadColaboraciones."----";
             }
             else
             {
                 $cantidadColaboraciones = Colaboracion::where("idColaborador",$idUsuario)->whereHas("necesidad",function($q)use ($insignia){
                     $q->where('idCategoriaNecesidad', '=', $insignia->idCategoria);
                 })->where("estadoColaboracion",1)->count();
-                echo $cantidadColaboraciones."----";
+                // echo $cantidadColaboraciones."----";
 
             }
 

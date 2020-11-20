@@ -59,6 +59,12 @@ document.addEventListener('DOMContentLoaded', ()=>{
 
     agregarPaginacionNecesidades();
 
+    $('.modal').on("hidden.bs.modal", function (e) { //fire on closing modal box
+        if ($('.modal:visible').length) { // check whether parent modal is opend after child modal close
+            $('body').addClass('modal-open'); // if open mean length is 1 then add a bootstrap css class to body of the page
+        }
+    });
+
     //MODAL EDITAR DOMICILIO
     $("#selectProvincia").change(function(){
         let idProvincia = $("#selectProvincia").val();
@@ -416,7 +422,7 @@ function mostrarModalEditarNecesidad(necesidad){
         e.preventDefault();
         if(necesidad.idNecesidad != 0){
             if(validarNecesidad()) {
-                console.log(necesidad);
+                // console.log(necesidad);
                 bloquearBoton($("#btnGuardarCambiosNecesidad"));
                 updateNecesidad(necesidad);
             }
@@ -445,7 +451,6 @@ function cargarNecesidades ( idUsuario, vistaVisitante){
         .then(data => {
         // console.log( response.data );
         let necesidades = data.necesidades;
-
         let divNecesidades = $('.necesidades');
         divNecesidades.html("");
         necesidades.forEach(necesidad => {
@@ -454,6 +459,14 @@ function cargarNecesidades ( idUsuario, vistaVisitante){
             if(necesidad.fechaBajaNecesidad == null){
                 divNecesidades.append(`<div class="col-md-6" id="necesidad${necesidad.idNecesidad}"></div>`);
                 crearCardNecesidad(necesidad,vistaVisitante);
+                $('.noNecesidad').remove();
+            }
+            else{
+                divNecesidades.html(
+                    `<div class="col-12 my-2 text-center alert alert-secondary" role="alert">
+                        Aun no tiene necesidades.
+                    </div>`
+                )
             }
 
         })

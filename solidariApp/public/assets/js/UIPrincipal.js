@@ -357,7 +357,7 @@ function traerOrganizacion(idOrganizacion, idNecesidad){
         .then(response => response.json())
         .then(data => {
             let organizaciones = data.organizaciones;
-            console.log( organizaciones );
+            // console.log( organizaciones );
             llenarOrganizaciones( organizaciones );
         })
 }
