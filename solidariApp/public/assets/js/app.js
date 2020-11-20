@@ -44,47 +44,48 @@ function getLocation() {
       .bindPopup( organizacion.razonSocial )
       .openPopup();
       markers[organizacion.idUsuario].on('click', () => {
-        $('.modal-footer .btn-link').remove()
         $('.modal-title').text( organizacion.razonSocial );
         $("#modalOrganizaciones .modal-body").html( '' );
-        $("#modalOrganizaciones .modal-footer .btn-link").remove();
         let cardOrganizacion = 
-          `<div class = "cardOrganizacion cardOrganizacion${organizacion.idUsuario} my-2rounded shadow-sm border my-2 pb-3">
-              <div class ="d-flex flex-row m-2 px-2 pt-5 justify-content-star detalleOrganizacion rounded align-items-center">
-                <img class="rounded-circle imgPerfilOrg" src="${organizacion.urlFotoPerfilUsuario}" alt="imagen de usuario">
-                <div id="card-org-name" class="ml-2">
-                    <p>${organizacion.razonSocial}</p>
-                    <p>${organizacion.nombreTipoOrganizacion}</p>
-                </div>
+        `<div class="card cardOrganizacion cardOrganizacion${organizacion.idUsuario} shadow-sm my-2" style="display: block; opacity: 1;">
+          <div class="card-header d-flex flex-row px-2 justify-content-star detalleOrganizacion align-items-center">
+              <img class="rounded-circle imgPerfilOrg" src="${organizacion.urlFotoPerfilUsuario || 'assets/img/imgUserProfile.png'}" alt="Avatar de la org ${organizacion.razonSocial}">
+              <div id="card-org-name" class="ml-2">
+                  <a href="organizacion/${organizacion.idUsuario}">${organizacion.razonSocial}</a>
+                  <a href="#">${organizacion.nombreTipoOrganizacion}</a>
               </div>
-              <div class = "listaNecesidades${organizacion.idUsuario} px-2">
-              </div>
-            </div>`
-              $("#modalOrganizaciones .modal-body").append( cardOrganizacion );
-              $('#modalOrganizaciones .modal-footer').append('<button class = "btn btn-link float-right">Ver todas</button>');
-              organizacion.necesidades.forEach( necesidad => {
-              $(`#modalOrganizaciones .listaNecesidades${organizacion.idUsuario}`).append(
-                  `<div class="card necesidad ${necesidad.nombreCategoria.toLowerCase()}">           
-                    <div class="card-body">
-                      <div class="row">
-                        <div class="col-md-6">
-                          <p class="font-weight-bold">${necesidad.nombreCategoria}</p>
-                          <p>${necesidad.descripcionNecesidad}</p>
-                        </div>
-                      <div class = "col-md-6 d-flex flex-row align-items-end justify-content-end">
-                        <button class = "btn btn-primary btnDetalleOrg btnDetalleOrg${necesidad.idNecesidad}" data-toggle="modal" data-target="#modalDetalleNecesidad">Me interesa</button></div>
-                      </div>
-                    </div>
-                  </div>`
-                  )
-                  $(`.btnDetalleOrg${necesidad.idNecesidad}`).on('click', function(){
-                      cargarDatosModalDetalleNecesidad(necesidad);    
-                  })
-              })
-          $('.btnDetalleOrg').on( 'click', ocultarModal )
-          $("#modalOrganizaciones").modal('show');
+          </div>
+          <div class="card-body p-0 listaNecesidades${organizacion.idUsuario}">
+
+          </div>
+          <div class="card-footer py-0 bg-transparent">
+              <a href="/organizacion/${organizacion.idUsuario}" class="btn btn-sm w-100 btn-link ml-auto text-decoration-none text-muted">Ver todas</a>
+          </div>
+        </div>`
+        $("#modalOrganizaciones .modal-body").append( cardOrganizacion );
+        organizacion.necesidades.forEach( necesidad => {
+          $category = necesidad.nombreCategoria.split(' ')[0].toLowerCase();
+          $diffDate = moment(necesidad.fechaCreacionNecesidad, "YYYY-MM-DD HH:mm:ss").startOf('day').fromNow();
+          $(`#modalOrganizaciones .listaNecesidades${organizacion.idUsuario}`).append(
+              ` <div class="need ${$category}">
+                  <div class="card-body py-2 px-3">
+                      <div class="card-title"><a title="${$category}" href="#" class="card-category">${capitalize(necesidad.nombreCategoria)}</a></div>
+                      <div class="card-subtitle text-muted">${capitalize(necesidad.descripcionNecesidad)}</div>
+                  </div>
+                  <div class="card-footer d-flex align-items-center p-0">
+                      <small class="ml-3 mr-auto align-items-center">${$diffDate}</small>
+                      <button class="btn btn-link btn-sm btnDetalleOrg btnDetalleOrg${necesidad.idNecesidad} text-decoration-none pl-0" data-toggle="modal" data-target="#modalDetalleNecesidad">Me interesa</button>
+                  </div>
+              </div>`
+            )
+            $(`.btnDetalleOrg${necesidad.idNecesidad}`).on('click', function(){
+                cargarDatosModalDetalleNecesidad(necesidad);    
+            })
+        })
+        $('.btnDetalleOrg').on( 'click', ocultarModal )
+        $("#modalOrganizaciones").modal('show');
       })
-      getLocation();
+    getLocation();
   }
 
   function ocultarModal(){

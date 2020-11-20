@@ -315,7 +315,7 @@ function agregarPaginacionComentarios(){
     let numPaginas = filasTotales / filasMostradas;
     for (i = 0; i < numPaginas; i++) {
         let numPag = i + 1;
-        $('#navComentarios').append('<a href="JavaScript:Void(0);" rel="' + i + '">' + numPag + '</a> ');
+        $('#navComentarios').append('<a href="javascript:void(0);" rel="' + i + '">' + numPag + '</a> ');
     }
 
     $(comentario).hide();
@@ -341,7 +341,7 @@ function agregarPaginacionNecesidades() {
     let numPaginas = filasTotales / filasMostradas;
     for (i = 0; i < numPaginas; i++) {
         let numPag = i + 1;
-        $('#navNecesidades').append('<a href="JavaScript:Void(0);" rel="' + i + '">' + numPag + '</a> ');
+        $('#navNecesidades').append('<a href="javascript:void(0);" rel="' + i + '">' + numPag + '</a> ');
     }
 
     $(necesidad).hide();

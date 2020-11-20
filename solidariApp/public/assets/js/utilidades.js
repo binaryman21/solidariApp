@@ -168,7 +168,7 @@ async function obtenerCoordenadas(calle, nro, localidad, provincia){
     let numPaginas = filasTotales/filasMostradas;
     for(i = 0; i < numPaginas; i++) {
         let numPag = i + 1;
-        $('#navUsuarios').append('<a href="#" class="closeLink" rel="' + i + '">' + numPag + '</a> ');
+        $('#navUsuarios').append('<a href="javascript:void(0)" class="closeLink" rel="' + i + '">' + numPag + '</a> ');
     }
     $( usuario ).hide();
     $( usuario ).slice(0, filasMostradas).show();
@@ -198,12 +198,14 @@ function listarTiposOrganizaciones()
 //BUSCAR UNA NECESIDAD POR EL FILTRO DEL CAMPO TEXTO
 function buscarNecesidadPorTexto( ){
     let filtroBusqueda = $('#campoBuscarPorTexto').val();
-    fetch( "/buscarOrganizaciones/" + filtroBusqueda )
-        .then(response => response.json())
-        .then(data => {
-            let organizaciones = data.organizaciones;
-            llenarOrganizaciones( organizaciones );
-        })
+    if( filtroBusqueda !== ''){
+        fetch( "/buscarOrganizaciones/" + filtroBusqueda )
+            .then(response => response.json())
+            .then(data => {
+                let organizaciones = data.organizaciones;
+                llenarOrganizaciones( organizaciones );
+            })
+    }
 }
 
 //BUSCAR UNA NECESIDAD POR EL FILTRO DE CATEGORIA
@@ -226,13 +228,15 @@ function filtrarPorCategoria( e ){
 //BUSCAR UNA ORGANIZACION POR FILTRO DE UBICACION
 function filtrarPorUbicacion(){
     let filtroBusqueda = $('#ubicacion').val();
-    console.log( filtroBusqueda );
-    fetch( "/buscarOrganizacionesPorUbicacion/" + filtroBusqueda )
-        .then(response => response.json())
-        .then(data => {
-            let organizaciones = data.organizaciones;
-            llenarOrganizaciones( organizaciones );
-        })
+    if( filtroBusqueda !== '' ){
+        fetch( "/buscarOrganizacionesPorUbicacion/" + filtroBusqueda )
+            .then(response => response.json())
+            .then(data => {
+                let organizaciones = data.organizaciones;
+                llenarOrganizaciones( organizaciones );
+            })
+    }
+    // console.log( filtroBusqueda );
 }
 
 //TRAER LAS INSIGNIAS DE UN USUARIO

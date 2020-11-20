@@ -47,7 +47,8 @@ function registrarColaboracion(necesidad)
             $("#tituloAlert").html("Gracias!");
             $("#mensajeAlert").html(response.data.message);
             $("#alertDetalleNecesidad").show();
-            getColaboraciones(idNecesidad);
+            getColaboraciones(necesidad);
+            // console.log(idNecesidad);
             crearNotificacionColaboracion(necesidad);
             //alert(response.data.message);
         }
