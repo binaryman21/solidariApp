@@ -307,3 +307,23 @@ function llenarComentarios( comentarios ){
         divComentarios.append( coment );
     }
 }
+
+function calcularPorcentaje( necesidad ){
+    let porcentajeAvance;
+    if( !necesidad.cantidadRecibida ) necesidad.cantidadRecibida = 0;
+    if( necesidad.cantidadNecesidad != 0){
+        porcentajeAvance = necesidad.cantidadRecibida / necesidad.cantidadNecesidad;
+    }
+    else{
+        if( necesidad.cantidadRecibida>0){
+            porcentajeAvance = 1;
+        }
+        else{
+            porcentajeAvance = 0;
+        }
+    }
+
+    if( porcentajeAvance > 1) porcentajeAvance = 1;
+    porcentajeAvance = Math.trunc(porcentajeAvance * 100);
+    return porcentajeAvance; 
+}

@@ -487,12 +487,10 @@ function crearCardNecesidad(necesidad,vistaVisitante)
     // console.log( necesidad );
 
     $("#necesidad" + necesidad.idNecesidad).html("");
+    let porcentajeAvance = calcularPorcentaje(necesidad);
     let cantColaboraciones = necesidad.colaboraciones_count;
-    if( cantColaboraciones === undefined ){
-        cantColaboraciones = 0;
-    }
-    let porcentajeAvance = necesidad.cantidadRecibida / necesidad.cantidadNecesidad;
-    if( porcentajeAvance>1) porcentajeAvance = 1; 
+    if( cantColaboraciones === undefined ) cantColaboraciones = 0;
+    
     let cardNecesidad =   `<div class="card necesidad ${necesidad.nombreCategoria.toLowerCase()}">
         <div class="card-body">
             <div class="row">
@@ -501,7 +499,10 @@ function crearCardNecesidad(necesidad,vistaVisitante)
                     <p>${necesidad.descripcionNecesidad}</p>
                     <p>Cantidad solicitada: ${necesidad.cantidadNecesidad}</p>
                     <p>Cantidad recibida: ${necesidad.cantidadRecibida}</p>
-                    <p>Cumplimiento: ${porcentajeAvance}%</p>
+                    <p>Cumplimiento: ${ porcentajeAvance }%</p>
+                    <div class="progress">
+                        <div class="progress-bar progress-bar-striped bg-success" role="progressbar" style="width: ${ porcentajeAvance }%" aria-valuenow="${ porcentajeAvance }" aria-valuemin="0" aria-valuemax="100"></div>
+                    </div>
                     <p>Fecha limite: ${ new Date(necesidad.fechaLimiteNecesidad).toLocaleDateString('es-AR') }</p>
                 </div>
                 <div class="col-md-6 text-right d-flex flex-column justify-content-between">
@@ -509,9 +510,6 @@ function crearCardNecesidad(necesidad,vistaVisitante)
                     <div class="fb-share-button" data-href='https://solidariapp.com.ar/organizacion/${necesidad.idUsuario}/necesidad/${necesidad.idNecesidad}' data-layout="button" data-size="small"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://solidariapp.com.ar/organizacion/${necesidad.idUsuario}/necesidad/${necesidad.idNecesidad}" class="fb-xfbml-parse-ignore">Compartir</a></div>
                     <p class="ayudasRecibidas">
                         <a href="#" data-toggle="modal" data-target="#modalDetalleNecesidad" id = "btnDetalleNecesidad`+ necesidad.idNecesidad + `" ><span class="nroAyudas">`+ cantColaboraciones + `</span><i class="fas fa-user-friends"></i></a>
-                    </p>
-                    <p class="estado">
-                        <i class="fas fa-spinner"></i>
                     </p>
                 </div>
             </div>
