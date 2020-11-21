@@ -90,7 +90,7 @@
     <!-- JS -->
     <script type="text/javascript" src="{{URL::asset('assets/js/master.js')}}"></script>
     <script type="text/javascript" src="{{URL::asset('assets/js/notificacion.js')}}"></script>
-    {{-- <script type="text/javascript" src="{{URL::asset('assets/js/UIPrincipal.js')}}"></script> --}}
+    <!-- {{-- <script type="text/javascript" src="{{URL::asset('assets/js/UIPrincipal.js')}}"></script> --}} -->
     <!-- JQuery -->
     <script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>    <!-- Bootstrap JS -->
     <!-- Bootstrap JS -->
@@ -105,6 +105,10 @@
     <!-- Memento -->
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/locale/es.min.js"></script>
+   <!-- Utilidades -->
+   <script type="text/javascript" src="{{URL::asset('assets/js/utilidades.js')}}" defer></script>
+   <script type="text/javascript" src="{{URL::asset('assets/js/colaboracion.js')}}" defer></script>
+   <script type="text/javascript" src="{{URL::asset('assets/js/calificacion.js')}}" defer></script>
     @yield('scripts')
 </body>
 

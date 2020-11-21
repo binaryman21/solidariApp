@@ -25,6 +25,11 @@ document.addEventListener('DOMContentLoaded', () => {
     // listarColaboraciones();
     agregarPaginacionComentarios();
     // agregarPaginacionNecesidades();
+    // $('.modal').on("hidden.bs.modal", function (e) { //fire on closing modal box
+    //     if ($('.modal:visible').length) { // check whether parent modal is opend after child modal close
+    //         $('body').addClass('modal-open'); // if open mean length is 1 then add a bootstrap css class to body of the page
+    //     }
+    // });
 
     $("#editarMiPerfil").click(camposEditables);
     $("#guardarCambios").click(guardarCambios);
@@ -309,7 +314,7 @@ function agregarTelefono(idUsuario)
 function agregarPaginacionComentarios(){
     $('.comentarios').after('<div id="navComentarios"></div>');
     let comentario = document.querySelectorAll('.comentario')
-    let filasMostradas = 2;
+    let filasMostradas = 4;
     let filasTotales = comentario.length;
 
     let numPaginas = filasTotales / filasMostradas;
@@ -405,6 +410,7 @@ function crearCardColaboracion( colaboracion )
                     <div class="col-md-9">
                         <p class="card-text h5">${colaboracion.nombreCategoria}</p>
                         <p class="mt-2">${colaboracion.descripcionNecesidad}</p>
+                        <p class="mt-2 font-weight-bold">${colaboracion.descripcionEstadoColaboracion}</p>
                     </div>
                 </div>
                 <h5 class="card-title"><a href="/organizacion/${colaboracion.idUsuario}">${colaboracion.razonSocial}</a></h5>

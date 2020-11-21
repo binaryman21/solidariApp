@@ -26,7 +26,7 @@
             <div class="col-md-2">
                 <button class="btn btn-block btn-primary d-none soloColaborador" type="button" id="editarMiPerfil">Editar <i class="far fa-edit"></i> </button>
                 <button class="btn btn-block btn-primary d-none" type="button" id="guardarCambios">Guardar Cambios</button>
-                <button class="btn btn-block btn-primary soloVisitante" type="button" data-toggle="modal" href="#modalCalificar">Calificar</button>
+                <!-- <button class="btn btn-block btn-primary soloVisitante" type="button" data-toggle="modal" href="#modalCalificar">Calificar</button> -->
             </div>
         </div>
 

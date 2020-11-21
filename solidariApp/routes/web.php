@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProvinciaController;
+use App\Http\Controllers\UsuarioController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -18,10 +19,11 @@ Route::get('/', function(){
     return view('UIPrincipal',compact('idNecesidad', 'idOrganizacion'));
 })->name('UIPrincipal');
 
+//RUTA DEL COLABORADOR
 Route::get('/colaborador', function()
 {
     session_start();
-    if(!isset($_SESSION['usuario']) || $_SESSION['usuario']->rol->nombreRol != 'colaborador')
+    if(!isset($_SESSION['usuario']) || !UsuarioController::tienePermisoPara("verPerfilColaborador"))
     {
         return view('Error403');
     }
@@ -38,10 +40,12 @@ Route::get('/organizacion/{idUsuario}', function($idUsuario){return view('UIPerf
 Route::get('/ver-colaborador/{idUsuario}', function($idUsuario){return view('UIPerfilVisitanteDeColaborador');})->name('UIColaboradorVisitante');
 Route::get('/ver-organizacion/{idUsuario}', function($idUsuario){return view('UIPerfilVisitanteDeOrganizacion');})->name('UIOrganizacionVisitante');
 //Route::get('/organizacion/{idUsuario}', 'App\Http\Controllers\OrganizacionController@getOrganizacion')->name('getOrganizacion');
+
+//RUTA DE LA ORGANIZACION
 Route::get('/organizacion', function()
 {
     session_start();
-    if(!isset($_SESSION['usuario']) || $_SESSION['usuario']->rol->nombreRol != 'organizacion')
+    if(!isset($_SESSION['usuario']) || !UsuarioController::tienePermisoPara("verPerfilOrganizacion"))
     {
         return view('Error403');
     }
@@ -52,9 +56,10 @@ Route::get('/organizacion', function()
 
 })->name('UIOrganizacion');
 
+//RUTA DEL ADMINISTRADOR
 Route::get('/administrador', function(){
     session_start();
-    if(!isset($_SESSION['usuario']) || $_SESSION['usuario']->rol->nombreRol != 'administrador')
+    if(!isset($_SESSION['usuario']) || !UsuarioController::tienePermisoPara("verPerfilAdministrador"))
     {
         return view('Error403');
     }
@@ -67,7 +72,7 @@ Route::get('/administrador', function(){
 //RUTAS GENERALES
 Route::get('/administrador/reportes', function(){
     session_start();
-    if(!isset($_SESSION['usuario']) || $_SESSION['usuario']->rol->nombreRol != 'administrador')
+    if(!isset($_SESSION['usuario']) || !UsuarioController::tienePermisoPara("verPerfilAdministrador"))
     {
         return view('Error403');
     }
