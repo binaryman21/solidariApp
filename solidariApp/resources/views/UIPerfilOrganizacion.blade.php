@@ -163,22 +163,17 @@
 @include("UIPerfilModales/UIModalEditarNecesidad")
 @include("UIPerfilModales/UIEditarDomicilio")
 @include("UIPerfilModales/UIModalBajaNecesidad")
-@include("UIPerfilModales/UIModalCalificar")
 @include("UIPerfilModales/UIModalCalificarOrganizacion")
-@include("UIPerfilModales/UIModalReportar")
-{{-- @include("UIDetalleNecesidad") --}}
+<!-- {{-- @include("UIDetalleNecesidad") --}} -->
 
 @endsection
 
 @section('scripts')
 <!-- scripts -->
-<script type="text/javascript" src="{{URL::asset('assets/js/utilidades.js')}}"></script>
-<script type="text/javascript" src="{{URL::asset('assets/js/logueo.js')}}"></script>
 <script type="text/javascript" src="{{URL::asset('assets/js/organizacion.js')}}"></script>
 <script type="text/javascript" src="{{URL::asset('assets/js/necesidad.js')}}"></script>
-<script type="text/javascript" src="{{URL::asset('assets/js/calificacion.js')}}"></script>
-<script type="text/javascript" src="{{URL::asset('assets/js/colaboracion.js')}}"></script>
-<script type="text/javascript" src="{{URL::asset('assets/js/validaciones.js')}}"></script>
-<script type="text/javascript" src="{{URL::asset('assets/js/usuario.js')}}"></script>
+<!-- <script type="text/javascript" src="{{URL::asset('assets/js/calificacion.js')}}"></script> -->
+<!-- <script type="text/javascript" src="{{URL::asset('assets/js/colaboracion.js')}}"></script> -->
+<!-- <script type="text/javascript" src="{{URL::asset('assets/js/validaciones.js')}}"></script> -->
 <script src="https://apis.google.com/js/platform.js?onload=onLoad" async defer></script>
 @endsection

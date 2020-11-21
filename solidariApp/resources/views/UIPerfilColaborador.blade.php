@@ -129,16 +129,10 @@
 @include("UIPerfilModales/UIDarmeDeBaja")
 @include("UIPerfilModales/UIModificarFotoPerfil")
 @include("UIPerfilModales/UIEditarDomicilio")
-@include("UIPerfilModales/UIModalCalificar")
-@include("UIPerfilModales/UIModalReportar")
 @endsection
 
 @section('scripts')
-   <!-- Scripts -->
-<script type="text/javascript" src="{{URL::asset('assets/js/utilidades.js')}}"></script>
-<script type="text/javascript" src="{{URL::asset('assets/js/logueo.js')}}"></script>
+<!-- Scripts -->
 <script type="text/javascript" src="{{URL::asset('assets/js/colaborador.js')}}"></script>
-<script type="text/javascript" src="{{URL::asset('assets/js/validaciones.js')}}"></script>
-<script type="text/javascript" src="{{URL::asset('assets/js/usuario.js')}}"></script>
 <script src="https://apis.google.com/js/platform.js?onload=onLoad" async defer></script>
 @endsection

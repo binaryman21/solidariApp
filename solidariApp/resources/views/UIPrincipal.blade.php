@@ -72,7 +72,6 @@
     @include("UIPrincipalRegistroGoogle")
     @include("UIPrincipalRegistro")
     <!-- {{-- @include("UIDetalleNecesidad") --}} -->
-    @include("UIPerfilModales/UIModalCalificar")
     @include("UIPrincipalResultadoRegistro")
     @include("UIPrincipalModalOrganizaciones")
 @endsection
@@ -86,14 +85,7 @@
     crossorigin=""></script>
     <script type="text/javascript" src="{{URL::asset('assets/js/app.js')}}"></script>
     <!-- JS -->
-    <script type="text/javascript" src="{{URL::asset('assets/js/logueo.js')}}"></script>
     <script type="text/javascript" src="{{URL::asset('assets/js/UIPrincipal.js')}}"></script>
-    <script type="text/javascript" src="{{URL::asset('assets/js/colaboracion.js')}}"></script>
-    <script type="text/javascript" src="{{URL::asset('assets/js/calificacion.js')}}"></script>
-    <script src="https://unpkg.com/axios/dist/axios.min.js" defer></script>
-    <!-- Validaciones -->
-    <script type="text/javascript" src="{{URL::asset('assets/js/validaciones.js')}}" defer></script>
-    
-
+    <!-- <script src="https://unpkg.com/axios/dist/axios.min.js" defer></script> -->
 @endsection
 
