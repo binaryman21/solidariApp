@@ -28,6 +28,9 @@ function cargarDatosModalDetalleNecesidad( necesidad, modo = "colaborador")
             $("#btnConfirmarColaboracion").click(function(){
                 registrarColaboracion(necesidad);
             });
+            $("#inputBuscarColaboraciones input").keyup(function(){
+                buscarColaboradoresEnNecesidad();
+            })
         }
 
 }
@@ -96,16 +99,15 @@ function getColaboraciones(necesidad,modo = "colaborador")
             $("#listadoColaboraciones").html("");
             $.each(response.data.colaboraciones, function (indexInArray, colaboracion) {
                 $("#listadoColaboraciones").append(`<div class="usuario">
-                                <div class="alert alert-secondary" role="alert">
+                                <div class="alert alert-secondary" role="alert" id="colaborador${colaboracion.idColaborador}">
                                 <div class = "font-weight-bold" id = "estadoColaboracion`+colaboracion.idColaboracion +`"></div>
                                     <div class="row align-items-center">
                                         <div class="col-md-2">
                                             <img class="rounded-circle imgPerfilOrg" style="height: 50px;"src="`+colaboracion.urlFotoPerfilUsuario +`" alt="imagen de usuario">
                                         </div>
                                         <div class="col-md-3">
-                                            <p class="lead">
-                                            `+colaboracion.nombreColaborador +` `+ colaboracion.apellidoColaborador+`
-                                            </p>
+                                            <p class="lead nombreColaborador">`+colaboracion.nombreColaborador +` `+ colaboracion.apellidoColaborador+`</p>
+
                                         </div>
                                         <div class="col-md-4">
                                         <a href= "#" class = "d-none" data-toggle="modal" data-target="#modalCalificar" id = "btnCalificar`+colaboracion.idColaboracion+`">Calificar</a>
@@ -162,3 +164,26 @@ function getColaboraciones(necesidad,modo = "colaborador")
 }
 
 
+function buscarColaboradoresEnNecesidad(){
+    const text = $("#inputBuscarColaboraciones input").val().toLowerCase();
+    const usuarios = $('.usuario');
+    const nombres = document.querySelectorAll(".nombreColaborador");
+    let nombre;
+    console.log("textBus: "+text);
+    //Filtro los colaboradores que coinciden con el texto de busqueda
+    if(text == ''){
+        for(i = 0 ; i < usuarios.length ; i++ ){
+            $(usuarios[i]).removeClass('d-none');
+        }
+    }
+    for(i = 0 ; i < usuarios.length ; i++ ){
+        nombre = nombres[i].innerHTML.toLowerCase();
+        console.log("nombreCol: "+nombre);
+        if(!nombre.includes(text)){
+            $(usuarios[i]).addClass('d-none');
+        }else{
+            $(usuarios[i]).removeClass('d-none');
+        }
+    }
+    agregarPaginacionUsuarios();
+}
