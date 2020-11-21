@@ -107,7 +107,7 @@ function getOrganizacion(idUsuario, vistaVisitante = 0){
     //CARGAR NECESIDADES
     cargarNecesidades( idUsuario, vistaVisitante );
     cargarInsignias( idUsuario );
-    cargarComentarios( idUsuario );
+    cargarComentariosOrganizacion( idUsuario );
     // console.log( idUsuario );
     fetch("/getOrganizacion/"+idUsuario)
     .then(response => response.json())
@@ -453,23 +453,24 @@ function cargarNecesidades ( idUsuario, vistaVisitante){
         let necesidades = data.necesidades;
         let divNecesidades = $('.necesidades');
         divNecesidades.html("");
-        necesidades.forEach(necesidad => {
-
-            // console.log( necesidad );
-            if(necesidad.fechaBajaNecesidad == null){
-                divNecesidades.append(`<div class="col-md-6" id="necesidad${necesidad.idNecesidad}"></div>`);
-                crearCardNecesidad(necesidad,vistaVisitante);
-                $('.noNecesidad').remove();
-            }
-            else{
-                divNecesidades.html(
-                    `<div class="col-12 my-2 text-center alert alert-secondary" role="alert">
-                        Aun no tiene necesidades.
-                    </div>`
-                )
-            }
-
-        })
+        if( necesidades.length>0){
+            necesidades.forEach(necesidad => {
+    
+                // console.log( necesidad );
+                if(necesidad.fechaBajaNecesidad == null){
+                    divNecesidades.append(`<div class="col-md-6" id="necesidad${necesidad.idNecesidad}"></div>`);
+                    crearCardNecesidad(necesidad,vistaVisitante);
+                }
+    
+            })
+        }
+        else{
+            divNecesidades.html(
+                `<div class="col-12 my-2 text-center alert alert-secondary" role="alert">
+                    Aun no tiene necesidades.
+                </div>`
+            )
+        }
     agregarPaginacionNecesidades();
     })
 }

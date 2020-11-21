@@ -100,6 +100,7 @@ Route::post('/registrarUsuario', 'App\Http\Controllers\UsuarioController@registr
 Route::get('/getOrganizacion/{idUsuario}', 'App\Http\Controllers\OrganizacionController@getOrganizacion')->name('getOrganizacion');
 Route::get('/traerOrganizacion/{idOrganizacion}/{idNecesidad}', 'App\Http\Controllers\OrganizacionController@traerOrganizacion')->name('traerOrganizacion');
 Route::get('/getOrganizaciones', 'App\Http\Controllers\OrganizacionController@getOrganizaciones')->name('getOrganizaciones');
+Route::post('/registrarCalificacionOrganizacion','App\Http\Controllers\CalificacionController@registrarCalificacionOrganizacion')->name('registrarCalificacionOrganizacion');
 
 //BUSCAR
 Route::get('/buscarOrganizacionesPorUbicacion/{ubicacion}', 'App\Http\Controllers\OrganizacionController@busquedaOrganizacionesPorUbicacion')->name('busquedaOrganizacionesPorUbicacion');
@@ -146,6 +147,7 @@ Route::post('/confirmarDenuncia', 'App\Http\Controllers\DenunciaController@confi
 //Route::get('/tienePermisoPara/{pStringPermiso}', 'App\Http\Controllers\UsuarioController@tienePermisoPara')->name('confirmarDenuncia');
 Route::get('/actualizarInsignias/{idUsuario}', 'App\Http\Controllers\CalificacionController@actualizarInsignias')->name('confirmarDenuncia');
 Route::get('/getCalificaciones/{idUsuario}', 'App\Http\Controllers\CalificacionController@getCalificaciones')->name('getCalificaciones');
+Route::get('/getCalificacionesOrganizacion/{idUsuario}', 'App\Http\Controllers\CalificacionController@getCalificacionesOrganizacion')->name('getCalificacionesOrganizacion');
 Route::get('/getInsignias/{idUsuario}', 'App\Http\Controllers\InsigniaUsuarioController@getInsignias')->name('getInsignias');
 
 

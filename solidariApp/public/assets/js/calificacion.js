@@ -58,6 +58,40 @@ function configModalCalificar(idRolCalificado,colaboracion,necesidad)
         {
             registrarCalificacion(idRolCalificado,colaboracion.idColaboracion,colaboracion.idNecesidad);
         }
+    });
+}
+
+//CALIFICAR A UNA ORGANIZACION
+$('#btnEnviarCalificacionOrganizacion').click(function(e){
+    e.preventDefault();
+    let idCalificado = $(location).attr('href').split("/")[4];
+    registrarCalificacionOrganizacion(idCalificado);
+    // registrarCalificacion(idRolCalificado,colaboracion.idColaboracion,colaboracion.idNecesidad);
+});
+
+function registrarCalificacionOrganizacion(idCalificado){
+    bloquearBoton($("#btnEnviarCalificacionOrganizacion"));
+    var calificacion = {
+        idCalificado,
+        idCalificante:0,
+        tratoRecibido: $("input[name='radioTratoOrg']:checked").val(),
+        comentario: $("#textoComentariosOrg").val()
+    };
+
+    console.log( calificacion );
+    axios.post("/registrarCalificacionOrganizacion",calificacion)
+    .then((response)=>{
+        console.log( response.data );
+        console.log( response.data.resultado );
+        desbloquearBoton($("#btnEnviarCalificacionOrganizacion"));
+        if(response.data.resultado)
+        {
+            alertify.success(response.data.message);
+            $("#modalCalificarOrganizacion").modal("hide");
+        }
+        else{
+            alertify.error(response.data.message);
+        }
 
     });
 }
@@ -78,8 +112,8 @@ function registrarCalificacion(idRolCalificado,idColaboracion,idNecesidad)
 
     axios.post("/registrarCalificacion",calificacion)
     .then((response)=>{
-        console.log( response.data );
-        console.log( response.data.resultado );
+        // console.log( response.data );
+        // console.log( response.data.resultado );
         desbloquearBoton($("#btnEnviarCalificacion"));
         if(response.data.resultado)
         {

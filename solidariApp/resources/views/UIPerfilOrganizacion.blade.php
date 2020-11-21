@@ -44,7 +44,7 @@
                 <button class="btn btn-block btn-primary btn-sm soloOrganizacion" type="button" id="editarMiPerfil">Editar <i class="far fa-edit"></i> </button>
                 <button class="btn btn-block btn-primary d-none btn-sm" type="button" id="guardarCambios">Guardar Cambios</button>
                 <button class="btn btn-block btn-success d-none soloVisitante" type="button" data-toggle="modal" href="#modalSubscribirse" id = "btnSuscribirse">Subscribirse</button>
-                <button class="btn btn-block btn-primary d-none soloVisitante" type="button" data-toggle="modal" href="#modalCalificar"  id = "btnCalificar">Calificar</button>
+                <button class="btn btn-block btn-primary d-none soloVisitante" type="button" data-toggle="modal" href="#modalCalificarOrganizacion"  id = "btnCalificar">Calificar</button>
             </div>
         </div>
     </div>
@@ -163,7 +163,7 @@
 @include("UIPerfilModales/UIModalEditarNecesidad")
 @include("UIPerfilModales/UIEditarDomicilio")
 @include("UIPerfilModales/UIModalBajaNecesidad")
-@include("UIPerfilModales/UIModalCalificar")
+@include("UIPerfilModales/UIModalCalificarOrganizacion")
 @include("UIPerfilModales/UIModalReportar")
 {{-- @include("UIDetalleNecesidad") --}}
 

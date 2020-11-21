@@ -272,6 +272,16 @@ function cargarComentarios( idUsuario ){
         })
 }
 
+//TRAER LOS COMENTARIOS DE UNA ORGANIZACION
+function cargarComentariosOrganizacion( idUsuario ){
+    fetch( "/getCalificacionesOrganizacion/" + idUsuario )
+        .then(response => response.json())
+        .then(data => {
+            let comentarios = data.calificaciones;
+            llenarComentarios( comentarios );
+        })
+}
+
 function llenarComentarios( comentarios ){
     // console.log( insignias );
     let divComentarios = $('.comentarios');
