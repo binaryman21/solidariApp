@@ -41,11 +41,11 @@ function cargarDenuncias(){
 }
 
 function crearCardDenuncia( denuncia ){
-    console.log( denuncia.denunciante[0].idUsuario );
+    // console.log( denuncia.denunciante[0].idUsuario );
     let cardDenuncia = 
     `<div class="card" name="cardReporte" id="cardReporte${denuncia.idDenuncia}">
         <div class="card-body justify-content-between d-flex flex-wrap ">
-            <div class="m-2"">${denuncia.fechaDenuncia}</div>
+            <div class="m-2"">${new Date(denuncia.fechaDenuncia).toLocaleDateString('es-AR')}</div>
             <div class="m-2"">Motivo: ${denuncia.descripcionMotivoDenuncia}</div>
             <div class="m-2">Código: ${denuncia.idDenuncia}</div>
             <div class="m-2">Denunciante: <a href="/${denuncia.denunciante[0].rol.nombreRol}/${denuncia.idDenunciante}">${denuncia.denunciante.nombre[0].nombre}</a></div>
@@ -61,7 +61,7 @@ function crearCardDenuncia( denuncia ){
 
 function cargarDatosModalDetalleDenuncia( denuncia ){
     $('#spnCodigoDenuncia').text( denuncia.idDenuncia );
-    $('#spnFechaDenuncia').text( denuncia.fechaDenuncia );
+    $('#spnFechaDenuncia').text( new Date(denuncia.fechaDenuncia).toLocaleDateString('es-AR') );
     $('#spnMotivoDenuncia').text( denuncia.descripcionMotivoDenuncia );
     $('#spnDenunciante').text( denuncia.idDenunciante );
     $('#spnNombreDenunciante').text( ' ' + denuncia.denunciante.nombre[0].nombre );

@@ -1,6 +1,6 @@
 function cargarDatosModalDetalleNecesidad( necesidad, modo = "colaborador")
 {
-    console.log( necesidad );
+    let porcentajeAvance = calcularPorcentaje( necesidad );
         $('.detalleNecesidadModal').html(
         `<div class="card necesidad ${necesidad.nombreCategoria.toLowerCase()}">
             <div class="card-body">
@@ -8,9 +8,14 @@ function cargarDatosModalDetalleNecesidad( necesidad, modo = "colaborador")
                     <div class="datosNecesidad">
                         <p class="font-weight-bold">${necesidad.nombreCategoria}</p>
                         <p>${necesidad.descripcionNecesidad}</p>
-                        <p>Cantidad: ${necesidad.cantidadNecesidad}</p>
+                        <p>Cantidad solicitada: ${necesidad.cantidadNecesidad}</p>
+                        <p>Cantidad recibida: ${necesidad.cantidadRecibida}</p>
+                        <p>Cumplimiento: ${ porcentajeAvance }%</p>
+                        <div class="progress">
+                            <div class="progress-bar progress-bar-striped bg-success" role="progressbar" style="width: ${ porcentajeAvance }%" aria-valuenow="${ porcentajeAvance }" aria-valuemin="0" aria-valuemax="100"></div>
+                        </div>
                         <p>Fecha limite: ${ new Date(necesidad.fechaLimiteNecesidad).toLocaleDateString('es-AR') }</p>
-                        <p>Estado: en proceso</p>
+                        <p>Estado: ${necesidad.descripcionEstado}</p>
                     </div>
                 </div>
                 <button type="button" class="btn btnColaborar btn-block btn-outline-primary mt-4" data-toggle="modal" data-target="#modalColaborar" id = "btnColaborar"><i class="far fa-handshake"></i>COLABORAR</button>
@@ -47,7 +52,8 @@ function registrarColaboracion(necesidad)
             $("#tituloAlert").html("Gracias!");
             $("#mensajeAlert").html(response.data.message);
             $("#alertDetalleNecesidad").show();
-            getColaboraciones(idNecesidad);
+            getColaboraciones(necesidad);
+            // console.log(idNecesidad);
             crearNotificacionColaboracion(necesidad);
             //alert(response.data.message);
         }
@@ -113,7 +119,7 @@ function getColaboraciones(necesidad,modo = "colaborador")
 
                                         </div>
                                         <div class="col-md-3">
-                                            <a href= "colaborador/`+colaboracion.idUsuario+`">Ver perfil</a>
+                                            <a href= "/colaborador/`+colaboracion.idUsuario+`">Ver perfil</a>
                                         </div>
                                     </div>
                                 </div>

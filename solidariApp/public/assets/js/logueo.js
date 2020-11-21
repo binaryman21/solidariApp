@@ -48,7 +48,7 @@ function mostrarInterfazSesionIniciada(usuario)
     $("#btnVerMiPerfil").attr("href","./"+ usuario.rol.nombreRol);
     $("#notificaciones").removeClass("d-none");
 
-    console.log("usuario "+usuario.idUsuario);
+    // console.log("usuario "+usuario.idUsuario);
     cargarNotificaciones(usuario);
 }
 

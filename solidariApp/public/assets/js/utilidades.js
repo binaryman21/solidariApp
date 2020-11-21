@@ -168,7 +168,7 @@ async function obtenerCoordenadas(calle, nro, localidad, provincia){
     let numPaginas = filasTotales/filasMostradas;
     for(i = 0; i < numPaginas; i++) {
         let numPag = i + 1;
-        $('#navUsuarios').append('<a href="#" class="closeLink" rel="' + i + '">' + numPag + '</a> ');
+        $('#navUsuarios').append('<a href="javascript:void(0)" class="closeLink" rel="' + i + '">' + numPag + '</a> ');
     }
     $( usuario ).hide();
     $( usuario ).slice(0, filasMostradas).show();
@@ -198,12 +198,14 @@ function listarTiposOrganizaciones()
 //BUSCAR UNA NECESIDAD POR EL FILTRO DEL CAMPO TEXTO
 function buscarNecesidadPorTexto( ){
     let filtroBusqueda = $('#campoBuscarPorTexto').val();
-    fetch( "/buscarOrganizaciones/" + filtroBusqueda )
-        .then(response => response.json())
-        .then(data => {
-            let organizaciones = data.organizaciones;
-            llenarOrganizaciones( organizaciones );
-        })
+    if( filtroBusqueda !== ''){
+        fetch( "/buscarOrganizaciones/" + filtroBusqueda )
+            .then(response => response.json())
+            .then(data => {
+                let organizaciones = data.organizaciones;
+                llenarOrganizaciones( organizaciones );
+            })
+    }
 }
 
 //BUSCAR UNA NECESIDAD POR EL FILTRO DE CATEGORIA
@@ -226,11 +228,102 @@ function filtrarPorCategoria( e ){
 //BUSCAR UNA ORGANIZACION POR FILTRO DE UBICACION
 function filtrarPorUbicacion(){
     let filtroBusqueda = $('#ubicacion').val();
-    console.log( filtroBusqueda );
-    fetch( "/buscarOrganizacionesPorUbicacion/" + filtroBusqueda )
+    if( filtroBusqueda !== '' ){
+        fetch( "/buscarOrganizacionesPorUbicacion/" + filtroBusqueda )
+            .then(response => response.json())
+            .then(data => {
+                let organizaciones = data.organizaciones;
+                llenarOrganizaciones( organizaciones );
+            })
+    }
+    // console.log( filtroBusqueda );
+}
+
+//TRAER LAS INSIGNIAS DE UN USUARIO
+function cargarInsignias( idUsuario ){
+    fetch( "/getInsignias/" + idUsuario )
         .then(response => response.json())
         .then(data => {
-            let organizaciones = data.organizaciones;
-            llenarOrganizaciones( organizaciones );
+            let insignias = data.insignias;
+            llenarInsignias( insignias );
         })
+}
+
+function llenarInsignias( insignias ){
+    // console.log( insignias );
+    let divInsignias = $('.insignias');
+    divInsignias.html('');
+    insignias.forEach(insignia => {
+        let icono = document.createElement('i');
+        $(icono).addClass( insignia.icono );
+        $(icono).attr('title', insignia.descripcionInsignia);
+        console.log( icono );
+        divInsignias.append(icono);
+    });
+}
+
+//TRAER LOS COMENTARIOS DE UN USUARIO
+function cargarComentarios( idUsuario ){
+    fetch( "/getCalificaciones/" + idUsuario )
+        .then(response => response.json())
+        .then(data => {
+            let comentarios = data.calificaciones;
+            llenarComentarios( comentarios );
+        })
+}
+
+//TRAER LOS COMENTARIOS DE UNA ORGANIZACION
+function cargarComentariosOrganizacion( idUsuario ){
+    fetch( "/getCalificacionesOrganizacion/" + idUsuario )
+        .then(response => response.json())
+        .then(data => {
+            let comentarios = data.calificaciones;
+            llenarComentarios( comentarios );
+        })
+}
+
+function llenarComentarios( comentarios ){
+    // console.log( insignias );
+    let divComentarios = $('.comentarios');
+    divComentarios.html('');
+    if( comentarios.length > 0 ){
+        comentarios.forEach(comentario => {
+            let coment = 
+            `<div class="card comentario">
+                <div class="card-body">
+                    <h5 class="card-title d-flex justify-content-between"> <span class="fechaComentario">${comentario.fechaCalificacion}</span></h5>
+                    <p class="card-text">${comentario.comentario}</p>
+                </div>
+            </div>`
+            divComentarios.append( coment );
+        });
+        agregarPaginacionComentarios();
+    }
+    else{
+        let coment = 
+        `<div class="alert alert-secondary" role="alert">
+            Aun no tiene comentarios.
+        </div>`
+        divComentarios.append( coment );
+    }
+}
+
+function calcularPorcentaje( necesidad ){
+    let porcentajeAvance;
+    if( !necesidad.cantidadRecibida ) necesidad.cantidadRecibida = 0;
+    if( necesidad.cantidadNecesidad != 0){
+        porcentajeAvance = necesidad.cantidadRecibida / necesidad.cantidadNecesidad;
+    }
+    else{
+        if( necesidad.cantidadRecibida>0){
+            porcentajeAvance = 1;
+        }
+        else{
+            porcentajeAvance = 0;
+        }
+    }
+
+    if( porcentajeAvance > 1) porcentajeAvance = 1;
+    porcentajeAvance = Math.trunc(porcentajeAvance * 100);
+    return porcentajeAvance; 
 }

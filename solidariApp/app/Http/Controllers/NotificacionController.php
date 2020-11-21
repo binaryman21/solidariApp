@@ -38,7 +38,6 @@ class NotificacionController extends Controller
                 $tipoNecesidad = $categoria->nombreCategoria;
                 $notificacion['tipoNecesidad'] = $tipoNecesidad;
                 $notificacion['necesidad'] = $necesidad;
-
             }
 
             return response()->json([

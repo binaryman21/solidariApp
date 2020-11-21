@@ -8,12 +8,17 @@ document.addEventListener('DOMContentLoaded', ()=>{
     if(url.length == 5 && url[4] != "" && !isNaN(url[4])){
         isLoggedIn();
         getOrganizacion(url[4],1);
-        $("#btnSuscribirse").removeClass("d-none");
-        $("#btnCalificar").removeClass("d-none");
+        // $("#btnSuscribirse").removeClass("d-none");
+        // $("#btnCalificar").removeClass("d-none");
+        // $("#editarMiPerfil").addClass("d-none");
+        $('.soloOrganizacion').addClass('d-none');
+        $('.soloVisitante').removeClass('d-none');
     }
     else if(url.length == 4 || (url.length == 5 && url[4] == "")){
         isLoggedIn(getOrganizacion);
-        $("#editarMiPerfil").removeClass("d-none");
+        // $("#editarMiPerfil").removeClass("d-none");
+        $('.soloVisitante').addClass('d-none');
+        $('.soloOrganizacion').removeClass('d-none');
     }
     else{
         window.location = "/";
@@ -53,6 +58,12 @@ document.addEventListener('DOMContentLoaded', ()=>{
     });
 
     agregarPaginacionNecesidades();
+
+    // $('.modal').on("hidden.bs.modal", function (e) { //fire on closing modal box
+    //     if ($('.modal:visible').length) { // check whether parent modal is opend after child modal close
+    //         $('body').addClass('modal-open'); // if open mean length is 1 then add a bootstrap css class to body of the page
+    //     }
+    // });
 
     //MODAL EDITAR DOMICILIO
     $("#selectProvincia").change(function(){
@@ -112,6 +123,8 @@ function getOrganizacion(idUsuario, vistaVisitante = 0){
     }
     //CARGAR NECESIDADES
     cargarNecesidades( idUsuario, vistaVisitante );
+    cargarInsignias( idUsuario );
+    cargarComentariosOrganizacion( idUsuario );
     // console.log( idUsuario );
     fetch("/getOrganizacion/"+idUsuario)
     .then(response => response.json())
@@ -227,7 +240,7 @@ function agregarTelefonoAlListado(telefono)
         </div>
         <div class="col-1 col-mb-1 mb-1">
             <a class="text-danger" id="btnEliminarTelefono${telefono.idTelefono}">
-                <i class="fas fa-trash-alt tacho"></i>
+                <i class="fas fa-trash-alt tacho d-none"></i>
             </a>
             <a class="text-primary oculto" id="btnOkEliminarTelefono${telefono.idTelefono}">
                 <i class="far fa-check-circle"></i>
@@ -294,6 +307,7 @@ function agregarTelefono(idUsuario)
             $('#numeroTelefono').val('');
             limpiarValidaciones($('#numeroTelefono'), $('.errorNroTelefono'));
             alertify.success('Telefono agregado');
+            $('.tacho').removeClass('d-none');
         });
 
 }
@@ -338,6 +352,8 @@ function guardarCambios() {
 
 
 function agregarPaginacionComentarios(){
+    $('#navComentarios').remove();
+
     $('.comentarios').after('<div id="navComentarios"></div>');
     let comentario = document.querySelectorAll('.comentario')
     let filasMostradas = 2;
@@ -346,7 +362,7 @@ function agregarPaginacionComentarios(){
     let numPaginas = filasTotales/filasMostradas;
     for(i = 0; i < numPaginas; i++) {
         let numPag = i + 1;
-        $('#navComentarios').append('<a href="JavaScript:Void(0);" rel="' + i + '">' + numPag + '</a> ');
+        $('#navComentarios').append('<a href="javascript:void(0);" rel="' + i + '">' + numPag + '</a> ');
     }
 
     $( comentario ).hide();
@@ -374,7 +390,7 @@ function agregarPaginacionNecesidades(){
     let numPaginas = filasTotales/filasMostradas;
     for(i = 0; i < numPaginas; i++) {
         let numPag = i + 1;
-        $('#navNecesidades').append('<a href="JavaScript:Void(0);" rel="' + i + '">' + numPag + '</a> ');
+        $('#navNecesidades').append('<a href="javascript:void(0);" rel="' + i + '">' + numPag + '</a> ');
     }
 
     $( necesidad ).hide();
@@ -423,7 +439,7 @@ function mostrarModalEditarNecesidad(necesidad){
         e.preventDefault();
         if(necesidad.idNecesidad != 0){
             if(validarNecesidad()) {
-                console.log(necesidad);
+                // console.log(necesidad);
                 bloquearBoton($("#btnGuardarCambiosNecesidad"));
                 updateNecesidad(necesidad);
             }
@@ -452,23 +468,26 @@ function cargarNecesidades ( idUsuario, vistaVisitante){
         .then(data => {
         // console.log( response.data );
         let necesidades = data.necesidades;
-
         let divNecesidades = $('.necesidades');
         divNecesidades.html("");
-        necesidades.forEach(necesidad => {
-
-            // console.log( necesidad );
-            if(necesidad.fechaBajaNecesidad == null){
-                divNecesidades.append(`<div class="col-md-6" id="necesidad${necesidad.idNecesidad}"></div>`);
-                if( vistaVisitante != 0){
-                    crearCardNecesidad(necesidad,idUsuario);
-                }
-                else{
+        if( necesidades.length>0){
+            necesidades.forEach(necesidad => {
+    
+                // console.log( necesidad );
+                if(necesidad.fechaBajaNecesidad == null){
+                    divNecesidades.append(`<div class="col-md-6" id="necesidad${necesidad.idNecesidad}"></div>`);
                     crearCardNecesidad(necesidad,vistaVisitante);
                 }
-            }
-
-        })
+    
+            })
+        }
+        else{
+            divNecesidades.html(
+                `<div class="col-12 my-2 text-center alert alert-secondary" role="alert">
+                    Aun no tiene necesidades.
+                </div>`
+            )
+        }
     agregarPaginacionNecesidades();
     })
 }
@@ -476,36 +495,38 @@ function cargarNecesidades ( idUsuario, vistaVisitante){
 function crearCardNecesidad(necesidad,vistaVisitante)
 {
     // console.log( vistaVisitante );
-    var btnEditarNecesidad = "";
+    let btnEditarNecesidad = "";
     if(vistaVisitante == 0){
         btnEditarNecesidad = `<p class="editarNecesidad">
         <a data-toggle="modal" href="#modalEditarNecesidad" id="editar${necesidad.idNecesidad}"><i class="far fa-edit"></i></a>
         </p>`;
     }
-    console.log( necesidad );
+    // console.log( necesidad );
 
     $("#necesidad" + necesidad.idNecesidad).html("");
+    let porcentajeAvance = calcularPorcentaje(necesidad);
     let cantColaboraciones = necesidad.colaboraciones_count;
-    if( cantColaboraciones === undefined ){
-        cantColaboraciones = 0;
-    }
-        let cardNecesidad =   `<div class="card necesidad ${necesidad.nombreCategoria.toLowerCase()}">
+    if( cantColaboraciones === undefined ) cantColaboraciones = 0;
+    
+    let cardNecesidad =   `<div class="card necesidad ${necesidad.nombreCategoria.toLowerCase()}">
         <div class="card-body">
             <div class="row">
                 <div class="col-md-6">
                     <p class="font-weight-bold">${necesidad.nombreCategoria}</p>
                     <p>${necesidad.descripcionNecesidad}</p>
-                    <p>Cantidad: ${necesidad.cantidadNecesidad}</p>
+                    <p>Cantidad solicitada: ${necesidad.cantidadNecesidad}</p>
+                    <p>Cantidad recibida: ${necesidad.cantidadRecibida}</p>
+                    <p>Cumplimiento: ${ porcentajeAvance }%</p>
+                    <div class="progress">
+                        <div class="progress-bar progress-bar-striped bg-success" role="progressbar" style="width: ${ porcentajeAvance }%" aria-valuenow="${ porcentajeAvance }" aria-valuemin="0" aria-valuemax="100"></div>
+                    </div>
                     <p>Fecha limite: ${ new Date(necesidad.fechaLimiteNecesidad).toLocaleDateString('es-AR') }</p>
                 </div>
                 <div class="col-md-6 text-right d-flex flex-column justify-content-between">
                 `+ btnEditarNecesidad + `
-                    <div class="fb-share-button" data-href='https://solidariapp.com.ar/organizacion/${vistaVisitante}/necesidad/${necesidad.idNecesidad}' data-layout="button" data-size="small"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdevelopers.facebook.com%2Fdocs%2Fplugins%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">Compartir</a></div>
+                    <div class="fb-share-button" data-href='https://solidariapp.com.ar/organizacion/${necesidad.idUsuario}/necesidad/${necesidad.idNecesidad}' data-layout="button" data-size="small"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://solidariapp.com.ar/organizacion/${necesidad.idUsuario}/necesidad/${necesidad.idNecesidad}" class="fb-xfbml-parse-ignore">Compartir</a></div>
                     <p class="ayudasRecibidas">
                         <a href="#" data-toggle="modal" data-target="#modalDetalleNecesidad" id = "btnDetalleNecesidad`+ necesidad.idNecesidad + `" ><span class="nroAyudas">`+ cantColaboraciones + `</span><i class="fas fa-user-friends"></i></a>
-                    </p>
-                    <p class="estado">
-                        <i class="fas fa-spinner"></i>
                     </p>
                 </div>
             </div>

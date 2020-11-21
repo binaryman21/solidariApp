@@ -18,26 +18,26 @@ function configModalCalificar(idRolCalificado,colaboracion,necesidad)
     );
 
     $("#usuarioCalificado").html("");
-    $("#usuarioCalificado").append(`<div class="usuario">
-
-                                <div class="alert alert-secondary" role="alert">
-                                    <div class="row align-items-center">
-                                        <div class="col-md-2">
-                                            <input type = "hidden" id = "inpIdDenunciado" value = "${colaboracion.idUsuario}">
-                                            <img class="rounded-circle imgPerfilOrg" style="height: 50px;"src="`+colaboracion.urlFotoPerfilUsuario +`" alt="imagen de usuario">
-                                        </div>
-                                        <div class="col-md-3">
-                                            <p class="lead">
-                                            `+colaboracion.nombreColaborador +` `+ colaboracion.apellidoColaborador+`
-                                            </p>
-                                        </div>
-                                        <div class="col-md-3">
-                                            <a href= "colaborador/`+colaboracion.idUsuario+`">Ver perfil</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>`);
+    $("#usuarioCalificado").append(
+        `<div class="usuario">
+            <div class="alert alert-secondary" role="alert">
+                <div class="row align-items-center">
+                    <div class="col-md-2">
+                        <input type = "hidden" id = "inpIdDenunciado" value = "${colaboracion.idUsuario}">
+                        <img class="rounded-circle imgPerfilOrg" style="height: 50px;"src="`+colaboracion.urlFotoPerfilUsuario +`" alt="imagen de usuario">
+                    </div>
+                    <div class="col-md-3">
+                        <p class="lead">
+                        `+colaboracion.nombreColaborador +` `+ colaboracion.apellidoColaborador+`
+                        </p>
+                    </div>
+                    <div class="col-md-3">
+                        <a href= "colaborador/`+colaboracion.idUsuario+`">Ver perfil</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>`);
         $("#necesidadCalificada").html("");
         $("#necesidadCalificada").append(`<div class="card necesidad ${necesidad.nombreCategoria.toLowerCase()}">
         <div class="card-body">
@@ -57,6 +57,40 @@ function configModalCalificar(idRolCalificado,colaboracion,necesidad)
         if($("input[name='radioConcretoAyuda']:checked").val() == 0 || validarCantidadRecibida( $("#cantidadRecibida"), $("#errorCantidadRecibida")))
         {
             registrarCalificacion(idRolCalificado,colaboracion.idColaboracion,colaboracion.idNecesidad);
+        }
+    });
+}
+
+//CALIFICAR A UNA ORGANIZACION
+$('#btnEnviarCalificacionOrganizacion').click(function(e){
+    e.preventDefault();
+    let idCalificado = $(location).attr('href').split("/")[4];
+    registrarCalificacionOrganizacion(idCalificado);
+    // registrarCalificacion(idRolCalificado,colaboracion.idColaboracion,colaboracion.idNecesidad);
+});
+
+function registrarCalificacionOrganizacion(idCalificado){
+    bloquearBoton($("#btnEnviarCalificacionOrganizacion"));
+    var calificacion = {
+        idCalificado,
+        idCalificante:0,
+        tratoRecibido: $("input[name='radioTratoOrg']:checked").val(),
+        comentario: $("#textoComentariosOrg").val()
+    };
+
+    // console.log( calificacion );
+    axios.post("/registrarCalificacionOrganizacion",calificacion)
+    .then((response)=>{
+        // console.log( response.data );
+        // console.log( response.data.resultado );
+        desbloquearBoton($("#btnEnviarCalificacionOrganizacion"));
+        if(response.data.resultado)
+        {
+            alertify.success(response.data.message);
+            $("#modalCalificarOrganizacion").modal("hide");
+        }
+        else{
+            alertify.error(response.data.message);
         }
 
     });
@@ -78,6 +112,8 @@ function registrarCalificacion(idRolCalificado,idColaboracion,idNecesidad)
 
     axios.post("/registrarCalificacion",calificacion)
     .then((response)=>{
+        // console.log( response.data );
+        // console.log( response.data.resultado );
         desbloquearBoton($("#btnEnviarCalificacion"));
         if(response.data.resultado)
         {
