@@ -491,13 +491,17 @@ function crearCardNecesidad(necesidad,vistaVisitante)
     if( cantColaboraciones === undefined ){
         cantColaboraciones = 0;
     }
+    let porcentajeAvance = necesidad.cantidadRecibida / necesidad.cantidadNecesidad;
+    if( porcentajeAvance>1) porcentajeAvance = 1; 
     let cardNecesidad =   `<div class="card necesidad ${necesidad.nombreCategoria.toLowerCase()}">
         <div class="card-body">
             <div class="row">
                 <div class="col-md-6">
                     <p class="font-weight-bold">${necesidad.nombreCategoria}</p>
                     <p>${necesidad.descripcionNecesidad}</p>
-                    <p>Cantidad: ${necesidad.cantidadNecesidad}</p>
+                    <p>Cantidad solicitada: ${necesidad.cantidadNecesidad}</p>
+                    <p>Cantidad recibida: ${necesidad.cantidadRecibida}</p>
+                    <p>Cumplimiento: ${porcentajeAvance}%</p>
                     <p>Fecha limite: ${ new Date(necesidad.fechaLimiteNecesidad).toLocaleDateString('es-AR') }</p>
                 </div>
                 <div class="col-md-6 text-right d-flex flex-column justify-content-between">
