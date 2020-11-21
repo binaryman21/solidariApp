@@ -16,4 +16,5 @@ class Insignia extends Model
     {
         return Insignia::All();
     }
+
 }

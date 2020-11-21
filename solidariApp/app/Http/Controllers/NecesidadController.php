@@ -139,6 +139,7 @@ class NecesidadController extends Controller
 
                 $necesidad = Necesidad::find($datosNecesidad->idNecesidad);
                 $necesidad->fechaBajaNecesidad = $fechaBaja;
+                $necesidad->estadoNecesidad = 3;
                 $necesidad->save();
 
                 return response()->json([

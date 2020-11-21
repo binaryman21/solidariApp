@@ -314,7 +314,7 @@ function agregarPaginacionListaOrganizaciones(){
     let numPaginas = filasTotales/filasMostradas;
     for(i = 0; i < numPaginas; i++) {
         let numPag = i + 1;
-        $('#navListaOrganizaciones').append('<a href="JavaScript:Void(0);" rel="' + i + '">' + numPag + '</a> ');
+        $('#navListaOrganizaciones').append('<a href="javascript:void(0);" rel="' + i + '">' + numPag + '</a> ');
     }
     $( organizacion ).hide();
     $( organizacion ).slice(0, filasMostradas).show();
@@ -357,7 +357,7 @@ function traerOrganizacion(idOrganizacion, idNecesidad){
         .then(response => response.json())
         .then(data => {
             let organizaciones = data.organizaciones;
-            console.log( organizaciones );
+            // console.log( organizaciones );
             llenarOrganizaciones( organizaciones );
         })
 }
@@ -399,7 +399,7 @@ function llenarOrganizaciones( organizaciones ){
 
                     </div>
                     <div class="card-footer py-0 bg-transparent">
-                        <button class="btn btn-sm w-100 btn-link ml-auto text-decoration-none text-muted">Ver todas</button>
+                        <a href="/organizacion/${org.idUsuario}" class="btn btn-sm w-100 btn-link ml-auto text-decoration-none text-muted">Ver todas</a>
                     </div>
                 </div>`
 

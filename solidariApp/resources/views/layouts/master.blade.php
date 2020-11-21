@@ -80,28 +80,36 @@
     </header>
     <main role="main" class="d-flex flex-shrink-0">
         @yield("contenido")
-
+        @include("../UIPerfilModales/UIModalNotificaciones")
+        @include("/UIDetalleNecesidad")
+        @include("UIPerfilModales/UIModalCalificar")
+        @include("UIPerfilModales/UIModalReportar")
     </main>
     <footer class="footer py-3 text-center text-white bg-dark mt-auto">
         <div class="container">
             <p>SolidariAPP© - 2020</p>
         </div>
     </footer>
-    <!-- JS -->
-    <script type="text/javascript" src="{{URL::asset('assets/js/master.js')}}"></script>
-    <script type="text/javascript" src="{{URL::asset('assets/js/notificacion.js')}}"></script>
-    {{-- <script type="text/javascript" src="{{URL::asset('assets/js/UIPrincipal.js')}}"></script> --}}
+   
     <!-- JQuery -->
     <script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>    <!-- Bootstrap JS -->
+    <!-- JS -->
+    <script type="text/javascript" src="{{URL::asset('assets/js/logueo.js')}}"></script>
+    <script type="text/javascript" src="{{URL::asset('assets/js/master.js')}}"></script>
+    <script type="text/javascript" src="{{URL::asset('assets/js/notificacion.js')}}"></script>
+     <!-- Utilidades -->
+   <script type="text/javascript" src="{{URL::asset('assets/js/usuario.js')}}" defer></script>
+   <script type="text/javascript" src="{{URL::asset('assets/js/utilidades.js')}}" defer></script>
+   <script type="text/javascript" src="{{URL::asset('assets/js/colaboracion.js')}}" defer></script>
+   <script type="text/javascript" src="{{URL::asset('assets/js/calificacion.js')}}" defer></script>
+   <script type="text/javascript" src="{{URL::asset('assets/js/validaciones.js')}}"></script>
+    <!-- {{-- <script type="text/javascript" src="{{URL::asset('assets/js/UIPrincipal.js')}}"></script> --}} -->
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <!-- Google JS-->
-    <script src="https://apis.google.com/js/platform.js" async defer></script>
-    <script type="text/javascript" src="{{URL::asset('assets/js/google.js')}}"></script>
-    @include("../UIPerfilModales/UIModalNotificaciones")
-    @include("/UIDetalleNecesidad")
+    <script src="https://apis.google.com/js/platform.js" async defer></script>    
     <!-- Memento -->
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/locale/es.min.js"></script>

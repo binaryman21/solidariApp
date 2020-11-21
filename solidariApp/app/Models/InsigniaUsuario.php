@@ -16,4 +16,11 @@ class InsigniaUsuario extends Model
     {
 
     }
+
+    public static function getInsignias( $idUsuario )
+    {
+        return InsigniaUsuario::where('idUsuario', '=', $idUsuario)
+        ->join('insignia', 'insignia.idInsignia', 'insigniaUsuario.idInsignia')
+        ->get();
+    }
 }

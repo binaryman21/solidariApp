@@ -34,7 +34,9 @@ function listarCategorias()
     axios.get("/listarCategoriasNecesidad")
     .then((response)=>{
         $.each(response.data.CategoriasNecesidad, function (indexInArray, categoria) {
-            $("#slctCategoria").append("<option value = '" + categoria.idCategoria + "'>" + categoria.nombreCategoria + "</option");
+            if(categoria.activo){
+                $("#slctCategoria").append("<option value = '" + categoria.idCategoria + "'>" + categoria.nombreCategoria + "</option");
+            }
         });
     });
 }

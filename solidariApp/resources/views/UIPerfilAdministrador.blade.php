@@ -57,5 +57,5 @@
 @parent
 <!-- JS -->
 <script type="text/javascript" src="{{URL::asset('assets/js/administrador.js')}}"></script>
-<script type="text/javascript" src="{{URL::asset('assets/js/logueo.js')}}"></script>
+<script src="https://apis.google.com/js/platform.js?onload=onLoad" async defer></script>
 @endsection

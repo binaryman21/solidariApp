@@ -7,11 +7,16 @@ document.addEventListener('DOMContentLoaded', () => {
      //alert(url);
      if(url.length == 5 && url[4] != "" && !isNaN(url[4])){
         isLoggedIn();
-         getColaborador(url[4],1);
+        getColaborador(url[4],1);
+        //  $("#editarMiPerfil").addClass("d-none");
+        $('.soloColaborador').addClass('d-none');
+        $('.soloVisitante').removeClass('d-none');
      }
      else if(url.length == 4 || (url.length == 5 && url[4] == "")){
         isLoggedIn(getColaborador);
-        $("#editarMiPerfil").removeClass("d-none");
+        // $("#editarMiPerfil").removeClass("d-none");
+        $('.soloVisitante').addClass('d-none');
+        $('.soloColaborador').removeClass('d-none');
      }
      else{
          window.location = "/";
@@ -20,6 +25,11 @@ document.addEventListener('DOMContentLoaded', () => {
     // listarColaboraciones();
     agregarPaginacionComentarios();
     // agregarPaginacionNecesidades();
+    // $('.modal').on("hidden.bs.modal", function (e) { //fire on closing modal box
+    //     if ($('.modal:visible').length) { // check whether parent modal is opend after child modal close
+    //         $('body').addClass('modal-open'); // if open mean length is 1 then add a bootstrap css class to body of the page
+    //     }
+    // });
 
     $("#editarMiPerfil").click(camposEditables);
     $("#guardarCambios").click(guardarCambios);
@@ -42,8 +52,8 @@ function bajaUsuario()
      axios.post("/bajaUsuario")
     .then((response)=>{
         if(response.data.resultado === 1 ){
-           console.log(response.data.message);
-
+           /*Redireccionar a pagina principal*/
+           document.location.href="/";
         }else{
             /*Ocurrio un error*/
             alert("Ocurrio un error inesperado.");
@@ -124,7 +134,9 @@ function getColaborador(idUsuario,vistaVisitante){
     });
     //getTelefonosUsuario(usuario.idUsuario);
     //getDomiciliosUsuario(usuario.idUsuario);
-
+    cargarInsignias( idUsuario );
+    cargarComentarios( idUsuario );
+    
     axios.get("/getColaborador/"+idUsuario)
     .then((response)=>{
         var colaborador = response.data.colaborador;
@@ -302,13 +314,13 @@ function agregarTelefono(idUsuario)
 function agregarPaginacionComentarios(){
     $('.comentarios').after('<div id="navComentarios"></div>');
     let comentario = document.querySelectorAll('.comentario')
-    let filasMostradas = 2;
+    let filasMostradas = 4;
     let filasTotales = comentario.length;
 
     let numPaginas = filasTotales / filasMostradas;
     for (i = 0; i < numPaginas; i++) {
         let numPag = i + 1;
-        $('#navComentarios').append('<a href="JavaScript:Void(0);" rel="' + i + '">' + numPag + '</a> ');
+        $('#navComentarios').append('<a href="javascript:void(0);" rel="' + i + '">' + numPag + '</a> ');
     }
 
     $(comentario).hide();
@@ -334,7 +346,7 @@ function agregarPaginacionNecesidades() {
     let numPaginas = filasTotales / filasMostradas;
     for (i = 0; i < numPaginas; i++) {
         let numPag = i + 1;
-        $('#navNecesidades').append('<a href="JavaScript:Void(0);" rel="' + i + '">' + numPag + '</a> ');
+        $('#navNecesidades').append('<a href="javascript:void(0);" rel="' + i + '">' + numPag + '</a> ');
     }
 
     $(necesidad).hide();
@@ -362,13 +374,22 @@ function listarColaboraciones ( idUsuario  ){
         .then(data => {
         // console.log( response.data );
         let colaboraciones = data.colaboraciones;
-
         let divNecesidades = $('.necesidades');
-        divNecesidades.html("");
-        colaboraciones.forEach(colaboracion => {
-            crearCardColaboracion( colaboracion );
-        })
-    agregarPaginacionNecesidades();
+
+        if( colaboraciones.length > 0 ){
+            divNecesidades.html("");
+            colaboraciones.forEach(colaboracion => {
+                crearCardColaboracion( colaboracion );
+            })
+            agregarPaginacionNecesidades();
+        }
+        else{
+            let mensaje = 
+            `<div class="alert alert-secondary" role="alert">
+                Aun no tiene colaboraciones.
+            </div>`
+            divNecesidades.parent().append( mensaje );
+        }
     })
 }
 
@@ -389,6 +410,7 @@ function crearCardColaboracion( colaboracion )
                     <div class="col-md-9">
                         <p class="card-text h5">${colaboracion.nombreCategoria}</p>
                         <p class="mt-2">${colaboracion.descripcionNecesidad}</p>
+                        <p class="mt-2 font-weight-bold">${colaboracion.descripcionEstadoColaboracion}</p>
                     </div>
                 </div>
                 <h5 class="card-title"><a href="/organizacion/${colaboracion.idUsuario}">${colaboracion.razonSocial}</a></h5>

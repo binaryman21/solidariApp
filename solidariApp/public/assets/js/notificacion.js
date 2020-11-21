@@ -15,7 +15,7 @@ function cargarNotificaciones(usuario){
 
 }
 function mostrarNotificaciones(notificaciones,noLeidas){
-    console.log('noLeidas '+noLeidas);
+    // console.log('noLeidas '+noLeidas);
     $("#spinnerNotif").remove();
     $("#dropNotificaciones").empty();
     $("span").remove('#badgeNotif');

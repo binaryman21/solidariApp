@@ -14,7 +14,8 @@ class CategoriaNecesidad extends Model
 
     public static function listarCategoriasNecesidad()
     {
-        return CategoriaNecesidad::All();
+        return CategoriaNecesidad::orderBy('categoriaNecesidad.idPrioridad', 'ASC')->get();
+
     }
     public static function getCategoria($idCategoria)
     {
