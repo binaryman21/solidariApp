@@ -19,7 +19,7 @@ class CalificacionController extends Controller
 
             $datos = json_decode($request->getContent());
             session_start();
-            if(UsuarioController::tienePermisoPara("calificarColaborador") || UsuarioController::tienePermisoPara("calificarOrganizacion"))
+            if(UsuarioController::tienePermisoPara("calificarColaborador"))
             {
                 $resultado = Calificacion::where('idColaboracion',$datos->idColaboracion)->where('idRolCalificado',$datos->idRolCalificado)->first();
 
@@ -39,6 +39,9 @@ class CalificacionController extends Controller
                     }
                     $necesidad = Necesidad::find($datos->idNecesidad);
                     $necesidad->cantidadRecibida += $datos->cantidadRecibida;
+                    if($necesidad->cantidadRecibida > $necesidad->cantidadNecesidad){
+                        $necesidad->estadoNecesidad = 2;
+                    }
                     $necesidad->save();
 
                     $colaboracion = Colaboracion::find($datos->idColaboracion);
@@ -95,7 +98,7 @@ class CalificacionController extends Controller
             session_start();
             $usuario = $_SESSION['usuario'];
             $datos->idCalificante = $usuario->idUsuario;
-            if(UsuarioController::tienePermisoPara("calificarColaborador") || UsuarioController::tienePermisoPara("calificarOrganizacion"))
+            if( UsuarioController::tienePermisoPara("calificarOrganizacion") )
             {
                 $resultado = CalificacionOrganizacion::where('idCalificado',$datos->idCalificado)->where('idCalificante',$datos->idCalificante)->first();
 

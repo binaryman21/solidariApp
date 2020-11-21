@@ -18,26 +18,26 @@ function configModalCalificar(idRolCalificado,colaboracion,necesidad)
     );
 
     $("#usuarioCalificado").html("");
-    $("#usuarioCalificado").append(`<div class="usuario">
-
-                                <div class="alert alert-secondary" role="alert">
-                                    <div class="row align-items-center">
-                                        <div class="col-md-2">
-                                            <input type = "hidden" id = "inpIdDenunciado" value = "${colaboracion.idUsuario}">
-                                            <img class="rounded-circle imgPerfilOrg" style="height: 50px;"src="`+colaboracion.urlFotoPerfilUsuario +`" alt="imagen de usuario">
-                                        </div>
-                                        <div class="col-md-3">
-                                            <p class="lead">
-                                            `+colaboracion.nombreColaborador +` `+ colaboracion.apellidoColaborador+`
-                                            </p>
-                                        </div>
-                                        <div class="col-md-3">
-                                            <a href= "colaborador/`+colaboracion.idUsuario+`">Ver perfil</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>`);
+    $("#usuarioCalificado").append(
+        `<div class="usuario">
+            <div class="alert alert-secondary" role="alert">
+                <div class="row align-items-center">
+                    <div class="col-md-2">
+                        <input type = "hidden" id = "inpIdDenunciado" value = "${colaboracion.idUsuario}">
+                        <img class="rounded-circle imgPerfilOrg" style="height: 50px;"src="`+colaboracion.urlFotoPerfilUsuario +`" alt="imagen de usuario">
+                    </div>
+                    <div class="col-md-3">
+                        <p class="lead">
+                        `+colaboracion.nombreColaborador +` `+ colaboracion.apellidoColaborador+`
+                        </p>
+                    </div>
+                    <div class="col-md-3">
+                        <a href= "colaborador/`+colaboracion.idUsuario+`">Ver perfil</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>`);
         $("#necesidadCalificada").html("");
         $("#necesidadCalificada").append(`<div class="card necesidad ${necesidad.nombreCategoria.toLowerCase()}">
         <div class="card-body">
@@ -78,11 +78,11 @@ function registrarCalificacionOrganizacion(idCalificado){
         comentario: $("#textoComentariosOrg").val()
     };
 
-    console.log( calificacion );
+    // console.log( calificacion );
     axios.post("/registrarCalificacionOrganizacion",calificacion)
     .then((response)=>{
-        console.log( response.data );
-        console.log( response.data.resultado );
+        // console.log( response.data );
+        // console.log( response.data.resultado );
         desbloquearBoton($("#btnEnviarCalificacionOrganizacion"));
         if(response.data.resultado)
         {

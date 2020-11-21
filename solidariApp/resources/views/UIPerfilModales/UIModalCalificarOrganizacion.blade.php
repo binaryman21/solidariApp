@@ -12,16 +12,16 @@
                 <div class="modal-body text-center">    
                     <p class="mt-4">¿Como fue el trato recibido?</p>
                     <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="radioTratoOrg" id="tratoMalo" value="1">
-                        <label class="form-check-label" for="tratoMalo"><i class="far fa-frown"></i></label>
+                        <input class="form-check-input" type="radio" name="radioTratoOrg" id="tratoMaloOrg" value="1">
+                        <label class="form-check-label" for="tratoMaloOrg"><i class="far fa-frown"></i></label>
                     </div>
                     <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="radioTratoOrg" id="tratoRegular" value="2">
-                        <label class="form-check-label" for="tratoRegular"><i class="far fa-meh"></i></label>
+                        <input class="form-check-input" type="radio" name="radioTratoOrg" id="tratoRegularOrg" value="2">
+                        <label class="form-check-label" for="tratoRegularOrg"><i class="far fa-meh"></i></label>
                     </div>
                     <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="radioTratoOrg" id="tratoBueno" value="3" checked>
-                        <label class="form-check-label" for="tratoBueno"><i class="far fa-smile-beam"></i></label>
+                        <input class="form-check-input" type="radio" name="radioTratoOrg" id="tratoBuenoOrg" value="3" checked>
+                        <label class="form-check-label" for="tratoBuenoOrg"><i class="far fa-smile-beam"></i></label>
                     </div>
                     <div class="form-group mt-4">
                         <label for="textoComentariosOrg">Comentarios</label>
