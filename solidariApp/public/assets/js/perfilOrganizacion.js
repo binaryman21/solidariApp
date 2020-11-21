@@ -1,10 +1,8 @@
 document.addEventListener('DOMContentLoaded', () => {
-    
-    //isLoggedIn hara una redireccion a / si no se esta logueado
-    isLoggedIn();
-    //Obtengo la url para saber el id de organizacion
-    var id = +location.pathname.slice('/ver-organizacion/'.length);
-    getOrganizacion(id);
+
+    //isLoggedIn redirecciona si no esta logueado. y llamara a la funcion pasandole 
+    //el id del usuario que esta en la session
+    isLoggedIn({funcionSuccess: getOrganizacion, RedirectIfNot: true});
 })
 
 function getOrganizacion(idUsuario){
@@ -26,30 +24,32 @@ function getOrganizacion(idUsuario){
         agregarModalContacto(response.data);
         cargarNecesidades(idUsuario);
     });
+
 }
 
 function cargarNecesidades ( idUsuario){
+
     fetch(`/listarNecesidades/${idUsuario}`)
     .then(response => response.json())
     .then(data => {
 
         let necesidades = data.necesidades;
-
         let divNecesidadesEnProgreso = $('#necesidadesEnProgreso');
         let divNecesidadesFinalizadas = $('#necesidadesFinalizadas');
-        necesidades.forEach(need => {
 
-            if(need.fechaBajaNecesidad == null){
+        if(necesidades != null || necesidades.length>0){
+
+            necesidades.forEach(need => {
 
                 let cardNeed = 
-                `<div class="card need ${need.nombreCategoria.toLowerCase()} ${need.fechaBajaNecesidad==null ? 'inprogress':'finished'}" id="necesidad${need.idNecesidad}" id="necesidad${need.idNecesidad}">
+                `<div class="card need ${need.nombreCategoria.toLowerCase()} ${need.fechaBajaNecesidad==null ? 'inprogress':'finished'}" id="necesidad${need.idNecesidad}">
                     <div class="card-body py-2">
                         <h6 class="card-title mb-n1">${capitalize(need.nombreCategoria)}</h6>
                         <small class="card-subtitle text-muted font-weight-light">Creada hace ${capitalize(moment(need.fechaCreacionNecesidad, "YYYY-MM-DD HH:mm:ss").startOf('day').fromNow())} - ${need.fechaBajaNecesidad==null ? 'En progreso':'Finalizado'}</small>
                         <div class="card-text mt-2 text-muted">
                             <p>${capitalize(need.descripcionNecesidad)}</p>
                             <small text-black-50>Cantidad: ${need.cantidadNecesidad}</small>
-                         </div>
+                            </div>
                     </div>
                     <div class="card-footer py-0 d-flex justify-content-between align-items-center">
                         <small class="text-muted ">Fecha limite: ${ new Date(need.fechaLimiteNecesidad).toLocaleDateString('es-AR')}</small>
@@ -59,11 +59,32 @@ function cargarNecesidades ( idUsuario){
                         </a>
                     </div>
                 </div>`;
+
                 if(need.fechaBajaNecesidad==null) divNecesidadesEnProgreso.append(cardNeed);
                 else divNecesidadesFinalizadas.append(cardNeed);
-            }
-        })
-        agregarPaginacionNecesidades();
+            })
+
+            agregarPaginacionNecesidades();
+        }
+        else divNecesidades.text('Esta organizacion no tiene necesidades publicadas');
+
+        $("#btnNuevaNecesidad").click(function(){
+
+            limpiarValidaciones($("#inpFechaLimite"),  $("#errorFechaLimite") );
+            limpiarValidaciones($("#slctCategoria"), $("#errorCategoria"));
+            limpiarValidaciones($("#inpCantidad"), $("#errorCantidad"));
+            limpiarValidaciones($("#txtDescripcion"), $("#errorDescripcion"));
+            document.getElementById("formEditarNecesidad").reset();
+            $("#modalEditarNecesidad .modal-content").removeClass($("#categoriaActual").val());
+            $("#btnGuardarCambiosNecesidad").unbind( "click" );
+            $("#btnGuardarCambiosNecesidad").click(function(e){
+                e.preventDefault();
+                if( validarNecesidad() ){
+                    bloquearBoton($("#btnGuardarCambiosNecesidad"));
+                    registrarNecesidad(idUsuario);
+                }
+            });
+        });
     })
 }
 
@@ -132,6 +153,7 @@ function agregarPaginacionNecesidades(){
         $(finalizadas).css('opacity','0.0').hide().slice(primerItem, ultimoItem).
             css('display','block').animate({opacity:1}, 300);
     });
+
 }
 
 function agregarModalContacto(contacto){

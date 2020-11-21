@@ -1,18 +1,9 @@
 document.addEventListener('DOMContentLoaded', () => {
 
-    //Obtengo la url para saber el id de organizacion
-    var url = $(location).attr('href').split("/");
-    //alert(url);
-    if(url.length == 5 && url[4] != "" && !isNaN(url[4])){
-       isLoggedIn();
-        getColaborador(url[4],1);
-    }
-    else if(url.length == 4 || (url.length == 5 && url[4] == "")){
-       isLoggedIn(getColaborador);
-    }
-    else{
-        window.location = "/";
-    }
+    //Obtengo la url para saber el id de colaborador
+    var id = +location.pathname.slice('/colaborador/'.length);
+    isLoggedIn();
+    getColaborador(id);
 })
 
 function getColaborador(idUsuario){
@@ -23,30 +14,58 @@ function getColaborador(idUsuario){
         $("#nombreColaborador").html(colaborador.nombreColaborador + " " + colaborador.apellidoColaborador);
         $("#imgPerfilColaborador").attr("src",colaborador.urlFotoPerfilUsuario);
         $("#correo").html(colaborador.emailUsuario);
-        $("#fechaAltaUsuario").html(colaborador.fechaAltaUsuario);
+        $("#fechaAltaUsuario").html(`Usuario desde el ${moment(colaborador.fechaAltaUsuario, "YYYY-MM-DD HH:mm:ss").format('LL')}`);
+        agregarContacto(response.data);
+    });
+}
 
-        $.each(response.data.domicilios, function (indexInArray, domicilio) {
+function agregarContacto(contacto){
+
+
+    $("#correo").html(contacto.colaborador.emailUsuario);
+
+    var $listaDomicilios = $('#listadoDomicilios');
+    if(contacto.domicilios && contacto.domicilios.length){
+
+        var $domiciliosFragment = $(document.createDocumentFragment());
+        $.each(contacto.domicilios, function (indexInArray, domicilio) {
 
             var piso = (domicilio.piso != '') ? `, Piso ${domicilio.piso}` : '';
             var depto = (domicilio.depto != '') ? `, Depto ${domicilio.depto}` : '';
 
-            $("#listadoDomicilios").html("");
-            $("#listadoDomicilios").append(`
+            $domiciliosFragment.append(`
                 <li class="list-group-item px-0 py-1" id="domicilio${domicilio.idDomicilio}">
                     <p class="m-1">${domicilio.calle} ${domicilio.numero}${piso}${depto}</p>
                     <p class="m-1">${domicilio.nombreLocalidad}, ${domicilio.nombreProvincia}</p>
                 </li>`
             );
         });
-        $("#listadoTelefonos").html("");
-        $.each(response.data.telefonos, function (indexInArray, telefono) {
-            $.each(response.data.telefonos, function (indexInArray, telefono) {
-                $("#listadoTelefonos").append(`
-                    <li class="list-group-item px-0 py-1" id="telefono${telefono.idTelefono}">
-                        <p class="m-1">${telefono.codAreaTelefono} - ${telefono.numeroTelefono}</p>
-                    </li>`
-                );
-            });
+
+        $listaDomicilios.html($domiciliosFragment);
+    }
+    else $listaDomicilios.html('<p class="mb-2">No hay domicilios registrados</p>');
+
+    var $listadoTelefonos = $("#listadoTelefonos");
+    if(contacto.telefonos && contacto.telefonos.length){
+
+        var $telefonosFragment = $(document.createDocumentFragment())
+        $.each(contacto.telefonos, function (indexInArray, telefono) {
+            $telefonosFragment.append(`
+                <li class="list-group-item px-0 py-1" id="telefono${telefono.idTelefono}">
+                    <p class="m-1">${telefono.codAreaTelefono} - ${telefono.numeroTelefono}</p>
+                </li>`
+            );
         });
-    });
+
+        $listadoTelefonos.html($telefonosFragment);
+    }
+    else $listadoTelefonos.html('<p class="mb-2">No hay telefonos registrados</p>');
+
+    $("#btn-contacto").toggleClass('d-none');
+}
+
+function capitalize(text){
+
+    let FirstLetterCap = text[0].toUpperCase();
+    return FirstLetterCap+text.slice(1);
 }

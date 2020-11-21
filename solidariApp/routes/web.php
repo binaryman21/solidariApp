@@ -1,7 +1,12 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Http\RedirectResponse;
 use App\Http\Controllers\ProvinciaController;
+use App\Http\Controllers\ColaboradorController;
+use App\Http\Controllers\OrganizacionController;
+use App\Http\Controllers\AdministradorController;
+use APP\Models\Usuario;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -28,11 +33,44 @@ Route::get('/colaborador', function()
 
 })->name('UIColaborador');
 
+//PERFIL DEL COLABORADOR
+Route::get('/cuenta-colaborador/perfil', function()
+{
+    session_start();
+    if(!isset($_SESSION['usuario']) || $_SESSION['usuario']->rol->nombreRol != 'colaborador')
+    {
+        return view('Error403');
+    }
+    else
+    {
+        return view('UIPerfilDeColaborador');
+    }
+
+})->name('UIColaboradorPerfil');
+
+//AJUSTES DE LA CUENTA DEL COLABORADOR
+Route::get('/cuenta-colaborador/ajustes', function()
+{
+    session_start();
+    if(!isset($_SESSION['usuario']) || $_SESSION['usuario']->rol->nombreRol != 'colaborador')
+    {
+        return view('Error403');
+    }
+    else return view('UIConfiguracionPerfilColaborador');
+
+})->name('UIOrganizacionAjustes');
+
 Route::get('/colaborador/{idUsuario}', function($idUsuario){return view('UIPerfilColaborador');})->name('UIColaboradorVisitante');
 Route::get('/organizacion/{idUsuario}', function($idUsuario){return view('UIPerfilOrganizacion');})->name('UIOrganizacionVisitante');
+
 //lo dejo de momento en otra ruta para no interferir en otras funcionalidades.
 Route::get('/ver-colaborador/{idUsuario}', function($idUsuario){return view('UIPerfilVisitanteDeColaborador');})->name('UIColaboradorVisitante');
-Route::get('/ver-organizacion/{idUsuario}', function($idUsuario){return view('UIPerfilVisitanteDeOrganizacion');})->name('UIOrganizacionVisitante');
+Route::get('/ver-organizacion/{idUsuario}', function($idUsuario){
+
+    
+    return view('UIPerfilVisitanteDeOrganizacion');
+
+})->name('UIOrganizacionVisitante');
 //Route::get('/organizacion/{idUsuario}', 'App\Http\Controllers\OrganizacionController@getOrganizacion')->name('getOrganizacion');
 Route::get('/organizacion', function()
 {
@@ -47,6 +85,30 @@ Route::get('/organizacion', function()
     }
 
 })->name('UIOrganizacion');
+
+//PERFIL DE LA CUENTA DE LA ORGANIZACION
+Route::get('/cuenta-organizacion/perfil', function()
+{
+    session_start();
+    if(!isset($_SESSION['usuario']) || $_SESSION['usuario']->rol->nombreRol != 'organizacion')
+    {
+        return view('Error403');
+    }
+    else return view('UIPerfilDeOrganizacion');
+
+})->name('UIOrganizacionPerfil');
+
+//AJUSTES DE LA CUENTA DE LA ORGANIZACIONS
+Route::get('/cuenta-organizacion/ajustes', function()
+{
+    session_start();
+    if(!isset($_SESSION['usuario']) || $_SESSION['usuario']->rol->nombreRol != 'organizacion')
+    {
+        return view('Error403');
+    }
+    else return view('UIConfiguracionPerfilOrganizacion');
+
+})->name('UIOrganizacionAjustes');
 
 Route::get('/administrador', function(){
     session_start();

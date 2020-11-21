@@ -1,5 +1,4 @@
 @extends("layouts.master")
-
 @section("contenido")
 @parent
  <!-- container -->
@@ -31,7 +30,7 @@
                             <button class="btn btn-outline-secondary border-secondary border-left-0" id="btnBuscarNeccesidades" type="button"><i class="fa fa-search fa-xs"></i></button>
                         </div>
                     </div>
-                    <div class="colaboraciones"></div>
+                    <div id="colaboraciones"></div>
                 </div>
                 <div id="navColaboraciones"></div>
             </div>
@@ -98,5 +97,6 @@
 @section('scripts')
     @parent
     <script type="text/javascript" src="{{URL::asset('assets/js/utilidades.js')}}"></script>
-    <script type="text/javascript" src="{{URL::asset('assets/js/visitanteDeColaborador.js')}}"></script>
+    <script type="text/javascript" src="{{URL::asset('assets/js/logueo.js')}}"></script> -->
+    <script type="text/javascript" src="{{URL::asset('assets/js/perfilColaborador.js')}}"></script> -->
 @endsection

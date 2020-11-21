@@ -283,7 +283,7 @@ div#filtrosCategoria:empty {
     animation: shine 1s infinite;
 }
 
-div.necesidades:empty{
+#necesidadesEnProgreso:empty, #necesidadesFinalizadas:empty{
 
     margin-top: 20px;
     width: 100%;
@@ -442,23 +442,31 @@ div.listaOrganizaciones:empty{
     }
 }
 
-#filtros{
-
-    padding-bottom: 7px;
-}
-
-@media only screen and (min-width: 900px){
-
-    #filtros{
-
-        padding-bottom: 6px;
-    }
-}
-
 @keyframes loading {
     to {
         background-position:
             100% 0, /* move highlight to right */
             100% 0;
     }
+}
+
+.custom-file-input:lang(es) ~ .custom-file-label::after {
+    content: "Elegir un archivo";
+}
+
+#necesidadeTABS.nav-tabs {
+    border-bottom: none;
+    color: #6d6d6d;
+}
+
+#necesidadeTABS .nav-link {
+    color: #6d6d6d;
+}
+
+#necesidadeTABS.nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link.active {
+    
+    font-weight: 500;
+    border-color: transparent;
+    border-bottom-color: #d0deea;
+    border-bottom-width: 4px;
 }

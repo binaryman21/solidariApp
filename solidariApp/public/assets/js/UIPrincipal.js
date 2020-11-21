@@ -369,7 +369,7 @@ function llenarOrganizaciones( organizaciones ){
                     <div class="card-header d-flex flex-row px-2 justify-content-star detalleOrganizacion align-items-center">
                         <img class="rounded-circle imgPerfilOrg" src="${org.urlFotoPerfilUsuario || 'assets/img/imgUserProfile.png'}" alt="Avatar de la org ${org.razonSocial}">
                         <div id="card-org-name" class="ml-2">
-                            <a href="organizacion/${org.idUsuario}">${org.razonSocial}</a>
+                            <a href="ver-organizacion/${org.idUsuario}">${org.razonSocial}</a>
                             <a href="#">${org.nombreTipoOrganizacion}</a>
                         </div>
                     </div>
@@ -403,8 +403,6 @@ function llenarOrganizaciones( organizaciones ){
                     $(`.btnDetalleOrg${need.idNecesidad}`).on('click', function(){
                         cargarDatosModalDetalleNecesidad(need);
                     })
-
-                    $()
                 })
 
                 cargarOrgEnMapa(org);
@@ -433,7 +431,6 @@ function cargarDatosModalDetalleNecesidad( necesidad ){
             </div>
         </div>`)
 }
-
 
 
 function listarCategoriasNecesidad() {
@@ -469,4 +466,10 @@ function llenarFiltrosDeCategoria(CategoriasNecesidad){
 
     //Evento click para los filtros por categoria
     $('#filtrosCategoria button').on('click', filtrarPorCategoria);
+}
+
+function capitalize(text){
+
+    let FirstLetterCap = text[0].toUpperCase();
+    return FirstLetterCap+text.slice(1);
 }

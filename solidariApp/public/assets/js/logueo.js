@@ -21,7 +21,7 @@ function login(datosLogin){
     });
 }
 
-function isLoggedIn(funcionSuccess)
+function isLoggedIn({funcionSuccess = undefined, RedirectIfNot = false} = {})
 {
     fetch("/isLoggedIn")
     .then(response => response.json())
@@ -33,6 +33,7 @@ function isLoggedIn(funcionSuccess)
                 funcionSuccess(data.usuario.idUsuario);
             }
         }
+        else if(RedirectIfNot) window.location = '/';
     });
 }
 
@@ -44,10 +45,12 @@ function mostrarInterfazSesionIniciada(usuario)
     $("#imgPerfil").attr("src",usuario.urlFotoPerfilUsuario);
     $("#mapa").removeClass("mapa");
     $("#mapa").addClass("mapaExtendido");
-    $("#btnVerMiPerfil").attr("href","./"+ usuario.rol.nombreRol);
+    $("#btnVerMiPerfil").attr("href", `/cuenta-${usuario.rol.nombreRol}/perfil`);
+    $("#btnAjustes").attr("href", `/cuenta-${usuario.rol.nombreRol}/ajustes`);
 }
 
 function signOut() {
+
     let auth2 = gapi.auth2.getAuthInstance();
     auth2.signOut().then(function () {
       console.log('User signed out.');
@@ -59,17 +62,17 @@ function cerrarSesion()
     signOut();
     axios.post("/logOut")
     .then((response)=>{
-        console.log( response.data );
-        // console.log('chau');
+        console.log(response.data);
         window.location= "/";
     });
 }
 
 function onLoad() {
+
     gapi.load('auth2', function() {
       gapi.auth2.init();
     });
-  }
+}
 
 function onSignIn(googleUser) {
     // Useful data for your client-side scripts:

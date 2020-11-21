@@ -1,5 +1,4 @@
 @extends("layouts.master")
-
 @section("contenido")
 @parent
  <!-- container -->
@@ -10,45 +9,57 @@
         </div>
         <div class="card-body pt-5">
             <div class="media">
-                <img id="imgPerfilColaborador" class="rounded-circle imgPerfilOrg align-self-start mr-auto" src="{{URL::asset('assets/img/imgUserProfile.png')}}" alt="imagen de usuario">
+                <img id="urlFotoPerfilOrganizacion" class="rounded-circle imgPerfilOrg align-self-start mr-auto" src="{{URL::asset('assets/img/imgUserProfile.png')}}" alt="imagen de usuario">
             </div>
-            <button class="user-action d-flex btn ml-auto p-0" type="button" data-toggle="modal" href="#modalSubscribirse" id="btnSuscribirse">Subscribirse</button>
+            <button class="user-action d-flex btn ml-auto p-0" type="button" data-toggle="modal" href="#modalSubscribirse" id="btnSuscribirse">-------</button>
             <div class="clearfix mb-n4"></div>
-            <h5 class="card-title mt-2 loading ldg-w-sm" id="nombreColaborador"></h5>
+            <h5 class="card-title mt-2 loading ldg-w-sm" id="nombreOrganizacion"></h5>
+            <h6 class="card-subtitle text-muted loading" id="tipoOrganizacion"></h6>
+            <p class="card-text mt-4 loading ldg-w-lg ldg-block" id="descripcionOrganizacion"></p>
             <small class="card-text text-muted loading" id="fechaAltaUsuario"></small>
             <button id="btn-contacto" type="button" class="btn btn-link btn-sm text-decoration-none d-none" data-toggle="modal" data-target="#contacto">Informacion de contacto</button>
         </div>
     </div>
     <div class="row mb-4">
-        <!-- Colaboraciones -->
+        <!-- necesidades -->
         <div class="col-md-6">
             <div class="card">
                 <div class="card-body">
-                    <h6 class="card-title float-left">Colaboraciones</h6>
+                    <!-- Titulo  Boton nueva necesidad-->
+                    <div class="d-flex align-items-center">
+                        <h6 class="card-title mr-auto">Necesidades</h6>
+                        <h6 class="card-title">
+                            <a class="px-2 py-1 text-decoration-none rounded" data-toggle="modal" href="#modalEditarNecesidad" id="btnNuevaNecesidad" style="background-color: aliceblue;">Nueva necesidad</a>
+                        </h6>
+                    </div>
+                    <!-- Buscador -->
                     <div class="input-group my-3">
                         <input class="form-control border-secondary border-right-0" type="text" id="campoBuscarPorTexto" placeholder="Categoría, descripción o nombre de la Org.">
                         <div class="input-group-append">
                             <button class="btn btn-outline-secondary border-secondary border-left-0" id="btnBuscarNeccesidades" type="button"><i class="fa fa-search fa-xs"></i></button>
                         </div>
                     </div>
-                    <div class="colaboraciones"></div>
+                    <!-- TABS En progreso | Finalizadas -->
+                    <ul class="nav nav-tabs" id="necesidadeTABS" role="tablist">
+                        <li class="nav-item" role="presentation">
+                            <a class="nav-link active" id="inprogress-tab" data-toggle="tab" href="#necesidadesEnProgreso" role="tab" aria-controls="En progreso" aria-selected="true">En progreso</a>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <a class="nav-link" id="finished-tab" data-toggle="tab" href="#necesidadesFinalizadas" role="tab" aria-controls="Finalizadas" aria-selected="false">Finalizadas</a>
+                        </li>
+                    </ul>
+                    <!-- Contenedor de las necesidades -->
+                    <div class="tab-content" id="misNecesidades">
+                        <div class="tab-pane fade active show" id="necesidadesEnProgreso" role="tabpanel" aria-labelledby="inprogress-tab"></div>
+                        <div class="tab-pane fade" id="necesidadesFinalizadas" role="tabpanel" aria-labelledby="finished-tab"></div>
+                    </div>
                 </div>
-                <div id="navColaboraciones"></div>
             </div>
         </div>
         <div class="col-md-6">
-            <!-- Insignias -->
-            <div class="card insignias mt-xs-4">
-                <div class="card-body">
-                    <h6 class="card-title">Insignias</h6>
-                    <div id="insignias"></div>
-                </div>
-            </div>
-
-            <!-- Calificaciones -->
             <div class="card comentarios mt-4">
                 <div class="card-body">
-                    <h6 class="card-title">Calificaciones</h6>
+                    <h6 class="card-title">Comentarios</h6>
                     <div class="card comentario">
                         <div class="card-body">
                             <h5 class="card-title d-flex justify-content-between"> <span class="tituloComentario">Gran ayuda</span> <span class="fechaComentario">15/07/2020</span></h5>
@@ -91,12 +102,13 @@
   </div>
 </div>
 
-@include("UIPerfilModales/UIModalReportar")
-@include("UIPerfilModales/UIModalSubscribirse")
+@include("UIPerfilModales.UIModalEditarNecesidad")
+@include("UIPerfilModales.UIModalBajaNecesidad")
 @endsection
 
 @section('scripts')
     @parent
     <script type="text/javascript" src="{{URL::asset('assets/js/utilidades.js')}}"></script>
-    <script type="text/javascript" src="{{URL::asset('assets/js/visitanteDeColaborador.js')}}"></script>
+    <script type="text/javascript" src="{{URL::asset('assets/js/necesidades.js')}}"></script>
+    <script type="text/javascript" src="{{URL::asset('assets/js/perfilOrganizacion.js')}}"></script>
 @endsection
