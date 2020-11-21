@@ -5,17 +5,16 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Calificacion extends Model
+class CalificacionOrganizacion extends Model
 {
-    protected $table = 'calificacion';
+    protected $table = 'calificacionOrganizacion';
     protected $primaryKey = 'idCalificacion';
     public $timestamps = false;
     use HasFactory;
 
     public static function getCalificaciones( $idUsuario )
     {
-        return Calificacion::where('colaboraciones.idColaborador', '=', $idUsuario)
-        ->join('colaboraciones', 'calificacion.idColaboracion', 'colaboraciones.idColaboracion')
+        return CalificacionOrganizacion::where('idCalificado', '=', $idUsuario)
         ->get();
     }
 }

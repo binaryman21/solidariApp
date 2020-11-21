@@ -21,6 +21,7 @@ function login(datosLogin){
     });
 }
 
+//puse un indicador para que isLoggedIn se encargue de la redireccion si se lo indica
 function isLoggedIn({funcionSuccess = undefined, RedirectIfNot = false} = {})
 {
     fetch("/isLoggedIn")
@@ -46,7 +47,13 @@ function mostrarInterfazSesionIniciada(usuario)
     $("#mapa").removeClass("mapa");
     $("#mapa").addClass("mapaExtendido");
     $("#btnVerMiPerfil").attr("href", `/cuenta-${usuario.rol.nombreRol}/perfil`);
+    //asi estaba antes en las rutas que defini uso "/cuenta-rol/perfil", ademas "./"
+    // concatenaria el path acutal con el que este en un href y si estas en tu perfil
+    // y pulsas en  "tu perfil" devuevo iria a "/orgaizacion/organizacion" por ejemplo
+    //dejo comentado lo anterio igual -> $("#btnVerMiPerfil").attr("href","./"+ usuario.rol.nombreRol);
     $("#btnAjustes").attr("href", `/cuenta-${usuario.rol.nombreRol}/ajustes`);
+    $("#notificaciones").removeClass("d-none");
+    cargarNotificaciones(usuario);
 }
 
 function signOut() {
@@ -123,4 +130,7 @@ function onSignIn(googleUser) {
         }
     });
 
+
 }
+
+

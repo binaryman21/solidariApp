@@ -173,11 +173,23 @@ class OrganizacionController extends Controller
     public function getOrganizaciones(){
 
         $organizaciones = Organizacion::getOrganizaciones();
-
+        
         foreach( $organizaciones as $organizacion ){
             $organizacion['necesidades'] = Necesidad::listarNecesidadesPantallaPrincipal( $organizacion->idUsuario );
         }
+        
+        return json_encode([
+            'organizaciones' => $organizaciones
+        ]);
+    }
 
+    //Traerme la organizacion del link
+    public function traerOrganizacion($idOrganizacion, $idNecesidad){
+
+        $organizaciones = Organizacion::traerOrganizacion($idOrganizacion);
+        foreach( $organizaciones as $organizacion ){
+            $organizacion['necesidades'] = Necesidad::traerNecesidad($idNecesidad);
+        }
         return json_encode([
             'organizaciones' => $organizaciones
         ]);

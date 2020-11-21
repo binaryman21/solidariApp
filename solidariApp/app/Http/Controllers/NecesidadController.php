@@ -83,9 +83,15 @@ class NecesidadController extends Controller
         ]);
     }
 
+    public function necesidad($idOrganizacion, $idNecesidad)
+    {
+        // $necesidad = Necesidad::getNecesidad($idNecesidad);
+        // return view('UIPrincipal')->with('idNecesidad',$idNecesidad);
+        return view('UIPrincipal', compact('idOrganizacion','idNecesidad'));
+    }
+
     public function updateNecesidad(Request $request)
     {
-
         try
         {
             if(UsuarioController::tienePermisoPara("editarNecesidad"))
@@ -133,6 +139,7 @@ class NecesidadController extends Controller
 
                 $necesidad = Necesidad::find($datosNecesidad->idNecesidad);
                 $necesidad->fechaBajaNecesidad = $fechaBaja;
+                $necesidad->estadoNecesidad = 3;
                 $necesidad->save();
 
                 return response()->json([

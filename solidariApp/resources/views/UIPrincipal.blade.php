@@ -11,6 +11,8 @@
     crossorigin=""/>
 @endsection
 @section("contenido")
+    <div id="necesidadOculta" class="d-none">{{$idNecesidad}}</div>
+    <div id="organizacionOculta" class="d-none">{{$idOrganizacion}}</div>
     <div class="container-fluid px-sm-3 px-lg-5">
         <div class="row bg-white rounded justify-content-lg-center pb-3">
             <div class="col-xs-12 col-sm-4 col-lg-3 p-sm-1 p-md-2 mr-n3">
@@ -69,7 +71,7 @@
 
     @include("UIPrincipalRegistroGoogle")
     @include("UIPrincipalRegistro")
-    @include("UIDetalleNecesidad")
+    <!-- {{-- @include("UIDetalleNecesidad") --}} -->
     @include("UIPrincipalResultadoRegistro")
     @include("UIPrincipalModalOrganizaciones")
 @endsection
@@ -87,7 +89,7 @@
     <script type="text/javascript" src="{{URL::asset('assets/js/utilidades.js')}}" defer></script>
     <script type="text/javascript" src="{{URL::asset('assets/js/UIPrincipal.js')}}"></script>
     <script type="text/javascript" src="{{URL::asset('assets/js/colaboracion.js')}}"></script>
-    <script src="https://unpkg.com/axios/dist/axios.min.js" defer></script>
+    <!-- <script src="https://unpkg.com/axios/dist/axios.min.js" defer></script> -->
     <!-- Validaciones -->
     <script type="text/javascript" src="{{URL::asset('assets/js/validaciones.js')}}" defer></script>
 @endsection

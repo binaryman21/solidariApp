@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Usuario;
+use Illuminate\Support\Facades\Redirect;
 
 class UsuarioController extends Controller
 {
@@ -51,28 +52,24 @@ class UsuarioController extends Controller
     /*Dar de baja al usuario logeado*/
     public function bajaUsuario()
     {
+       
         try
         {
             session_start();
             if(isset($_SESSION['usuario'])){
                 /*Busco el ID del usuario logeado*/
-                $usuarioLogoeado = $_SESSION['usuario'];
-                Usuario::bajaUser($usuarioLogoeado->idUsuario);
-                /*Log out */
-                unset($_SESSION['usuario']);
                 $usuarioLogueado = $_SESSION['usuario'];
                 Usuario::bajaUser($usuarioLogueado->idUsuario);
-
+                unset($_SESSION['usuario']);
             }
-            /*Redirecciono a pagina de inicio*/
-            return redirect()->route('UIPrincipal');
-
-            /*
+            
             return response()->json([
                 'resultado' => 1,
                 'message' => 'ejecucion exitosa'
-            ]);*/
+            ]);
         }
+
+
         catch (\Exception $e)
         {
             return response()->json([
@@ -80,6 +77,9 @@ class UsuarioController extends Controller
                 'message' => $e->getMessage()
             ]);
         }
+
+
+
 
     }
 
@@ -111,12 +111,16 @@ class UsuarioController extends Controller
                 Usuario::updateFotoPerfil($usuarioLogueado->idUsuario,$urlFotoPerfil);
             }
 
-            return redirect()->route('UIColaborador');
-            /*
-            return response()->json([
-                'resultado' => 1,
-                'message' => 'ejecucion exitosa'
-            ]);*/
+            /**Si es un colaborador, vuelvo a UIColaborador  */
+            if($usuarioLogueado->idRolUsuario == '1'){
+              return redirect()->route('UIColaborador');
+            }
+
+            /**Si es un Organizacion, vuelvo a UIOrganizacion  */
+            if($usuarioLogueado->idRolUsuario == '2'){
+                return redirect()->route('UIOrganizacion');
+            }
+
         }
 
 

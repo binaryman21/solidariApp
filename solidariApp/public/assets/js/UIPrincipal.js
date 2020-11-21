@@ -1,20 +1,31 @@
-getOrganizaciones();
 isLoggedIn();
 
 $( document ).ready(function() {
 
-    $(function() {
+    
+    if( $('#necesidadOculta').text() == '' && $('#organizacionOculta').text() == ''  ){
+        getOrganizaciones();
+    }
+    else{
+        let idOrganizacion = $('#organizacionOculta').text();
+        let idNecesidad = $('#necesidadOculta').text();
+        traerOrganizacion( idOrganizacion, idNecesidad );
+    }
+    // $(function() {
         $(document).on('click', '.alert-close', function() {
             $(this).parent().hide();
         })
-     });
+    //  });
 
     listarProvincias(1);
     listarTiposOrganizaciones();
     listarCategoriasNecesidad();
     // agregarPaginacionUsuarios();
-
     // EVENTOS
+    $(document).on('click', '.alert-close', function() {
+        $(this).parent().hide();
+    })
+    
     $("#btnRegistrarseComoOrganizacion").on('click', mostrarRegistrarseComoOrganizacion);
     $("#btnRegistrarseComoColaborador").on('click', mostrarRegistrarseComoColaborador);
 
@@ -303,7 +314,7 @@ function agregarPaginacionListaOrganizaciones(){
     let numPaginas = filasTotales/filasMostradas;
     for(i = 0; i < numPaginas; i++) {
         let numPag = i + 1;
-        $('#navListaOrganizaciones').append('<a href="JavaScript:Void(0);" rel="' + i + '">' + numPag + '</a> ');
+        $('#navListaOrganizaciones').append('<a href="javascript:void(0);" rel="' + i + '">' + numPag + '</a> ');
     }
     $( organizacion ).hide();
     $( organizacion ).slice(0, filasMostradas).show();
@@ -336,6 +347,17 @@ function getOrganizaciones(){
         .then(response => response.json())
         .then(data => {
             let organizaciones = data.organizaciones;
+            llenarOrganizaciones( organizaciones );
+        })
+}
+
+//TRAER LA ORGANIZACION DEL LINK
+function traerOrganizacion(idOrganizacion, idNecesidad){
+    fetch(`/traerOrganizacion/${idOrganizacion}/${idNecesidad}`)
+        .then(response => response.json())
+        .then(data => {
+            let organizaciones = data.organizaciones;
+            // console.log( organizaciones );
             llenarOrganizaciones( organizaciones );
         })
 }
@@ -377,7 +399,7 @@ function llenarOrganizaciones( organizaciones ){
 
                     </div>
                     <div class="card-footer py-0 bg-transparent">
-                        <button class="btn btn-sm w-100 btn-link ml-auto text-decoration-none text-muted">Ver todas</button>
+                        <a href="/organizacion/${org.idUsuario}" class="btn btn-sm w-100 btn-link ml-auto text-decoration-none text-muted">Ver todas</a>
                     </div>
                 </div>`
 
@@ -452,7 +474,7 @@ function llenarFiltrosDeCategoria(CategoriasNecesidad){
 
         if(category.activo){
 
-            let btnCateogoryTemplate = 
+            let btnCateogoryTemplate =
             `<button class="dropdown-item" title="${category.nombreCategoria}" type="button">
                 <span>${category.nombreCategoria}</span>
             </button>`
