@@ -33,8 +33,8 @@ class NotificacionController extends Controller
                     $notificacion['emisor'] = $organizacion;
                 }
                 if($notificacion->leido == '0') $noLeidas++;
-                //SI ES DE TIPO 1 TIENE NECECEISDADES
-                if($notificacion->idMensaje == 1){
+                //SI ES DE TIPO 1 o 5 TIENE NECECEISDADES
+                if($notificacion->idMensaje == 1 || $notificacion->idMensaje == 5){
                     $necesidad = Necesidad::getNecesidad($notificacion->idNecesidad);
                     $categoria = CategoriaNecesidad::getCategoria($necesidad->idCategoriaNecesidad);
                     $tipoNecesidad = $categoria->nombreCategoria;

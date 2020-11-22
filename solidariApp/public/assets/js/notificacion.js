@@ -25,6 +25,7 @@ function mostrarNotificaciones(notificaciones,noLeidas){
     }
 
     notificaciones.forEach(notificacion => {
+        // console.log(  notificacion );
         //INDIFERENTE PARA CUALQUIER NOTIFICACION
         let fecha = new Date(notificacion.fechaNotificacion).toLocaleDateString('es-AR')
         let nombre;
@@ -96,6 +97,33 @@ function mostrarNotificaciones(notificaciones,noLeidas){
                 </div>
             </div>`
         }
+        // NOTIFICACIONES EXCLUSIVAS PARA CUANDO UNA ORGANIZACION CREA UNA NECESIDAD
+        else if(notificacion.idMensaje == 5){
+            let nombreCategoria = notificacion.tipoNecesidad;
+            let necesidad = notificacion.necesidad;
+            necesidad["nombreCategoria"] = nombreCategoria;
+           
+            cardNotificacion = `
+            <div class="container border-top sombra  p-2">
+                <div>
+                    <div class="d-flex flex-row">
+                        <div>
+                            <img class="rounded-circle imgPerfilOrg" src="${img}" alt="">
+                        </div>
+                        <div class="card-text align-self-center mx-2 w-100">
+                            <div class="d-flex">
+                                <p>${fecha}</p>
+                                ${checkNoLeida}
+                            </div>
+                            <a class="font-weight-bold text-dark text-decoration-none notificacionEmisor${notificacion.idNotificacion} " href="/organizacion/${notificacion.idEmisor}">${nombre}</a>
+                            <div class="d-flex flex-wrap">
+                            <p>${msj} <a class="font-weight-bold text-dark text-decoration-none notificacionVerNecesidad${notificacion.idNotificacion}" href="#modalDetalleNecesidad" data-toggle="modal">necesidad</a></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>`
+        }
         
         //INDIFERENTE PARA CUALQUIER NOTIFICACION
         if(notificacion.leido == '1') checkNoLeida = `<svg width="2em" height="2em" viewBox="0 0 16 16" class="bi bi-check ml-auto text-success" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
@@ -105,10 +133,13 @@ function mostrarNotificaciones(notificaciones,noLeidas){
         
         $("#dropNotificaciones").append(cardNotificacion);
 
-        if( notificacion.idMensaje == 1 ){
+        if( notificacion.idMensaje == 1 || notificacion.idMensaje == 5 ){
             let necesidad = notificacion.necesidad;
             $(`.notificacionVerNecesidad${notificacion.idNotificacion}`).on('click',function(){
-                cargarDatosModalDetalleNecesidad(necesidad, "organizacion");
+                if(notificacion.idMensaje == 1 )
+                    cargarDatosModalDetalleNecesidad(necesidad, "organizacion");
+                else
+                    cargarDatosModalDetalleNecesidad(necesidad);
                 $('#modalNotificaciones').modal('hide');
             })
         }

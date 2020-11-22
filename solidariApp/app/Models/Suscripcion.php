@@ -12,7 +12,8 @@ class Suscripcion extends Model
     protected $primaryKey = 'idSuscripcion';
     public $timestamps = false;
 
-    public static function listarSuscripciones(){
-        return Suscripcion::All();
+    public static function getSuscriptores( $idOrganizacion ){
+        return Suscripcion::where('idOrganizacion', $idOrganizacion)
+        ->get();
     }
 }

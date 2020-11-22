@@ -79,4 +79,12 @@ class SuscripcionController extends Controller
         }
     }
 
+    public function getSuscriptores($idOrganizacion)
+    {
+        return response()->json([
+            'suscriptores' => Suscripcion::getSuscriptores($idOrganizacion)
+        ]);
+    }
+    
+
 }

@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\CategoriaNecesidad;
 use Illuminate\Http\Request;
 use App\Models\Necesidad;
+use App\Models\Suscripcion;
+use App\Models\Notificacion;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Carbon;
 
 class NecesidadController extends Controller
@@ -13,9 +16,11 @@ class NecesidadController extends Controller
     {
         try
         {
+            session_start();
             if(UsuarioController::tienePermisoPara("registrarNecesidad"))
             {
                 $datosNecesidad = json_decode($request->getContent());
+                DB::beginTransaction();
                 $necesidad = new Necesidad;
                 $necesidad->descripcionNecesidad = $datosNecesidad ->descripcionNecesidad;
                 $necesidad->cantidadNecesidad = $datosNecesidad ->cantidadNecesidad;
@@ -23,6 +28,20 @@ class NecesidadController extends Controller
                 $necesidad->idCategoriaNecesidad = $datosNecesidad ->idCategoria;
                 $necesidad->idUsuario = $datosNecesidad ->idUsuario;
                 $necesidad->save();
+
+                $suscriptores = Suscripcion::getSuscriptores( $_SESSION['usuario']->idUsuario );
+
+                foreach ($suscriptores as $suscriptor){
+                    $notificacion = new Notificacion;
+                    $notificacion->idMensaje = "5";
+                    $notificacion->idEmisor = $_SESSION['usuario']->idUsuario;
+                    $notificacion->idReceptor = $suscriptor->idColaborador;
+                    $notificacion->idNecesidad = $necesidad->idNecesidad;
+                    $notificacion->save();
+                }
+
+                DB::commit();
+
                 return response()->json([
                     'resultado' => 1,
                     'message' => 'registro exitoso',

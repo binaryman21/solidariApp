@@ -158,6 +158,7 @@ Route::get('/getInsignias/{idUsuario}', 'App\Http\Controllers\InsigniaUsuarioCon
 
 //SUSCRIPCION
 Route::post('/registrarSuscripcion', 'App\Http\Controllers\SuscripcionController@registrarSuscripcion')->name('registrarSuscripcion');
+Route::get('/getSuscriptores/{idOrganizacion}', 'App\Http\Controllers\SuscripcionController@getSuscriptores')->name('getSuscriptores');
 
 
 
