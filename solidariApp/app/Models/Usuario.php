@@ -16,10 +16,17 @@ class Usuario extends Model
         $email = $datosLogin->email;
         $pass = $datosLogin->pass;
         $idGoogle = $datosLogin->idGoogle;
-        $usuario = Usuario::with('rol.permisos')->where('emailUsuario', $email)->where('claveUsuario',$pass)->first();
+        $usuario = Usuario::with('rol.permisos')
+                            ->where('emailUsuario', $email)
+                            ->where('claveUsuario',$pass)
+                            ->where('idEstadoUsuario',1)
+                            ->first();
         if($idGoogle != 0)
         {
-            $usuario = Usuario::with('rol.permisos')->where('emailUsuario', $email)->where('tokenGoogle',$idGoogle)->first();
+            $usuario = Usuario::with('rol.permisos')
+                                ->where('emailUsuario', $email)->where('tokenGoogle',$idGoogle)
+                                ->where('idEstadoUsuario',1)
+                                ->first();
         }
 
         return $usuario;
@@ -30,23 +37,25 @@ class Usuario extends Model
         if( $usuario[0]->rol->idRol == '1' ){
             $usuario['nombre'] = 
             // Usuario::select('colaborador.nombreColaborador as nombre' , 'colaborador.apellidoColaborador as apellido')
-            Usuario::select(Usuario::raw("CONCAT(colaborador.nombreColaborador, \" \",colaborador.apellidoColaborador) AS nombre"))
-                                ->join('colaborador', 'usuario.idUsuario', 'colaborador.idUsuario')
-                                ->where('usuario.idUsuario', $idUsuario)
-                                ->get();
+                Usuario::select(Usuario::raw("CONCAT(colaborador.nombreColaborador, \" \",colaborador.apellidoColaborador) AS nombre"))
+                ->join('colaborador', 'usuario.idUsuario', 'colaborador.idUsuario')
+                ->where('usuario.idUsuario', $idUsuario)
+                ->get();
         }
         else{
-            $usuario['nombre'] = Usuario::select('organizacion.razonSocial as nombre')
-                                ->join('organizacion', 'usuario.idUsuario', 'organizacion.idUsuario')
-                                ->where('usuario.idUsuario', $idUsuario)
-                                ->get();
+            $usuario['nombre'] = 
+                Usuario::select('organizacion.razonSocial as nombre')
+                ->join('organizacion', 'usuario.idUsuario', 'organizacion.idUsuario')
+                ->where('usuario.idUsuario', $idUsuario)
+                ->get();
         }
         return $usuario;
     }
 
     public static function isUser($email){
-        /*TODO: agregar condicion: idEstadoUsuario = 1 */
-        return Usuario::where('emailUsuario',$email)->exists();
+        return Usuario::where('emailUsuario',$email)
+                        ->where('idEstadoUsuario',1)
+                        ->exists();
 
     }
 
@@ -66,9 +75,6 @@ class Usuario extends Model
       /*Seteo idEstadoUsuario en 2 */
       Usuario::where('idUsuario', $idUsuario)->update(array('idEstadoUsuario' => '2'));
 
-      /*TODO: Si el usuario es de tipo Organizacion tengo que setear
-      todas sus necesidades como resueltas*/
-
     }
 
     //bloquear usuario por denuncia
@@ -83,17 +89,19 @@ class Usuario extends Model
         Usuario::where('idUsuario', $idUsuario)->update(array('urlFotoPerfilUsuario' => $urlFotoPerfil));
     }
 
-    // public static function getUsuario($idUsuario)
-    // {
-    //     Usuario::find($idUsuario);
-    // }
-
     public static function cambiarClave( $datosClaves )
     {
         Usuario::where('idUsuario', $datosClaves->idUsuario)
             ->update(['claveUsuario'=>$datosClaves->claveNueva]);
     }
 
+    public static function comprobarClave( $datosClaves )
+    {
+        return Usuario::where('idUsuario', $datosClaves->idUsuario )
+                ->where('claveUsuario', $datosClaves->claveVieja )
+                // ->get();
+                ->count();
+    }
 }
 
 

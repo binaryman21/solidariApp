@@ -93,6 +93,12 @@ class Necesidad extends Model
         ->first();
     }
 
+    public static function completarNecesidades($idUsuario)
+    {
+        return Necesidad::where('idUsuario',$idUsuario)
+                        ->update(['estadoNecesidad'=>'3']);
+    }
+
     public function categoria()
     {
         return $this->belongsTo('App\Models\CategoriaNecesidad','idCategoriaNecesidad','idCategoria');

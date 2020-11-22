@@ -161,4 +161,4 @@ Route::post('/registrarSuscripcion', 'App\Http\Controllers\SuscripcionController
 Route::get('/getSuscriptores/{idOrganizacion}', 'App\Http\Controllers\SuscripcionController@getSuscriptores')->name('getSuscriptores');
 
 
-
+?>
