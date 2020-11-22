@@ -33,11 +33,14 @@ class NotificacionController extends Controller
                     $notificacion['emisor'] = $organizacion;
                 }
                 if($notificacion->leido == '0') $noLeidas++;
-                $necesidad = Necesidad::getNecesidad($notificacion->idNecesidad);
-                $categoria = CategoriaNecesidad::getCategoria($necesidad->idCategoriaNecesidad);
-                $tipoNecesidad = $categoria->nombreCategoria;
-                $notificacion['tipoNecesidad'] = $tipoNecesidad;
-                $notificacion['necesidad'] = $necesidad;
+                //SI ES DE TIPO 1 TIENE NECECEISDADES
+                if($notificacion->idMensaje == 1){
+                    $necesidad = Necesidad::getNecesidad($notificacion->idNecesidad);
+                    $categoria = CategoriaNecesidad::getCategoria($necesidad->idCategoriaNecesidad);
+                    $tipoNecesidad = $categoria->nombreCategoria;
+                    $notificacion['tipoNecesidad'] = $tipoNecesidad;
+                    $notificacion['necesidad'] = $necesidad;
+                }
             }
 
             return response()->json([

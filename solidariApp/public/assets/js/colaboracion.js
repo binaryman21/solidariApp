@@ -1,5 +1,6 @@
 function cargarDatosModalDetalleNecesidad( necesidad, modo = "colaborador")
 {
+    console.log( necesidad );
     let porcentajeAvance = calcularPorcentaje( necesidad );
         $('.detalleNecesidadModal').html(
         `<div class="card necesidad ${necesidad.nombreCategoria.toLowerCase()}">

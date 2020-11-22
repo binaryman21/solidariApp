@@ -8,7 +8,7 @@ function suscribirse( e ){
         idColaborador: 0,
         idOrganizacion: $(location).attr('href').split("/")[4],
     }
-    console.log( datosSuscripcion );
+    // console.log( datosSuscripcion );
     axios.post("/registrarSuscripcion",datosSuscripcion)
     .then((response)=>{
         if ( response.data.resultado ){
