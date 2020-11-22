@@ -26,6 +26,9 @@ function cargarDatosModalDetalleNecesidad( necesidad, modo = "colaborador")
         {
             $("#btnColaborar").addClass("d-none");
             getColaboraciones(necesidad,"organizacion");
+            $("#inputBuscarColaboraciones input").keyup(function(){
+                buscarColaboradoresEnNecesidad();
+            })
         }
         else{
             getColaboraciones(necesidad);

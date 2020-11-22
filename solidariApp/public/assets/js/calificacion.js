@@ -88,6 +88,7 @@ function registrarCalificacionOrganizacion(idCalificado){
         {
             alertify.success(response.data.message);
             $("#modalCalificarOrganizacion").modal("hide");
+            crearNotificacionCalificacionOrganizacion(calificacion)
         }
         else{
             alertify.error(response.data.message);
@@ -119,6 +120,8 @@ function registrarCalificacion(idRolCalificado,idColaboracion,idNecesidad)
         {
             alertify.success(response.data.message);
             $("#modalCalificar").modal("hide");
+            crearNotificacionCalificacionColaboracion(idColaboracion);
+
         }
         else{
             alertify.error(response.data.message);

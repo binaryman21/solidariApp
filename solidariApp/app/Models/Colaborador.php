@@ -11,6 +11,7 @@ class Colaborador extends Model
     protected $table = 'colaborador';
     protected $primaryKey = 'idUsuario';
     public $timestamps = false;
+
     static function getColaborador($idUsuario)
     {
         return Colaborador::join('usuario', 'colaborador.idUsuario', '=', 'usuario.idUsuario')

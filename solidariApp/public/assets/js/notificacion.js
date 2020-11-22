@@ -126,3 +126,33 @@ function crearNotificacionColaboracion(necesidad){
         }
     });
 }
+
+function crearNotificacionCalificacionColaboracion(idColaboracion){
+    JSON.stringify(idColaboracion);
+    axios.post("/crearNotificacionCalificacionColaboracion",idColaboracion)
+    .then((response)=>{
+        if(response.data.resultado){
+            console.log('resultNotifCalificacion '+response.data.resultado);
+
+        }else{
+            alertify.error(response.data.resultado);
+            console.log('resultNotifCalificacion '+response.data.resultado+'\n msj: '+response.data.message);
+
+        }
+    });
+}
+
+function crearNotificacionCalificacionOrganizacion(calificacion){
+    JSON.stringify(calificacion);
+    axios.post("/crearNotificacionCalificacionColaboracion",calificacion)
+    .then((response)=>{
+        if(response.data.resultado){
+            console.log('resultNotifCalificacion '+response.data.resultado);
+
+        }else{
+            alertify.error(response.data.resultado);
+            console.log('resultNotifCalificacion '+response.data.resultado+'\n msj: '+response.data.message);
+
+        }
+    });
+}
