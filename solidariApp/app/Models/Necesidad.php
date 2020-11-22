@@ -86,7 +86,9 @@ class Necesidad extends Model
 
     public static function getNecesidad($idNecesidad)
     {
-        return Necesidad::find($idNecesidad);
+        return Necesidad::find($idNecesidad)
+        ->join('estadoNecesidad', 'estadoNecesidad.idEstadoNecesidad', '=', 'necesidad.estadoNecesidad')    
+        ->first();
     }
 
     public function categoria()

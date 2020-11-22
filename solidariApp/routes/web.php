@@ -156,6 +156,8 @@ Route::get('/getCalificacionesOrganizacion/{idUsuario}', 'App\Http\Controllers\C
 Route::get('/getInsignias/{idUsuario}', 'App\Http\Controllers\InsigniaUsuarioController@getInsignias')->name('getInsignias');
 
 
+//SUSCRIPCION
+Route::post('/registrarSuscripcion', 'App\Http\Controllers\SuscripcionController@registrarSuscripcion')->name('registrarSuscripcion');
 
 
 

@@ -43,7 +43,7 @@
             <div class="col-md-2">
                 <button class="btn btn-block btn-primary btn-sm soloOrganizacion" type="button" id="editarMiPerfil">Editar <i class="far fa-edit"></i> </button>
                 <button class="btn btn-block btn-primary d-none btn-sm" type="button" id="guardarCambios">Guardar Cambios</button>
-                <button class="btn btn-block btn-success d-none soloVisitante" type="button" data-toggle="modal" href="#modalSubscribirse" id = "btnSuscribirse">Subscribirse</button>
+                <button class="btn btn-block btn-success d-none soloVisitante" type="button" data-toggle="modal" href="#modalSuscribirse" id = "btnSuscribirse">Suscribirse</button>
                 <button class="btn btn-block btn-primary d-none soloVisitante" type="button" data-toggle="modal" href="#modalCalificarOrganizacion"  id = "btnCalificar">Calificar</button>
             </div>
         </div>
@@ -164,6 +164,7 @@
 @include("UIPerfilModales/UIEditarDomicilio")
 @include("UIPerfilModales/UIModalBajaNecesidad")
 @include("UIPerfilModales/UIModalCalificarOrganizacion")
+@include("UIPerfilModales/UIModalSuscribirse")
 <!-- {{-- @include("UIDetalleNecesidad") --}} -->
 
 @endsection
@@ -172,6 +173,7 @@
 <!-- scripts -->
 <script type="text/javascript" src="{{URL::asset('assets/js/organizacion.js')}}"></script>
 <script type="text/javascript" src="{{URL::asset('assets/js/necesidad.js')}}"></script>
+<script type="text/javascript" src="{{URL::asset('assets/js/suscripcion.js')}}"></script>
 <!-- <script type="text/javascript" src="{{URL::asset('assets/js/calificacion.js')}}"></script> -->
 <!-- <script type="text/javascript" src="{{URL::asset('assets/js/colaboracion.js')}}"></script> -->
 <!-- <script type="text/javascript" src="{{URL::asset('assets/js/validaciones.js')}}"></script> -->

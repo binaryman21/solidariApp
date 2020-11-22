@@ -257,7 +257,7 @@ function llenarInsignias( insignias ){
         let icono = document.createElement('i');
         $(icono).addClass( insignia.icono );
         $(icono).attr('title', insignia.descripcionInsignia);
-        console.log( icono );
+        // console.log( icono );
         divInsignias.append(icono);
     });
 }
