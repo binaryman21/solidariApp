@@ -1,7 +1,72 @@
 $(document).ready(function(){
+    //Evento click del boton ingresar en el navbar
+    $("#btnIngresar").click(function(){
+        limpiarCamposLogin();
+        $("#modoRegistro").val("ingresar"); //seteo el modalLogin en "ingreso"
+        $("#btnLogin").html("Ingresar"); //cambio el nombre del boton del modalLogin a "ingresar"
+        $("#tituloModalLogin").html("Ingresar a solidariApp"); //Seteo el titulo del modalLogin
+    });
+    //evento click del boton del modalLogin
+    $("#btnLogin").click(clickBtnLogin);
+
     //evento click en el boton de cerrar sesion
     $("#btnCerrarSesion").click(cerrarSesion);
 });
+
+//Codigo que se ejecuta al clickear el boton del modalLogin
+function clickBtnLogin()
+{
+    //Deshabilito el boton y muestro el spinner
+    $("#btnLogin").html("<span id = 'spinnerBtnLogin' class='spinner-border spinner-border-sm' role='status' aria-hidden='true'></span>Un momento...");
+    $("#btnLogin").attr("disabled", true);
+
+    //Si el modoRegistro es "ingresar"
+    if($("#modoRegistro").val() == "ingresar")
+    {
+        if( validarLogin() ){
+            var datosLogin = {
+                email: $("#emailUsuario").val(),
+                idGoogle: 0,
+                pass:$("#claveUsuario").val()
+            };
+            //hago el login
+            login(datosLogin);
+        }
+        else{
+            $("#btnLogin").html("Ingresar");
+            $("#btnLogin").attr("disabled", false);
+        }
+    }
+    else
+    {
+        if( validarRegistroGoogle() ){
+            axios.post("/isUser",{email:$("#emailUsuario").val()})
+            .then((response)=>{
+                // alert(response.data.isUser);
+                if(response.data.isUser)
+                {
+                    limpiarCamposRegistro();
+                    $("#errorCorreo").html("El correo ya esta registrado");
+                    $("#errorCorreo").show();
+                    $("#btnLogin").html("Crear cuenta");
+                    $("#btnLogin").attr("disabled", false);
+                }
+                else
+                {
+                    $("#modalRegistroColOrg").modal("show");
+                    $("#modalLogin").modal("hide");
+                }
+
+            });
+        }
+        else{
+            $("#btnLogin").html("Crear cuenta");
+            $("#btnLogin").attr("disabled", false);
+        }
+
+    }
+}
+
 
 function login(datosLogin){
     axios.post("/login",JSON.stringify(datosLogin))
@@ -64,7 +129,7 @@ function cerrarSesion()
     signOut();
     axios.post("/logOut")
     .then((response)=>{
-        console.log( response.data );
+        // console.log( response.data );
         // console.log('chau');
         window.location= "/";
     });

@@ -84,6 +84,7 @@
         @include("/UIDetalleNecesidad")
         @include("UIPerfilModales/UIModalCalificar")
         @include("UIPerfilModales/UIModalReportar")
+        @include("UIPrincipalRegistroGoogle")
     </main>
     <footer class="footer py-3 text-center text-white bg-dark mt-auto">
         <div class="container">
