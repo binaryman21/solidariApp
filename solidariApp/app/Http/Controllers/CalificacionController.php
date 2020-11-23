@@ -188,6 +188,7 @@ class CalificacionController extends Controller
             {
                 try
                 {
+                    NotificacionController::crearNotificacionInsignia($insignia->idInsignia,$idUsuario);
                     $nuevaInsignia = new InsigniaUsuario;
                     $nuevaInsignia->idUsuario = $idUsuario;
                     $nuevaInsignia->idInsignia = $insignia->idInsignia;
