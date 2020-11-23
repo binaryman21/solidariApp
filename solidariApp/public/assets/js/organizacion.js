@@ -93,83 +93,88 @@ function bajaUsuario()
 }
 
 function getOrganizacion(idUsuario, vistaVisitante = 0){
-
-    if(vistaVisitante == 0){
-    $("#btnNuevaNecesidad").click(function(){
-        limpiarValidaciones($("#inpFechaLimite"),  $("#errorFechaLimite") );
-        limpiarValidaciones($("#slctCategoria"), $("#errorCategoria"));
-        limpiarValidaciones($("#inpCantidad"), $("#errorCantidad"));
-        limpiarValidaciones($("#txtDescripcion"), $("#errorDescripcion"));
-        document.getElementById("formEditarNecesidad").reset();
-        $("#modalEditarNecesidad .modal-content").removeClass($("#categoriaActual").val());
-        $("#btnGuardarCambiosNecesidad").unbind( "click" );
-        $("#btnGuardarCambiosNecesidad").click(function(e){
-            e.preventDefault();
-            if( validarNecesidad() ){
-                bloquearBoton($("#btnGuardarCambiosNecesidad"));
-                registrarNecesidad(idUsuario);
-            }
-        });
-    });
-    $("#btnGuardarDescripcion").click(function()
-    {
-        actualizarDescripcion(idUsuario);
-    });
-    $("#btnAgregarTelefono").click(function()
-    {
-        if( validarTelefono( '' ) ){
-            agregarTelefono(idUsuario);
-        }
-    });
-    }
-    //CARGAR NECESIDADES
-    cargarNecesidades( idUsuario, vistaVisitante );
-    cargarInsignias( idUsuario );
-    cargarComentariosOrganizacion( idUsuario );
-    // console.log( idUsuario );
     fetch("/getOrganizacion/"+idUsuario)
     .then(response => response.json())
     .then(data => {
-        let organizacion = data.organizacion;
-
-        $("#nombreOrganizacion").html(organizacion.razonSocial);
-        $("#tipoOrganizacion").html(organizacion.nombreTipoOrganizacion);
-        $("#urlFotoPerfilOrganizacion").attr("src",organizacion.urlFotoPerfilUsuario);
-        $("#emailOrganizacion").html(organizacion.emailUsuario);
-        if(organizacion.descripcionOrganizacion == "")
-        {
-            organizacion.descripcionOrganizacion = "La organización no ha especificado ninguna descripción todavia";
+        if(data.resultado){
+            //CARGAR NECESIDADES
+            cargarNecesidades( idUsuario, vistaVisitante );
+            cargarInsignias( idUsuario );
+            cargarComentariosOrganizacion( idUsuario );
+    
+            let organizacion = data.organizacion;
+    
+            $("#nombreOrganizacion").html(organizacion.razonSocial);
+            $("#tipoOrganizacion").html(organizacion.nombreTipoOrganizacion);
+            $("#urlFotoPerfilOrganizacion").attr("src",organizacion.urlFotoPerfilUsuario);
+            $("#emailOrganizacion").html(organizacion.emailUsuario);
+            if(organizacion.descripcionOrganizacion == "")
+            {
+                organizacion.descripcionOrganizacion = "La organización no ha especificado ninguna descripción todavia";
+            }
+            $("#descripcionOrganizacion").html(organizacion.descripcionOrganizacion);
+            $("#fechaAltaUsuario").html(organizacion.fechaAltaUsuario);
+            $.each(data.domicilios, function (indexInArray, domicilio) {
+                let piso = "Piso";
+                let depto = "Depto";
+    
+                if(domicilio.piso == '') piso = '';
+                if(domicilio.depto == '') depto = '';
+    
+                $("#listadoDomicilios").html("");
+                 $("#listadoDomicilios").append(`<div class="form-row" >
+                 <div class = "d-flex flex-row m-2  domicilio w-100 rounded p-1 justify-content-between">
+                 <div class = "d-flex flex-column m-2 " id ="domicilio${domicilio.idDomicilio}">
+                    <p class = "m-1 domicilioInfo1">${domicilio.calle} ${domicilio.numero}` +` `+ piso +` `+ `${domicilio.piso} `+` `+ depto +` `+` ${domicilio.depto}</p>
+                    <p class = "m-1">${domicilio.nombreLocalidad} ,  ${domicilio.nombreProvincia}</p>
+                </div>
+                <a class="ml-2" id="btnEditarDomicilio${domicilio.idDomicilio}" data-toggle="modal" href="#modalEditarDomicilio"><i class="far fa-edit editarDom d-none"></i></a>
+                </div>
+             </div>`);
+    
+             $("#btnEditarDomicilio"+ domicilio.idDomicilio).click(function(){
+                    cargarDatosModalDomicilio(domicilio);
+             });
+    
+            });
+            $("#listadoTelefonos").html("");
+            $.each(data.telefonos, function (indexInArray, telefono) {
+                agregarTelefonoAlListado(telefono);
+            });
         }
-        $("#descripcionOrganizacion").html(organizacion.descripcionOrganizacion);
-        $("#fechaAltaUsuario").html(organizacion.fechaAltaUsuario);
-        $.each(data.domicilios, function (indexInArray, domicilio) {
-            let piso = "Piso";
-            let depto = "Depto";
-
-            if(domicilio.piso == '') piso = '';
-            if(domicilio.depto == '') depto = '';
-
-            $("#listadoDomicilios").html("");
-             $("#listadoDomicilios").append(`<div class="form-row" >
-             <div class = "d-flex flex-row m-2  domicilio w-100 rounded p-1 justify-content-between">
-             <div class = "d-flex flex-column m-2 " id ="domicilio${domicilio.idDomicilio}">
-                <p class = "m-1 domicilioInfo1">${domicilio.calle} ${domicilio.numero}` +` `+ piso +` `+ `${domicilio.piso} `+` `+ depto +` `+` ${domicilio.depto}</p>
-                <p class = "m-1">${domicilio.nombreLocalidad} ,  ${domicilio.nombreProvincia}</p>
-            </div>
-            <a class="ml-2" id="btnEditarDomicilio${domicilio.idDomicilio}" data-toggle="modal" href="#modalEditarDomicilio"><i class="far fa-edit editarDom d-none"></i></a>
-            </div>
-         </div>`);
-
-         $("#btnEditarDomicilio"+ domicilio.idDomicilio).click(function(){
-                cargarDatosModalDomicilio(domicilio);
-         });
-
-        });
-        $("#listadoTelefonos").html("");
-        $.each(data.telefonos, function (indexInArray, telefono) {
-            agregarTelefonoAlListado(telefono);
-        });
+        else{
+            location.href = data.redireccion;
+        }
     });
+
+    if(vistaVisitante == 0){
+        $("#btnNuevaNecesidad").click(function(){
+            limpiarValidaciones($("#inpFechaLimite"),  $("#errorFechaLimite") );
+            limpiarValidaciones($("#slctCategoria"), $("#errorCategoria"));
+            limpiarValidaciones($("#inpCantidad"), $("#errorCantidad"));
+            limpiarValidaciones($("#txtDescripcion"), $("#errorDescripcion"));
+            document.getElementById("formEditarNecesidad").reset();
+            $("#modalEditarNecesidad .modal-content").removeClass($("#categoriaActual").val());
+            $("#btnGuardarCambiosNecesidad").unbind( "click" );
+            $("#btnGuardarCambiosNecesidad").click(function(e){
+                e.preventDefault();
+                if( validarNecesidad() ){
+                    bloquearBoton($("#btnGuardarCambiosNecesidad"));
+                    registrarNecesidad(idUsuario);
+                }
+            });
+        });
+        $("#btnGuardarDescripcion").click(function()
+        {
+            actualizarDescripcion(idUsuario);
+        });
+        $("#btnAgregarTelefono").click(function()
+        {
+            if( validarTelefono( '' ) ){
+                agregarTelefono(idUsuario);
+            }
+        });
+    }
 }
 function cargarDatosModalDomicilio(domicilio){
     $("#calle").val(domicilio.calle);

@@ -90,10 +90,30 @@ class ColaboradorController extends Controller
     }
 
     public function getColaborador($idUsuario){
-        return response()->json([
-            'colaborador'=>Colaborador::getColaborador($idUsuario),
-            'domicilios' => Domicilio::listarDomiciliosUsuario($idUsuario),
-            'telefonos' => Telefono::listarTelefonosUsuario($idUsuario)
-        ]);
+        try{
+            $colaborador = Colaborador::getColaborador($idUsuario);
+            if( $colaborador ){
+                return response()->json([
+                    'resultado' => 1,
+                    'colaborador'=> $colaborador,
+                    'domicilios' => Domicilio::listarDomiciliosUsuario($idUsuario),
+                    'telefonos' => Telefono::listarTelefonosUsuario($idUsuario)
+                ]);
+            }
+            else{
+                return response()->json([
+                    'resultado' => 0,
+                    'message'=> 'No se encontro al colaborador',
+                    'redireccion'=>'/error404'
+                ]);
+            }
+        }
+        catch (\Exception $e)
+        {
+            return response()->json([
+                'resultado' => 0,
+                'message' => $e->getMessage()
+            ]);
+        }
     }
 }

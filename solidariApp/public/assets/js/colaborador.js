@@ -126,51 +126,58 @@ function guardarCambios() {
 
 function getColaborador(idUsuario,vistaVisitante){
 
-    listarColaboraciones( idUsuario );
-
-    $("#btnAgregarTelefono").click(function()
-    {
-        agregarTelefono(idUsuario);
-    });
-    //getTelefonosUsuario(usuario.idUsuario);
-    //getDomiciliosUsuario(usuario.idUsuario);
-    cargarInsignias( idUsuario );
-    cargarComentarios( idUsuario );
     
     axios.get("/getColaborador/"+idUsuario)
     .then((response)=>{
-        var colaborador = response.data.colaborador;
-        $("#nombreColaborador").html(colaborador.nombreColaborador + " " + colaborador.apellidoColaborador);
-        $("#imgPerfilColaborador").attr("src",colaborador.urlFotoPerfilUsuario);
-        $("#correo").html(colaborador.emailUsuario);
-        $("#fechaAltaUsuario").html(colaborador.fechaAltaUsuario);
-        $.each(response.data.domicilios, function (indexInArray, domicilio) {
-            var piso = "Piso";
-            var depto = "Depto";
-
-            if(domicilio.piso == '') piso = '';
-            if(domicilio.depto == '') depto = '';
-
-            $("#listadoDomicilios").html("");
-             $("#listadoDomicilios").append(`<div class="form-row" >
-             <div class = "d-flex flex-row m-2  domicilio w-100 rounded p-1 justify-content-between">
-             <div class = "d-flex flex-column m-2 " id ="domicilio` + domicilio.idDomicilio + `">
-                <p class = "m-1 domicilioInfo1">` + domicilio.calle + ` ` + domicilio.numero + ` ` + piso + ` ` + domicilio.piso + ` ` + depto + ` ` + domicilio.depto + `</p>
-                <p class = "m-1">` + domicilio.nombreLocalidad + `, ` + domicilio.nombreProvincia + `</p>
-            </div>
-            <a class="ml-2" id="btnEditarDomicilio` + domicilio.idDomicilio + `" data-toggle="modal" href="#modalEditarDomicilio"><i class="far fa-edit editarDom d-none"></i></a>
-            </div>
-         </div>`);
-
-         $("#btnEditarDomicilio"+ domicilio.idDomicilio).click(function(){
-                cargarDatosModalDomicilio(domicilio);
-         });
-
-        });
-        $("#listadoTelefonos").html("");
-        $.each(response.data.telefonos, function (indexInArray, telefono) {
-            agregarTelefonoAlListado(telefono);
-        });
+        if (response.data.resultado){
+            listarColaboraciones( idUsuario );
+        
+            $("#btnAgregarTelefono").click(function()
+            {
+                agregarTelefono(idUsuario);
+            });
+            //getTelefonosUsuario(usuario.idUsuario);
+            //getDomiciliosUsuario(usuario.idUsuario);
+            cargarInsignias( idUsuario );
+            cargarComentarios( idUsuario );
+            
+            var colaborador = response.data.colaborador;
+            $("#nombreColaborador").html(colaborador.nombreColaborador + " " + colaborador.apellidoColaborador);
+            $("#imgPerfilColaborador").attr("src",colaborador.urlFotoPerfilUsuario);
+            $("#correo").html(colaborador.emailUsuario);
+            $("#fechaAltaUsuario").html(colaborador.fechaAltaUsuario);
+            $.each(response.data.domicilios, function (indexInArray, domicilio) {
+                var piso = "Piso";
+                var depto = "Depto";
+    
+                if(domicilio.piso == '') piso = '';
+                if(domicilio.depto == '') depto = '';
+    
+                $("#listadoDomicilios").html("");
+                 $("#listadoDomicilios").append(`<div class="form-row" >
+                 <div class = "d-flex flex-row m-2  domicilio w-100 rounded p-1 justify-content-between">
+                 <div class = "d-flex flex-column m-2 " id ="domicilio` + domicilio.idDomicilio + `">
+                    <p class = "m-1 domicilioInfo1">` + domicilio.calle + ` ` + domicilio.numero + ` ` + piso + ` ` + domicilio.piso + ` ` + depto + ` ` + domicilio.depto + `</p>
+                    <p class = "m-1">` + domicilio.nombreLocalidad + `, ` + domicilio.nombreProvincia + `</p>
+                </div>
+                <a class="ml-2" id="btnEditarDomicilio` + domicilio.idDomicilio + `" data-toggle="modal" href="#modalEditarDomicilio"><i class="far fa-edit editarDom d-none"></i></a>
+                </div>
+             </div>`);
+    
+             $("#btnEditarDomicilio"+ domicilio.idDomicilio).click(function(){
+                    cargarDatosModalDomicilio(domicilio);
+             });
+    
+            });
+            $("#listadoTelefonos").html("");
+            $.each(response.data.telefonos, function (indexInArray, telefono) {
+                agregarTelefonoAlListado(telefono);
+            });
+        }
+        else{
+            location.href = data.redireccion;
+        }
+        
     });
 }
 

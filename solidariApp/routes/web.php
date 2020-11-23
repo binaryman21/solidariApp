@@ -160,5 +160,7 @@ Route::get('/getInsignias/{idUsuario}', 'App\Http\Controllers\InsigniaUsuarioCon
 Route::post('/registrarSuscripcion', 'App\Http\Controllers\SuscripcionController@registrarSuscripcion')->name('registrarSuscripcion');
 Route::get('/getSuscriptores/{idOrganizacion}', 'App\Http\Controllers\SuscripcionController@getSuscriptores')->name('getSuscriptores');
 
+//ERRORES
+Route::get('/error404', function(){return view('Error404');} );
 
 ?>
