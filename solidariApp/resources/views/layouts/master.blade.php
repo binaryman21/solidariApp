@@ -46,12 +46,12 @@
                     <li class="nav-item px-3" id="navInicio">
                         <a class="nav-link" href="{{url('/')}}">Inicio</a>
                     </li>
-                    <li class="nav-item px-3" id="navContacto">
+                    <!-- <li class="nav-item px-3" id="navContacto">
                         <a class="nav-link" href="{{url('/contacto')}}">Contacto</a>
                     </li>
                     <li class="nav-item px-3" id="navAcerca">
                         <a class="nav-link" href="{{url('/acerca')}}">Acerca de</a>
-                    </li>
+                    </li> -->
 
                     <button class="btn btn-outline-primary my-2 my-sm-0 px-5" data-toggle="modal" data-target="#modalLogin"  id = "btnIngresar">Ingresar</button>
                     <li class="nav-item dropdown oculto" id = "dropDownUsuario">
@@ -84,6 +84,7 @@
         @include("/UIDetalleNecesidad")
         @include("UIPerfilModales/UIModalCalificar")
         @include("UIPerfilModales/UIModalReportar")
+        @include("UIPrincipalRegistroGoogle")
     </main>
     <footer class="footer py-3 text-center text-white bg-dark mt-auto">
         <div class="container">

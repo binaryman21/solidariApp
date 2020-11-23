@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Usuario;
+use App\Models\Necesidad;
+use App\Models\Colaboracion;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Redirect;
 
 class UsuarioController extends Controller
@@ -34,7 +37,6 @@ class UsuarioController extends Controller
             return response()->json([
                 'usuario' => $_SESSION['usuario']
             ]);
-
         }
         else{
             return response()->json([
@@ -43,6 +45,7 @@ class UsuarioController extends Controller
 
         }
     }
+
     public function logOut(){
         session_start();
         unset($_SESSION['usuario']);
@@ -52,24 +55,44 @@ class UsuarioController extends Controller
     /*Dar de baja al usuario logeado*/
     public function bajaUsuario()
     {
-       
         try
         {
             session_start();
             if(isset($_SESSION['usuario'])){
-                /*Busco el ID del usuario logeado*/
-                $usuarioLogueado = $_SESSION['usuario'];
-                Usuario::bajaUser($usuarioLogueado->idUsuario);
-                unset($_SESSION['usuario']);
+                if(UsuarioController::tienePermisoPara("darseDeBaja"))
+                {
+                    /*Busco el ID del usuario logeado*/
+                    $usuarioLogueado = $_SESSION['usuario'];
+                    DB::beginTransaction();
+                    Usuario::bajaUser($usuarioLogueado->idUsuario);
+                    if( $usuarioLogueado->rol->idRol == 2 ){
+                        Necesidad::completarNecesidades( $usuarioLogueado->idUsuario );
+                    }
+                    else if( $usuarioLogueado->rol->idRol == 1 ){
+                        Colaboracion::noConcretarColaboraciones( $usuarioLogueado->idUsuario );
+                    }
+                    DB::commit();
+                    unset($_SESSION['usuario']);
+                    // redirect()->route('UIPrincipal');
+                    return response()->json([
+                        'resultado' => 1,
+                        'message' => 'ejecucion exitosa'
+                    ]);
+                }
+                else{
+                    return response()->json([
+                        'resultado' => 0,
+                        'message' => 'No tiene permisos para realizar esta accion'
+                    ]);
+                }
             }
-            
-            return response()->json([
-                'resultado' => 1,
-                'message' => 'ejecucion exitosa'
-            ]);
+            else{
+                return response()->json([
+                    'resultado' => 0,
+                    'message' => 'No estas logueado'
+                ]);
+            }
         }
-
-
         catch (\Exception $e)
         {
             return response()->json([
@@ -77,10 +100,6 @@ class UsuarioController extends Controller
                 'message' => $e->getMessage()
             ]);
         }
-
-
-
-
     }
 
     /*Actualizar foto de perfil del usuario logeado*/
@@ -123,7 +142,6 @@ class UsuarioController extends Controller
 
         }
 
-
         catch (\Exception $e)
         {
             return response()->json([
@@ -164,34 +182,53 @@ class UsuarioController extends Controller
     }
 
     public function cambiarClave( Request $request ){
-        try
+        session_start();
+        if(isset($_SESSION['usuario']))
         {
-            $datosClaves = json_decode($request->getContent());
-            $datosClaves->claveVieja = hash( 'sha256', $datosClaves->claveVieja );
-            $datosClaves->claveNueva = hash( 'sha256', $datosClaves->claveNueva );
-            $user = Usuario::comprobarClave( $datosClaves );
-            if ( $user ){
-                Usuario::cambiarClave( $datosClaves );
+            if(UsuarioController::tienePermisoPara("cambiarPass"))
+            {
+                try
+                {
+                    $datosClaves = json_decode($request->getContent());
+                    $datosClaves->claveVieja = hash( 'sha256', $datosClaves->claveVieja );
+                    $datosClaves->claveNueva = hash( 'sha256', $datosClaves->claveNueva );
+                    $user = Usuario::comprobarClave( $datosClaves );
+                    if ( $user ){
+                        Usuario::cambiarClave( $datosClaves );
+                        return response()->json([
+                            'resultado' => 1,
+                            'message' => "cambio de clave exitoso!"
+                        ]);
+                    }
+                    else{
+                        return response()->json([
+                            'resultado' => 0,
+                            'message' => "clave incorrecta"
+                        ]);
+                    }
+                }
+                catch (\Exception $e)
+                {
+                    return response()->json([
+                        'resultado' => 0,
+                        'message' => $e->getMessage()
+                    ]);
+                }
+                
             }
             else{
                 return response()->json([
                     'resultado' => 0,
-                    'message' => "clave incorrecta"
+                    'message' => 'No tiene permisos para realizar esta accion'
                 ]);
             }
         }
-        catch (\Exception $e)
-        {
+        else{
             return response()->json([
                 'resultado' => 0,
-                'message' => $e->getMessage()
+                'message' => "no estas logueado"
             ]);
         }
-
-        return response()->json([
-            'resultado' => 1,
-            'message' => "cambio de clave exitoso!"
-        ]);
     }
 
     public static function tienePermisoPara($pStringPermiso)

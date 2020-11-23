@@ -80,13 +80,23 @@ class Necesidad extends Model
         return Necesidad::where("idNecesidad",$idNecesidad)
             ->join('categoriaNecesidad', 'categoriaNecesidad.idCategoria', '=', 'necesidad.idCategoriaNecesidad')    
             ->join('estadoNecesidad', 'estadoNecesidad.idEstadoNecesidad', '=', 'necesidad.estadoNecesidad')    
+            // ->withCount('colaboraciones')
             ->orderBy('fechaLimiteNecesidad', 'ASC')
             ->get();
     }
 
     public static function getNecesidad($idNecesidad)
     {
-        return Necesidad::find($idNecesidad);
+        return Necesidad::where('idNecesidad',$idNecesidad)
+        ->join('estadoNecesidad', 'estadoNecesidad.idEstadoNecesidad', '=', 'necesidad.estadoNecesidad')   
+        // ->withCount('colaboraciones') 
+        ->first();
+    }
+
+    public static function completarNecesidades($idUsuario)
+    {
+        return Necesidad::where('idUsuario',$idUsuario)
+                        ->update(['estadoNecesidad'=>'3']);
     }
 
     public function categoria()

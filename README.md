@@ -4,7 +4,7 @@
 
 SolidariApp permite conectar organizaciones con personas interesadas en donar algun recurso necesitado a travez de una plataforma de forma simple y rapida. 
 
-Puedes unirte como colaborador o organizacion en https://www.solidariapp.com
+Puedes unirte como colaborador o organizacion en https://www.solidariapp.com.ar
 
 ---
 

@@ -160,5 +160,11 @@ Route::get('/getInsignias/{idUsuario}', 'App\Http\Controllers\InsigniaUsuarioCon
 Route::post('/crearNotificacionColaboracion','App\Http\Controllers\NotificacionController@crearNotificacionColaboracion')->name('crearNotificacionColaboracion');
 Route::post('/upDateNotificacion', 'App\Http\Controllers\NotificacionController@upDateNotificacione')->name('upDateNotificacion');
 Route::post('/crearNotificacionCalificacionColaboracion','App\Http\Controllers\NotificacionController@crearNotificacionCalificacionColaboracion')->name('crearNotificacionCalificacionColaboracion');
+Route::post('/crearNotificacionCalificacionOrganizacion','App\Http\Controllers\NotificacionController@crearNotificacionCalificacionOrganizacion')->name('crearNotificacionCalificacionOrganizacion');
+
+//SUSCRIPCION
+Route::post('/registrarSuscripcion', 'App\Http\Controllers\SuscripcionController@registrarSuscripcion')->name('registrarSuscripcion');
+Route::get('/getSuscriptores/{idOrganizacion}', 'App\Http\Controllers\SuscripcionController@getSuscriptores')->name('getSuscriptores');
 
 
+?>

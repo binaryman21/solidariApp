@@ -24,6 +24,13 @@ class Colaboracion extends Model
     public static function getColaboracion($idColaboracion)
     {
         return Colaboracion::where('idColaboracion',$idColaboracion)->first();
+
+    }
+    public static function noConcretarColaboraciones($idUsuario)
+    {
+        return Colaboracion::where('idColaborador',$idUsuario)
+                            ->where('estadoColaboracion', 0)
+                            ->update(['estadoColaboracion'=>'2']);
     }
 
 }

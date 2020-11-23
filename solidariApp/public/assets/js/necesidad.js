@@ -24,6 +24,14 @@ function registrarNecesidad(idUsuario)
         divNecesidades.prepend(`<div class="col-md-6" id="necesidad${necesidad.idNecesidad}"></div>`);
         crearCardNecesidad(necesidad, 0);
         agregarPaginacionNecesidades();
+        limpiarValidaciones($("#inpFechaLimite"),  $("#errorFechaLimite") );
+        limpiarValidaciones($("#slctCategoria"), $("#errorCategoria"));
+        limpiarValidaciones($("#inpCantidad"), $("#errorCantidad"));
+        limpiarValidaciones($("#txtDescripcion"), $("#errorDescripcion"));
+        $("#inpFechaLimite").val('');
+        $("#slctCategoria").val('');
+        $("#inpCantidad").val('');
+        $("#txtDescripcion").val('');
         $('#navNecesidades a:first').trigger('click');
         alertify.success('Necesidad creada');
     });

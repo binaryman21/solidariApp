@@ -7,7 +7,9 @@ use App\Models\Notificacion;
 use App\Models\Organizacion;
 use App\Models\Colaborador;
 use App\Models\Colaboracion;
+use App\Models\Calificacion;
 use App\Models\Necesidad;
+use App\Models\TratoCalificacion;
 use App\Models\CategoriNecesidad;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
@@ -34,11 +36,20 @@ class NotificacionController extends Controller
                     $notificacion['emisor'] = $organizacion;
                 }
                 if($notificacion->leido == '0') $noLeidas++;
-                $necesidad = Necesidad::getNecesidad($notificacion->idNecesidad);
-                $categoria = CategoriaNecesidad::getCategoria($necesidad->idCategoriaNecesidad);
-                $tipoNecesidad = $categoria->nombreCategoria;
-                $notificacion['tipoNecesidad'] = $tipoNecesidad;
-                $notificacion['necesidad'] = $necesidad;
+                //SI ES DE TIPO 1 o 5 TIENE NECECEISDADES
+                if($notificacion->idMensaje == 1 || $notificacion->idMensaje == 5 || $notificacion->idMensaje == 2){
+                    $necesidad = Necesidad::getNecesidad($notificacion->idNecesidad);
+                    $categoria = CategoriaNecesidad::getCategoria($necesidad->idCategoriaNecesidad);
+                    $tipoNecesidad = $categoria->nombreCategoria;
+                    $notificacion['tipoNecesidad'] = $tipoNecesidad;
+                    $notificacion['necesidad'] = $necesidad;
+
+                }
+                if($notificacion->idMensaje == 2){
+                    $calificacion = Calificacion::getCalificacion($notificacion->idColaboracion);
+                    // $tratoRecibido = TratoCalificacion::getTrato($calificacion->comentario);
+                    // $notificacion['tratoRecibido'] = $tratoRecibido->descripcion;
+                }
             }
 
             return response()->json([
@@ -51,7 +62,7 @@ class NotificacionController extends Controller
         {
             return response()->json([
                 'result' => 0,
-                'message' => 'Error al cargar notificaciones',
+                'message' => $e->getMessage(),
             ]);
         }
     }
@@ -117,7 +128,12 @@ class NotificacionController extends Controller
             session_start();
             if(isset($_SESSION['usuario']))
             {
-
+                $notificacion = new Notificacion;
+                $notificacion->idMensaje = '6';
+                $notificacion->idEmisor = $_SESSION['usuario']->idUsuario;
+                $notificacion->idReceptor = $calificacion->idCalificado;
+                $notificacion->leido = '0';
+                $notificacion->save();
 
                 return response()->json([
                     'resultado' => 1,

@@ -54,7 +54,7 @@ class ColaboracionController extends Controller
             {
                 return response()->json([
                     'resultado' => 0,
-                    'message' => 'notLoggedIn'
+                    'message' => 'No estas logueado'
                 ]);
             }
 
@@ -73,6 +73,7 @@ class ColaboracionController extends Controller
         $colaboraciones = Colaboracion::where("idNecesidad",$idNecesidad)->with("calificaciones")
         ->join("colaborador","colaborador.idUsuario","=","colaboraciones.idColaborador")
         ->join("usuario","usuario.idUsuario","=","colaboraciones.idColaborador")
+        ->where("colaboraciones.estadoColaboracion","<>","2")
         ->get();
         return response()->json([
             'colaboraciones' => $colaboraciones

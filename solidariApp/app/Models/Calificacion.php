@@ -18,5 +18,10 @@ class Calificacion extends Model
         ->join('colaboraciones', 'calificacion.idColaboracion', 'colaboraciones.idColaboracion')
         ->get();
     }
+
+    public static function getCalificacion($idColaboracion){
+        return Calificacion::where('calificacion.idColaboracion', '=', $idColaboracion)->get();
+    }
+
 }
 
