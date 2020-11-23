@@ -21,4 +21,11 @@ class Colaboracion extends Model
         return $this->belongsTo('App\Models\Necesidad','idNecesidad','idNecesidad');
     }
 
+    public static function noConcretarColaboraciones($idUsuario)
+    {
+        return Colaboracion::where('idColaborador',$idUsuario)
+                            ->where('estadoColaboracion', 0)
+                            ->update(['estadoColaboracion'=>'2']);
+    }
+
 }

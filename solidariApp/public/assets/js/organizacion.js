@@ -74,12 +74,13 @@ function bajaUsuario()
      axios.post("/bajaUsuario")
     .then((response)=>{
         if(response.data.resultado === 1 ){
+            alertify.error("Hasta luego.");
             /*Redireccionar a pagina principal*/
             document.location.href="/";
         }else{
             //Ocurrio un error
-            alert("Ocurrio un error inesperado.");
-            console.log(response.data.message);
+            alertify.error("Ocurrio un error inesperado.");
+            // console.log(response.data.message);
         }
     });
 
@@ -463,8 +464,8 @@ function cargarNecesidades ( idUsuario, vistaVisitante){
         // console.log( response.data );
         let necesidades = data.necesidades;
         let divNecesidades = $('.necesidades');
-        divNecesidades.html("");
         if( necesidades.length>0){
+            divNecesidades.html("");
             necesidades.forEach(necesidad => {
     
                 // console.log( necesidad );
@@ -477,7 +478,7 @@ function cargarNecesidades ( idUsuario, vistaVisitante){
         }
         else{
             divNecesidades.html(
-                `<div class="col-12 my-2 text-center alert alert-secondary" role="alert">
+                `<div class="col-11 my-2 text-center alert alertNoNecesidades alert-secondary mr-auto ml-auto" role="alert">
                     Aun no tiene necesidades.
                 </div>`
             )
@@ -488,6 +489,7 @@ function cargarNecesidades ( idUsuario, vistaVisitante){
 
 function crearCardNecesidad(necesidad,vistaVisitante)
 {
+    $('.alertNoNecesidades').remove();
     // console.log( vistaVisitante );
     let btnEditarNecesidad = "";
     if(vistaVisitante == 0){

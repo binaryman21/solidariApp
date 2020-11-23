@@ -72,7 +72,7 @@ function confirmarReporte( idDenunciante ){
     if (!datosReporte.idDenunciado){
         datosReporte.idDenunciado = $(location).attr('href').split("/")[4];
     }
-    console.log( datosReporte.idDenunciado );
+    // console.log( datosReporte.idDenunciado );
     axios.post("/altaDenuncia",datosReporte)
     .then((response)=>{
         if ( response.data.resultado ){

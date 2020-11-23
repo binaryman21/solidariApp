@@ -216,3 +216,11 @@ Route::get('/actualizarInsignias/{idUsuario}', 'App\Http\Controllers\Calificacio
 Route::get('/getCalificaciones/{idUsuario}', 'App\Http\Controllers\CalificacionController@getCalificaciones')->name('getCalificaciones');
 Route::get('/getCalificacionesOrganizacion/{idUsuario}', 'App\Http\Controllers\CalificacionController@getCalificacionesOrganizacion')->name('getCalificacionesOrganizacion');
 Route::get('/getInsignias/{idUsuario}', 'App\Http\Controllers\InsigniaUsuarioController@getInsignias')->name('getInsignias');
+
+
+//SUSCRIPCION
+Route::post('/registrarSuscripcion', 'App\Http\Controllers\SuscripcionController@registrarSuscripcion')->name('registrarSuscripcion');
+Route::get('/getSuscriptores/{idOrganizacion}', 'App\Http\Controllers\SuscripcionController@getSuscriptores')->name('getSuscriptores');
+
+
+?>

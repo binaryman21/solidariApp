@@ -10,14 +10,14 @@
       <div class="modal-body p-5">
         <form>
               <div> 
-                Esta accion no se puede deshacer.
-                </div>
+                Esta accion no se puede deshacer, ¿Estas seguro que deseas darte de baja? En el caso de que seas una organizacion, todas tus necesidades se marcaran como completadas. Si sos un colaborador todas tus colaboraciones pendientes pasaran a ser no concretadas.
+              </div>
 
-            <div class="form-group mb-3">
+            <!-- <div class="form-group mb-3">
                 <label for="motivo">Motivo:</label>
                 <textarea class="form-control" id="motivo" rows="3"></textarea>
                 <span class="error text-danger"></span>
-            </div>
+            </div> -->
    
 
             <button type="button" class="btn btn-danger btn-block my-4 " id="btnConfirmarDarmeDeBaja">Confirmar</button>

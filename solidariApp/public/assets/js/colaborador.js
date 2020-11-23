@@ -393,7 +393,7 @@ function listarColaboraciones ( idUsuario  ){
 // MOSTRAR LAS COLABORACIONES
 function crearCardColaboracion( colaboracion )
 {
-    console.log( colaboracion );
+    // console.log( colaboracion );
     let cardColaboracion =
     `<div class="col-md-6" id="colaboracion${colaboracion.idColaboracion}">
         <div class="card necesidad ${colaboracion.nombreCategoria.toLowerCase()}">

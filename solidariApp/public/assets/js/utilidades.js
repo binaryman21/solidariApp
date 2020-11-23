@@ -1,14 +1,6 @@
 function limpiarCamposRegistro(){
+    limpiarCamposLogin();
     $('#formularioRegistroDatos')[0].reset();
-    $('#formRegistroGoogle')[0].reset();
-    // Error Login
-    $("#errorLogin").hide();
-    // Email
-    $('#emailUsuario').removeClass('is-invalid is-valid');
-    $('#errorCorreo').fadeOut();
-    // Pass
-    $('#claveUsuario').removeClass('is-invalid is-valid');
-    $('.errorPass').fadeOut();
     // Nombre organizacion
     $('#nombreOrganizacion').removeClass('is-invalid is-valid');
     $('.errorNombreOrg').fadeOut();
@@ -28,6 +20,18 @@ function limpiarCamposRegistro(){
     // Tipo de organizacion
     $('#selectTipoOrganizacion').removeClass('is-invalid is-valid');
     $('.errorTipoOrg').fadeOut();
+}
+
+function limpiarCamposLogin(){
+    $('#formRegistroGoogle')[0].reset();
+    // Error Login
+    $("#errorLogin").hide();
+    // Email
+    $('#emailUsuario').removeClass('is-invalid is-valid');
+    $('#errorCorreo').fadeOut();
+    // Pass
+    $('#claveUsuario').removeClass('is-invalid is-valid');
+    $('.errorPass').fadeOut();
 }
 
 function limpiarDomicilio(){
@@ -162,7 +166,7 @@ async function obtenerCoordenadas(calle, nro, localidad, provincia){
   function agregarPaginacionUsuarios(){
     $('#navUsuarios').html('');
     $('#listadoColaboraciones').after('<div id="navUsuarios"></div>');
-    let usuario = document.querySelectorAll('.usuario')
+    let usuario = $('.usuario').not('.d-none');
     let filasMostradas = 2;
     let filasTotales = usuario.length;
     let numPaginas = filasTotales/filasMostradas;
@@ -257,7 +261,7 @@ function llenarInsignias( insignias ){
         let icono = document.createElement('i');
         $(icono).addClass( insignia.icono );
         $(icono).attr('title', insignia.descripcionInsignia);
-        console.log( icono );
+        // console.log( icono );
         divInsignias.append(icono);
     });
 }

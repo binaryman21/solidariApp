@@ -69,10 +69,10 @@
         </div>
     </div>
 
-    @include("UIPrincipalRegistroGoogle")
+    <!-- {{-- @include("UIPrincipalRegistroGoogle") --}} -->
     @include("UIPrincipalRegistro")
     <!-- {{-- @include("UIDetalleNecesidad") --}} -->
-    @include("UIPrincipalResultadoRegistro")
+    <!-- {{-- @include("UIPrincipalResultadoRegistro") --}} -->
     @include("UIPrincipalModalOrganizaciones")
 @endsection
 
