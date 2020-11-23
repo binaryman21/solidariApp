@@ -175,7 +175,7 @@ function getColaborador(idUsuario,vistaVisitante){
             });
         }
         else{
-            location.href = data.redireccion;
+            location.href = response.data.redireccion;
         }
         
     });

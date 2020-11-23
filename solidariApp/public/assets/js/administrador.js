@@ -12,9 +12,6 @@ document.addEventListener('DOMContentLoaded', () => {
   $("#btnModificar").on('click', modificarCategoria);
   $("#btnDeshabilitar").on('click', bajaCategoria);
   $("#btnHabilitar").on('click', activarCategoria);
- 
-
-
 })
 
 function validaciones() {

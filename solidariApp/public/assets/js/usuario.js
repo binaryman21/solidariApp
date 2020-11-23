@@ -9,13 +9,13 @@ $(function () {
 function cambiarPassWord( e ){
     e.preventDefault();
     if ( validarClavesCambio() ){
-        isLoggedIn( cambiarPass );
+        cambiarPass ();
     }
 }
 
-function cambiarPass( idUsuario ){
+function cambiarPass( ){
     let datosClaves = {
-        idUsuario,
+        idUsuario:0,
         claveVieja: $('#claveVieja').val(),
         claveNueva: $('#claveNueva').val(),
     }
@@ -57,13 +57,13 @@ function cargarMotivosDenuncia(){
 function reportar( e ){
     e.preventDefault();
     if( validarDenuncia() ){
-        isLoggedIn( confirmarReporte );
+        confirmarReporte ();
     }
 }
 
-function confirmarReporte( idDenunciante ){
+function confirmarReporte( ){
     let datosReporte = {
-        idDenunciante,
+        idDenunciante: 0,
         idDenunciado: $("#inpIdDenunciado").val(),
         fecha: $('#fechaIncidente').val(),
         motivo: $('#motivoReporte option:selected').val(),

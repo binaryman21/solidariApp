@@ -64,7 +64,7 @@ class SuscripcionController extends Controller
             {
                 return response()->json([
                     'resultado' => 0,
-                    'message' => 'notLoggedIn'
+                    'message' => 'No estas logueado'
                 ]);
             }
 

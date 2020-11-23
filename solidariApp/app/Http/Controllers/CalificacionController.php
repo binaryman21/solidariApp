@@ -19,67 +19,76 @@ class CalificacionController extends Controller
 
             $datos = json_decode($request->getContent());
             session_start();
-            if(UsuarioController::tienePermisoPara("calificarColaborador"))
+            if(isset($_SESSION['usuario']))
             {
-                $resultado = Calificacion::where('idColaboracion',$datos->idColaboracion)->where('idRolCalificado',$datos->idRolCalificado)->first();
-
-                if(!$resultado)
+                if(UsuarioController::tienePermisoPara("calificarColaborador"))
                 {
-                    DB::beginTransaction();
-                    $calificacion = new Calificacion;
-                    $calificacion->idColaboracion = $datos->idColaboracion;
-                    $calificacion->comentario = $datos->comentario;
-                    $calificacion->ayudaConcretada = $datos->ayudaConcretada;
-                    $calificacion->tratoRecibido = $datos->tratoRecibido;
-                    $calificacion->idRolCalificado = $datos->idRolCalificado;
-                    $calificacion->save();
+                    $resultado = Calificacion::where('idColaboracion',$datos->idColaboracion)->where('idRolCalificado',$datos->idRolCalificado)->first();
 
-                    if(!$datos->ayudaConcretada){
-                        $datos->cantidadRecibida = 0;
-                    }
-                    $necesidad = Necesidad::find($datos->idNecesidad);
-                    $necesidad->cantidadRecibida += $datos->cantidadRecibida;
-                    if($necesidad->cantidadRecibida > $necesidad->cantidadNecesidad){
-                        $necesidad->estadoNecesidad = 2;
-                    }
-                    $necesidad->save();
-
-                    $colaboracion = Colaboracion::find($datos->idColaboracion);
-                    if($datos->ayudaConcretada && $datos->idRolCalificado == 1)
+                    if(!$resultado)
                     {
-                        $colaboracion->estadoColaboracion = 1;
+                        DB::beginTransaction();
+                        $calificacion = new Calificacion;
+                        $calificacion->idColaboracion = $datos->idColaboracion;
+                        $calificacion->comentario = $datos->comentario;
+                        $calificacion->ayudaConcretada = $datos->ayudaConcretada;
+                        $calificacion->tratoRecibido = $datos->tratoRecibido;
+                        $calificacion->idRolCalificado = $datos->idRolCalificado;
+                        $calificacion->save();
+
+                        if(!$datos->ayudaConcretada){
+                            $datos->cantidadRecibida = 0;
+                        }
+                        $necesidad = Necesidad::find($datos->idNecesidad);
+                        $necesidad->cantidadRecibida += $datos->cantidadRecibida;
+                        if($necesidad->cantidadRecibida > $necesidad->cantidadNecesidad){
+                            $necesidad->estadoNecesidad = 2;
+                        }
+                        $necesidad->save();
+
+                        $colaboracion = Colaboracion::find($datos->idColaboracion);
+                        if($datos->ayudaConcretada && $datos->idRolCalificado == 1)
+                        {
+                            $colaboracion->estadoColaboracion = 1;
+                        }
+                        else if(!$datos->ayudaConcretada && $datos->idRolCalificado == 1)
+                        {
+                            $colaboracion->estadoColaboracion = 2;
+                        }
+
+                        $colaboracion->save();
+                        $this->actualizarInsignias($colaboracion->idColaborador);
+                        DB::commit();
+                        return response()->json([
+                            'resultado' => 1,
+                            'message' => 'Se ha enviado la calificacion'
+                        ]);
                     }
-                    else if(!$datos->ayudaConcretada && $datos->idRolCalificado == 1)
+                    else
                     {
-                        $colaboracion->estadoColaboracion = 2;
+                        return response()->json([
+                            'resultado' => 0,
+                            'message' => 'Error: Ya ha realizado esta calificacion'
+                        ]);
                     }
 
-                    $colaboracion->save();
-                    $this->actualizarInsignias($colaboracion->idColaborador);
-                    DB::commit();
-                    return response()->json([
-                        'resultado' => 1,
-                        'message' => 'Se ha enviado la calificacion'
-                    ]);
                 }
+
                 else
                 {
                     return response()->json([
                         'resultado' => 0,
-                        'message' => 'Error: Ya ha realizado esta calificacion'
+                        'message' => 'ACCION NO PERMITIDA'
                     ]);
                 }
-
             }
-
             else
             {
                 return response()->json([
                     'resultado' => 0,
-                    'message' => 'ACCION NO PERMITIDA'
+                    'message' => 'No estas logueado'
                 ]);
             }
-
         }
         catch (\Exception $e)
         {
@@ -96,42 +105,52 @@ class CalificacionController extends Controller
         {
             $datos = json_decode($request->getContent());
             session_start();
-            $usuario = $_SESSION['usuario'];
-            $datos->idCalificante = $usuario->idUsuario;
-            if( UsuarioController::tienePermisoPara("calificarOrganizacion") )
+            if(isset($_SESSION['usuario']))
             {
-                $resultado = CalificacionOrganizacion::where('idCalificado',$datos->idCalificado)->where('idCalificante',$datos->idCalificante)->first();
-
-                if(!$resultado)
+                $usuario = $_SESSION['usuario'];
+                $datos->idCalificante = $usuario->idUsuario;
+                if( UsuarioController::tienePermisoPara("calificarOrganizacion") )
                 {
-                    DB::beginTransaction();
-                    $calificacion = new CalificacionOrganizacion;
-                    $calificacion->idCalificado = $datos->idCalificado;
-                    $calificacion->idCalificante = $datos->idCalificante;
-                    $calificacion->tratoRecibido = $datos->tratoRecibido;
-                    $calificacion->comentario = $datos->comentario;
-                    $calificacion->save();
-                    DB::commit();
-                    return response()->json([
-                        'resultado' => 1,
-                        'message' => 'Se ha enviado la calificacion'
-                    ]);
+                    $resultado = CalificacionOrganizacion::where('idCalificado',$datos->idCalificado)->where('idCalificante',$datos->idCalificante)->first();
+
+                    if(!$resultado)
+                    {
+                        DB::beginTransaction();
+                        $calificacion = new CalificacionOrganizacion;
+                        $calificacion->idCalificado = $datos->idCalificado;
+                        $calificacion->idCalificante = $datos->idCalificante;
+                        $calificacion->tratoRecibido = $datos->tratoRecibido;
+                        $calificacion->comentario = $datos->comentario;
+                        $calificacion->save();
+                        DB::commit();
+                        return response()->json([
+                            'resultado' => 1,
+                            'message' => 'Se ha enviado la calificacion'
+                        ]);
+                    }
+                    else
+                    {
+                        return response()->json([
+                            'resultado' => 0,
+                            'message' => 'Error: Ya ha realizado esta calificacion'
+                        ]);
+                    }
+
                 }
+
                 else
                 {
                     return response()->json([
                         'resultado' => 0,
-                        'message' => 'Error: Ya ha realizado esta calificacion'
+                        'message' => 'ACCION NO PERMITIDA'
                     ]);
                 }
-
             }
-
             else
             {
                 return response()->json([
                     'resultado' => 0,
-                    'message' => 'ACCION NO PERMITIDA'
+                    'message' => 'No estas logueado'
                 ]);
             }
 
