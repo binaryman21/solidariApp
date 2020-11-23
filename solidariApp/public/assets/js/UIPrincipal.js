@@ -1,4 +1,4 @@
-isLoggedIn();
+isLoggedIn({funcionSuccess:undefined, RedirectIfNot: false});
 
 $( document ).ready(function() {
 

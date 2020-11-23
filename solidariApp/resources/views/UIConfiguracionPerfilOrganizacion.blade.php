@@ -3,43 +3,33 @@
 @section("contenido")
 @parent
 <!-- container -->
-<div class="container-sm perfil bg-white p-2 px-lg-5">
+<div class="container-sm perfil bg-white p-3 px-lg-5">
     <div class="row mb-4">
         <!-- Administracion de datos basicos -->
         <div class="col">
             <h5 class="mt-3">Administracion de datos basicos</h5>
             <div class="card-text text-muted">Aqui puedes configurar los datos basicos de tu cuenta como portada, avatar y descripcion</div>
-            <div class="p-4">
-                <div class="card mb-3 border-light">
-                    <img src="{{URL::asset('assets/img/cover.svg')}}" class="card-img-top" alt="Portada actual">
-                    <div class="card-body">
-                        <h5 class="card-title">Portada de su cuenta</h5>
-                        <p class="card-text text-muted">Aqui puede establecer la portada para su cuenta, recomendamos una imagen de estilo banner</p>
-                        <div class="custom-file mt-3">
-                            <input type="file" class="custom-file-input" id="customFile" lang="es">
-                            <label class="custom-file-label" for="customFile">Subir nueva portada</label>
-                        </div>
-                    </div>
+            <div class="card card-user mb-3">
+                <div class="card-img-block">
+                    <img id="cover" src="/assets/img/cover.svg" class="img-fluid" alt="portada de la organizacion">
+                    <label for="actualizarPortada" class="fas fa-camera">
+                        <input type="file" id="actualizarPortada">
+                    </label>
                 </div>
-
-                <div class="media mt-5">
-                    <img src="{{URL::asset('assets/img/imgUserProfile.png')}}" class="mr-3" alt="..." style="width: 70px;">
-                    <div class="media-body pr-4">
-                        <h5 class="mt-0">Avatar de la cuenta</h5>
-                        <div class="text-muted">Aqui puede establecer su avatar de la cuenta cargando una imagen, la misma debe estar en formato .jpg</div>
-                        <div class="custom-file mt-3">
-                            <input type="file" class="custom-file-input" id="customFile" lang="es">
-                            <label class="custom-file-label" for="customFile">Subir avatar</label>
-                        </div>
+                <div class="card-body pt-5">
+                    <div class="media">
+                        <img id="urlFotoPerfilOrganizacion" class="rounded-circle imgPerfilOrg align-self-start mr-auto" src="/assets/img/imgUserProfile.png" alt="imagen de usuario">
+                        <label for="actualizarAvatar" class="fas fa-camera">
+                            <input type="file" id="actualizarAvatar">
+                        </label>
                     </div>
-                </div>
-
-                <div class="card mt-5">
-                    <div class="card-body">
-                        <h5 class="card-title">Descripcion de tu organizacion</h5>
-                        <p class="card-text">Incluye una descripcion adecuada para describir tu organizacion</p>
-                        <textarea class="form-control"></textarea>
+                    <div class="clearfix"></div>
+                    <h5 class="card-title mt-2 loading ldg-w-sm" id="nombreOrganizacion"></h5>
+                    <h6 class="card-subtitle text-muted loading" id="tipoOrganizacion"></h6>
+                    <div class="form-group">
+                        <textarea max-length="500" rows="5" class="form-control card-text mt-4 loading ldg-w-lg ldg-block" id="descripcionOrganizacion"></textarea>
                     </div>
+                    <!--<small class="card-text text-muted loading" id="fechaAltaUsuario"></small>-->
                 </div>
             </div>
         </div>

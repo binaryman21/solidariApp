@@ -11,8 +11,7 @@
             <div class="media">
                 <img id="urlFotoPerfilOrganizacion" class="rounded-circle imgPerfilOrg align-self-start mr-auto" src="{{URL::asset('assets/img/imgUserProfile.png')}}" alt="imagen de usuario">
             </div>
-            <button class="user-action d-flex btn ml-auto p-0" type="button" data-toggle="modal" href="#modalSubscribirse" id="btnSuscribirse">-------</button>
-            <div class="clearfix mb-n4"></div>
+            <div class="clearfix"></div>
             <h5 class="card-title mt-2 loading ldg-w-sm" id="nombreOrganizacion"></h5>
             <h6 class="card-subtitle text-muted loading" id="tipoOrganizacion"></h6>
             <p class="card-text mt-4 loading ldg-w-lg ldg-block" id="descripcionOrganizacion"></p>
@@ -39,19 +38,23 @@
                             <button class="btn btn-outline-secondary border-secondary border-left-0" id="btnBuscarNeccesidades" type="button"><i class="fa fa-search fa-xs"></i></button>
                         </div>
                     </div>
-                    <!-- TABS En progreso | Finalizadas -->
-                    <ul class="nav nav-tabs" id="necesidadeTABS" role="tablist">
+                    <!-- TABS En progreso | Cumplidas | Eliminadas -->
+                    <ul class="nav nav-tabs" id="necesidadesTABS" role="tablist">
                         <li class="nav-item" role="presentation">
-                            <a class="nav-link active" id="inprogress-tab" data-toggle="tab" href="#necesidadesEnProgreso" role="tab" aria-controls="En progreso" aria-selected="true">En progreso</a>
+                            <a class="nav-link active" id="enproceso-tab" data-toggle="tab" href="#necesidadesEnProceso" role="tab" aria-controls="En proceso" aria-selected="true">En proceso</a>
                         </li>
                         <li class="nav-item" role="presentation">
-                            <a class="nav-link" id="finished-tab" data-toggle="tab" href="#necesidadesFinalizadas" role="tab" aria-controls="Finalizadas" aria-selected="false">Finalizadas</a>
+                            <a class="nav-link" id="cumplidas-tab" data-toggle="tab" href="#necesidadesCumplidas" role="tab" aria-controls="Cumplidas" aria-selected="false">Cumplidas</a>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <a class="nav-link" id="eliminadas-tab" data-toggle="tab" href="#necesidadesEliminadas" role="tab" aria-controls="Eliminadas" aria-selected="false">Eliminadas</a>
                         </li>
                     </ul>
                     <!-- Contenedor de las necesidades -->
                     <div class="tab-content" id="misNecesidades">
-                        <div class="tab-pane fade active show" id="necesidadesEnProgreso" role="tabpanel" aria-labelledby="inprogress-tab"></div>
-                        <div class="tab-pane fade" id="necesidadesFinalizadas" role="tabpanel" aria-labelledby="finished-tab"></div>
+                        <div class="tab-pane fade active show" id="necesidadesEnProceso" role="tabpanel" aria-labelledby="enproceso-tab"></div>
+                        <div class="tab-pane fade" id="necesidadesCumplidas" role="tabpanel" aria-labelledby="cumplidas-tab"></div>
+                        <div class="tab-pane fade" id="necesidadesEliminadas" role="tabpanel" aria-labelledby="eliminadas-tab"></div>
                     </div>
                 </div>
             </div>
@@ -109,6 +112,6 @@
 @section('scripts')
     @parent
     <script type="text/javascript" src="{{URL::asset('assets/js/utilidades.js')}}"></script>
-    <script type="text/javascript" src="{{URL::asset('assets/js/necesidades.js')}}"></script>
+    <script type="text/javascript" src="{{URL::asset('assets/js/necesidad.js')}}"></script>
     <script type="text/javascript" src="{{URL::asset('assets/js/perfilOrganizacion.js')}}"></script>
 @endsection

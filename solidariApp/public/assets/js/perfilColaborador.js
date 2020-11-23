@@ -17,6 +17,7 @@ function getColaborador(idUsuario){
        
         agregarContacto(response.data);
         listarColaboraciones(idUsuario);
+        cargarInsignias(idUsuario);
     });
 }
 

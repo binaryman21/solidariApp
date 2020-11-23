@@ -23,6 +23,8 @@ function getOrganizacion(idUsuario){
         $("#fechaAltaUsuario").html(`Usuario desde el ${moment(organizacion.fechaAltaUsuario, "YYYY-MM-DD HH:mm:ss").format('LL')}`);
         agregarModalContacto(response.data);
         cargarNecesidades(idUsuario);
+        cargarInsignias( idUsuario );
+        cargarComentariosOrganizacion(idUsuario);
     });
 
 }
@@ -34,23 +36,34 @@ function cargarNecesidades ( idUsuario){
     .then(data => {
 
         let necesidades = data.necesidades;
-        let divNecesidadesEnProgreso = $('#necesidadesEnProgreso');
-        let divNecesidadesFinalizadas = $('#necesidadesFinalizadas');
+        let divNecesidadesEnProgreso = $('#necesidadesEnProceso');
+        let divNecesidadesCumplidas = $('#necesidadesCumplidas');
+        let divNecesidadesEliminadas = $('#necesidadesEliminadas');
+        
 
         if(necesidades != null || necesidades.length>0){
 
             necesidades.forEach(need => {
 
+                let porcentajeAvance = calcularPorcentaje(need);
+
                 let cardNeed = 
-                `<div class="card need ${need.nombreCategoria.toLowerCase()} ${need.fechaBajaNecesidad==null ? 'inprogress':'finished'}" id="necesidad${need.idNecesidad}">
+                `<div class="card need ${need.nombreCategoria.toLowerCase()} ${need.descripcionEstado.replace(/\s+/g, "")}" id="necesidad${need.idNecesidad}">
+                    <!-- CATEGORIA, FECHA, ESTADO Y DESCRIPCION -->
                     <div class="card-body py-2">
                         <h6 class="card-title mb-n1">${capitalize(need.nombreCategoria)}</h6>
-                        <small class="card-subtitle text-muted font-weight-light">Creada hace ${capitalize(moment(need.fechaCreacionNecesidad, "YYYY-MM-DD HH:mm:ss").startOf('day').fromNow())} - ${need.fechaBajaNecesidad==null ? 'En progreso':'Finalizado'}</small>
-                        <div class="card-text mt-2 text-muted">
-                            <p>${capitalize(need.descripcionNecesidad)}</p>
-                            <small text-black-50>Cantidad: ${need.cantidadNecesidad}</small>
-                            </div>
+                        <small class="card-subtitle text-muted font-weight-light">Creada hace ${capitalize(moment(need.fechaCreacionNecesidad, "YYYY-MM-DD HH:mm:ss").startOf('day').fromNow())} - ${capitalize(need.descripcionEstado)}</small>
+                        <div class="card-text mt-2 text-muted">${capitalize(need.descripcionNecesidad)}</div>
                     </div>
+                    <!-- PROGRESO (SOLICITADO Y RECIBIDO) -->
+                    <div class="progress">
+                        <div class="progress-count d-flex mx-3">
+                            <p class="mr-auto">Se solicita: ${need.cantidadNecesidad}</p>
+                            <p class="mr-auto">Se recibio: ${need.cantidadRecibida || 0}</p>
+                        </div>
+                        <div class="progress-bar" role="progressbar" style="width:${ porcentajeAvance }%;" aria-valuenow="${ porcentajeAvance }" aria-valuemin="0" aria-valuemax="100"></div>
+                    </div>
+                    <!-- FECHA LIMITE Y COLABORACIONES -->
                     <div class="card-footer py-0 d-flex justify-content-between align-items-center">
                         <small class="text-muted ">Fecha limite: ${ new Date(need.fechaLimiteNecesidad).toLocaleDateString('es-AR')}</small>
                         <a href="#" data-toggle="modal" data-target="#modalDetalleNecesidad" id="btnDetalleNecesidad${need.idNecesidad}" class="text-black-50">
@@ -60,8 +73,12 @@ function cargarNecesidades ( idUsuario){
                     </div>
                 </div>`;
 
-                if(need.fechaBajaNecesidad==null) divNecesidadesEnProgreso.append(cardNeed);
-                else divNecesidadesFinalizadas.append(cardNeed);
+                switch(need.estadoNecesidad){
+
+                    case 1: divNecesidadesEnProgreso.append(cardNeed); break;
+                    case 2: divNecesidadesCumplidas.append(cardNeed); break;
+                    default: divNecesidadesEliminadas.append(cardNeed);
+                }
             })
 
             agregarPaginacionNecesidades();
@@ -90,70 +107,57 @@ function cargarNecesidades ( idUsuario){
 
 function agregarPaginacionNecesidades(){
 
-    let $necesidadesEnProgreso = $('#necesidadesEnProgreso');
-    let $necesidadesFinalizadas = $('#necesidadesFinalizadas');
+    paginarTabNecesidad({containerType:'EnProceso', ListType:'enproceso'});
+    paginarTabNecesidad({containerType:'Cumplidas', ListType:'cumplida'});
+    paginarTabNecesidad({containerType:'Eliminadas', ListType:'eliminada'});
+}
 
-    $necesidadesEnProgreso.append('<div id=navNecesidadesEnProgreso></div>');
-    $necesidadesFinalizadas.append('<div id=navNecesidadesFinalizadas></div>');
+function paginarTabNecesidad({containerType = '', ListType = ''} = {}){
 
-    let $navEnProgreso = $('#navNecesidadesEnProgreso');
-    let $navFinalizadas = $('#navNecesidadesFinalizadas');
+    let $necesidadesContainer = $(`#necesidades${containerType}`);
+    let necesidades = document.querySelectorAll(`.need.${ListType}`);
+    let filasTotales= necesidades.length;
 
-    let enprogreso = document.querySelectorAll('.need.inprogress');
-    let finalizadas = document.querySelectorAll('.need.finished');
+    if(filasTotales){
 
-    let filasMostradas = 4;
-    let filasTotalesEnProgeso = enprogreso.length;
-    let filasTotalesFinalizadas = finalizadas.length;
-
-    let numPaginasEnProgreso = filasTotalesEnProgeso/filasMostradas;
-    let numPaginasFinalizadas = filasTotalesFinalizadas/filasMostradas;
+        $necesidadesContainer.append(`<div id=navNecesidades${containerType}></div>`);
+        let $nav = $(`#navNecesidades${containerType}`);
     
-    for(i = 0; i < numPaginasEnProgreso; i++) {
-
-        let numPag = i + 1;
-        let pagRel = `<a href="JavaScript:Void(0);" rel="${i}" ${!i ? 'class="active"':''}">${numPag}</a>`
-        $navEnProgreso.append(pagRel);
+        let filasMostradas = 4;
+    
+        let numPaginas = filasTotales/filasMostradas;
+    
+        for(i = 0; i < numPaginas; i++) {
+    
+            let numPag = i + 1;
+            let pagRel = `<a href="JavaScript:Void(0);" rel="${i}" ${!i ? 'class="active"':''}">${numPag}</a>`
+            $nav.append(pagRel);
+        }
+    
+        $(necesidades).hide();
+        $(necesidades).slice(0, filasMostradas).show();
+    
+        $nav.find('a').bind('click', function(){
+    
+            $nav.find('a').removeClass('active');
+            $(this).addClass('active');
+    
+            let pagActual = $(this).attr('rel');
+    
+            let primerItem = pagActual * filasMostradas;
+            let ultimoItem = primerItem + filasMostradas;
+            $(necesidades).css('opacity','0.0').hide().slice(primerItem, ultimoItem).
+                css('display','block').animate({opacity:1}, 300);
+        });
     }
+    else {
 
-    for(i = 0; i < numPaginasFinalizadas; i++) {
-
-        let numPag = i + 1;
-        let pagRel = `<a href="JavaScript:Void(0);" rel="${i}" ${!i ? 'class="active"':''}">${numPag}</a>`
-        $navFinalizadas.append(pagRel);
-    }
-
-    $(enprogreso).hide();
-    $(enprogreso).slice(0, filasMostradas).show();
-
-    $(finalizadas).hide();
-    $(finalizadas).slice(0, filasMostradas).show();
-    $navEnProgreso.find('a').bind('click', function(){
-
-        $navEnProgreso.find('a').removeClass('active');
-        $(this).addClass('active');
-
-        let pagActual = $(this).attr('rel');
-
-        let primerItem = pagActual * filasMostradas;
-        let ultimoItem = primerItem + filasMostradas;
-        $(enprogreso).css('opacity','0.0').hide().slice(primerItem, ultimoItem).
-            css('display','block').animate({opacity:1}, 300);
-    });
-
-    $navFinalizadas.find('a').bind('click', function(){
-
-        $navFinalizadas.find('a').removeClass('active');
-        $(this).addClass('active');
-
-        let pagActual = $(this).attr('rel');
-
-        let primerItem = pagActual * filasMostradas;
-        let ultimoItem = primerItem + filasMostradas;
-        $(finalizadas).css('opacity','0.0').hide().slice(primerItem, ultimoItem).
-            css('display','block').animate({opacity:1}, 300);
-    });
-
+        let tabType = document.querySelector(`a.nav-link[href="#necesidades${containerType}"]`).textContent.toLowerCase();
+        let emptyStateOfNeed = 
+        `<img src="/assets/img/SinNecesidades${containerType}.svg">
+         <p class="text-center my-5">No hay necesidades ${tabType}</p>`
+        $necesidadesContainer.append(emptyStateOfNeed);
+    } 
 }
 
 function agregarModalContacto(contacto){
@@ -198,6 +202,34 @@ function agregarModalContacto(contacto){
     else $listadoTelefonos.html('<p class="mb-2">No hay telefonos registrados</p>');
 
     $("#btn-contacto").toggleClass('d-none');
+}
+
+function agregarPaginacionComentarios(){
+    $('#navComentarios').remove();
+
+    $('.comentarios').after('<div id="navComentarios"></div>');
+    let comentario = document.querySelectorAll('.comentario')
+    let filasMostradas = 2;
+    let filasTotales = comentario.length;
+
+    let numPaginas = filasTotales/filasMostradas;
+    for(i = 0; i < numPaginas; i++) {
+        let numPag = i + 1;
+        $('#navComentarios').append('<a href="javascript:void(0);" rel="' + i + '">' + numPag + '</a> ');
+    }
+
+    $( comentario ).hide();
+    $( comentario ).slice(0, filasMostradas).show();
+    $('#navComentarios a:first').addClass('active');
+    $('#navComentarios a').bind('click', function(){
+        $('#navComentarios a').removeClass('active');
+        $(this).addClass('active');
+        let pagActual = $(this).attr('rel');
+        let primerItem = pagActual * filasMostradas;
+        let ultimoItem = primerItem + filasMostradas;
+        $( comentario ).css('opacity','0.0').hide().slice(primerItem, ultimoItem).
+            css('display','block').animate({opacity:1}, 300);
+    });
 }
 
 function capitalize(text){

@@ -34,7 +34,13 @@ function isLoggedIn({funcionSuccess = undefined, RedirectIfNot = false} = {})
                 funcionSuccess(data.usuario.idUsuario);
             }
         }
-        else if(RedirectIfNot) window.location = '/';
+        else {
+
+            $("#dropDownUsuario").hide();
+            $("#btnIngresar").show();
+            $("#botonesRegistro").show();
+            if(RedirectIfNot) window.location = '/';
+        } 
     });
 }
 
@@ -69,7 +75,7 @@ function cerrarSesion()
     signOut();
     axios.post("/logOut")
     .then((response)=>{
-        console.log(response.data);
+
         window.location= "/";
     });
 }

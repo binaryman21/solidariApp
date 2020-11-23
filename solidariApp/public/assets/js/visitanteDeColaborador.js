@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
 
     //Obtengo la url para saber el id de colaborador
-    var id = +location.pathname.slice('/colaborador/'.length);
+    var id = +location.pathname.slice('/ver-colaborador/'.length);
     isLoggedIn();
     getColaborador(id);
 })

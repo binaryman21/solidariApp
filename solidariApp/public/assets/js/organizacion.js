@@ -3,25 +3,19 @@
 document.addEventListener('DOMContentLoaded', ()=>{
 
     //Obtengo la url para saber el id de organizacion
-    var url = $(location).attr('href').split("/");
-    //alert(url);
-    if(url.length == 5 && url[4] != "" && !isNaN(url[4])){
-        isLoggedIn();
-        getOrganizacion(url[4],1);
-        // $("#btnSuscribirse").removeClass("d-none");
-        // $("#btnCalificar").removeClass("d-none");
-        // $("#editarMiPerfil").addClass("d-none");
+    var id = +location.pathname.slice("/organizacion/".length);
+    if(id && typeof(id)=='number'){
+
+        isLoggedIn({funcionSuccess:undefined, RedirectIfNot:true});
+        getOrganizacion(id);
         $('.soloOrganizacion').addClass('d-none');
         $('.soloVisitante').removeClass('d-none');
     }
-    else if(url.length == 4 || (url.length == 5 && url[4] == "")){
-        isLoggedIn(getOrganizacion);
-        // $("#editarMiPerfil").removeClass("d-none");
+    else{
+
+        isLoggedIn({funcionSuccess:getOrganizacion, RedirectIfNot:true});
         $('.soloVisitante').addClass('d-none');
         $('.soloOrganizacion').removeClass('d-none');
-    }
-    else{
-        window.location = "/";
     }
 
     listarCategorias();
@@ -94,32 +88,32 @@ function bajaUsuario()
 function getOrganizacion(idUsuario, vistaVisitante = 0){
 
     if(vistaVisitante == 0){
-    $("#btnNuevaNecesidad").click(function(){
-        limpiarValidaciones($("#inpFechaLimite"),  $("#errorFechaLimite") );
-        limpiarValidaciones($("#slctCategoria"), $("#errorCategoria"));
-        limpiarValidaciones($("#inpCantidad"), $("#errorCantidad"));
-        limpiarValidaciones($("#txtDescripcion"), $("#errorDescripcion"));
-        document.getElementById("formEditarNecesidad").reset();
-        $("#modalEditarNecesidad .modal-content").removeClass($("#categoriaActual").val());
-        $("#btnGuardarCambiosNecesidad").unbind( "click" );
-        $("#btnGuardarCambiosNecesidad").click(function(e){
-            e.preventDefault();
-            if( validarNecesidad() ){
-                bloquearBoton($("#btnGuardarCambiosNecesidad"));
-                registrarNecesidad(idUsuario);
+        $("#btnNuevaNecesidad").click(function(){
+            limpiarValidaciones($("#inpFechaLimite"),  $("#errorFechaLimite") );
+            limpiarValidaciones($("#slctCategoria"), $("#errorCategoria"));
+            limpiarValidaciones($("#inpCantidad"), $("#errorCantidad"));
+            limpiarValidaciones($("#txtDescripcion"), $("#errorDescripcion"));
+            document.getElementById("formEditarNecesidad").reset();
+            $("#modalEditarNecesidad .modal-content").removeClass($("#categoriaActual").val());
+            $("#btnGuardarCambiosNecesidad").unbind( "click" );
+            $("#btnGuardarCambiosNecesidad").click(function(e){
+                e.preventDefault();
+                if( validarNecesidad() ){
+                    bloquearBoton($("#btnGuardarCambiosNecesidad"));
+                    registrarNecesidad(idUsuario);
+                }
+            });
+        });
+        $("#btnGuardarDescripcion").click(function()
+        {
+            actualizarDescripcion(idUsuario);
+        });
+        $("#btnAgregarTelefono").click(function()
+        {
+            if( validarTelefono( '' ) ){
+                agregarTelefono(idUsuario);
             }
         });
-    });
-    $("#btnGuardarDescripcion").click(function()
-    {
-        actualizarDescripcion(idUsuario);
-    });
-    $("#btnAgregarTelefono").click(function()
-    {
-        if( validarTelefono( '' ) ){
-            agregarTelefono(idUsuario);
-        }
-    });
     }
     //CARGAR NECESIDADES
     cargarNecesidades( idUsuario, vistaVisitante );
