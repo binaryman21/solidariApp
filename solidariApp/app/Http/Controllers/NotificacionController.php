@@ -8,6 +8,7 @@ use App\Models\Organizacion;
 use App\Models\Colaborador;
 use App\Models\Colaboracion;
 use App\Models\Calificacion;
+use App\Models\CalificacionOrganizacion;
 use App\Models\Necesidad;
 use App\Models\TratoCalificacion;
 use App\Models\CategoriNecesidad;
@@ -36,7 +37,7 @@ class NotificacionController extends Controller
                     $notificacion['emisor'] = $organizacion;
                 }
                 if($notificacion->leido == '0') $noLeidas++;
-                //SI ES DE TIPO 1 o 5 TIENE NECECEISDADES
+                //SI ES DE TIPO 1, 2 o 5 TIENE NECECEISDADES
                 if($notificacion->idMensaje == 1 || $notificacion->idMensaje == 5 || $notificacion->idMensaje == 2){
                     $necesidad = Necesidad::getNecesidad($notificacion->idNecesidad);
                     $categoria = CategoriaNecesidad::getCategoria($necesidad->idCategoriaNecesidad);
@@ -45,11 +46,19 @@ class NotificacionController extends Controller
                     $notificacion['necesidad'] = $necesidad;
 
                 }
+                //SI ES DE TIPO 2 TIENE UNA AYUDA CALIFICADA
                 if($notificacion->idMensaje == 2){
-                    $calificacion = Calificacion::getCalificacion($notificacion->idColaboracion);
-                    // $tratoRecibido = TratoCalificacion::getTrato($calificacion->comentario);
-                    // $notificacion['tratoRecibido'] = $tratoRecibido->descripcion;
+                    $calificacion = Calificacion::where('idColaboracion', '=', $notificacion->idColaboracion)->first();
+                    $tratoRecibido = TratoCalificacion::where('idTrato','=', $calificacion->tratoRecibido)->first();;
+                    $notificacion['tratoRecibido'] = $tratoRecibido->descripcion;
                 }
+                //SI ES TIPO 6 TIENE UNA CALIFICACION SOBRE SU ORGANIZACION
+                if($notificacion->idMensaje == 6){
+                    $calificacion = CalificacionOrganizacion::where('idCalificado',$notificacion->idReceptor)->where('idCalificante',$notificacion->idEmisor)->first();
+                    $tratoRecibido = TratoCalificacion::where('idTrato','=', $calificacion->tratoRecibido)->first();
+                    $notificacion['tratoRecibido'] = $tratoRecibido->descripcion;
+                }
+
             }
 
             return response()->json([

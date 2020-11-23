@@ -104,7 +104,7 @@ function mostrarNotificaciones(notificaciones,noLeidas){
                             </div>
                             <a class="font-weight-bold text-dark text-decoration-none notificacionEmisor${notificacion.idNotificacion} " href="/organizacion/${notificacion.idEmisor}">${nombre}</a>
                             <div class="d-flex flex-wrap">
-                            <p>${msj} con <a class="font-weight-bold text-dark text-decoration-none notificacionVerNecesidad${notificacion.idNotificacion}">${nombreCategoria}</a> como ${trato}</p>
+                            <p>${msj} con  ${nombreCategoria} como ${trato}</p>
                             </div>
                         </div>
                     </div>
@@ -161,6 +161,7 @@ function mostrarNotificaciones(notificaciones,noLeidas){
         }
         //NOTIFICACIONES EXCLUSIVAS PARA CUANDO UN COLABORADOR CALIFICA UNA ORGANIZACION
         else if(notificacion.idMensaje == 6){
+            let trato = notificacion.tratoRecibido;
 
             cardNotificacion = `
             <div class="container border-top sombra  p-2">
@@ -176,7 +177,8 @@ function mostrarNotificaciones(notificaciones,noLeidas){
                             </div>
                             <a class="font-weight-bold text-dark text-decoration-none notificacionEmisor${notificacion.idNotificacion} " href="/colaborador/${notificacion.idEmisor}">${nombre}</a>
                             <div class="d-flex flex-wrap">
-                            <p>${msj}. <a class="font-weight-bold text-dark text-decoration-none notificacionVerNecesidad${notificacion.idNotificacion}" href="/organizacion/${notificacion.idReceptor}">¿Quieres ver tus calificaciones?</a></p>
+                            <p>${msj} como ${trato}</p><br>
+                            <a class="font-weight-bold text-dark text-decoration-none notificacionVerNecesidad${notificacion.idNotificacion}" href="/organizacion/${notificacion.idReceptor}">¿Quieres ver tus calificaciones?</a>
                             </div>
                         </div>
                     </div>
@@ -189,7 +191,7 @@ function mostrarNotificaciones(notificaciones,noLeidas){
 
         $("#dropNotificaciones").append(cardNotificacion);
 
-        if( notificacion.idMensaje == 1 || notificacion.idMensaje == 5 ){
+        if( notificacion.idMensaje == 1 || notificacion.idMensaje == 5 || notificacion.idMensaje == 6){
             let necesidad = notificacion.necesidad;
             $(`.notificacionVerNecesidad${notificacion.idNotificacion}`).on('click',function(){
                 if(!notificacion.leido){
@@ -208,7 +210,15 @@ function mostrarNotificaciones(notificaciones,noLeidas){
                 $('#modalNotificaciones').modal('hide');
             })
         }
-
+        // $(`.notificacionVerPerfil${notificacion.idReceptor}`).on('click',function(){
+        //     if(!notificacion.leido){
+        //         notificacion.leido = "1";
+        //         if(!upDateNotificacion(notificacion)){
+        //             noLeidas = noLeidas -1;
+        //             mostrarNotificaciones(notificaciones,noLeidas);
+        //         };
+        //     }
+        // })
         $(`.notificacionEmisor${notificacion.idNotificacion}`).on('click',function(){
             if(!notificacion.leido){
                 notificacion.leido = "1";
