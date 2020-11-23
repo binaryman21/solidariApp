@@ -13,26 +13,38 @@ class DenunciaController extends Controller
     //
     public function altaDenuncia( Request $request ){
         try{
-            if(UsuarioController::tienePermisoPara("registrarDenuncia"))
+            session_start();
+            if(isset($_SESSION['usuario']))
             {
-                $datosReporte = json_decode($request->getContent());
-                $denuncia = new Denuncia;
-                $denuncia->idMotivoDenuncia = $datosReporte->motivo;
-                $denuncia->fechaDenuncia = $datosReporte->fecha;
-                $denuncia->idDenunciante = $datosReporte->idDenunciante;
-                $denuncia->idDenunciado = $datosReporte->idDenunciado;
-                $denuncia->descripcionDenuncia = $datosReporte->descripcion;
-                $denuncia->save();
-                return response()->json([
-                    'resultado' => 1,
-                    'message' => 'denuncia realizada'
-                ]);
+                if(UsuarioController::tienePermisoPara("registrarDenuncia"))
+                {
+                    $datosReporte = json_decode($request->getContent());
+                    $datosReporte->idDenunciante = $_SESSION['usuario']->idUsuario;
+                    $denuncia = new Denuncia;
+                    $denuncia->idMotivoDenuncia = $datosReporte->motivo;
+                    $denuncia->fechaDenuncia = $datosReporte->fecha;
+                    $denuncia->idDenunciante = $datosReporte->idDenunciante;
+                    $denuncia->idDenunciado = $datosReporte->idDenunciado;
+                    $denuncia->descripcionDenuncia = $datosReporte->descripcion;
+                    $denuncia->save();
+                    return response()->json([
+                        'resultado' => 1,
+                        'message' => 'denuncia realizada'
+                    ]);
+                }
+                else
+                {
+                    return response()->json([
+                        'resultado' => 0,
+                        'message' => "ACCION NO PERMITIDA",
+                    ]);
+                }
             }
             else
             {
                 return response()->json([
                     'resultado' => 0,
-                    'message' => "ACCION NO PERMITIDA",
+                    'message' => 'No estas logueado'
                 ]);
             }
         }

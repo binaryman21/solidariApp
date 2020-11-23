@@ -95,19 +95,31 @@ class OrganizacionController extends Controller
 
     public function getOrganizacion($idUsuario){
 
-        return response()->json([
-            'organizacion' => Organizacion::getOrganizacion($idUsuario),
-            'domicilios' => Domicilio::listarDomiciliosUsuario($idUsuario),
-            'telefonos' => Telefono::listarTelefonosUsuario($idUsuario)
-        ]);
-
-    /*$datos = [
-    'organizacion' => Organizacion::getOrganizacion($idUsuario),
-    'domicilios' => Domicilio::listarDomiciliosUsuario($idUsuario),
-    'telefonos' => Telefono::listarTelefonosUsuario($idUsuario)
-    ];
-
-        return view("UIPerfilOrganizacion",['datos'=>$datos]);*/
+        try{
+            $organizacion = Organizacion::getOrganizacion($idUsuario);
+            if( $organizacion ){
+                return response()->json([
+                    'resultado' => 1,
+                    'organizacion' => $organizacion,
+                    'domicilios' => Domicilio::listarDomiciliosUsuario($idUsuario),
+                    'telefonos' => Telefono::listarTelefonosUsuario($idUsuario)
+                ]);
+            }
+            else{
+                return response()->json([
+                    'resultado' => 0,
+                    'message'=> 'No se encontro al colaborador',
+                    'redireccion'=>'/error404'
+                ]);
+            }
+        }
+        catch (\Exception $e)
+        {
+            return response()->json([
+                'resultado' => 0,
+                'message' => $e->getMessage()
+            ]);
+        }
     }
 
     public function busquedaOrganizaciones($filtroTexto){

@@ -190,6 +190,7 @@ class UsuarioController extends Controller
                 try
                 {
                     $datosClaves = json_decode($request->getContent());
+                    $datosClaves->idUsuario = $_SESSION['usuario']->idUsuario;
                     $datosClaves->claveVieja = hash( 'sha256', $datosClaves->claveVieja );
                     $datosClaves->claveNueva = hash( 'sha256', $datosClaves->claveNueva );
                     $user = Usuario::comprobarClave( $datosClaves );
