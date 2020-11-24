@@ -565,10 +565,13 @@ function validarComentario( comentario, error ){
         mostrarError( comentario, error, 'Complete el comentario');
         return false;
     }
+    else if(comentario.val().length < 4){
+        mostrarError( comentario, error, 'El comentario debe tener al menos 4 caracteres');
+        return false;
+    }
     quitarError( comentario, error );
     return true;
 }
-
 
 function mostrarError( campo, nombreError, texto ){
     nombreError.text( texto );
