@@ -20,6 +20,34 @@ class NecesidadController extends Controller
             if(UsuarioController::tienePermisoPara("registrarNecesidad"))
             {
                 $datosNecesidad = json_decode($request->getContent());
+
+                //VALIDO SI LA CANTIDAD INGRESADA ES UN NUMERO
+                if($datosNecesidad->cantidadNecesidad == "")
+                {
+                    $datosNecesidad->cantidadNecesidad == 0;
+                }
+                else
+                {
+                     //VALIDO SI LA CANTIDAD INGRESADA ES UN NUMERO
+                     if(is_numeric($datosNecesidad->cantidadNecesidad))
+                     {
+                         //VALIDO SI LA CANTIDAD INGRESADA ES POSITIVA
+                         if($datosNecesidad->cantidadNecesidad < 0)
+                         {
+                             return response()->json([
+                                 'resultado' => 0,
+                                 'message' => 'La cantidad debe ser mayor a 0'
+                             ]);
+                         }
+                     }
+                     else
+                     {
+                         return response()->json([
+                             'resultado' => 0,
+                             'message' => 'La cantidad debe ser un numero'
+                         ]);
+                     }
+                }
                 DB::beginTransaction();
                 $necesidad = new Necesidad;
                 $necesidad->descripcionNecesidad = $datosNecesidad ->descripcionNecesidad;

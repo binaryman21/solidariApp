@@ -27,6 +27,32 @@ class CalificacionController extends Controller
 
                     if(!$resultado)
                     {
+                        if(!$datos->ayudaConcretada){
+                            $datos->cantidadRecibida = 0;
+                        }
+                        else
+                        {
+                            //VALIDO SI LA CANTIDAD INGRESADA ES UN NUMERO
+                            if(is_numeric($datos->cantidadRecibida))
+                            {
+                                //VALIDO SI LA CANTIDAD INGRESADA ES POSITIVA
+                                if($datos->cantidadRecibida < 0)
+                                {
+                                    return response()->json([
+                                        'resultado' => 0,
+                                        'message' => 'La cantidad debe ser mayor a 0'
+                                    ]);
+                                }
+                            }
+                            else
+                            {
+                                return response()->json([
+                                    'resultado' => 0,
+                                    'message' => 'La cantidad debe ser un numero'
+                                ]);
+                            }
+                        }
+
                         DB::beginTransaction();
                         $calificacion = new Calificacion;
                         $calificacion->idColaboracion = $datos->idColaboracion;
@@ -36,9 +62,6 @@ class CalificacionController extends Controller
                         $calificacion->idRolCalificado = $datos->idRolCalificado;
                         $calificacion->save();
 
-                        if(!$datos->ayudaConcretada){
-                            $datos->cantidadRecibida = 0;
-                        }
                         $necesidad = Necesidad::find($datos->idNecesidad);
                         $necesidad->cantidadRecibida += $datos->cantidadRecibida;
                         if($necesidad->cantidadRecibida > $necesidad->cantidadNecesidad){
