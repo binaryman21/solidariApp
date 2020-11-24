@@ -16,6 +16,7 @@ class Usuario extends Model
         $email = $datosLogin->email;
         $pass = $datosLogin->pass;
         $idGoogle = $datosLogin->idGoogle;
+        
         $usuario = Usuario::with('rol.permisos')
                             ->where('emailUsuario', $email)
                             ->where('claveUsuario',$pass)

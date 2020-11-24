@@ -23,7 +23,8 @@ class OrganizacionController extends Controller
             if(Usuario::isUser($usuario->emailUsuario))
             {
                 return response()->json([
-                    'resultado' => 0
+                    'resultado' => 0,
+                    'message' =>'ya estas registrado'
                 ]);
             }
             $organizacion = new Organizacion;
