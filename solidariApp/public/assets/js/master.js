@@ -7,6 +7,10 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
+    alertify.defaults.transition = 'fade';
+    alertify.defaults.glossary.title = 'SolidariAPP';
+    alertify.defaults.glossary.cancel = 'cancelar';
+    alertify.defaults.glossary.ok = 'confirmar';
 })
 
 /*activo el menu que corresponde*/

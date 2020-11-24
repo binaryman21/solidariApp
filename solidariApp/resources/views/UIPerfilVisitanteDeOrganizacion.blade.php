@@ -106,8 +106,8 @@
 </div>
 
 
-@include("UIPerfilModales/UIModalReportar")
-@include("UIPerfilModales/UIModalSubscribirse")
+@include("UIPerfilModales.UIModalReportar")
+@include("UIPerfilModales.UIModalSuscribirse")
 @endsection
 
 @section('scripts')

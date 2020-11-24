@@ -26,7 +26,7 @@ function limpiarCamposLogin(){
     $('#formRegistroGoogle')[0].reset();
     // Error Login
     $("#errorLogin").hide();
-    // Email
+    // EmailEmail
     $('#emailUsuario').removeClass('is-invalid is-valid');
     $('#errorCorreo').fadeOut();
     // Pass

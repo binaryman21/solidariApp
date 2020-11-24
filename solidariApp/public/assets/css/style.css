@@ -592,6 +592,85 @@ div#misNecesidades div[id^=necesidades] > p{
     box-shadow: none;
     outline: 0 none;
 }
+#nav-tab{
+    
+    width: 100vw;
+}
+
+#config-panels .tab-pane{
+
+    min-height: 700px !important;
+    display: flex;
+    flex-direction:column;
+}
+
+#config-panels .tab-pane:not(.show){
+
+    display: none!important;
+}
+
+#v-nav-tab{
+
+   background-color: #fdfdfd;
+   min-height: 700px;
+}
+
+.shadow-top{
+
+    box-shadow: 1px -4px 7px 2px #b9b9b973;
+    -webkit-box-shadow: 1px -4px 7px 2px #b9b9b973;
+    -moz-box-shadow: 1px -4px 7px 2px #b9b9b973;
+}
+
+#nav-tab .nav-link{
+
+    font-size: .9em;
+    padding:  10px 14px;
+    color: #848483;
+}
+
+#v-pills-tab .nav-link{
+
+    color: #585858;
+}
+
+#v-pills-tab .nav-link.active{
+
+    color: #216bc1;
+    background-color: #e3ecff;
+    font-weight: 500;
+    border-radius: 0;
+}
+
+.dropdown-menu[aria-labelledby^="telOptions-forID"]{
+
+    left: -25px !important;
+}
+
+#fomrs-contact{
+
+    background: white;
+    position: absolute;
+    bottom: 25px;
+    right: 0;
+    left: 0;
+    z-index: 99;
+}
+
+.alertify .ajs-header {
+
+    font-size: 17px!important;
+    padding: 14px 24px!important;
+}
+
+.alertify .ajs-body .ajs-content {
+    padding: 24px 24px 24px 16px!important;
+}
+
+.alertify .ajs-footer{
+
+    padding: 3px!important;
+}
 
 @media (min-width: 768px){
 
