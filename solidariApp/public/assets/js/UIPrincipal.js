@@ -2,7 +2,7 @@ isLoggedIn();
 
 $( document ).ready(function() {
 
-    
+
     if( $('#necesidadOculta').text() == '' && $('#organizacionOculta').text() == ''  ){
         getOrganizaciones();
     }
@@ -25,7 +25,7 @@ $( document ).ready(function() {
     $(document).on('click', '.alert-close', function() {
         $(this).parent().hide();
     })
-    
+
     $("#btnRegistrarseComoOrganizacion").on('click', mostrarRegistrarseComoOrganizacion);
     $("#btnRegistrarseComoColaborador").on('click', mostrarRegistrarseComoColaborador);
 
@@ -148,7 +148,8 @@ function registrarOrganizacion()
                 }
                 else{
                     $("#modalRegistroColOrg").modal("hide");
-                    alertify.error('Algo fallo, intentalo mas tarde')
+                    alertify.error(response.data.message)
+                    console.log(response.data.message);
                     // $("#msjResultadoRegistro").html("Algo fallo, intentalo mas tarde");
                     // $("#modalResultadoRegistro").modal("show");
                 }
@@ -229,7 +230,8 @@ function registrarColaborador()
                 }
                 else{
                     $("#modalRegistroColOrg").modal("hide");
-                    alertify.error('Registro exitoso!')
+                    alertify.error(response.data.message)
+                    console.log(response.data.message);
                     // $("#msjResultadoRegistro").html("Algo fallo, intentalo mas tarde");
                     // $("#modalResultadoRegistro").modal("show");
                 }
