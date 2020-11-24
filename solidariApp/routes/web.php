@@ -152,7 +152,7 @@ Route::get('/listarTipoOrganizaciones', 'App\Http\Controllers\TipoOrganizacionCo
 Route::get('/listarTipoLinks', 'App\Http\Controllers\TipoLinkController@listarTipoLinks')->name('listarTipoLinks');
 Route::get('/listarCategoriasNecesidad', 'App\Http\Controllers\CategoriaNecesidadController@listarCategoriasNecesidad')->name('listarCategoriasNecesidad');
 Route::get('/listarNotificaciones/{idUsuario}', 'App\Http\Controllers\NotificacionController@listarNotificaciones')->name('listarNotificaciones');
-Route::post('/upDateNotificacion', 'App\Http\Controllers\NotificacionController@upDateNotificacione')->name('upDateNotificacion');
+
 
 //REGISTRO Y LOGIN
 Route::post('/registrarColaborador', 'App\Http\Controllers\ColaboradorController@registrarColaborador')->name('registrarColaborador');
@@ -162,6 +162,7 @@ Route::post('/logOut', 'App\Http\Controllers\UsuarioController@logout')->name('l
 Route::post('/isUser', 'App\Http\Controllers\UsuarioController@isUser')->name('isUser');
 Route::get('/isLoggedIn', 'App\Http\Controllers\UsuarioController@isLoggedIn')->name('isLoggedIn');
 Route::post('/registrarUsuario', 'App\Http\Controllers\UsuarioController@registrarUsuario')->name('registrarUsuario');
+
 
 //ORGANIZACIONES
 Route::get('/getOrganizacion/{idUsuario}', 'App\Http\Controllers\OrganizacionController@getOrganizacion')->name('getOrganizacion');
@@ -203,7 +204,7 @@ Route::post('/registrarCalificacion','App\Http\Controllers\CalificacionControlle
 Route::post('/registrarNecesidad', 'App\Http\Controllers\NecesidadController@registrarNecesidad')->name('registrarNecesidad');
 Route::post('/nuevaCategoriaNecesidad', 'App\Http\Controllers\CategoriaNecesidadController@nuevaCategoriaNecesidad')->name('nuevaCategoriaNecesidad');
 Route::post('/modificarCategoria', 'App\Http\Controllers\CategoriaNecesidadController@modificarCategoria')->name('modificarCategoria');
-Route::post('/crearNotificacionColaboracion','App\Http\Controllers\NotificacionController@crearNotificacionColaboracion')->name('crearNotificacionColaboracion');
+
 
 //REPORTE DE DENUNCIA
 Route::get('/getMotivos', 'App\Http\Controllers\MotivoDenunciaController@getMotivos')->name('getMotivos');
@@ -217,10 +218,17 @@ Route::get('/getCalificaciones/{idUsuario}', 'App\Http\Controllers\CalificacionC
 Route::get('/getCalificacionesOrganizacion/{idUsuario}', 'App\Http\Controllers\CalificacionController@getCalificacionesOrganizacion')->name('getCalificacionesOrganizacion');
 Route::get('/getInsignias/{idUsuario}', 'App\Http\Controllers\InsigniaUsuarioController@getInsignias')->name('getInsignias');
 
+//NOTIFICACIONES
+Route::post('/crearNotificacionColaboracion','App\Http\Controllers\NotificacionController@crearNotificacionColaboracion')->name('crearNotificacionColaboracion');
+Route::post('/upDateNotificacion', 'App\Http\Controllers\NotificacionController@upDateNotificacione')->name('upDateNotificacion');
+Route::post('/crearNotificacionCalificacionColaboracion','App\Http\Controllers\NotificacionController@crearNotificacionCalificacionColaboracion')->name('crearNotificacionCalificacionColaboracion');
+Route::post('/crearNotificacionCalificacionOrganizacion','App\Http\Controllers\NotificacionController@crearNotificacionCalificacionOrganizacion')->name('crearNotificacionCalificacionOrganizacion');
 
 //SUSCRIPCION
 Route::post('/registrarSuscripcion', 'App\Http\Controllers\SuscripcionController@registrarSuscripcion')->name('registrarSuscripcion');
 Route::get('/getSuscriptores/{idOrganizacion}', 'App\Http\Controllers\SuscripcionController@getSuscriptores')->name('getSuscriptores');
 
+//ERRORES
+Route::get('/error404', function(){return view('Error404');} );
 
 ?>

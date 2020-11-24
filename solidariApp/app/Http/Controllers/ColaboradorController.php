@@ -23,6 +23,99 @@ class ColaboradorController extends Controller
             $usuario = new Usuario;
             $colaborador = new Colaborador;
 
+             //VALIDACIÓN NOMBRE
+             if( $datosColaborador->nombreColaborador === ''){
+                return response()->json([
+                    'resultado' => 0,
+                    'message' => "Ingrese un nombre"
+                ]);
+            }
+            $regEx = '/[A-Za-zÁÉÍÓÚñáéíóúÑ\s]/';
+            if(!preg_match($regEx, $datosColaborador->nombreColaborador)){
+                return response()->json([
+                    'resultado' => 0,
+                    'message' => "Ingrese un nombre valido"
+                ]);
+            }
+            if(strlen($datosColaborador->nombreColaborador) < 3){
+                return response()->json([
+                    'resultado' => 0,
+                    'message' => "Ingrese un nombre con longitud mayor a 2 caracteres"
+                ]);
+            }
+
+            if(strlen($datosColaborador->nombreColaborador) > 30){
+                return response()->json([
+                    'resultado' => 0,
+                    'message' => "Ingrese un nombre con longitud menor a 30 caracteres"
+                ]);
+            }
+
+            //VALIDACIÓN APELLIDO
+            if( $datosColaborador->apellidoColaborador === ''){
+            return response()->json([
+                'resultado' => 0,
+                'message' => "Ingrese un apellido"
+            ]);
+            }
+            $regEx = '/[A-Za-zÁÉÍÓÚñáéíóúÑ\s]/';
+            if(!preg_match($regEx, $datosColaborador->apellidoColaborador)){
+                return response()->json([
+                    'resultado' => 0,
+                    'message' => "Ingrese un apellido valido"
+                ]);
+            }
+            if(strlen($datosColaborador->apellidoColaborador) < 3){
+                return response()->json([
+                    'resultado' => 0,
+                    'message' => "Ingrese un apellido con longitud mayor a 2 caracteres"
+                ]);
+            }
+
+            if(strlen($datosColaborador->apellidoColaborador) > 30){
+                return response()->json([
+                    'resultado' => 0,
+                    'message' => "Ingrese un apellido con longitud menor a 30 caracteres"
+                ]);
+            }
+
+            //VALIDACIÓN EMAIL
+            if(!filter_var( $datosColaborador->emailUsuario, FILTER_VALIDATE_EMAIL)){
+                return response()->json([
+                    'resultado' => 0,
+                    'message' => "Ingrese un email válido"
+                ]);
+            };
+
+            if(strlen( $datosColaborador->emailUsuario) > 120){
+                return response()->json([
+                    'resultado' => 0,
+                    'message' => "Ingrese un email con longitud menor a 120 caracteres"
+                ]);
+            }
+
+            //VALIDAR CLAVE DE USUARIO
+            if($datosColaborador->claveUsuario === ''){
+                return response()->json([
+                    'resultado' => 0,
+                    'message' => "La longitud de la contraseña debe ser mayor a 7 caracteres"
+                ]);
+            }
+            if(!preg_match("/[a-z]/", $datosColaborador->claveUsuario) || !preg_match("/[A-Z]/", $datosColaborador->claveUsuario) || !preg_match("/[0-9]/", $datosColaborador->claveUsuario) || !preg_match("/[^a-zA-Z\d]/", $datosColaborador->claveUsuario)){
+                return response()->json([
+                    'resultado' => 0,
+                    'message' => "La contraseña debe tener al menos una mayuscula, una minuscula, un numero y un caracter especial"
+                ]);
+            };
+            if(strlen($datosColaborador->claveUsuario) < 8){
+                return response()->json([
+                    'resultado' => 0,
+                    'message' => "La longitud de la contraseña debe ser mayor a 7 caracteres"
+                ]);
+            }
+
+
+
             $usuario->claveUsuario = hash( 'sha256', $datosColaborador->claveUsuario );
             $usuario->emailUsuario = $datosColaborador->emailUsuario;
             $usuario->tokenGoogle = $datosColaborador->tokenGoogle;
@@ -40,6 +133,58 @@ class ColaboradorController extends Controller
             $telefonos = $datosColaborador->telefonos;
             foreach ($telefonos as $telefonoActual)
             {
+                 //VALIDACIÓN CÓDIGO DE ÁREA
+                 if( $telefonoActual->codAreaTelefono === ''){
+                    return response()->json([
+                        'resultado' => 0,
+                        'message' => "Ingrese un código de área"
+                    ]);
+                }
+                if(!preg_match("/^[0-9]+$/",$telefonoActual->codAreaTelefono )){
+                    return response()->json([
+                        'resultado' => 0,
+                        'message' => "Ingrese un código de área válido"
+                    ]);
+                }
+                if( strlen($telefonoActual->codAreaTelefono) > 4){
+                    return response()->json([
+                        'resultado' => 0,
+                        'message' => "Ingrese un código de área con longitud menor a 4 dígitos"
+                    ]);
+                }
+                if( strlen($telefonoActual->codAreaTelefono) < 2){
+                    return response()->json([
+                        'resultado' => 0,
+                        'message' => "Ingrese un código de área con longitud mayor a 2 dígitos"
+                    ]);
+                }
+
+                //VALIDACIÓN NÚMERO DE TELÉFONO
+                if( $telefonoActual->numeroTelefono === ''){
+                    return response()->json([
+                        'resultado' => 0,
+                        'message' => "Ingrese un número de teléfono"
+                    ]);
+                }
+                if(!preg_match("/^[0-9]+$/",$telefonoActual->numeroTelefono )){
+                    return response()->json([
+                        'resultado' => 0,
+                        'message' => "Ingrese un número de teléfono válido"
+                    ]);
+                }
+                if(strlen($telefonoActual->numeroTelefono) < 8 ){
+                    return response()->json([
+                        'resultado' => 0,
+                        'message' => "Ingrese un número de teléfono con longitud mayor a 8 caracteres"
+                    ]);
+                }
+                if(strlen($telefonoActual->numeroTelefono) > 10 ){
+                    return response()->json([
+                        'resultado' => 0,
+                        'message' => "Ingrese un número de teléfono con longitud menor a 10 caracteres"
+                    ]);
+                }
+
                 $telefono = new Telefono;
                 $telefono->codAreaTelefono = $telefonoActual->codAreaTelefono;
                 $telefono->numeroTelefono = $telefonoActual->numeroTelefono;
@@ -90,10 +235,30 @@ class ColaboradorController extends Controller
     }
 
     public function getColaborador($idUsuario){
-        return response()->json([
-            'colaborador'=>Colaborador::getColaborador($idUsuario),
-            'domicilios' => Domicilio::listarDomiciliosUsuario($idUsuario),
-            'telefonos' => Telefono::listarTelefonosUsuario($idUsuario)
-        ]);
+        try{
+            $colaborador = Colaborador::getColaborador($idUsuario);
+            if( $colaborador ){
+                return response()->json([
+                    'resultado' => 1,
+                    'colaborador'=> $colaborador,
+                    'domicilios' => Domicilio::listarDomiciliosUsuario($idUsuario),
+                    'telefonos' => Telefono::listarTelefonosUsuario($idUsuario)
+                ]);
+            }
+            else{
+                return response()->json([
+                    'resultado' => 0,
+                    'message'=> 'No se encontro al colaborador',
+                    'redireccion'=>'/error404'
+                ]);
+            }
+        }
+        catch (\Exception $e)
+        {
+            return response()->json([
+                'resultado' => 0,
+                'message' => $e->getMessage()
+            ]);
+        }
     }
 }

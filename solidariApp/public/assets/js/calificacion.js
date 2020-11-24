@@ -1,6 +1,11 @@
+$(document).ready(function () {
+    
+});
 
 function configModalCalificar(idRolCalificado,colaboracion,necesidad)
 {
+    limpiarValidaciones($("#textoComentarios"), $("#errorTextoComentarios"));
+    $("#textoComentarios").val('');
     $("input[name='radioConcretoAyuda']").change(
 
         function(){
@@ -12,7 +17,6 @@ function configModalCalificar(idRolCalificado,colaboracion,necesidad)
                 $("#cantidadRecibida").attr("disabled",true);
                 $("#cantidadRecibida").val("");
                 limpiarValidaciones($("#cantidadRecibida"), $("#errorCantidadRecibida"));
-
             }
         }
     );
@@ -54,7 +58,7 @@ function configModalCalificar(idRolCalificado,colaboracion,necesidad)
     $("#btnEnviarCalificacion").unbind("click");
     $("#btnEnviarCalificacion").click(function(event){
         event.preventDefault();
-        if($("input[name='radioConcretoAyuda']:checked").val() == 0 || validarCantidadRecibida( $("#cantidadRecibida"), $("#errorCantidadRecibida")))
+        if( ( $("input[name='radioConcretoAyuda']:checked").val() == 0 || validarCantidadRecibida( $("#cantidadRecibida"), $("#errorCantidadRecibida")) ) && validarComentario($('#textoComentarios'), $('#errorTextoComentarios')))
         {
             registrarCalificacion(idRolCalificado,colaboracion.idColaboracion,colaboracion.idNecesidad);
         }
@@ -65,7 +69,9 @@ function configModalCalificar(idRolCalificado,colaboracion,necesidad)
 $('#btnEnviarCalificacionOrganizacion').click(function(e){
     e.preventDefault();
     let idCalificado = $(location).attr('href').split("/")[4];
-    registrarCalificacionOrganizacion(idCalificado);
+    if( validarComentario($('#textoComentariosOrg'), $('#errorTextoComentariosOrg')) ){
+        registrarCalificacionOrganizacion(idCalificado);
+    }
     // registrarCalificacion(idRolCalificado,colaboracion.idColaboracion,colaboracion.idNecesidad);
 });
 
@@ -88,11 +94,13 @@ function registrarCalificacionOrganizacion(idCalificado){
         {
             alertify.success(response.data.message);
             $("#modalCalificarOrganizacion").modal("hide");
+            crearNotificacionCalificacionOrganizacion(calificacion)
+            limpiarValidaciones($("#textoComentarios"), $("#errorTextoComentarios"));
+            $("#textoComentarios").val('');
         }
         else{
             alertify.error(response.data.message);
         }
-
     });
 }
 
@@ -119,6 +127,8 @@ function registrarCalificacion(idRolCalificado,idColaboracion,idNecesidad)
         {
             alertify.success(response.data.message);
             $("#modalCalificar").modal("hide");
+            crearNotificacionCalificacionColaboracion(idColaboracion);
+
         }
         else{
             alertify.error(response.data.message);

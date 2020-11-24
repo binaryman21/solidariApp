@@ -17,6 +17,6 @@
 </svg>
 </use>
 <h1>403</h1>
-<h2>No esta vez, acceso prohibido!</h2>
+<h2>No esta vez, acceso prohibido! Vuelve al <a href="/">inicio</a></h2>
 </body>
 </html>

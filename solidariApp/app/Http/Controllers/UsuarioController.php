@@ -13,20 +13,38 @@ class UsuarioController extends Controller
 {
     public function login(Request $request){
         $datosLogin = json_decode($request->getContent());
-        $datosLogin->pass = hash( 'sha256',  $datosLogin->pass );
-        $usuario = Usuario::login($datosLogin);
-        if($usuario != null){
-            session_start();
-            $_SESSION['usuario'] = $usuario;
+        //VALIDACIONES
+        if($datosLogin->pass == ''){
+            return response()->json([
+                'resultado' => 0,
+                'message' => 'introduzca un password'
+            ]);
         }
-        return response()->json([
-            'usuario' => $usuario
-        ]);
+        else if(  !filter_var($datosLogin->email, FILTER_VALIDATE_EMAIL) ){
+            return response()->json([
+                'resultado' => 0,
+                'message' => 'ingrese un email valido'
+            ]);
+        }
+        else{
+            $datosLogin->pass = hash( 'sha256',  $datosLogin->pass );
+            $usuario = Usuario::login($datosLogin);
+            if($usuario != null){
+                session_start();
+                $_SESSION['usuario'] = $usuario;
+            }
+            return response()->json([
+                'resultado' => 1,
+                'usuario' => $usuario
+            ]);
+        }
     }
 
     public function isUser(Request $request){
         $datos = json_decode($request->getContent());
+       
         return response()->json([
+            'resultado' => 1,
             'isUser' => Usuario::isUser($datos->email)
         ]);
     }
@@ -109,44 +127,49 @@ class UsuarioController extends Controller
         if(isset($_SESSION['usuario'])){
             /*Busco el ID del usuario logeado*/
             $usuarioLogueado = $_SESSION['usuario'];
-
-        }
-
-        /*me traigo los archivos que recibo al realizar el submit*/
-        if ($_FILES['fotoPerfil']['error'] == 0) {
-            $fileName = $_FILES['fotoPerfil']['name'];
-            $ubicacionActual = $_FILES['fotoPerfil']['tmp_name'];
-            /*Concateno el ID usuario al nombre del archivo*/
-            $urlFotoPerfil = storage_path()."/app/public/fotosPerfil/".$usuarioLogueado->idUsuario.$fileName ;
-            move_uploaded_file($ubicacionActual, $urlFotoPerfil);
-        }
-
-        /*Preparo la url relativa para guardarla en la BDD*/
-        $urlFotoPerfil = "/storage/fotosPerfil/".$usuarioLogueado->idUsuario.$fileName ;
-
-        try
-        {
-            if(isset($_SESSION['usuario'])){
-                Usuario::updateFotoPerfil($usuarioLogueado->idUsuario,$urlFotoPerfil);
+            /*me traigo los archivos que recibo al realizar el submit*/
+            if ($_FILES['fotoPerfil']['error'] == 0) {
+                $fileName = $_FILES['fotoPerfil']['name'];
+                $ubicacionActual = $_FILES['fotoPerfil']['tmp_name'];
+                /*Concateno el ID usuario al nombre del archivo*/
+                $urlFotoPerfil = storage_path()."/app/public/fotosPerfil/".$usuarioLogueado->idUsuario.$fileName ;
+                move_uploaded_file($ubicacionActual, $urlFotoPerfil);
+            }
+    
+            /*Preparo la url relativa para guardarla en la BDD*/
+            $urlFotoPerfil = "/storage/fotosPerfil/".$usuarioLogueado->idUsuario.$fileName ;
+    
+            try
+            {
+                if(isset($_SESSION['usuario'])){
+                    Usuario::updateFotoPerfil($usuarioLogueado->idUsuario,$urlFotoPerfil);
+                }
+    
+                /**Si es un colaborador, vuelvo a UIColaborador  */
+                if($usuarioLogueado->idRolUsuario == '1'){
+                  return redirect()->route('UIColaborador');
+                }
+    
+                /**Si es un Organizacion, vuelvo a UIOrganizacion  */
+                if($usuarioLogueado->idRolUsuario == '2'){
+                    return redirect()->route('UIOrganizacion');
+                }
+    
+            }
+    
+            catch (\Exception $e)
+            {
+                return response()->json([
+                    'resultado' => 0,
+                    'message' => $e->getMessage()
+                ]);
             }
 
-            /**Si es un colaborador, vuelvo a UIColaborador  */
-            if($usuarioLogueado->idRolUsuario == '1'){
-              return redirect()->route('UIColaborador');
-            }
-
-            /**Si es un Organizacion, vuelvo a UIOrganizacion  */
-            if($usuarioLogueado->idRolUsuario == '2'){
-                return redirect()->route('UIOrganizacion');
-            }
-
         }
-
-        catch (\Exception $e)
-        {
+        else{
             return response()->json([
                 'resultado' => 0,
-                'message' => $e->getMessage()
+                'message' => 'no estas logueado'
             ]);
         }
     }
@@ -157,24 +180,46 @@ class UsuarioController extends Controller
         {
             $datosUsuario = json_decode($request->getContent());
 
-            $usuario = new Usuario;
+            if( !filter_var($datosUsuario->emailUsuario, FILTER_VALIDATE_EMAIL) ){
+                return response()->json([
+                    'resultado' => 0,
+                    'message' => 'ingrese un email valido'
+                ]);
+            }
+            else if( $datosUsuario->claveUsuario == '' ){
+                return response()->json([
+                    'resultado' => 0,
+                    'message' => 'ingrese una clave'
+                ]);
+            }
+            else if( strlen($datosUsuario->claveUsuario) < 8){
+                return response()->json([
+                    'resultado' => 0,
+                    'message' => 'la clave debe tener al menos 8 caracteres'
+                ]);
+            }
+            else{
+                $usuario = new Usuario;
+    
+                $usuario->claveUsuario = hash( 'sha256', $datosUsuario->claveUsuario );
+                $usuario->emailUsuario = $datosUsuario->emailUsuario;
+                $usuario->tokenGoogle = $datosUsuario->tokenGoogle;
+                $usuario->urlFotoPerfilUsuario = $datosUsuario->urlFotoPerfilUsuario;
+                $usuario->idRolUsuario = $datosUsuario->idRolUsuario;
+                $usuario->idEstadoUsuario = 1;
+                $usuario->save();
+    
+                return response()->json([
+                    'resultado' => 1,
+                    'message' => "Registro exitoso"
+                ]);
+            }
 
-            $usuario->claveUsuario = hash( 'sha256', $datosUsuario->claveUsuario );
-            $usuario->emailUsuario = $datosUsuario->emailUsuario;
-            $usuario->tokenGoogle = $datosUsuario->tokenGoogle;
-            $usuario->urlFotoPerfilUsuario = $datosUsuario->urlFotoPerfilUsuario;
-            $usuario->idRolUsuario = $datosUsuario->idRolUsuario;
-            $usuario->idEstadoUsuario = 1;
-            $usuario->save();
-
-            return response()->json([
-                'message' => "Registro exitoso"
-
-            ]);
         }
         catch (\Exception $e)
         {
             return response()->json([
+                'resultado' => 0,
                 'message' => $e->getMessage()
             ]);
         }
@@ -190,21 +235,48 @@ class UsuarioController extends Controller
                 try
                 {
                     $datosClaves = json_decode($request->getContent());
-                    $datosClaves->claveVieja = hash( 'sha256', $datosClaves->claveVieja );
-                    $datosClaves->claveNueva = hash( 'sha256', $datosClaves->claveNueva );
-                    $user = Usuario::comprobarClave( $datosClaves );
-                    if ( $user ){
-                        Usuario::cambiarClave( $datosClaves );
+                    if( $datosClaves->claveVieja == '' ){
                         return response()->json([
-                            'resultado' => 1,
-                            'message' => "cambio de clave exitoso!"
+                            'resultado' => 0,
+                            'message' => 'ingrese su primer clave'
+                        ]);
+                    }
+                    else if( strlen($datosClaves->claveVieja) < 8){
+                        return response()->json([
+                            'resultado' => 0,
+                            'message' => 'la clave debe tener al menos 8 caracteres'
+                        ]);
+                    }
+                    else if( $datosClaves->claveNueva == '' ){
+                        return response()->json([
+                            'resultado' => 0,
+                            'message' => 'ingrese su nueva clave'
+                        ]);
+                    }
+                    else if( strlen($datosClaves->claveNueva) < 8){
+                        return response()->json([
+                            'resultado' => 0,
+                            'message' => 'la clave nueva debe tener al menos 8 caracteres'
                         ]);
                     }
                     else{
-                        return response()->json([
-                            'resultado' => 0,
-                            'message' => "clave incorrecta"
-                        ]);
+                        $datosClaves->idUsuario = $_SESSION['usuario']->idUsuario;
+                        $datosClaves->claveVieja = hash( 'sha256', $datosClaves->claveVieja );
+                        $datosClaves->claveNueva = hash( 'sha256', $datosClaves->claveNueva );
+                        $user = Usuario::comprobarClave( $datosClaves );
+                        if ( $user ){
+                            Usuario::cambiarClave( $datosClaves );
+                            return response()->json([
+                                'resultado' => 1,
+                                'message' => "cambio de clave exitoso!"
+                            ]);
+                        }
+                        else{
+                            return response()->json([
+                                'resultado' => 0,
+                                'message' => "clave incorrecta"
+                            ]);
+                        }
                     }
                 }
                 catch (\Exception $e)
@@ -213,8 +285,7 @@ class UsuarioController extends Controller
                         'resultado' => 0,
                         'message' => $e->getMessage()
                     ]);
-                }
-                
+                }   
             }
             else{
                 return response()->json([

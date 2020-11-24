@@ -6,6 +6,11 @@
     background: #233142;
     
   }
+
+  a{
+    color:white;
+  }
+
   .whistle{
     width: 20%;
     fill: #f95959;

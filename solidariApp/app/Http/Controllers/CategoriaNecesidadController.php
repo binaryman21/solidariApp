@@ -20,100 +20,135 @@ class CategoriaNecesidadController extends Controller
 
     public function nuevaCategoriaNecesidad(Request $request)
     {
-        if(UsuarioController::tienePermisoPara("registrarCategoria"))
-        {
-            $datosCategoriaNueva = json_decode($request->getContent());
-
-            /*validaciones*/
-            if (is_numeric($datosCategoriaNueva->nombreCategoria)){
-                return response()->json([
-                    'resultado' => 0,
-                    'message' => 'el nombre de la categoria no puede ser un numero'
-                ]);
-            }
-
-            if (!is_numeric($datosCategoriaNueva->idPrioridad) || $datosCategoriaNueva->idPrioridad <= 0 || $datosCategoriaNueva->idPrioridad > 3  ){
-                return response()->json([
-                    'resultado' => 0,
-                    'message' => 'el id de la prioridad debe ser numerico'
-                ]);
-            }
-
-            try
+        try
             {
-                DB::beginTransaction();
-                $nuevaCategoria = new CategoriaNecesidad;
-                $nuevaCategoria->nombreCategoria = $datosCategoriaNueva->nombreCategoria;
-                $nuevaCategoria->idPrioridad = $datosCategoriaNueva->idPrioridad;
-                $nuevaCategoria->activo = 1;
-                $nuevaCategoria->save();
+            if(UsuarioController::tienePermisoPara("registrarCategoria"))
+            {
+                $datosCategoriaNueva = json_decode($request->getContent());
 
-                DB::commit();
+                /*validaciones*/
+                if( $datosCategoriaNueva->nombreCategoria == '' ){
+                    return response()->json([
+                        'resultado' => 0,
+                        'message' => 'debe ingresar un nombre para la categoria'
+                    ]);
+                }
+                else if( strlen($datosCategoriaNueva->nombreCategoria) < 3 ){
+                    return response()->json([
+                        'resultado' => 0,
+                        'message' => 'el nombre de la categoria debe tener al menos 3 caracteres'
+                    ]);
+                }
+                else if (is_numeric($datosCategoriaNueva->nombreCategoria)){
+                    return response()->json([
+                        'resultado' => 0,
+                        'message' => 'el nombre de la categoria no puede ser un numero'
+                    ]);
+                }
+                else if (!is_numeric($datosCategoriaNueva->idPrioridad) || $datosCategoriaNueva->idPrioridad <= 0 || $datosCategoriaNueva->idPrioridad > 3  ){
+                    return response()->json([
+                        'resultado' => 0,
+                        'message' => 'el id de la prioridad debe ser numerico'
+                    ]);
+                }
+                else{
+                    DB::beginTransaction();
+                    $nuevaCategoria = new CategoriaNecesidad;
+                    $nuevaCategoria->nombreCategoria = $datosCategoriaNueva->nombreCategoria;
+                    $nuevaCategoria->idPrioridad = $datosCategoriaNueva->idPrioridad;
+                    $nuevaCategoria->activo = 1;
+                    $nuevaCategoria->save();
+                    DB::commit();
+                    return response()->json([
+                        'resultado' => 1,
+                        'message' => "categoria creada"
+                    ]);
+                }
             }
-            catch (\Exception $e)
+            else
             {
                 return response()->json([
                     'resultado' => 0,
-                    'message' => $e->getMessage()
+                    'message' => "ACCION NO PERMITIDA"
+
                 ]);
             }
+            
         }
-        else
-        {
+        catch (\Exception $e)
+            {
             return response()->json([
                 'resultado' => 0,
-                'message' => "ACCION NO PERMITIDA"
-
+                'message' => $e->getMessage()
             ]);
         }
-        return response()->json([
-            'resultado' => 1,
-            'message' => "alta exitosa!"
-
-        ]);
     }
 
     public function modificarCategoria(Request $request)
     {
-        if(UsuarioController::tienePermisoPara("editarCategoria"))
-        {
-            try
+        try
             {
-                DB::beginTransaction();
-
+            if(UsuarioController::tienePermisoPara("editarCategoria"))
+            {
                 $datosCategoriaNueva = json_decode($request->getContent());
+                /*validaciones*/
+                if( $datosCategoriaNueva->nombreCategoria == '' ){
+                    return response()->json([
+                        'resultado' => 0,
+                        'message' => 'debe ingresar un nombre para la categoria'
+                    ]);
+                }
+                else if( strlen($datosCategoriaNueva->nombreCategoria) < 3 ){
+                    return response()->json([
+                        'resultado' => 0,
+                        'message' => 'el nombre de la categoria debe tener al menos 3 caracteres'
+                    ]);
+                }
+                else if (is_numeric($datosCategoriaNueva->nombreCategoria)){
+                    return response()->json([
+                        'resultado' => 0,
+                        'message' => 'el nombre de la categoria no puede ser un numero'
+                    ]);
+                }
+                else if (!is_numeric($datosCategoriaNueva->idPrioridad) || $datosCategoriaNueva->idPrioridad <= 0 || $datosCategoriaNueva->idPrioridad > 3  ){
+                    return response()->json([
+                        'resultado' => 0,
+                        'message' => 'seleccione una prioridad'
+                    ]);
+                }
+                else{
+                    DB::beginTransaction();
 
-                $categoria = CategoriaNecesidad::find($datosCategoriaNueva->idCategoria);
+                    $categoria = CategoriaNecesidad::find($datosCategoriaNueva->idCategoria);
 
-                $categoria->nombreCategoria = $datosCategoriaNueva->nombreCategoria;
-                $categoria->idPrioridad = $datosCategoriaNueva->idPrioridad;
-                $categoria->activo = $datosCategoriaNueva->activo;
-                $categoria->save();
-
-                DB::commit();
+                    $categoria->nombreCategoria = $datosCategoriaNueva->nombreCategoria;
+                    $categoria->idPrioridad = $datosCategoriaNueva->idPrioridad;
+                    $categoria->activo = $datosCategoriaNueva->activo;
+                    $categoria->save();
+                    DB::commit();
+                    return response()->json([
+                        'resultado' => 1,
+                        'message' => "categoria actualizada"
+                    ]);
+                }
             }
-            catch (\Exception $e)
+            else
             {
                 return response()->json([
-                    'resultado' => 0,
-                    'message' => $e->getMessage()
+                    'resultado' => 1,
+                    'message' => "ACCION NO PERMITIDA"
+
                 ]);
             }
+            
         }
-        else
+        catch (\Exception $e)
         {
             return response()->json([
-                'resultado' => 1,
-                'message' => "ACCION NO PERMITIDA"
-
+                'resultado' => 0,
+                'message' => $e->getMessage()
             ]);
         }
-        return response()->json([
-            'resultado' => 1,
-            'message' => "actualizacion exitosa!"
-
-        ]);
     }
-
 
 }

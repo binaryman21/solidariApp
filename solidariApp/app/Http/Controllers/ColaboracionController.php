@@ -95,5 +95,4 @@ class ColaboracionController extends Controller
         ]);
     }
 
-
 }

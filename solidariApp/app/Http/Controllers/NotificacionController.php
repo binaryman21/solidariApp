@@ -6,8 +6,13 @@ use App\Models\CategoriaNecesidad;
 use App\Models\Notificacion;
 use App\Models\Organizacion;
 use App\Models\Colaborador;
+use App\Models\Colaboracion;
+use App\Models\Calificacion;
+use App\Models\CalificacionOrganizacion;
 use App\Models\Necesidad;
+use App\Models\TratoCalificacion;
 use App\Models\CategoriNecesidad;
+use App\Models\Insignia;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 
@@ -33,14 +38,34 @@ class NotificacionController extends Controller
                     $notificacion['emisor'] = $organizacion;
                 }
                 if($notificacion->leido == '0') $noLeidas++;
-                //SI ES DE TIPO 1 o 5 TIENE NECECEISDADES
-                if($notificacion->idMensaje == 1 || $notificacion->idMensaje == 5){
+                //SI ES DE TIPO 1, 2 o 5 TIENE NECECEISDADES
+                if($notificacion->idMensaje == 1 || $notificacion->idMensaje == 5 || $notificacion->idMensaje == 2){
                     $necesidad = Necesidad::getNecesidad($notificacion->idNecesidad);
                     $categoria = CategoriaNecesidad::getCategoria($necesidad->idCategoriaNecesidad);
                     $tipoNecesidad = $categoria->nombreCategoria;
                     $notificacion['tipoNecesidad'] = $tipoNecesidad;
                     $notificacion['necesidad'] = $necesidad;
+
                 }
+                //SI ES DE TIPO 2 TIENE UNA AYUDA CALIFICADA
+                if($notificacion->idMensaje == 2){
+                    $calificacion = Calificacion::where('idColaboracion', '=', $notificacion->idColaboracion)->first();
+                    $tratoRecibido = TratoCalificacion::where('idTrato','=', $calificacion->tratoRecibido)->first();;
+                    $notificacion['tratoRecibido'] = $tratoRecibido->descripcion;
+                }
+                //SI ES TIPO 6 TIENE UNA CALIFICACION SOBRE SU ORGANIZACION
+                if($notificacion->idMensaje == 6){
+                    $calificacion = CalificacionOrganizacion::where('idCalificado',$notificacion->idReceptor)->where('idCalificante',$notificacion->idEmisor)->first();
+                    $tratoRecibido = TratoCalificacion::where('idTrato','=', $calificacion->tratoRecibido)->first();
+                    $notificacion['tratoRecibido'] = $tratoRecibido->descripcion;
+                }
+
+                  //SI ES TIPO 7 EL COLABORADOR TIENE UNA NUEVA INSIGNIA
+                  if($notificacion->idMensaje == 7){
+                    $insignia =  Insignia::where('idInsignia', '=', $notificacion->idInsignia)->first();
+                    $notificacion['insignia'] = $insignia;
+                }
+
             }
 
             return response()->json([
@@ -53,7 +78,7 @@ class NotificacionController extends Controller
         {
             return response()->json([
                 'result' => 0,
-                'message' => 'Error al cargar notificaciones',
+                'message' => $e->getMessage(),
             ]);
         }
     }
@@ -111,4 +136,91 @@ class NotificacionController extends Controller
 
         }
     }
+
+    public function crearNotificacionCalificacionOrganizacion(Request $request)
+    {
+        try{
+            $calificacion = json_decode($request->getContent());
+            session_start();
+            if(isset($_SESSION['usuario']))
+            {
+                $notificacion = new Notificacion;
+                $notificacion->idMensaje = '6';
+                $notificacion->idEmisor = $_SESSION['usuario']->idUsuario;
+                $notificacion->idReceptor = $calificacion->idCalificado;
+                $notificacion->leido = '0';
+                $notificacion->save();
+
+                return response()->json([
+                    'resultado' => 1,
+                ]);
+            }
+        }
+        catch(\Exception $e)
+        {
+            return response()->json([
+                'resultado' => 0,
+                'message' => $e->getMessage()
+            ]);
+        }
+    }
+
+    public function crearNotificacionCalificacionColaboracion(Request $request)
+    {
+        try{
+            $idColaboracion = json_decode($request->getContent());
+            session_start();
+            if(isset($_SESSION['usuario']))
+            {
+                $colaboracion = Colaboracion::getColaboracion($idColaboracion);
+                $notificacion = new Notificacion;
+                $notificacion->idMensaje = '2';
+                $notificacion->idEmisor = $_SESSION['usuario']->idUsuario;
+                $notificacion->idReceptor = $colaboracion->idColaborador;
+                $notificacion->leido = '0';
+                $notificacion->idNecesidad = $colaboracion->idNecesidad;
+                $notificacion->idColaboracion = $colaboracion->idColaboracion;
+                $notificacion->save();
+
+                return response()->json([
+                    'resultado' => 1,
+                ]);
+            }
+        }
+        catch(\Exception $e)
+        {
+            return response()->json([
+                'resultado' => 0,
+                'message' => $e->getMessage()
+            ]);
+        }
+    }
+
+    public static function crearNotificacionInsignia($idInsignia,$idUsuario)
+    {
+        try{
+
+            if (session_status() == PHP_SESSION_NONE)
+        {
+            session_start();
+        }
+            if(isset($_SESSION['usuario']))
+            {
+                $notificacion = new Notificacion;
+                $notificacion->idMensaje = '7';
+                $notificacion->idReceptor = $idUsuario;
+                $notificacion->leido = '0';
+                $notificacion->idInsignia = $idInsignia;
+                $notificacion->save();
+
+                return 1;
+            }
+        }
+        catch(\Exception $e)
+        {
+            throw $e;
+        }
+    }
+
+
 }
