@@ -91,6 +91,7 @@ function isLoggedIn(funcionSuccess)
     fetch("/isLoggedIn")
     .then(response => response.json())
     .then(data => {
+        console.log( data.usuario );
         if(data.usuario != null)
         {
             mostrarInterfazSesionIniciada(data.usuario);
