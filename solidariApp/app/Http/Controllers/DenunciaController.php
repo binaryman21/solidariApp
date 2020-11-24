@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Denuncia;
 use App\Models\Usuario;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\DB;
 
 
 class DenunciaController extends Controller
@@ -19,18 +20,46 @@ class DenunciaController extends Controller
                 if(UsuarioController::tienePermisoPara("registrarDenuncia"))
                 {
                     $datosReporte = json_decode($request->getContent());
-                    $datosReporte->idDenunciante = $_SESSION['usuario']->idUsuario;
-                    $denuncia = new Denuncia;
-                    $denuncia->idMotivoDenuncia = $datosReporte->motivo;
-                    $denuncia->fechaDenuncia = $datosReporte->fecha;
-                    $denuncia->idDenunciante = $datosReporte->idDenunciante;
-                    $denuncia->idDenunciado = $datosReporte->idDenunciado;
-                    $denuncia->descripcionDenuncia = $datosReporte->descripcion;
-                    $denuncia->save();
-                    return response()->json([
-                        'resultado' => 1,
-                        'message' => 'denuncia realizada'
-                    ]);
+
+                    //VALIDACIONES
+                    if( $datosReporte->descripcion == ''){
+                        return response()->json([
+                            'resultado' => 0,
+                            'message' => 'ingrese una descripcion'
+                        ]);
+                    }
+                    else if( strlen($datosReporte->descripcion) < 4 ){
+                        return response()->json([
+                            'resultado' => 0,
+                            'message' => 'ingrese una descripcion de al menos 4 caracteres'
+                        ]);
+                    }
+                    else if( $datosReporte->fecha == ''){
+                        return response()->json([
+                            'resultado' => 0,
+                            'message' => 'ingrese una fecha'
+                        ]);
+                    }
+                    else if( !strtotime( $datosReporte->fecha ) ){
+                        return response()->json([
+                            'resultado' => 0,
+                            'message' => 'ingrese una fecha valida'
+                        ]);
+                    }
+                    else{
+                        $datosReporte->idDenunciante = $_SESSION['usuario']->idUsuario;
+                        $denuncia = new Denuncia;
+                        $denuncia->idMotivoDenuncia = $datosReporte->motivo;
+                        $denuncia->fechaDenuncia = $datosReporte->fecha;
+                        $denuncia->idDenunciante = $datosReporte->idDenunciante;
+                        $denuncia->idDenunciado = $datosReporte->idDenunciado;
+                        $denuncia->descripcionDenuncia = $datosReporte->descripcion;
+                        $denuncia->save();
+                        return response()->json([
+                            'resultado' => 1,
+                            'message' => 'denuncia realizada'
+                        ]);
+                    }
                 }
                 else
                 {
@@ -75,8 +104,10 @@ class DenunciaController extends Controller
         try {
             if(UsuarioController::tienePermisoPara("confirmarDenuncia"))
             {
+                DB::beginTransaction();
                 Denuncia::confirmarDenuncia( $request->idDenuncia );
                 Usuario::bloquearUsuario( $request->idDenunciado );
+                DB::commit();
                 return response()->json([
                     'resultado' => 1,
                     'message'=> 'usuario bloqueado'

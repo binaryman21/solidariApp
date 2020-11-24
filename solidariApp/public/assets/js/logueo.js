@@ -110,7 +110,7 @@ function mostrarInterfazSesionIniciada(usuario)
     $("#imgPerfil").attr("src",usuario.urlFotoPerfilUsuario);
     $("#mapa").removeClass("mapa");
     $("#mapa").addClass("mapaExtendido");
-    $("#btnVerMiPerfil").attr("href","./"+ usuario.rol.nombreRol);
+    $("#btnVerMiPerfil").attr("href","/"+ usuario.rol.nombreRol);
     $("#notificaciones").removeClass("d-none");
 
     // console.log("usuario "+usuario.idUsuario);
