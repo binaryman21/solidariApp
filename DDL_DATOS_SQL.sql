@@ -91,12 +91,12 @@ INSERT INTO `calificacionorganizacion` (`idCalificacion`, `idCalificado`, `idCal
 	(1, 63, 64, 2, 'Medio raro', '2020-11-21 01:03:19'),
 	(2, 63, 86, 1, 'Muy mal!!!', '2020-11-21 21:28:39'),
 	(3, 63, 105, 3, 'un capo', '2020-11-22 20:27:24'),
-	(4, 78, 86, 3, '', '2020-11-23 04:07:26'),
-	(5, 102, 86, 3, '', '2020-11-23 04:12:04'),
-	(6, 87, 86, 3, '', '2020-11-23 04:19:49'),
-	(7, 92, 86, 3, '', '2020-11-23 04:22:00'),
-	(8, 110, 86, 3, '', '2020-11-23 04:24:20'),
-	(9, 63, 113, 3, '', '2020-11-23 15:55:44');
+	(4, 78, 86, 3, 'Muy buena organizacion, recomendable', '2020-11-23 04:07:26'),
+	(5, 102, 86, 3, 'Excelente', '2020-11-23 04:12:04'),
+	(6, 87, 86, 3, 'Me encanta lo que hacen', '2020-11-23 04:19:49'),
+	(7, 92, 86, 3, 'Ayudan a mucha gente', '2020-11-23 04:22:00'),
+	(8, 110, 86, 3, 'Muy buena organizacion', '2020-11-23 04:24:20'),
+	(9, 63, 113, 3, 'Muy bien', '2020-11-23 15:55:44');
 /*!40000 ALTER TABLE `calificacionorganizacion` ENABLE KEYS */;
 
 -- Volcando estructura para tabla u474532209_solidariapp.categorianecesidad
