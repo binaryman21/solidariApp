@@ -14,13 +14,13 @@ class UsuarioController extends Controller
     public function login(Request $request){
         $datosLogin = json_decode($request->getContent());
         //VALIDACIONES
-        if($datosLogin->pass == ''){
-            return response()->json([
-                'resultado' => 0,
-                'message' => 'introduzca un password'
-            ]);
-        }
-        else if(  !filter_var($datosLogin->email, FILTER_VALIDATE_EMAIL) ){
+        // if($datosLogin->pass == ''){
+        //     return response()->json([
+        //         'resultado' => 0,
+        //         'message' => 'introduzca un password'
+        //     ]);
+        // }
+        if(  !filter_var($datosLogin->email, FILTER_VALIDATE_EMAIL) ){
             return response()->json([
                 'resultado' => 0,
                 'message' => 'ingrese un email valido'
