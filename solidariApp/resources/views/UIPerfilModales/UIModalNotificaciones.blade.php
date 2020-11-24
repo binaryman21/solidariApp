@@ -1,7 +1,7 @@
 <!-- Modal -->
 <div class="modal fade" id="modalNotificaciones" tabindex="-1" role="dialog" aria-labelledby="modalNotificacionesLabel" aria-hidden="true">
     <div class="modal-dialog" >
-        <div class="modal-content p-2" id="modalContent">
+        <div class="modal-content p-2 h-auto" id="modalContent">
 
             <div class="container d-flex justify-content-between">
                 <div>
