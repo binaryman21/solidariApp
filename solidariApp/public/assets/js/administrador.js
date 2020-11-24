@@ -74,9 +74,9 @@ function modificarCategoria() {
       if (response.data.resultado == 1) {
         $("#modalABMCategorias").modal("hide");
         alertify.success('Se actualizo categoria con exito!');
+
       } else {
         alertify.error(response.data.message);
-
       }
     });
 
@@ -202,6 +202,13 @@ function seleccionaCrearNuevaCategoria() {
 
 /*Cargar lista con las categorias existentes*/
 function listarCategoriasNecesidades() {
+  $("#seleccionCategoria").val('0');
+  $("#nombreCategoria").val('');
+  $("#seleccionPrioridad").val('');
+  $('#btnDeshabilitar').addClass('d-none');
+  $('#btnHabilitar').addClass('d-none');
+  $('#btnModificar').addClass('d-none');
+  $("#btnAgregar").removeClass('d-none');
   /*Borro el contenido previo del combo Categorias*/
   $("#seleccionCategoria")
     .find("option")

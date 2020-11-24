@@ -129,7 +129,7 @@ function registrarOrganizacion()
             }
             axios.post("/registrarOrganizacion",JSON.stringify(organizacion))
             .then((response)=>{
-                console.log('registrando..');
+                // console.log('registrando..');
                 // alert(response.data.message);
                 $("#btnCrearCuenta").html("Guardar");
                 $("#btnCrearCuenta").attr("disabled", false);
@@ -148,7 +148,7 @@ function registrarOrganizacion()
                 }
                 else{
                     $("#modalRegistroColOrg").modal("hide");
-                    alertify.error('Algo fallo, intentalo mas tarde')
+                    alertify.error( response.data.message )
                     // $("#msjResultadoRegistro").html("Algo fallo, intentalo mas tarde");
                     // $("#modalResultadoRegistro").modal("show");
                 }

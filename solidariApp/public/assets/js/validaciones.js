@@ -560,6 +560,15 @@ function validarFechaLimite(fecha,error){
     return true;
 }
 
+function validarComentario( comentario, error ){
+    if(comentario.val().length < 1){
+        mostrarError( comentario, error, 'Complete el comentario');
+        return false;
+    }
+    quitarError( comentario, error );
+    return true;
+}
+
 
 function mostrarError( campo, nombreError, texto ){
     nombreError.text( texto );

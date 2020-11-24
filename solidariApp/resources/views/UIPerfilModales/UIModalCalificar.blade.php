@@ -45,6 +45,7 @@
                     <div class="form-group mt-4">
                         <label for="textoComentarios">Comentarios</label>
                         <textarea class="form-control" id="textoComentarios" rows="5" required></textarea>
+                        <span class="text-danger" id="errorTextoComentarios"></span>
                     </div>
                 </div>
                 <div class="modal-footer justify-content-between">
