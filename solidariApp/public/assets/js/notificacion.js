@@ -46,7 +46,7 @@ function mostrarNotificaciones(notificaciones,noLeidas){
             nombre = notificacion.emisor.nombreColaborador;
             nombre += " ";
             nombre += notificacion.emisor.apellidoColaborador;
-        }else{
+        }else if(notificacion.idRolUsuario == "2"){
             nombre =  notificacion.emisor.razonSocial;
         }
 
@@ -179,6 +179,33 @@ function mostrarNotificaciones(notificaciones,noLeidas){
                             <div class="d-flex flex-wrap">
                             <p>${msj} como ${trato}</p><br>
                             <a class="font-weight-bold text-dark text-decoration-none notificacionVerNecesidad${notificacion.idNotificacion}" href="/organizacion/${notificacion.idReceptor}">¿Quieres ver tus calificaciones?</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>`
+        }
+
+        else if(notificacion.idMensaje == 7){
+            let trato = notificacion.tratoRecibido;
+
+            cardNotificacion = `
+            <div class="container border-top sombra  p-2">
+                <div>
+                    <div class="d-flex flex-row">
+                        <div>
+                            <img class="rounded-circle imgPerfilOrg" src="../assets/img/app-logo/Logo - Chico.png" alt="">
+                        </div>
+                        <div class="card-text align-self-center mx-2 w-100">
+                            <div class="d-flex">
+                                <p>${fecha}</p>
+                                ${checkNoLeida}
+                            </div>
+                            <a class="font-weight-bold text-dark text-decoration-none notificacionEmisor${notificacion.idNotificacion} " href="">SolidariApp - Nueva insigna!</a>
+                            <div class="d-flex flex-wrap">
+                            <p class = "text-primary"><i class ="${notificacion.insignia.icono} mr-2" ></i>${notificacion.insignia.nombreInsignia}</p>
+                            <small>${notificacion.insignia.descripcionInsignia}</small>
+
                             </div>
                         </div>
                     </div>

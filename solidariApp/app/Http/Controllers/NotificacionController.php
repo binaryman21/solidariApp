@@ -12,6 +12,7 @@ use App\Models\CalificacionOrganizacion;
 use App\Models\Necesidad;
 use App\Models\TratoCalificacion;
 use App\Models\CategoriNecesidad;
+use App\Models\Insignia;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 
@@ -57,6 +58,12 @@ class NotificacionController extends Controller
                     $calificacion = CalificacionOrganizacion::where('idCalificado',$notificacion->idReceptor)->where('idCalificante',$notificacion->idEmisor)->first();
                     $tratoRecibido = TratoCalificacion::where('idTrato','=', $calificacion->tratoRecibido)->first();
                     $notificacion['tratoRecibido'] = $tratoRecibido->descripcion;
+                }
+
+                  //SI ES TIPO 7 EL COLABORADOR TIENE UNA NUEVA INSIGNIA
+                  if($notificacion->idMensaje == 7){
+                    $insignia =  Insignia::where('idInsignia', '=', $notificacion->idInsignia)->first();
+                    $notificacion['insignia'] = $insignia;
                 }
 
             }
@@ -188,4 +195,32 @@ class NotificacionController extends Controller
             ]);
         }
     }
+
+    public static function crearNotificacionInsignia($idInsignia,$idUsuario)
+    {
+        try{
+
+            if (session_status() == PHP_SESSION_NONE)
+        {
+            session_start();
+        }
+            if(isset($_SESSION['usuario']))
+            {
+                $notificacion = new Notificacion;
+                $notificacion->idMensaje = '7';
+                $notificacion->idReceptor = $idUsuario;
+                $notificacion->leido = '0';
+                $notificacion->idInsignia = $idInsignia;
+                $notificacion->save();
+
+                return 1;
+            }
+        }
+        catch(\Exception $e)
+        {
+            throw $e;
+        }
+    }
+
+
 }

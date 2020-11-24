@@ -15,7 +15,7 @@ class Notificacion extends Model
     public static function listarNotificaciones($idUsuario)
     {
         return Notificacion::where("idReceptor",$idUsuario)
-        ->join('usuario', 'usuario.idusuario', '=', 'notificacion.idEmisor')
+        ->leftJoin('usuario', 'usuario.idusuario', '=', 'notificacion.idEmisor')
         ->join('mensajeNotificacion','mensajeNotificacion.idMensaje', '=','notificacion.idMensaje')
         // ->join('colaborador','colaborador.idUsuario', '=', 'notificacion.idEmisor')
         // ->where('usuario.idRolUsuario','=', 1 )
