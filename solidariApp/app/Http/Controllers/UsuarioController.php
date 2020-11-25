@@ -14,6 +14,7 @@ class UsuarioController extends Controller
     public function login(Request $request){
         $datosLogin = json_decode($request->getContent());
         //VALIDACIONES
+        //primero fijate el ID DE GOOGLE
         // if($datosLogin->pass == ''){
         //     return response()->json([
         //         'resultado' => 0,

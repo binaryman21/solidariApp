@@ -2,7 +2,6 @@ isLoggedIn();
 
 $( document ).ready(function() {
 
-
     if( $('#necesidadOculta').text() == '' && $('#organizacionOculta').text() == ''  ){
         getOrganizaciones();
     }

@@ -4,6 +4,12 @@
 .mapaExtendido {
     height:  600px;
 }
+
+.alertify,.alertify-notifier,.alertify-confirm{
+    z-index:999999 !important;
+    /* margin-top: -50px; */
+}
+
 :root {
     --alimentos-color:#fdf5e7;
     --ropa-color: #C7C6F5;

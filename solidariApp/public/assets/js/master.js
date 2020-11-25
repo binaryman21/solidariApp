@@ -7,6 +7,9 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
+    alertify.set('notifier', 'position', 'bottom-left')
+
+
 })
 
 /*activo el menu que corresponde*/
