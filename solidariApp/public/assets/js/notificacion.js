@@ -262,15 +262,7 @@ function mostrarNotificaciones(notificaciones,noLeidas){
                 $('#modalNotificaciones').modal('hide');
             })
         }
-        // $(`.notificacionVerPerfil${notificacion.idReceptor}`).on('click',function(){
-        //     if(!notificacion.leido){
-        //         notificacion.leido = "1";
-        //         if(!upDateNotificacion(notificacion)){
-        //             noLeidas = noLeidas -1;
-        //             mostrarNotificaciones(notificaciones,noLeidas);
-        //         };
-        //     }
-        // })
+
         $(`.notificacionEmisor${notificacion.idNotificacion}`).on('click',function(){
             if(!notificacion.leido){
                 notificacion.leido = "1";
