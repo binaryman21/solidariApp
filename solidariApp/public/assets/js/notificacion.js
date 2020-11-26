@@ -11,11 +11,14 @@ function cargarNotificaciones(usuario){
             //console.log(noLeidas);
             console.log(notificaciones);
 
-            mostrarNotificaciones(notificaciones,noLeidas)
+            if(!notificaciones == ''){
+                mostrarNotificaciones(notificaciones,noLeidas)
+                $("btnNotifLeidas").on('click',()=>{
+
+                })
+            }
         }else{
-
-            console.log('result '+response.data.result+ " msj: "+response.data.message);
-
+             console.log('result '+response.data.result+ " msj: "+response.data.message);
         }
 
     })
@@ -30,6 +33,28 @@ function mostrarNotificaciones(notificaciones,noLeidas){
     if(noLeidas  >  0){
         $("#logoNotificacion").prepend('<span class="badge badge-light bg-danger text-white" id="badgeNotif">' + noLeidas + '</span>')
     }
+
+    //MODIFICO LA CABECERA DEL MODAL
+    $("#headNotif").html(`
+        <div class="d-flex justify-content-between">
+            <div>
+                <h3 class="pt-2">Notifiaciones</h3>
+            </div>
+            <div id="dropMarcarLeidas" class="">
+                <button class="btn p-2" type="button" id="btnNotifLeidas">
+                    <svg width="2em" height="2em" viewBox="0 0 16 16" class="bi bi-check ml-auto text-success" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd" d="M10.97 4.97a.75.75 0 0 1 1.071 1.05l-3.992 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.236.236 0 0 1 .02-.022z"/>
+                    </svg>
+                    <span class="tooltipText">Marcar como leídas</span>
+                </button>
+            </div>
+        </div>
+    `)
+
+    //DEFINO BTN PARA MARCAR TODAS COMO LEÍDAS
+    $("#btnNotifLeidas").on('click',()=>{
+        marcarNotifLeidas(notificaciones, noLeidas);
+    })
 
     notificaciones.forEach(notificacion => {
         // console.log(  notificacion );
@@ -318,4 +343,17 @@ function crearNotificacionCalificacionOrganizacion(calificacion){
 
         }
     });
+}
+
+function marcarNotifLeidas(notificaciones, noLeidas){
+    console.log('Entro');
+    notificaciones.forEach(notificacion =>{
+        if(!notificacion.leido){
+            notificacion.leido = "1";
+            if(!upDateNotificacion(notificacion)){
+                noLeidas = noLeidas -1;
+            };
+        }
+        mostrarNotificaciones(notificaciones, noLeidas);
+    })
 }
