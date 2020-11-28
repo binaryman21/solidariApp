@@ -64,19 +64,33 @@ Route::get('/cuenta-colaborador/ajustes', function()
     }
     else return view('UIConfiguracionPerfilColaborador');
 
-})->name('UIOrganizacionAjustes');
+})->name('UIColaboradorAjustes');
 
 Route::get('/colaborador/{idUsuario}', function($idUsuario){return view('UIPerfilColaborador');})->name('UIColaboradorVisitante');
 Route::get('/organizacion/{idUsuario}', function($idUsuario){return view('UIPerfilOrganizacion');})->name('UIOrganizacionVisitante');
 
 //lo dejo de momento en otra ruta para no interferir en otras funcionalidades.
-Route::get('/ver-colaborador/{idUsuario}', function($idUsuario){return view('UIPerfilVisitanteDeColaborador');})->name('UIColaboradorVisitante');
-Route::get('/ver-organizacion/{idUsuario}', function($idUsuario){
-
+Route::get('/ver-colaborador/{idUsuario}', function($idUsuario){
     
-    return view('UIPerfilVisitanteDeOrganizacion');
 
-})->name('UIOrganizacionVisitante');
+    if(UsuarioController::ExisteUsuario($idUsuario)){
+
+        if(isset($_SESSION['usuario'])){
+
+            $typeUser = $_SESSION['usuario']->rol->nombreRol;
+            return view('UIPerfilVisitanteDeColaborador', compact('typeUser'));
+        }
+        return view('UIUsuarioNoEncontrado');
+    } 
+    else return view('UIUsuarioNoEncontrado');
+
+;})->name('UIVisitanteDeColaborador');
+Route::get('/ver-organizacion/{idUsuario}', function($idUsuario){
+    
+    if(UsuarioController::ExisteUsuario($idUsuario)) return view('UIPerfilVisitanteDeOrganizacion');
+    else return view('UIUsuarioNoEncontrado');
+
+})->name('UIVisitanteDeOrganizacion');
 //Route::get('/organizacion/{idUsuario}', 'App\Http\Controllers\OrganizacionController@getOrganizacion')->name('getOrganizacion');
 
 //RUTA DE LA ORGANIZACION
@@ -213,7 +227,7 @@ Route::post('/altaDenuncia', 'App\Http\Controllers\DenunciaController@altaDenunc
 Route::post('/confirmarDenuncia', 'App\Http\Controllers\DenunciaController@confirmarDenuncia')->name('confirmarDenuncia');
 
 //Route::get('/tienePermisoPara/{pStringPermiso}', 'App\Http\Controllers\UsuarioController@tienePermisoPara')->name('confirmarDenuncia');
-Route::get('/actualizarInsignias/{idUsuario}', 'App\Http\Controllers\CalificacionController@actualizarInsignias')->name('confirmarDenuncia');
+Route::get('/actualizarInsignias/{idUsuario}', 'App\Http\Controllers\CalificacionController@actualizarInsignias')->name('actualizarInsignias');
 Route::get('/getCalificaciones/{idUsuario}', 'App\Http\Controllers\CalificacionController@getCalificaciones')->name('getCalificaciones');
 Route::get('/getCalificacionesOrganizacion/{idUsuario}', 'App\Http\Controllers\CalificacionController@getCalificacionesOrganizacion')->name('getCalificacionesOrganizacion');
 Route::get('/getInsignias/{idUsuario}', 'App\Http\Controllers\InsigniaUsuarioController@getInsignias')->name('getInsignias');

@@ -43,40 +43,47 @@
                         </div>
                     </div>
                     <!-- TABS En progreso | Finalizadas -->
-                    <ul class="nav nav-tabs" id="necesidadeTABS" role="tablist">
+                    <ul class="nav nav-tabs" id="necesidadesTABS" role="tablist">
                         <li class="nav-item" role="presentation">
-                            <a class="nav-link active" id="inprogress-tab" data-toggle="tab" href="#necesidadesEnProgreso" role="tab" aria-controls="En progreso" aria-selected="true">En progreso</a>
+                            <a class="nav-link active" id="enproceso-tab" data-toggle="tab" href="#necesidadesEnProceso" role="tab" aria-controls="En proceso" aria-selected="true">En proceso</a>
                         </li>
                         <li class="nav-item" role="presentation">
-                            <a class="nav-link" id="finished-tab" data-toggle="tab" href="#necesidadesFinalizadas" role="tab" aria-controls="Finalizadas" aria-selected="false">Finalizadas</a>
+                            <a class="nav-link" id="cumplidas-tab" data-toggle="tab" href="#necesidadesCumplidas" role="tab" aria-controls="Cumplidas" aria-selected="false">Cumplidas</a>
                         </li>
                     </ul>
                     <!-- Contenedor de las necesidades -->
                     <div class="tab-content" id="misNecesidades">
-                        <div class="tab-pane fade active show" id="necesidadesEnProgreso" role="tabpanel" aria-labelledby="inprogress-tab"></div>
-                        <div class="tab-pane fade" id="necesidadesFinalizadas" role="tabpanel" aria-labelledby="finished-tab"></div>
+                        <div class="tab-pane fade active show" id="necesidadesEnProceso" role="tabpanel" aria-labelledby="enproceso-tab"></div>
+                        <div class="tab-pane fade" id="necesidadesCumplidas" role="tabpanel" aria-labelledby="cumplidas-tab"></div>
                     </div>
                 </div>
             </div>
         </div>
         <div class="col-md-6">
-            <div class="card comentarios mt-4">
+            <div class="card mt-sm-4">
                 <div class="card-body">
-                    <h6 class="card-title">Comentarios</h6>
-                    <div class="card comentario">
-                        <div class="card-body">
-                            <h5 class="card-title d-flex justify-content-between"> <span class="tituloComentario">Gran ayuda</span> <span class="fechaComentario">15/07/2020</span></h5>
-                            <p class="card-text">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quis molestias adipisci asperiores doloribus, soluta nostrum ab ea quasi ducimus aliquam. Illo accusamus rerum dignissimos aliquid culpa aperiam vitae ullam sunt.</p>
-                        </div>
+                    <h6 class="card-title">Calificaciones</h6>
+                    <!-- TABS Buenas | Regulares | Malas -->
+                    <ul class="nav nav-tabs" id="calificacionesTAB" role="tablist">
+                        <li class="nav-item" role="presentation">
+                            <a class="nav-link active" id="Positivas-tab" data-toggle="tab" href="#trato-3" role="tab" aria-controls="Positivas" aria-selected="true">Positivas</a>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <a class="nav-link" id="Regulares-tab" data-toggle="tab" href="#trato-2" role="tab" aria-controls="Regulares" aria-selected="false">Regulares</a>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <a class="nav-link" id="Negativas-tab" data-toggle="tab" href="#trato-1" role="tab" aria-controls="Negativs" aria-selected="false">Negativas</a>
+                        </li>
+                    </ul>
+                    <!-- Contenedor de la calificaciones -->
+                    <div class="tab-content" id="calificaciones">
+                        <div class="tab-pane fade active show" id="trato-3" role="tabpanel" aria-labelledby="Positivas-tab"></div>
+                        <div class="tab-pane fade" id="trato-2" role="tabpanel" aria-labelledby="Regulares-tab"></div>
+                        <div class="tab-pane fade" id="trato-1" role="tabpanel" aria-labelledby="Negativas-tab"></div>
                     </div>
-                    <div class="card comentario">
-                        <div class="card-body">
-                            <h5 class="card-title d-flex justify-content-between"> <span class="tituloComentario">Dudoso</span> <span class="fechaComentario">15/07/2020</span></h5>
-                            <p class="card-text">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Tempora quasi, fuga voluptates accusamus odit id quam alias sint officia harum, explicabo veniam incidunt, repellat molestiae quaerat eum delectus eligendi beatae!</p>
-                        </div>
-                    </div>
-                <div id="navComentarios"><a href="JavaScript:Void(0);" rel="0" class="active">1</a> <a href="JavaScript:Void(0);" rel="1">2</a> </div></div>
+                </div>
             </div>
+        </div>
         </div>
     </div>
 </div>

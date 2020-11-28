@@ -16,62 +16,69 @@ class DomicilioController extends Controller
     public function actualizarDomicilio(Request $request)
     {
         $datos = json_decode($request->getContent());
-
         $domicilio = Domicilio::find($datos->idDomicilio);
+        $changes = false;
 
-        if( $datos->calle == ''){
+        if(isset($datos->calle)){
 
-            return response()->json([
-                'resultado' => 0,
-                'failOn' => 'calle',
-                'message' => "Ingrese una calle"
-            ]);
+            if($datos->calle == ''){
+
+                return response()->json([
+                    'resultado' => 0,
+                    'failOn' => 'calle',
+                    'message' => "Ingrese una calle"
+                ]);
+            }
+            if(strlen($datos->calle) < 3){
+
+                return response()->json([
+                    'resultado' => 0,
+                    'failOn' => 'calle',
+                    'message' => "Ingrese una calle valida"
+                ]);
+            }
+            if(strlen($datos->calle) > 50){
+
+                return response()->json([
+                    'resultado' => 0,
+                    'failOn' => 'calle',
+                    'message' => "Maximo 50 caracteres"
+                ]);
+            }
+            if(!preg_match('/^[A-Za-z0-9\s]+$/', $datos->calle)){
+    
+                return response()->json([
+                    'resultado' => 0,
+                    'failOn' => 'calle',
+                    'message' => "La calle tiene caracteres especiales"
+                ]);
+            }
+            
+            $domicilio->calle = $datos->calle;
+            $changes = true;
         }
 
-        if(strlen($datos->calle) < 3){
-            return response()->json([
-                'resultado' => 0,
-                'failOn' => 'calle',
-                'message' => "Ingrese una calle valida"
-            ]);
+        if(isset($datos->numero)){
+
+            if(!preg_match('/[0-9]/', $datos->numero)){
+
+                return response()->json([
+
+                    'resultado' => 0,
+                    'failOn' => 'numero',
+                    'message' => 'La altura no es valida'
+                ]);
+            }
+
+            $domicilio->numero = $datos->numero;
+            if(!$changes) $changes = true;
         }
-
-        if(strlen($datos->calle) > 50){
-            return response()->json([
-                'resultado' => 0,
-                'failOn' => 'calle',
-                'message' => "Maximo 50 caracteres"
-            ]);
-        }
-
-        if(!preg_match('/^[A-Za-z0-9\s]+$/', $datos->calle)){
-
-            return response()->json([
-                'resultado' => 0,
-                'failOn' => 'calle',
-                'message' => "La calle tiene caracteres especiales"
-            ]);
-        }
-
-        $domicilio->calle = $datos->calle;
-
-        if(!preg_match('/[0-9]/', $datos->numero)){
-
-            return response()->json([
-
-                'resultado' => 0,
-                'failOn' => 'numero',
-                'message' => 'La altura no es valida'
-            ]);
-        }
-
-        $domicilio->numero = $datos->numero;
 
         if(isset($datos->piso)){
 
-            if(isset($datos->depto) && $datos->depto !=''){
+            if(isset($datos->depto)){
 
-                if(!preg_match('/[0-9]/', $datos->piso)){
+                if($datos->piso!= '' && !preg_match('/[0-9]/', $datos->piso)){
 
                     return response()->json([
 
@@ -83,6 +90,8 @@ class DomicilioController extends Controller
 
                 $domicilio->piso = $datos->piso;
                 $domicilio->depto = $datos->depto;
+
+                if(!$changes) $changes = true;
             }
             else{
 
@@ -98,15 +107,25 @@ class DomicilioController extends Controller
 
             $domicilio->latitud = $datos->latitud;
             $domicilio->longitud = $datos->longitud;
+
+            if(!$changes) $changes = true;
         }
 
-        if($datos->idLocalidad>0 && $datos->idLocalidad < 2382){
+        if(isset($datos->idLocalidad)){
+            
+            if($datos->idLocalidad>0 && $datos->idLocalidad < 2382){
 
-            $domicilio->save();
-
-            return response()->json([
-                'resultado' => 1
-            ]);
+                $domicilio->idLocalidad = $datos->idLocalidad;
+            }
+            else return response()->json(['resultado' => 0, 'failOn'=> 'idLocalidad', 'message'=> 'No existe la localidad']);
         }
-    }
-}
+
+        if(!$changes) return response()->json(['resultado' => -1, 'message' => 'No hay cambios']);
+
+        $domicilio->save();
+
+        return response()->json([
+            'resultado' => 1
+        ]);
+    } 
+} 

@@ -152,7 +152,12 @@ class UsuarioController extends Controller
     
                 /**Si es un Organizacion, vuelvo a UIOrganizacion  */
                 if($usuarioLogueado->idRolUsuario == '2'){
-                    return redirect()->route('UIOrganizacion');
+
+                    return response()->json([
+
+                        'resultado' => 1,
+                        'imgUrlTemp' => $urlFotoPerfil
+                    ]);
                 }
     
             }
@@ -328,4 +333,8 @@ class UsuarioController extends Controller
         }
     }
 
+    public static function ExisteUsuario($id){
+
+        return Usuario::EsUsuario($id);
+    }
 }

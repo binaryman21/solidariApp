@@ -11,7 +11,24 @@ function getOrganizacion(idUsuario){
     .then((response)=>{
 
         let organizacion = response.data.organizacion;
-        $("#nombreOrganizacion").html(organizacion.razonSocial);
+        let contacto = {
+
+            correo: organizacion.emailUsuario,
+            telefonos: response.data.telefonos,
+            domicilios: response.data.domicilios
+        };
+
+        cargarDatosPerfil(organizacion);
+        agregarModalContacto(contacto);
+        cargarNecesidades(idUsuario);
+        cargarInsignias( idUsuario );
+        cargarComentariosOrganizacion(idUsuario);
+    });
+}
+
+function cargarDatosPerfil(organizacion) {
+
+    $("#nombreOrganizacion").html(organizacion.razonSocial);
         $("#tipoOrganizacion").html(organizacion.nombreTipoOrganizacion);
         $("#urlFotoPerfilOrganizacion").attr("src",organizacion.urlFotoPerfilUsuario);
         if(organizacion.descripcionOrganizacion == "")
@@ -21,15 +38,9 @@ function getOrganizacion(idUsuario){
 
         $("#descripcionOrganizacion").html(organizacion.descripcionOrganizacion);
         $("#fechaAltaUsuario").html(`Usuario desde el ${moment(organizacion.fechaAltaUsuario, "YYYY-MM-DD HH:mm:ss").format('LL')}`);
-        agregarModalContacto(response.data);
-        cargarNecesidades(idUsuario);
-        cargarInsignias( idUsuario );
-        cargarComentariosOrganizacion(idUsuario);
-    });
-
 }
 
-function cargarNecesidades ( idUsuario){
+function cargarNecesidades(idUsuario){
 
     fetch(`/listarNecesidades/${idUsuario}`)
     .then(response => response.json())
@@ -41,7 +52,7 @@ function cargarNecesidades ( idUsuario){
         let divNecesidadesEliminadas = $('#necesidadesEliminadas');
         
 
-        if(necesidades != null || necesidades.length>0){
+        if(necesidades != null && necesidades.length>0){
 
             necesidades.forEach(need => {
 
@@ -49,9 +60,18 @@ function cargarNecesidades ( idUsuario){
 
                 let cardNeed = 
                 `<div class="card need ${need.nombreCategoria.toLowerCase()} ${need.descripcionEstado.replace(/\s+/g, "")}" id="necesidad${need.idNecesidad}">
-                    <!-- CATEGORIA, FECHA, ESTADO Y DESCRIPCION -->
+                    <!-- CATEGORIA, FECHA, ESTADO, OPCIONES Y DESCRIPCION -->
                     <div class="card-body py-2">
-                        <h6 class="card-title mb-n1">${capitalize(need.nombreCategoria)}</h6>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <h6 class="card-title mb-n1">${capitalize(need.nombreCategoria)}</h6>
+                            <button class="btn dropdown px-0 text-muted" type="button" id="OptionsNeed-forID-${need.idNecesidad}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="fas fa-ellipsis-v fa-xs"></i></button>
+                            <div class="dropdown-menu dropdown-menu-right shadow-sm mt-n4" aria-labelledby="OptionsNeed-forID-${need.idNecesidad}">
+                                <button class="dropdown-item" id="btnEdite-need${need.idNecesidad}" data-need="${need.idNecesidad}" type="button">Editar necesidad</button>
+                                <button class="dropdown-item" id="btnDelete-need${need.idNecesidad}" data-need="${need.idNecesidad}" type="button">Eliminar necesidad</button>                            
+                                <a target="_blank" class="dropdown-item fb-xfbml-parse-ignore"
+                                    href="https://www.facebook.com/sharer/sharer.php?u=https://solidariapp.com.ar/organizacion/${need.idUsuario}/necesidad/${need.idNecesidad}">Compartir en Facebook</a>
+                            </div>
+                        </div>
                         <small class="card-subtitle text-muted font-weight-light">Creada hace ${capitalize(moment(need.fechaCreacionNecesidad, "YYYY-MM-DD HH:mm:ss").startOf('day').fromNow())} - ${capitalize(need.descripcionEstado)}</small>
                         <div class="card-text mt-2 text-muted">${capitalize(need.descripcionNecesidad)}</div>
                     </div>
@@ -80,11 +100,9 @@ function cargarNecesidades ( idUsuario){
                     default: divNecesidadesEliminadas.append(cardNeed);
                 }
             })
-
-            agregarPaginacionNecesidades();
         }
-        else divNecesidades.text('Esta organizacion no tiene necesidades publicadas');
-
+        
+        agregarPaginacionNecesidades();
         $("#btnNuevaNecesidad").click(function(){
 
             limpiarValidaciones($("#inpFechaLimite"),  $("#errorFechaLimite") );
@@ -112,20 +130,29 @@ function agregarPaginacionNecesidades(){
     paginarTabNecesidad({containerType:'Eliminadas', ListType:'eliminada'});
 }
 
+function agregarPaginacionComentarios(){
+
+    //llamo a la funcion para paginar cada seccion pasandole el nombre del contenedor y la clase de los elementos que contiene
+    paginarTabCalificacion({containerType:'trato-1', ListType:'trato-1'});//negativas
+    paginarTabCalificacion({containerType:'trato-2', ListType:'trato-2'});//regulares
+    paginarTabCalificacion({containerType:'trato-3', ListType:'trato-3'});//positivas
+}
+
 function paginarTabNecesidad({containerType = '', ListType = ''} = {}){
 
+    $(`#navNecesidades${containerType}`).remove();
     let $necesidadesContainer = $(`#necesidades${containerType}`);
     let necesidades = document.querySelectorAll(`.need.${ListType}`);
     let filasTotales= necesidades.length;
+    let filasParaMostrar = 4;
 
-    if(filasTotales){
+    if(filasTotales>filasParaMostrar){
 
         $necesidadesContainer.append(`<div id=navNecesidades${containerType}></div>`);
         let $nav = $(`#navNecesidades${containerType}`);
     
-        let filasMostradas = 4;
     
-        let numPaginas = filasTotales/filasMostradas;
+        let numPaginas = filasTotales/filasParaMostrar;
     
         for(i = 0; i < numPaginas; i++) {
     
@@ -135,7 +162,7 @@ function paginarTabNecesidad({containerType = '', ListType = ''} = {}){
         }
     
         $(necesidades).hide();
-        $(necesidades).slice(0, filasMostradas).show();
+        $(necesidades).slice(0, filasParaMostrar).show();
     
         $nav.find('a').bind('click', function(){
     
@@ -144,25 +171,74 @@ function paginarTabNecesidad({containerType = '', ListType = ''} = {}){
     
             let pagActual = $(this).attr('rel');
     
-            let primerItem = pagActual * filasMostradas;
-            let ultimoItem = primerItem + filasMostradas;
+            let primerItem = pagActual * filasParaMostrar;
+            let ultimoItem = primerItem + filasParaMostrar;
             $(necesidades).css('opacity','0.0').hide().slice(primerItem, ultimoItem).
                 css('display','block').animate({opacity:1}, 300);
         });
     }
-    else {
+    else if(!filasTotales)  {
 
         let tabType = document.querySelector(`a.nav-link[href="#necesidades${containerType}"]`).textContent.toLowerCase();
         let emptyStateOfNeed = 
         `<img src="/assets/img/SinNecesidades${containerType}.svg">
          <p class="text-center my-5">No hay necesidades ${tabType}</p>`
         $necesidadesContainer.append(emptyStateOfNeed);
-    } 
+    }
+
+}
+
+function paginarTabCalificacion({containerType = "", ListType = ""} = {}) {
+
+    $(`#navCalificaciones${containerType}`).remove();
+    let $calificacionContainer = $(`#${containerType}`);
+    let calificaciones = document.querySelectorAll(`.${ListType}`);
+    let filasTotales= calificaciones.length;
+    let filasParaMostrar = 4;
+
+    if(filasTotales>filasParaMostrar){
+
+        $calificacionContainer.append(`<div id=navCalificaciones${containerType}></div>`);
+        let $nav = $(`#navNecesidades${containerType}`);
+    
+        let numPaginas = filasTotales/filasParaMostrar;
+    
+        for(i = 0; i < numPaginas; i++) {
+    
+            let numPag = i + 1;
+            let pagRel = `<a href="JavaScript:Void(0);" rel="${i}" ${!i ? 'class="active"':''}">${numPag}</a>`
+            $nav.append(pagRel);
+        }
+    
+        $(calificaciones).hide();
+        $(calificaciones).slice(0, filasParaMostrar).show();
+    
+        $nav.find('a').bind('click', function(){
+    
+            $nav.find('a').removeClass('active');
+            $(this).addClass('active');
+    
+            let pagActual = $(this).attr('rel');
+    
+            let primerItem = pagActual * filasParaMostrar;
+            let ultimoItem = primerItem + filasParaMostrar;
+            $(calificaciones).css('opacity','0.0').hide().slice(primerItem, ultimoItem).
+                css('display','block').animate({opacity:1}, 300);
+        });
+    }
+    else if(!filasTotales) {
+                      
+        let tabType = document.querySelector(`a.nav-link[href="#${containerType}"]`).textContent.toLowerCase();
+        let emptyState = 
+        `<img src="/assets/img/noComments.png">
+         <p class="text-center my-5">No hay calificaciones ${tabType}</p>`
+        $calificacionContainer.append(emptyState);
+    }
 }
 
 function agregarModalContacto(contacto){
 
-    $("#correo").html(contacto.organizacion.emailUsuario);
+    $("#correo").html(contacto.correo);
 
     var $listaDomicilios = $('#listadoDomicilios');
     if(contacto.domicilios && contacto.domicilios.length){
@@ -202,34 +278,6 @@ function agregarModalContacto(contacto){
     else $listadoTelefonos.html('<p class="mb-2">No hay telefonos registrados</p>');
 
     $("#btn-contacto").toggleClass('d-none');
-}
-
-function agregarPaginacionComentarios(){
-    $('#navComentarios').remove();
-
-    $('.comentarios').after('<div id="navComentarios"></div>');
-    let comentario = document.querySelectorAll('.comentario')
-    let filasMostradas = 2;
-    let filasTotales = comentario.length;
-
-    let numPaginas = filasTotales/filasMostradas;
-    for(i = 0; i < numPaginas; i++) {
-        let numPag = i + 1;
-        $('#navComentarios').append('<a href="javascript:void(0);" rel="' + i + '">' + numPag + '</a> ');
-    }
-
-    $( comentario ).hide();
-    $( comentario ).slice(0, filasMostradas).show();
-    $('#navComentarios a:first').addClass('active');
-    $('#navComentarios a').bind('click', function(){
-        $('#navComentarios a').removeClass('active');
-        $(this).addClass('active');
-        let pagActual = $(this).attr('rel');
-        let primerItem = pagActual * filasMostradas;
-        let ultimoItem = primerItem + filasMostradas;
-        $( comentario ).css('opacity','0.0').hide().slice(primerItem, ultimoItem).
-            css('display','block').animate({opacity:1}, 300);
-    });
 }
 
 function capitalize(text){

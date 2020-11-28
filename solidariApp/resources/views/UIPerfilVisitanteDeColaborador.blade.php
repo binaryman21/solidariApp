@@ -31,37 +31,45 @@
                             <button class="btn btn-outline-secondary border-secondary border-left-0" id="btnBuscarNeccesidades" type="button"><i class="fa fa-search fa-xs"></i></button>
                         </div>
                     </div>
+                    <div class="accordion" id="colaboracionesConOrgs"></div>
                     <div class="colaboraciones"></div>
                 </div>
-                <div id="navColaboraciones"></div>
             </div>
         </div>
         <div class="col-md-6">
             <!-- Insignias -->
-            <div class="card insignias mt-xs-4">
+            <div class="card card.body insignias mt-xs-4">
                 <div class="card-body">
                     <h6 class="card-title">Insignias</h6>
                     <div id="insignias"></div>
                 </div>
             </div>
-
-            <!-- Calificaciones -->
-            <div class="card comentarios mt-4">
+            <!-- calificaciones -->
+            <div class="card mt-4">
                 <div class="card-body">
-                    <h6 class="card-title">Calificaciones</h6>
-                    <div class="card comentario">
-                        <div class="card-body">
-                            <h5 class="card-title d-flex justify-content-between"> <span class="tituloComentario">Gran ayuda</span> <span class="fechaComentario">15/07/2020</span></h5>
-                            <p class="card-text">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quis molestias adipisci asperiores doloribus, soluta nostrum ab ea quasi ducimus aliquam. Illo accusamus rerum dignissimos aliquid culpa aperiam vitae ullam sunt.</p>
-                        </div>
+                    <div class="d-flex align-items-center">
+                        <h6 class="card-title mr-auto">Comentarios</h6>
+                        <div id="InComentariosActionUser"></div>
                     </div>
-                    <div class="card comentario">
-                        <div class="card-body">
-                            <h5 class="card-title d-flex justify-content-between"> <span class="tituloComentario">Dudoso</span> <span class="fechaComentario">15/07/2020</span></h5>
-                            <p class="card-text">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Tempora quasi, fuga voluptates accusamus odit id quam alias sint officia harum, explicabo veniam incidunt, repellat molestiae quaerat eum delectus eligendi beatae!</p>
-                        </div>
+                    <!-- TABS Positivas | Regulares | Negativas -->
+                    <ul class="nav nav-tabs" id="calificacionesTAB" role="tablist">
+                        <li class="nav-item" role="presentation">
+                            <a class="nav-link active" id="Positivos-tab" data-toggle="tab" href="#trato-3" role="tab" aria-controls="Positivos" aria-selected="true">Positivos</a>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <a class="nav-link" id="Regulares-tab" data-toggle="tab" href="#trato-2" role="tab" aria-controls="Regulares" aria-selected="false">Regulares</a>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <a class="nav-link" id="Negativos-tab" data-toggle="tab" href="#trato-1" role="tab" aria-controls="Negativos" aria-selected="false">Negativos</a>
+                        </li>
+                    </ul>
+                    <!-- Contenedor de la calificaciones -->
+                    <div class="tab-content" id="calificaciones">
+                        <div class="tab-pane fade active show" id="trato-3" role="tabpanel" aria-labelledby="Positivos-tab"></div>
+                        <div class="tab-pane fade" id="trato-2" role="tabpanel" aria-labelledby="Regulares-tab"></div>
+                        <div class="tab-pane fade" id="trato-1" role="tabpanel" aria-labelledby="Negativos-tab"></div>
                     </div>
-                <div id="navComentarios"><a href="JavaScript:Void(0);" rel="0" class="active">1</a> <a href="JavaScript:Void(0);" rel="1">2</a> </div></div>
+                </div>
             </div>
         </div>
     </div>
@@ -91,8 +99,7 @@
   </div>
 </div>
 
-@include("UIPerfilModales/UIModalReportar")
-@include("UIPerfilModales/UIModalSubscribirse")
+@include("UIPerfilModales.UIModalReportar")
 @endsection
 
 @section('scripts')

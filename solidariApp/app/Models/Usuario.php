@@ -57,7 +57,11 @@ class Usuario extends Model
         return Usuario::where('emailUsuario',$email)
                         ->where('idEstadoUsuario',1)
                         ->exists();
+    }
 
+    public static function EsUsuario($id){
+
+        return Usuario::where('idUsuario',$id)->where('idEstadoUsuario',1)->exists();
     }
 
     public function rol()

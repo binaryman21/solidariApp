@@ -14,6 +14,8 @@ document.addEventListener('DOMContentLoaded', () => {
     let opcionesTabs = navTabs.find('a[role=tab]');
     let btnGuardarCambiosDomicilio = $('#btnGuardarCambiosDomicilio');
 
+    listarProvincias(-1);
+
     btnGuardarCambiosDomicilio.on('click', e => {
 
         ActualizarDomicilio(e);
@@ -79,6 +81,8 @@ function configurarCuentaDeLaOrganizacion(idUsuario){
             var $domiciliosFragment = $(document.createDocumentFragment());
             $.each(FetchedDomicilios, function (indexInArray, domicilio) {
     
+                if(!indexInArray) listarLocalidades(domicilio.idProvincia, -1);
+
                 var piso = (domicilio.piso != '') ? `Piso ${domicilio.piso}` : '';
                 var depto = (domicilio.depto != '') ? `Depto ${domicilio.depto}` : '';
 
@@ -103,6 +107,11 @@ function configurarCuentaDeLaOrganizacion(idUsuario){
             $listaDomicilios.html($domiciliosFragment);
         }
         else $listaDomicilios.html('<p class="mb-2">No hay domicilios registrados</p>');
+
+        $('#selectProvincia').on('change', e => {
+
+            listarProvincias(e.target.value, -1);
+        });
         
         //TELEFONOS
         var $listadoTelefonos = $("#listadoTelefonos");
@@ -115,7 +124,7 @@ function configurarCuentaDeLaOrganizacion(idUsuario){
                 `<a id="telefono${telefono.idTelefono}" class="list-group-item list-group-item list-group-item-action px-2 py-1 d-flex justify-content-between align-items-center">
                     <span class="m-1">${telefono.codAreaTelefono} - ${telefono.numeroTelefono}</span>
                     <button class="btn dropdown" type="button" id="telOptions-forID-${telefono.idTelefono}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="fas fa-ellipsis-v fa-xs"></i></button>
-                    <div class="dropdown-menu dropdown-menu-lg-right shadow" aria-labelledby="telOptions-forID-${telefono.idTelefono}">
+                    <div class="dropdown-menu dropdown-menu-right shadow" aria-labelledby="telOptions-forID-${telefono.idTelefono}">
                         <button class="dropdown-item" id="btnEdite-Tel${indexInArray}" data-tel="${indexInArray}" type="button">Editar</button>
                         <button class="dropdown-item" id="btnDelete-Tel${indexInArray}" data-tel="${indexInArray}" type="button">Eliminar</button>
                     </div>
@@ -133,9 +142,9 @@ function configurarCuentaDeLaOrganizacion(idUsuario){
 
 function EditarEnFormDomicilios(e){
 
-    let id = $(e.target).data('dir');
-    let dir = FetchedDomicilios[id];
-    EstablecerFormDomiciliosEn({title: 'Editar direccion', data: dir});
+    let index = $(e.target).data("dir");
+    let dir = FetchedDomicilios[index];
+    EstablecerFormDomiciliosEn({title: 'Editar direccion', data: dir, id:index});
     $('#formularioDomicilio').collapse('show');
 }
 function EditarEnFormTelefonos(e){
@@ -144,7 +153,7 @@ function EditarEnFormTelefonos(e){
     let tel = FetchedTelefonos[id];
     EstablecerFormTelefonosEn({title: 'Editar direccion', data: tel});
     $('#nuevoTelefono').collapse('show');
-}
+}calificacionContainer
 
 function EliminarTelefono(e){
 
@@ -182,7 +191,7 @@ function EliminarTelefono(e){
     );
 }
 
-function EstablecerFormDomiciliosEn({title="", data = {}} = {}) {
+function EstablecerFormDomiciliosEn({title="", data = {}, id = -1} = {}) {
 
     $('#formDirTitle').text(title);
     $('#calle').val(data.calle || '');
@@ -191,6 +200,7 @@ function EstablecerFormDomiciliosEn({title="", data = {}} = {}) {
     $('#dpto').val(data.depto || '');
     $('#selectLocalidad').val(data.idLocalidad || -1);
     $('#selectProvincia').val(data.idProvincia || -1);
+    $('#btnGuardarCambiosDomicilio').data("dir", id);
 }
 
 function EstablecerFormTelefonosEn({title="", data = {}} = {}) {
@@ -202,10 +212,46 @@ function EstablecerFormTelefonosEn({title="", data = {}} = {}) {
 
 function ActualizarDomicilio(e){
 
-    let id = $(e.target).data('dir');
-    axios.post("/actualizarDomicilio", {idDomicilio:46, calle: "San Luis", numero: 675, idLocalidad:3})
+    let id = $(e.target).data("dir");
+    let nuevosDatos = ObtenerDiferenciasConDomicilioFedched(id);
+
+    axios.post("/actualizarDomicilio", nuevosDatos)
     .then((response)=>{
         
-        console.log(response.data);
-    });
+        if(response.data.resultado){
+
+            if(response.data.resultado == 1) alertify.success('Cambios guardados');
+            else alertify.notify(response.data.message);
+        }
+        else console.log(response.data.message);
+    })
+    .catch(error => alertify.error('Ha ocurrido un problema y no se ha podido guardar los cambios'));
 }
+
+
+function ObtenerDiferenciasConDomicilioFedched(id){
+
+
+    if(id>0 && id<FetchedDomicilios.length){
+
+        let dirBefore = FetchedDomicilios[id];
+        let dirAfter = {
+            
+            id: dirBefore.idDomicilio
+        };
+
+        let calle = $('#calle').val();
+        let numero = $('#numero').val();
+        let piso = $('#piso').val();
+        let dpto = $('#dpto').val();
+        let idLocalidad = $('#selectLocalidad').val();
+
+        if(calle != dirBefore.calle) dirAfter.calle = calle;
+        if(numero != dirBefore.numero) dirAfter.numero = numero; 
+        if(piso != dirBefore.piso) dirAfter.piso = piso; 
+        if(dpto != dirBefore.dpto) dirAfter.dpto = dpto; 
+        if(idLocalidad != dirBefore.idLocalidad) dirAfter.idLocalidad = idLocalidad;
+    }
+}
+
+//Esta accion no se puede deshacer, ¿Estas seguro que deseas darte de baja?

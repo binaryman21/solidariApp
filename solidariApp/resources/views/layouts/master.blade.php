@@ -28,11 +28,16 @@
 
 </head>
 <body class="d-flex flex-column h-100">
-    <header>
+    <header class="position-sticky" style="top:0;z-index:1000;">
         <div class="d-flex ">
             <nav class="flex-fill mb-md-3 navbar navbar-expand-md navbar-light bg-light shadow-sm bg-white pl-lg-5">
                 <!-- LOGO SolidariApp -->
-                <a class="navbar-brand mr-auto" href="{{url('/')}}"><span class="mr-2"><img src="{{URL::asset('assets/img/app-logo/Logo - Chico.png')}}" alt="logo"></span>SolidariAPP</a>
+                <a id="logoApp" class="navbar-brand mr-auto" href="{{url('/')}}"style="
+                    color: black;
+                    font-size: large;
+                    font-weight: 600;
+                    font-family: sans-serif;
+                " ><span class="mr-2"><img style="width: 42px;" src="{{URL::asset('assets/img/app-logo/Logo - Chico.png')}}" alt="logo"></span>SolidariAPP</a>
                 <!-- Notificaciones -->
                 <div class="order-md-11 d-none" id="notificaciones">
                     <a class="btn" type="button" data-toggle="modal" href="#modalNotificaciones" id="logoNotificacion">
@@ -52,7 +57,7 @@
                     <div class="dropdown-divider"></div>
                     <a id="btnCerrarSesion" class="dropdown-item" href="#">Cerrar sesion</a>
                 </div>
-                <button class="btn btn-outline-primary my-2 my-sm-0 mr-lg-3 px-3 order-md-12" data-toggle="modal" data-target="#modalLogin" id="btnIngresar" style="display: none;">Ingresar</button>
+                <button class="btn btn-outline-primary my-1 mr-lg-3 px-2 order-md-12" data-toggle="modal" data-target="#modalLogin" id="btnIngresar" style="display: none;">Ingresar</button>
                 <!-- Boton opciones -->
                 <button class="navbar-toggler border-0 collapsed" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                         <i class="fas fa-bars fa-sm"></i>

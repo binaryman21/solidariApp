@@ -88,9 +88,9 @@
                     </div>
                     <hr>
                     <!-- SECCION DE FORMULARIOS PARA DATOS DE CONTACTO -->
-                    <section id="fomrs-contact">
+                    <section id="fomrs-contact" class="position-sticky">
                         <!-- NUEVO TELEFONO-->
-                        <form id="nuevoTelefono" class="collapse shadow-top rounded p-3 mb-n4">
+                        <form id="nuevoTelefono" class="bg-white shadow-top rounded p-3 mb-n4 mx-n3 collapse">
                             <label for="calle" class="modal-header mx-n3 pt-0">
                                 <span id="formTelTitle">Agregar nueva direccion</span>
                                 <button type="button" class="close" aria-label="Close">
@@ -113,7 +113,7 @@
                             </div>
                         </form>
                         <!-- NUEVA DIRECCION-->
-                        <form id="formularioDomicilio" class="shadow-top rounded p-3 mb-n4 collapse">
+                        <form id="formularioDomicilio" class="bg-white shadow-top rounded p-3 mb-n4 mx-n3 collapse">
                             <label for="calle" class="modal-header pt-0 mx-n3 px-4">
                                 <span id="formDirTitle">Agregar nueva direccion</span>
                                 <button type="button" class="close" aria-label="Close">
@@ -186,7 +186,7 @@
                     <h5 class="">Administracion de la cuenta</h5>
                     <div class="card-text text-muted">Aqui puedes dar de baja tu cuenta</div>
                     <form>
-                        <div>Esta accion no se puede deshacer, ¿Estas seguro que deseas darte de baja?
+                        <div>
                              En el caso de que seas una organizacion, todas tus necesidades se marcaran como completadas.
                              Si sos un colaborador todas tus colaboraciones pendientes pasaran a ser no concretadas.
                         </div>
