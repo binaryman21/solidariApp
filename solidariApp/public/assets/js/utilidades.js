@@ -118,6 +118,9 @@ function limpiarValidaciones(inp,error){
         }else{
             inp.nextSibling.fadeOut();
         }
+        if(inp.attr('type') == 'text' || inp.attr('type') == 'number'){
+            inp.val('');
+        }
     }
 }
 
@@ -339,8 +342,8 @@ function cargarComentariosOrganizacion( idUsuario ){
     .then(response => response.json())
     .then(data => {
         
-        let calificaciones = data.calificaciones
-        //llenarComentariosOrganizacion({comentarios: calificaciones})
+        let calificaciones = data.calificaciones;
+        llenarComentariosOrganizacion( data.calificaciones );
     })
     .catch(error => {
         

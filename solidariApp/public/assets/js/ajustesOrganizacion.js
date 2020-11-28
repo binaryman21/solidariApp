@@ -13,6 +13,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let opcionesPills = navPills.find('a[role=tab]');
     let opcionesTabs = navTabs.find('a[role=tab]');
     let btnGuardarCambiosDomicilio = $('#btnGuardarCambiosDomicilio');
+    let btnGuardarTelefonos = $('#btnGuardarTelefonos');
 
     listarProvincias(-1);
 
@@ -25,6 +26,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
         EstablecerFormTelefonosEn({title:'Agregar nuevo telefono'});
     });
+
+    btnGuardarTelefonos.on('click', e => {
+        AgregarTelefono();
+    })
 
     btnAgregarDireccion.on('click', e => {
 
@@ -151,9 +156,9 @@ function EditarEnFormTelefonos(e){
 
     let id = $(e.target).data('tel');
     let tel = FetchedTelefonos[id];
-    EstablecerFormTelefonosEn({title: 'Editar direccion', data: tel});
+    EstablecerFormTelefonosEn({title: 'Editar telefono', data: tel});
     $('#nuevoTelefono').collapse('show');
-}calificacionContainer
+}
 
 function EliminarTelefono(e){
 
@@ -171,13 +176,13 @@ function EliminarTelefono(e){
                 if(response.data.resultado){
 
                     $(e.target).parent()
-                    .replacewith('Eliminado')
+                    // .replacewith('Eliminado')
                     .fadeOut(1000)
                     .animate({
-                       "opacity" : "0",
+                        "opacity" : "0",
                     }, function() {
                         alertify.success(response.data.message);
-                        $(this).remove();
+                        $(this).parent().remove();
                         FetchedTelefonos.slice(id, 1);
                     });
                 };
@@ -189,6 +194,42 @@ function EliminarTelefono(e){
 
         }
     );
+}
+
+function AgregarTelefono(e){
+    let telefono = {
+        idTelefono:0,
+        codAreaTelefono:$("#codArea").val(),
+        numeroTelefono:$("#numeroTelefono").val(),
+        esCelular:0,
+    }
+
+    if( validarTelefono( '' ) ){
+        axios.post("/registrarTelefono",telefono)
+        .then((response)=>{
+            if( response.data.resultado ){
+                telefono.idTelefono = response.data.idTelefono;
+                limpiarValidaciones($('#codArea'), $('.errorCodArea'));
+                limpiarValidaciones($('#numeroTelefono'), $('.errorNroTelefono'));
+                alertify.success('Telefono agregado');
+                var $listadoTelefonos = $('#listadoTelefonos');
+                $listadoTelefonos.append(
+                `<a id="telefono${telefono.idTelefono}" class="list-group-item list-group-item list-group-item-action px-2 py-1 d-flex justify-content-between align-items-center">
+                    <span class="m-1">${telefono.codAreaTelefono} - ${telefono.numeroTelefono}</span>
+                    <button class="btn dropdown" type="button" id="telOptions-forID-${telefono.idTelefono}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="fas fa-ellipsis-v fa-xs"></i></button>
+                    <div class="dropdown-menu dropdown-menu-right shadow" aria-labelledby="telOptions-forID-${telefono.idTelefono}">
+                        <button class="dropdown-item" id="btnEdite-Tel${telefono.idTelefono}" data-tel="${telefono.idTelefono}" type="button">Editar</button>
+                        <button class="dropdown-item" id="btnDelete-Tel${telefono.idTelefono}" data-tel="${telefono.idTelefono}" type="button">Eliminar</button>
+                    </div>
+                </a>`);
+                $listadoTelefonos.find(`#btnEdite-Tel${telefono.idTelefono}`).on('click', function (e) {EditarEnFormTelefonos(e)});
+                $listadoTelefonos.find(`#btnDelete-Tel${telefono.idTelefono}`).on('click', function (e) {EliminarTelefono(e)});
+            }
+            else{
+                alertify.error( response.data.message );
+            }
+        });
+    }
 }
 
 function EstablecerFormDomiciliosEn({title="", data = {}, id = -1} = {}) {

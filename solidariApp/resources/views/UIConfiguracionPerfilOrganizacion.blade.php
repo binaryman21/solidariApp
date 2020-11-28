@@ -161,7 +161,7 @@
                 <!-- Administracion de la seguridad -->
                 <section class="tab-pane fade" id="admin-seguridad" role="tabpanel" aria-labelledby="admin-seguridad-tab">
                     <h5 class="">Administracion de la seguridad</h5>
-                    <div class="card-text text-muted">Aqui econtraras opciones que impactan sobre la seguridad de tu cuenta tal como la contraceña..</div>
+                    <div class="card-text text-muted">Aqui encontraras opciones que impactan sobre la seguridad de tu cuenta tal como la contraseña..</div>
                     <form class="mt-4">
                         <div class="form-group mb-3">
                             <label for="passActual">Contraseña actual</label>
@@ -187,8 +187,8 @@
                     <div class="card-text text-muted">Aqui puedes dar de baja tu cuenta</div>
                     <form>
                         <div>
-                             En el caso de que seas una organizacion, todas tus necesidades se marcaran como completadas.
-                             Si sos un colaborador todas tus colaboraciones pendientes pasaran a ser no concretadas.
+                            En el caso de que seas una organizacion, todas tus necesidades se marcaran como completadas.
+                            Si sos un colaborador todas tus colaboraciones pendientes pasaran a ser no concretadas.
                         </div>
                         <small class="card-text text-muted loading" id="fechaAltaUsuario"></small>
                         <button type="button" class="btn btn-danger btn-block my-4 " id="btnConfirmarDarmeDeBaja">Confirmar</button>
@@ -203,5 +203,6 @@
 @section('scripts')
     @parent
     <script type="text/javascript" src="{{URL::asset('assets/js/utilidades.js')}}"></script>
+    <script type="text/javascript" src="{{URL::asset('assets/js/validaciones.js')}}"></script>
     <script type="text/javascript" src="{{URL::asset('assets/js/ajustesOrganizacion.js')}}"></script>
 @endsection
