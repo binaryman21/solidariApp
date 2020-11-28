@@ -22,8 +22,7 @@
 body {
     background-color: #e5e5e5;
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='36' height='72' viewBox='0 0 36 72'%3E%3Cg fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.4'%3E%3Cpath d='M2 6h12L8 18 2 6zm18 36h12l-6 12-6-12z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
-    min-width: 310px;
-    /* min-height: 100vh; */
+    min-width: 320px !important;
 }
 
 .container{
@@ -41,16 +40,19 @@ footer .container{
 
 .imgPerfilCol,.imgPerfilOrg{
     width: 40px;
+    height: 40px;
 }
 
 img#urlFotoPerfilOrganizacion, img#imgPerfilColaborador {
 
     width: 125px;
+    height: 125px;
     border: 4px solid rgb(255 255 255);
 }
 
 .imgNecesidad{
     height: 80px;
+    width: 80px;
 }
 
 p {
@@ -289,17 +291,17 @@ div#filtrosCategoria:empty {
     animation: shine 1s infinite;
 }
 
-div.necesidades:empty{
+#necesidadesEnProceso:empty, #necesidadesCumplidas:empty, #necesidadesEliminadas:empty{
 
     margin-top: 20px;
     width: 100%;
     height: 600px; /* change height to see repeat-y behavior */
     --card-height: 152px;
-    --card-header-color: rgb(0 0 0 / 8%);
-    --card-body-color: rgb(0 0 0 / 0.02);
-    --card-action-color: rgb(171 171 171 / 13%);
-    --card-text-color: #efeeee;
-    --card-text-secondary-color: #f1f1f1;
+    --card-header-color: rgb(162 159 159 / 8%);
+    --card-body-color: rgb(0 0 0 / 0.01);
+    --card-action-color: rgb(206 206 206 / 13%);
+    --card-text-color: #f9f9f9;
+    --card-text-secondary-color: #f7f7f7;
 
     background-image:
         linear-gradient( 100deg, rgb(0 0 0 / 0), hsl(0 0% 100% / 0.30) 50%, rgba(255, 255, 255, 0) 80% ),
@@ -440,24 +442,67 @@ div.listaOrganizaciones:empty{
     }
 }
 
+div[id^="trato-"]:empty{
+
+    margin-top: 10px;
+    width: 100%;
+    height: 240px;
+    --card-height: 126px;
+    --card-body-color: rgb(0 0 0 / 2%);
+    --card-text-color: #e6e6e6;
+    --card-text-secondary-color: #f3f3f3;
+
+    background-image:
+        radial-gradient( circle 20px at 45px 40px, var(--card-text-color) 99%, #ffffff61 0 ),
+        linear-gradient( 100deg, rgba(255, 255, 255, 0), rgb(255 255 255 / 16%) 50%, rgba(255, 255, 255, 0) 80% ),
+        linear-gradient( var(--card-text-color) 13px, transparent 0 ),/*card-col-name*/
+        linear-gradient( var(--card-text-secondary-color) 10px, transparent 0 ),/*card-date*/
+        linear-gradient( var(--card-text-secondary-color) 20px, transparent 0 ),/*card-comment*/
+        repeating-linear-gradient(
+            var(--card-body-color), var(--card-body-color) 0px,
+            var(--card-body-color), var(--card-body-color) 116px,
+             transparent, transparent 116px,
+            transparent, transparent 126px,
+            transparent, transparent 20px,
+            transparent, transparent 270px
+        );
+
+    background-repeat: repeat-y;
+
+    background-size:
+        100% var(--card-height), /* background */
+        50px var(--card-height), /* highlight */
+        55% var(--card-height),/*card-col-name*/
+        40% var(--card-height),/*card-date*/
+        85% var(--card-height);/*card-comment*/
+
+    background-position:
+        0px 0px, /* background */
+        0 0, /* highlight */
+        80px 24px,/*card-col-name*/
+        80px 45px,/*card-date*/
+        25px 75px;/*card-comment*/
+
+     animation: shine-card-comment 1s infinite;
+}
+
+@keyframes shine-card-comment{
+
+    to {
+        background-position:
+        0px 0px, /* background */
+        100% 0, /* highlight */
+        80px 24px,/*card-col-name*/
+        80px 45px,/*card-date*/
+        25px 75px;/*card-comment*/
+    }
+}
+
 @keyframes shine {
     to {
         background-position:
             100% 0, /* move highlight to right */
             15px 10px;
-    }
-}
-
-#filtros{
-
-    padding-bottom: 7px;
-}
-
-@media only screen and (min-width: 900px){
-
-    #filtros{
-
-        padding-bottom: 6px;
     }
 }
 
@@ -467,6 +512,38 @@ div.listaOrganizaciones:empty{
             100% 0, /* move highlight to right */
             100% 0;
     }
+}
+
+.custom-file-input:lang(es) ~ .custom-file-label::after {
+
+    content: '\f093';
+    font-weight: 900;
+    font-family: "Font Awesome 5 Free";
+    color: #6f6c6c;
+    font-style: normal;
+    font-variant: normal;
+    text-rendering: auto;
+    -webkit-font-smoothing: antialiased;
+    background-color: #ffffff;
+}
+#necesidadesTABS, #calificacionesTAB{
+    border-bottom: none;
+    color: #6d6d6d;
+}
+
+#necesidadesTABS .nav-link, #calificacionesTAB .nav-link{
+    color: #6d6d6d;
+    font-size: 0.9em;
+    padding: 10px 6px;
+}
+
+#necesidadesTABS.nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link.active,
+#calificacionesTAB .nav-item.show .nav-link{
+    
+    font-weight: 500;
+    border-color: transparent;
+    border-bottom-color: #d0deea;
+    border-bottom-width: 4px;
 }
 .sinPaddingBotton{
     padding-bottom: 0;
@@ -488,8 +565,8 @@ div.listaOrganizaciones:empty{
 
 .modal-dialog,
 #modalContent.modal-content {
-       /* 80% of window height */
-       height: 95%;
+    /* 80% of window height */
+    height: 95%;
 }
 
 
@@ -513,3 +590,187 @@ div.listaOrganizaciones:empty{
 }
 
 
+#dropNotificaciones {
+    /* 100% = dialog height, 120px = header + footer */
+    max-height: 100%;
+    overflow-y: scroll;
+}
+
+label.fas.fa-camera:hover {
+
+    background-color: #5f5f5f6e !important;
+}
+
+label.fas.fa-camera {
+
+    position: relative;
+    color: #ffffff;
+    background-color: #00000029;
+    padding: 10px;
+    cursor: pointer;
+    border-radius: 50px;
+}
+
+label[for=actualizarAvatar].fas.fa-camera{
+
+    left: -50%;
+    top: 45px;
+}
+
+label[for=actualizarPortada].fas.fa-camera{
+
+    left: 50%;
+    top: -65%;
+}
+
+input#actualizarPortada, input#actualizarAvatar {
+    display: none;
+}
+
+textarea#descripcionOrganizacion{
+
+    resize: vertical;
+    height: fit-content !important;
+}
+
+div#misNecesidades div[id^=necesidades] > img[src^="/assets/img/SinNecesidades"],
+div#calificaciones img[src^="/assets/img/noComments"]{
+
+    display: block;
+    width: 190px;
+    margin: 0 auto;
+    padding-top: 50px;
+}
+
+div#misNecesidades div[id^=necesidades] > p{
+    
+    font-size: 1.2em;
+    font-weight: 500;
+    color: #636363;
+}
+
+.need .progress-count {
+
+    color: #545454;
+    position: absolute;
+    bottom: 35px;
+    width: 100%;
+}
+
+.need .progress{
+
+    margin-left: 6px;
+    border-radius: 0px;
+    height: 19px;
+    background-color: floralwhite;
+}
+
+.need .progress-bar{
+
+    background-color: #e3fbe3;
+ }
+
+#menu-usuario{
+    right: 8px;
+}
+
+.btn:focus, button:focus{
+
+    box-shadow: none;
+    outline: 0 none;
+}
+#nav-tab{
+    
+    width: 100vw;
+}
+
+#config-panels .tab-pane{
+
+    min-height: 700px !important;
+    display: flex;
+    flex-direction:column;
+}
+
+#config-panels .tab-pane:not(.show){
+
+    display: none!important;
+}
+
+#v-nav-tab{
+
+   background-color: #fdfdfd;
+   min-height: 700px;
+}
+
+.shadow-top{
+
+    box-shadow: 1px -4px 7px 2px #b9b9b973;
+    -webkit-box-shadow: 1px -4px 7px 2px #b9b9b973;
+    -moz-box-shadow: 1px -4px 7px 2px #b9b9b973;
+}
+
+#nav-tab .nav-link{
+
+    font-size: .9em;
+    padding:  10px 14px;
+    color: #848483;
+}
+
+#v-pills-tab .nav-link{
+
+    color: #585858;
+}
+
+#v-pills-tab .nav-link.active{
+
+    color: #216bc1;
+    background-color: #f6f9ff;
+    font-weight: 500;
+    border-radius: 0;
+}
+
+.dropdown-menu[aria-labelledby^="telOptions-forID"]{
+
+    left: -25px !important;
+}
+
+#fomrs-contact{
+
+    background: white;
+    bottom: 0;
+    z-index: 100;
+}
+
+.alertify .ajs-header {
+
+    font-size: 17px!important;
+    padding: 14px 24px!important;
+}
+
+.alertify .ajs-body .ajs-content {
+    padding: 24px 24px 24px 16px!important;
+}
+
+.alertify .ajs-footer{
+
+    padding: 3px!important;
+}
+
+#logoApp span{
+
+    color: black;
+    font-size: large;
+    font-weight: 600;
+    font-family: sans-serif;
+}
+
+#logoApp img{
+    
+    width: 42px;
+}
+
+@media (min-width: 768px){
+
+    li#dropDownUsuario {right: -50px !important;}
+    #notificaciones{position: relative!important;left: -10px !important;}
+}

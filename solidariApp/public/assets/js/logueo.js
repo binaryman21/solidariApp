@@ -86,7 +86,8 @@ function login(datosLogin){
     });
 }
 
-function isLoggedIn(funcionSuccess)
+//puse un indicador para que isLoggedIn se encargue de la redireccion si se lo indica
+function isLoggedIn({funcionSuccess = undefined, RedirectIfNot = false} = {})
 {
     fetch("/isLoggedIn")
     .then(response => response.json())
@@ -99,8 +100,14 @@ function isLoggedIn(funcionSuccess)
                 funcionSuccess(data.usuario.idUsuario);
             }
         }
-    });
+        else {
 
+            $("#dropDownUsuario").hide();
+            $("#btnIngresar").show();
+            $("#botonesRegistro").show();
+            if(RedirectIfNot) window.location = '/';
+        } 
+    });
 }
 
 function mostrarInterfazSesionIniciada(usuario)
@@ -111,14 +118,18 @@ function mostrarInterfazSesionIniciada(usuario)
     $("#imgPerfil").attr("src",usuario.urlFotoPerfilUsuario);
     $("#mapa").removeClass("mapa");
     $("#mapa").addClass("mapaExtendido");
-    $("#btnVerMiPerfil").attr("href","/"+ usuario.rol.nombreRol);
+    $("#btnVerMiPerfil").attr("href", `/cuenta-${usuario.rol.nombreRol}/perfil`);
+    //asi estaba antes en las rutas que defini uso "/cuenta-rol/perfil", ademas "./"
+    // concatenaria el path acutal con el que este en un href y si estas en tu perfil
+    // y pulsas en  "tu perfil" devuevo iria a "/orgaizacion/organizacion" por ejemplo
+    //dejo comentado lo anterio igual -> $("#btnVerMiPerfil").attr("href","./"+ usuario.rol.nombreRol);
+    $("#btnAjustes").attr("href", `/cuenta-${usuario.rol.nombreRol}/ajustes`);
     $("#notificaciones").removeClass("d-none");
-
-    // console.log("usuario "+usuario.idUsuario);
     cargarNotificaciones(usuario);
 }
 
 function signOut() {
+
     let auth2 = gapi.auth2.getAuthInstance();
     auth2.signOut().then(function () {
       console.log('User signed out.');
@@ -130,17 +141,16 @@ function cerrarSesion()
     signOut();
     axios.post("/logOut")
     .then((response)=>{
-        // console.log( response.data );
-        // console.log('chau');
         window.location= "/";
     });
 }
 
 function onLoad() {
+
     gapi.load('auth2', function() {
       gapi.auth2.init();
     });
-  }
+}
 
 function onSignIn(googleUser) {
     // Useful data for your client-side scripts:

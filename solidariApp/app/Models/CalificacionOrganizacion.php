@@ -15,7 +15,14 @@ class CalificacionOrganizacion extends Model
     public static function getCalificaciones( $idUsuario )
     {
         return CalificacionOrganizacion::where('idCalificado', '=', $idUsuario)
+        ->join('usuario', 'calificacionOrganizacion.idCalificante', 'usuario.idUsuario')
+        ->join('colaborador', 'calificacionOrganizacion.idCalificante', 'colaborador.idUsuario')
+        ->select(
+            
+            'idCalificante', 'tratoRecibido', 'fechaCalificacion', 'comentario',
+            'colaborador.nombreColaborador', 'colaborador.apellidoColaborador',
+            'usuario.urlFotoPerfilUsuario'
+        )
         ->get();
     }
 }
-

@@ -16,6 +16,13 @@ class Calificacion extends Model
     {
         return Calificacion::where('colaboraciones.idColaborador', '=', $idUsuario)
         ->join('colaboraciones', 'calificacion.idColaboracion', 'colaboraciones.idColaboracion')
+        ->join('necesidad', 'colaboraciones.idNecesidad', 'necesidad.idNecesidad')
+        ->join('usuario', 'necesidad.idUsuario', 'usuario.idUsuario')
+        ->join('organizacion', 'usuario.idUsuario', 'organizacion.idUsuario')
+        ->select(
+
+            'comentario', 'fechaCalificacion', 'ayudaConcretada', 'tratoRecibido', 'razonSocial', 'urlFotoPerfilUsuario', 'usuario.idUsuario'
+        )
         ->get();
     }
 
