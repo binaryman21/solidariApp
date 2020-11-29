@@ -64,7 +64,7 @@ document.addEventListener('DOMContentLoaded', () => {
     formularioDomicilio.find('button.close').on('click', () => formularioDomicilio.collapse('hide'));
 
     //cambiar foto
-    // document.querySelector('#actualizarPortada').addEventListener("change", cambiarFotoPortada, false);
+    document.querySelector('#actualizarPortada').addEventListener("change", cambiarFotoPortada, false);
     document.querySelector('#actualizarAvatar').addEventListener("change", cambiarFotoPerfil, false);
  
     //Actualizar datos
@@ -72,9 +72,11 @@ document.addEventListener('DOMContentLoaded', () => {
         ev.preventDefault(); // Prevent browser default submit.
         let formData = new FormData(this);         
         let fotoPerfil = $('#actualizarAvatar').prop('files')[0];
+        let fotoPortada = $('#actualizarPortada').prop('files')[0];
         let descripcion = $('#descripcionOrganizacion').val();
         let contador = 0;
         formData.append('fotoPerfil', fotoPerfil);
+        formData.append('fotoPortada', fotoPortada);
         //Actualizar descripcion
         if( descripcion !== "No has especificado una descripcion todavia" ){
             axios.post("/actualizarDescripcion",{descripcion}) 
@@ -101,6 +103,19 @@ document.addEventListener('DOMContentLoaded', () => {
             });
             contador++;
         } 
+        //Foto de portada
+        if( fotoPortada ){
+            axios.post("/updateFotoPortada",formData) 
+            .then((response)=>{
+                if ( response.data.resultado ){
+                    alertify.success( response.data.message )
+                }
+                else{
+                    alertify.error( response.data.message )
+                }
+            });
+            contador ++;
+        }
         if(contador == 0){
             alertify.error('Nada para actualizar');
         }
@@ -113,10 +128,10 @@ function cambiarFotoPerfil() {
     $('#imgPerfil').attr('src', URL.createObjectURL( fotoPerfil ));
 }
 
-// function cambiarFotoPortada() {
-//     let fotoPortada = $('#actualizarPortada').prop('files')[0];
-//     $('#cover').attr('src', URL.createObjectURL( fotoPortada ) );
-// }
+function cambiarFotoPortada() {
+    let fotoPortada = $('#actualizarPortada').prop('files')[0];
+    $('#cover').attr('src', URL.createObjectURL( fotoPortada ) );
+}
 
 var FetchedDomicilios = [];
 var FetchedTelefonos = [];
@@ -130,6 +145,8 @@ function configurarCuentaDeLaOrganizacion(idUsuario){
         $("#nombreOrganizacion").html(organizacion.razonSocial);
         $("#tipoOrganizacion").html(organizacion.nombreTipoOrganizacion);
         $("#urlFotoPerfilOrganizacion").attr("src",organizacion.urlFotoPerfilUsuario);
+        $("#cover").attr("src",organizacion.urlFotoPortadaUsuario);
+
         if(organizacion.descripcionOrganizacion == "")
         {
             organizacion.descripcionOrganizacion = "No has especificado una descripcion todavia";

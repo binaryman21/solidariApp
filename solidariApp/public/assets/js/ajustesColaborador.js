@@ -65,27 +65,43 @@ document.addEventListener('DOMContentLoaded', () => {
 
     //cambiar foto
     document.querySelector('#actualizarAvatar').addEventListener("change", cambiarFotoPerfil, false);
+    document.querySelector('#actualizarPortada').addEventListener("change", cambiarFotoPortada, false);
  
     //Actualizar datos
     $("form[name='uploader']").on("submit", function(ev) {
         ev.preventDefault(); // Prevent browser default submit.
         let formData = new FormData(this);         
         let fotoPerfil = $('#actualizarAvatar').prop('files')[0];
+        let fotoPortada = $('#actualizarPortada').prop('files')[0];
+        let contador = 0;
         formData.append('fotoPerfil', fotoPerfil);
+        formData.append('fotoPortada', fotoPortada);
         //Actualizar foto de perfil
         if( fotoPerfil ){
             axios.post("/updateFotoPerfil",formData) 
             .then((response)=>{
                 if ( response.data.resultado ){
                     alertify.success( response.data.message )
-                    console.log( response.data.imgUrlTemp );
                 }
                 else{
                     alertify.error( response.data.message )
                 }
             });
+            contador ++;
         } 
-        else{
+        if( fotoPortada ){
+            axios.post("/updateFotoPortada",formData) 
+            .then((response)=>{
+                if ( response.data.resultado ){
+                    alertify.success( response.data.message )
+                }
+                else{
+                    alertify.error( response.data.message )
+                }
+            });
+            contador ++;
+        }
+        if(contador == 0){
             alertify.error('Nada para actualizar');
         }
     });
@@ -95,6 +111,11 @@ function cambiarFotoPerfil() {
     let fotoPerfil = $('#actualizarAvatar').prop('files')[0];
     $('#imgPerfilColaborador').attr('src', URL.createObjectURL( fotoPerfil ) );
     $('#imgPerfil').attr('src', URL.createObjectURL( fotoPerfil ));
+}
+
+function cambiarFotoPortada() {
+    let fotoPortada = $('#actualizarPortada').prop('files')[0];
+    $('#cover').attr('src', URL.createObjectURL( fotoPortada ) );
 }
 
 var FetchedDomicilios = [];
@@ -108,6 +129,7 @@ function configurarCuentaDelColaborador(idUsuario){
         let colaborador = response.data.colaborador;
         $("#nombreColaborador").html(`${colaborador.nombreColaborador} ${colaborador.apellidoColaborador}`);
         $("#imgPerfilColaborador").attr("src",colaborador.urlFotoPerfilUsuario);
+        $("#cover").attr("src",colaborador.urlFotoPortadaUsuario);
     
         $("#fechaAltaUsuario").html(`Eres usuario desde el ${moment(colaborador.fechaAltaUsuario, "YYYY-MM-DD HH:mm:ss").format('LL')}`);
         

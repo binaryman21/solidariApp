@@ -33,6 +33,7 @@ function getColaborador(idUsuario){
 function cargarDatosPerfil(colaborador) {
     $("#nombreColaborador").html(colaborador.nombreColaborador + " " + colaborador.apellidoColaborador);
     $("#imgPerfilColaborador").attr("src",colaborador.urlFotoPerfilUsuario);
+    $("#cover").attr("src",colaborador.urlFotoPortadaUsuario);
     $("#correo").html(colaborador.emailUsuario);
     $("#fechaAltaUsuario").html(`Usuario desde el ${moment(colaborador.fechaAltaUsuario, "YYYY-MM-DD HH:mm:ss").format('LL')}`);
 }
