@@ -78,6 +78,7 @@ document.addEventListener('DOMContentLoaded', () => {
             .then((response)=>{
                 if ( response.data.resultado ){
                     alertify.success( response.data.message )
+                    console.log( response.data.imgUrlTemp );
                 }
                 else{
                     alertify.error( response.data.message )

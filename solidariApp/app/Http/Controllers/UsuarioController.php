@@ -134,18 +134,20 @@ class UsuarioController extends Controller
                     $fileName = $_FILES['fotoPerfil']['name'];
                     $ubicacionActual = $_FILES['fotoPerfil']['tmp_name'];
                     /*Concateno el ID usuario al nombre del archivo*/
-                    $urlFotoPerfil = storage_path()."/app/public/fotosPerfil/".$usuario->idUsuario.$fileName ;
+                    // $urlFotoPerfil = storage_path()."/app/public/fotosPerfil/".$usuario->idUsuario.$fileName ;
+                    $urlFotoPerfil = public_path()."/fotosPerfil/".$usuario->idUsuario.$fileName ;
+                    $urlFotoPerfil2 = $urlFotoPerfil;
                     move_uploaded_file($ubicacionActual, $urlFotoPerfil);
                 }
         
                 /*Preparo la url relativa para guardarla en la BDD*/
-                $urlFotoPerfil = "/storage/fotosPerfil/".$usuario->idUsuario.$fileName ;
+                $urlFotoPerfil = "../fotosPerfil/".$usuario->idUsuario.$fileName ;
                 Usuario::updateFotoPerfil($usuario->idUsuario,$urlFotoPerfil);
                 $_SESSION['usuario']->urlFotoPerfilUsuario = $urlFotoPerfil;
                 return response()->json([
                     'resultado' => 1,
                     'message' => 'Foto actualizada',
-                    'imgUrlTemp' => $urlFotoPerfil
+                    'imgUrlTemp' => $urlFotoPerfil2
                 ]);
             }
             else{
