@@ -34,9 +34,9 @@
                         <div class="card card-user shadow mt-4">
                             <div class="card-img-block">
                                 <img id="cover" src="/assets/img/cover.svg" class="img-fluid" alt="portada de la organizacion">
-                                <!-- <label for="actualizarPortada" class="fas fa-camera">
+                                <label for="actualizarPortada" class="fas fa-camera">
                                     <input type="file" id="actualizarPortada">
-                                </label> -->
+                                </label>
                             </div>
                             <div class="card-body pt-5">
                                 <div class="media">
