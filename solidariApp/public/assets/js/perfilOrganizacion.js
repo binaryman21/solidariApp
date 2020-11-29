@@ -31,6 +31,7 @@ function cargarDatosPerfil(organizacion) {
     $("#nombreOrganizacion").html(organizacion.razonSocial);
         $("#tipoOrganizacion").html(organizacion.nombreTipoOrganizacion);
         $("#urlFotoPerfilOrganizacion").attr("src",organizacion.urlFotoPerfilUsuario);
+        $("#cover").attr("src",organizacion.urlFotoPortadaUsuario);
         if(organizacion.descripcionOrganizacion == "")
         {
             organizacion.descripcionOrganizacion = "La organización no ha especificado ninguna descripción todavia";

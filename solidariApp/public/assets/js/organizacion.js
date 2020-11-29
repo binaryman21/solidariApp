@@ -195,6 +195,7 @@ function actualizarDomicilio(domicilio)
                 lat: data.lat,
                 lon: data.lon
             }
+            domicilio.idDomicilio = $("#idDomicilio").val(),
             domicilio.calle = $("#calle").val(),
             domicilio.numero = $("#numero").val(),
             domicilio.piso = $("#piso").val(),

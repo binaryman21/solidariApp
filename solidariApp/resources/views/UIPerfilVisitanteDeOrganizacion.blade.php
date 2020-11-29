@@ -13,7 +13,7 @@
                 <img id="urlFotoPerfilOrganizacion" class="shadow-sm rounded-circle imgPerfilOrg align-self-start mr-auto" src="{{URL::asset('assets/img/imgUserProfile.png')}}" alt="imagen de usuario">
             </div>
             <div class="user-action d-flex">
-                <button class="btn ml-auto p-0" type="button" data-toggle="modal" href="#modalSubscribirse" id="btnSuscribirse">Subscribirse</button>
+                <button class="btn ml-auto p-0" type="button" data-toggle="modal" href="#modalSuscribirse" id="btnSuscribirse">Suscribirse</button>
                 <div class="btn-group">
                         <i class="fas fa-ellipsis-v fa-sm ml-2 mt-2 text-black" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></i>
                     <div class="dropdown-menu dropdown-menu-right shadow">
@@ -113,12 +113,11 @@
 </div>
 
 
-@include("UIPerfilModales.UIModalReportar")
-@include("UIPerfilModales.UIModalSuscribirse")
+@include("UIPerfilModales/UIModalSuscribirse")
 @endsection
 
 @section('scripts')
     @parent
-    <script type="text/javascript" src="{{URL::asset('assets/js/utilidades.js')}}"></script>
+    <script type="text/javascript" src="{{URL::asset('assets/js/suscripcion.js')}}"></script>
     <script type="text/javascript" src="{{URL::asset('assets/js/visitanteDeOrganizacion.js')}}"></script>
 @endsection

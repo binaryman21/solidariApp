@@ -105,7 +105,8 @@ function listarLocalidades(idProvincia,defaultSelected)
         $.each(localidades, function (indexInArray, localidad) {
             $("#selectLocalidad").append("<option value = '" + localidad.idLocalidad + "'>" + localidad.nombreLocalidad +"</option");
         });
-        $("#selectLocalidad").val(defaultSelected);
+        let def = $('#selectLocalidad > option').val();
+        $("#selectLocalidad").val(def);
 
       });
 }
@@ -117,6 +118,9 @@ function limpiarValidaciones(inp,error){
             error.fadeOut();
         }else{
             inp.nextSibling.fadeOut();
+        }
+        if(inp.attr('type') == 'text' || inp.attr('type') == 'number'){
+            inp.val('');
         }
     }
 }
@@ -343,8 +347,13 @@ function cargarComentariosOrganizacion( idUsuario ){
     .then(response => response.json())
     .then(data => {
         
+<<<<<<< HEAD
         let calificaciones = data.calificaciones
         llenarComentariosOrganizacion(data.calificaciones);
+=======
+        let calificaciones = data.calificaciones;
+        llenarComentariosOrganizacion( data.calificaciones );
+>>>>>>> 449ff225ddd462882b7449ba621017eaea1bec20
     })
     .catch(error => {
         

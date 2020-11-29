@@ -12,6 +12,7 @@ function getColaborador(idUsuario){
         var colaborador = response.data.colaborador;
         $("#nombreColaborador").html(colaborador.nombreColaborador + " " + colaborador.apellidoColaborador);
         $("#imgPerfilColaborador").attr("src",colaborador.urlFotoPerfilUsuario);
+        $("#cover").attr("src",colaborador.urlFotoPortadaUsuario);
         $("#correo").html(colaborador.emailUsuario);
         $("#fechaAltaUsuario").html(colaborador.fechaAltaUsuario);
        

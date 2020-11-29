@@ -97,11 +97,9 @@
   </div>
 </div>
 
-@include("UIPerfilModales.UIModalReportar")
 @endsection
 
 @section('scripts')
     @parent
-    <script type="text/javascript" src="{{URL::asset('assets/js/utilidades.js')}}"></script>
     <script type="text/javascript" src="{{URL::asset('assets/js/visitanteDeColaborador.js')}}"></script>
 @endsection

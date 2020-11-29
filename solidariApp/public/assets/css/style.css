@@ -36,6 +36,7 @@ footer .container{
 #cover{
 
     height: inherit;
+    width: 100%;
 }
 
 .imgPerfilCol,.imgPerfilOrg{

@@ -117,7 +117,6 @@
 
 @section('scripts')
     @parent
-    <script type="text/javascript" src="{{URL::asset('assets/js/utilidades.js')}}"></script>
     <script type="text/javascript" src="{{URL::asset('assets/js/necesidad.js')}}"></script>
     <script type="text/javascript" src="{{URL::asset('assets/js/perfilOrganizacion.js')}}"></script>
 @endsection
