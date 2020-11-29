@@ -57,11 +57,7 @@ class Usuario extends Model
         return Usuario::where('emailUsuario',$email)
                         ->where('idEstadoUsuario',1)
                         ->exists();
-    }
 
-    public static function EsUsuario($id){
-
-        return Usuario::where('idUsuario',$id)->where('idEstadoUsuario',1)->exists();
     }
 
     public function rol()
@@ -92,11 +88,6 @@ class Usuario extends Model
     public static function updateFotoPerfil($idUsuario, $urlFotoPerfil)
     {
         Usuario::where('idUsuario', $idUsuario)->update(array('urlFotoPerfilUsuario' => $urlFotoPerfil));
-    }
-
-    public static function updateFotoPortada($idUsuario, $urlFotoPortada)
-    {
-        Usuario::where('idUsuario', $idUsuario)->update(array('urlFotoPortadaUsuario' => $urlFotoPortada));
     }
 
     public static function cambiarClave( $datosClaves )

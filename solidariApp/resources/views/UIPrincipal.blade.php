@@ -17,7 +17,7 @@
         <div class="row bg-white rounded justify-content-lg-center pb-3">
             <div class="col-xs-12 col-sm-4 col-lg-3 p-sm-1 p-md-2 mr-n3">
                 <div class="input-group my-2 mt-3 mt-lg-2">
-                    <input class="form-control border-secondary border-right-0" type="text" id="campoBuscarPorTexto" placeholder="¿Con qué querés colaborar?">
+                    <input class="form-control border-secondary border-right-0" type="text" id="campoBuscarPorTexto" placeholder="Categoría, descripción o nombre de la Org.">
                     <div class="input-group-append">
                         <div id="dropdownFilters" class="dropdown">
                             <button type="button" class="btn btn-outline-secondary rounded-0 border-left-0 border-right-0" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id="filtros">
@@ -38,7 +38,7 @@
                         <small class="text-muted">Organizaciones en el radio de tu ubicacion</small>
                     </div>
                     <div class="col-12 col-lg-6 ml-2 mr-2 ml-lg-auto pr-0 pl-2 input-group">
-                        <input type="text" id="ubicacion" class="form-control border-secondary border-right-0 " placeholder="¿Dondé queres colaborar?">
+                        <input type="text" id="ubicacion" class="form-control border-secondary border-right-0 " placeholder="Buscar por localidad o direccion">
                         <div class="input-group-append">
                             <button class="btn btn-outline-secondary border-secondary border-left-0" id="btnBuscarPorUbicacion" type="button"><i class="fa fa-search fa-xs"></i></button>
                         </div>
@@ -85,11 +85,7 @@
     crossorigin=""></script>
     <script type="text/javascript" src="{{URL::asset('assets/js/app.js')}}"></script>
     <!-- JS -->
-    <!-- Utilidades -->
-    <script type="text/javascript" src="{{URL::asset('assets/js/utilidades.js')}}" defer></script>
     <script type="text/javascript" src="{{URL::asset('assets/js/UIPrincipal.js')}}"></script>
-    <script type="text/javascript" src="{{URL::asset('assets/js/colaboracion.js')}}"></script>
     <!-- <script src="https://unpkg.com/axios/dist/axios.min.js" defer></script> -->
-    <!-- Validaciones -->
-    <script type="text/javascript" src="{{URL::asset('assets/js/validaciones.js')}}" defer></script>
 @endsection
+

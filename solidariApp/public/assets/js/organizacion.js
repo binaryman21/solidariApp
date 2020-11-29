@@ -3,19 +3,25 @@
 document.addEventListener('DOMContentLoaded', ()=>{
 
     //Obtengo la url para saber el id de organizacion
-    var id = +location.pathname.slice("/organizacion/".length);
-    if(id && typeof(id)=='number'){
-
-        isLoggedIn({funcionSuccess:undefined, RedirectIfNot:true});
-        getOrganizacion(id);
+    var url = $(location).attr('href').split("/");
+    //alert(url);
+    if(url.length == 5 && url[4] != "" && !isNaN(url[4])){
+        isLoggedIn();
+        getOrganizacion(url[4],1);
+        // $("#btnSuscribirse").removeClass("d-none");
+        // $("#btnCalificar").removeClass("d-none");
+        // $("#editarMiPerfil").addClass("d-none");
         $('.soloOrganizacion').addClass('d-none');
         $('.soloVisitante').removeClass('d-none');
     }
-    else{
-
-        isLoggedIn({funcionSuccess:getOrganizacion, RedirectIfNot:true});
+    else if(url.length == 4 || (url.length == 5 && url[4] == "")){
+        isLoggedIn(getOrganizacion);
+        // $("#editarMiPerfil").removeClass("d-none");
         $('.soloVisitante').addClass('d-none');
         $('.soloOrganizacion').removeClass('d-none');
+    }
+    else{
+        window.location = "/";
     }
 
     listarCategorias();
@@ -195,7 +201,6 @@ function actualizarDomicilio(domicilio)
                 lat: data.lat,
                 lon: data.lon
             }
-            domicilio.idDomicilio = $("#idDomicilio").val(),
             domicilio.calle = $("#calle").val(),
             domicilio.numero = $("#numero").val(),
             domicilio.piso = $("#piso").val(),

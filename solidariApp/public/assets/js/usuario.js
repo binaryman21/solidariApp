@@ -4,16 +4,7 @@ $(function () {
     $('#btnConfirmarPassNuevo').on('click', cambiarPassWord);
     //denunciar
     $('#btnConfirmarReporte').on('click', reportar);
-    //dar de baja
-    $('#btnConfirmarDarmeDeBaja').on('click', bajaUsuario);
-    //select provincia
-    $("#selectProvincia").change(function(){
-        let idProvincia = $("#selectProvincia").val();
-        $("#selectLocalidad").html("");
-        listarLocalidades(idProvincia,1);
-    });
-})
-
+});
 
 function cambiarPassWord( e ){
     e.preventDefault();
@@ -61,22 +52,6 @@ function cargarMotivosDenuncia(){
         })
     // $('#motivoReporte');
 
-}
-
-/*Dar de baja el usuario logeado*/
-function bajaUsuario()
-{
-     axios.post("/bajaUsuario")
-    .then((response)=>{
-        if(response.data.resultado === 1 ){
-           /*Redireccionar a pagina principal*/
-           document.location.href="/";
-        }else{
-            /*Ocurrio un error*/
-            alert("Ocurrio un error inesperado.");
-            console.log(response.data.message);
-        }
-    });
 }
 
 function reportar( e ){

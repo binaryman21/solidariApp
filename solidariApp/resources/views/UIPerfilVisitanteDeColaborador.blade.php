@@ -2,104 +2,180 @@
 
 @section("contenido")
 @parent
- <!-- container -->
-<div class="container-sm perfil bg-white p-2 px-lg-4">
+<!-- container -->
+<div class="container-sm bg-white p-2 px-lg-4 perfil">
     <div class="card card-user mb-3">
         <div class="card-img-block">
-            <img id="cover" src="{{URL::asset('assets/img/cover.svg')}}" class="img-fluid" alt="portada de la organizacion">
+            <img id="cover" src="{{URL::asset('assets/img/cover.svg')}}" class="img-fluid" alt="portada del colaborador">
         </div>
         <div class="card-body pt-5">
-            <div class="media">
-                <img id="imgPerfilColaborador" class="shadow-sm rounded-circle imgPerfilOrg align-self-start mr-auto" src="{{URL::asset('assets/img/imgUserProfile.png')}}" alt="imagen de usuario">
-            </div>
-            <div class="clearfix"></div>
-            <h5 class="card-title mt-2 loading ldg-w-sm" id="nombreColaborador"></h5>
-            <small class="card-text text-muted loading" id="fechaAltaUsuario"></small>
-            <button id="btn-contacto" type="button" class="btn btn-link btn-sm text-decoration-none d-none" data-toggle="modal" data-target="#contacto">Informacion de contacto</button>
+        <div class="media">
+            <img id="imgPerfilColaborador" class="rounded-circle imgPerfilOrg align-self-start mr-auto" src="{{URL::asset('assets/img/imgUserProfile.png')}}" alt="imagen de usuario">
         </div>
+        <button class="user-action d-flex btn ml-auto p-0" type="button" data-toggle="modal" href="#modalSubscribirse" id="btnSuscribirse">Seguir</button>
+        <div class="clearfix mb-n4"></div>
+        <h5 class="card-title mt-2" id="nombreColaborador">Nombre del colaborador</h5>
+        <small class="card-text text-muted">
+            <span>Usuario desde </span>
+            <span id="fechaAltaUsuario">2020-10-25 23:03:50</span>
+        </small></div>
     </div>
     <div class="row mb-4">
-        <!-- Colaboraciones -->
+    <!-- necesidades -->
         <div class="col-md-6">
-            <div class="card">
-                <div class="card-body">
-                    <h6 class="card-title float-left">Colaboraciones</h6>
-                    <div class="input-group my-3">
+        <div class="card">
+            <div class="card-body">
+                <h6 class="card-title float-left">Colaboraciones</h6>
+                <div class="input-group my-3">
                         <input class="form-control border-secondary border-right-0" type="text" id="campoBuscarPorTexto" placeholder="Categoría, descripción o nombre de la Org.">
                         <div class="input-group-append">
                             <button class="btn btn-outline-secondary border-secondary border-left-0" id="btnBuscarNeccesidades" type="button"><i class="fa fa-search fa-xs"></i></button>
                         </div>
                     </div>
-                    <div class="accordion" id="colaboracionesConOrgs"></div>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-6">
-            <!-- Insignias -->
-            <div class="card card.body insignias mt-xs-4">
-                <div class="card-body">
-                    <h6 class="card-title">Insignias</h6>
-                    <div id="insignias"></div>
-                </div>
-            </div>
-            <!-- calificaciones -->
-            <div class="card mt-4">
-                <div class="card-body">
-                    <div class="d-flex align-items-center">
-                        <h6 class="card-title mr-auto">Comentarios</h6>
-                        <div id="InComentariosActionUser"></div>
+            <div class="necesidades"><div class="card need limpieza" style="" id="necesidad5">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <p class="font-weight-bold">Limpieza e higiene</p>
+                        <p>asdasdasdasdasdasdasd</p>
+                        <p>Cantidad: 1</p>
+                        <p>Fecha limite: 13/12/2020</p>
                     </div>
-                    <!-- TABS Positivas | Regulares | Negativas -->
-                    <ul class="nav nav-tabs" id="calificacionesTAB" role="tablist">
-                        <li class="nav-item" role="presentation">
-                            <a class="nav-link active" id="Positivos-tab" data-toggle="tab" href="#trato-3" role="tab" aria-controls="Positivos" aria-selected="true">Positivos</a>
-                        </li>
-                        <li class="nav-item" role="presentation">
-                            <a class="nav-link" id="Regulares-tab" data-toggle="tab" href="#trato-2" role="tab" aria-controls="Regulares" aria-selected="false">Regulares</a>
-                        </li>
-                        <li class="nav-item" role="presentation">
-                            <a class="nav-link" id="Negativos-tab" data-toggle="tab" href="#trato-1" role="tab" aria-controls="Negativos" aria-selected="false">Negativos</a>
-                        </li>
-                    </ul>
-                    <!-- Contenedor de la calificaciones -->
-                    <div class="tab-content" id="calificaciones">
-                        <div class="tab-pane fade active show" id="trato-3" role="tabpanel" aria-labelledby="Positivos-tab"></div>
-                        <div class="tab-pane fade" id="trato-2" role="tabpanel" aria-labelledby="Regulares-tab"></div>
-                        <div class="tab-pane fade" id="trato-1" role="tabpanel" aria-labelledby="Negativos-tab"></div>
+                    <div class="col-md-6 text-right d-flex flex-column justify-content-between">
+
+                        <p class="ayudasRecibidas">
+                            <a href="#" data-toggle="modal" data-target="#modalDetalleNecesidad" id="btnDetalleNecesidad5"><span class="nroAyudas">1</span><i class="fas fa-user-friends"></i></a>
+                        </p>
+                        <p class="estado">
+                            <i class="fas fa-spinner"></i>
+                        </p>
                     </div>
                 </div>
             </div>
         </div>
+        <div class="card need dinero" style="" id="necesidad6">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <p class="font-weight-bold">Dinero</p>
+                        <p>Mucho</p>
+                        <p>Cantidad: 1</p>
+                        <p>Fecha limite: 31/10/2020</p>
+                    </div>
+                    <div class="col-md-6 text-right d-flex flex-column justify-content-between">
+
+                        <p class="ayudasRecibidas">
+                            <a href="#" data-toggle="modal" data-target="#modalDetalleNecesidad" id="btnDetalleNecesidad6"><span class="nroAyudas">0</span><i class="fas fa-user-friends"></i></a>
+                        </p>
+                        <p class="estado">
+                            <i class="fas fa-spinner"></i>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div><div class="card need dinero" style="">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <p class="font-weight-bold">Dinero</p>
+                        <p>asdasdasd</p>
+                        <p>Cantidad: 1</p>
+                        <p>Fecha limite: 28/11/2020</p>
+                    </div>
+                    <div class="col-md-6 text-right d-flex flex-column justify-content-between">
+
+                        <p class="ayudasRecibidas">
+                            <a href="#" data-toggle="modal" data-target="#modalDetalleNecesidad" id="btnDetalleNecesidad7"><span class="nroAyudas">0</span><i class="fas fa-user-friends"></i></a>
+                        </p>
+                        <p class="estado">
+                            <i class="fas fa-spinner"></i>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div><div class="card need limpieza" style="">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <p class="font-weight-bold">Limpieza e higiene</p>
+                        <p>lavandina</p>
+                        <p>Cantidad: 1</p>
+                        <p>Fecha limite: 31/10/2020</p>
+                    </div>
+                    <div class="col-md-6 text-right d-flex flex-column justify-content-between">
+
+                        <p class="ayudasRecibidas">
+                            <a href="#" data-toggle="modal" data-target="#modalDetalleNecesidad" id="btnDetalleNecesidad8"><span class="nroAyudas">0</span><i class="fas fa-user-friends"></i></a>
+                        </p>
+                        <p class="estado">
+                            <i class="fas fa-spinner"></i>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+        <div id="navNecesidades">
+        </div>
+        </div>
+        </div>
+        </div>
+            <div class="col-md-6">
+                <div class="datos">
+                    <div class="card">
+                        <div class="card-body">
+                            <h6 class="card-title">Contacto</h6>
+                            <label for="inptEmail">Email</label>
+                            <p class="mx-2 py-3 text-muted" id="correo"></p>
+                            <label for="codArea">Telefono</label>
+                            <div class="list-group list-group-flush mx-2 text-muted" id="listadoTelefonos"></div>
+                            <label for="calle">Direccion</label>
+                            <div class="list-group list-group-flush mx-2 text-muted" id="listadoDomicilios">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card comentarios mt-4">
+                    <div class="card-body">
+                        <div class="card-title clearfix">
+                            <h6 class="float-left">Comentarios</h6>
+                            <button class="btn float-right p-0" type="button" data-toggle="modal" href="#modalCalificar" id="btnCalificar">Calificar</button>
+                        </div>
+                        <div class="card comentario">
+                            <div class="card-body">
+                                <h5 class="card-title d-flex justify-content-between"> <span class="tituloComentario">Gran ayuda</span> <span class="fechaComentario">15/07/2020</span></h5>
+                                <p class="card-text">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quis molestias adipisci asperiores doloribus, soluta nostrum ab ea quasi ducimus aliquam. Illo accusamus rerum dignissimos aliquid culpa aperiam vitae ullam sunt.</p>
+                            </div>
+                        </div>
+                        <div class="card comentario">
+                            <div class="card-body">
+                                <h5 class="card-title d-flex justify-content-between"> <span class="tituloComentario">Dudoso</span> <span class="fechaComentario">15/07/2020</span></h5>
+                                <p class="card-text">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Tempora quasi, fuga voluptates accusamus odit id quam alias sint officia harum, explicabo veniam incidunt, repellat molestiae quaerat eum delectus eligendi beatae!</p>
+                            </div>
+                        </div>
+                        <div class="card comentario" style="display: none;">
+                            <div class="card-body">
+                                <h5 class="card-title d-flex justify-content-between"> <span class="tituloComentario">Confiable</span> <span class="fechaComentario">15/07/2020</span></h5>
+                                <p class="card-text">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ducimus in praesentium fugiat itaque laboriosam provident totam sed omnis reprehenderit! Inventore culpa enim ad nihil corrupti aperiam eos nisi nulla dolore?</p>
+                            </div>
+                        </div>
+                        <div id="navComentarios">
+                        </div></div>
+                    </div></div>
+                </div>
     </div>
 </div>
 
-<!-- Modal Contacto-->
-<div class="modal fade" id="contacto" tabindex="-1" aria-labelledby="contactoTitulo" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="contactoTitulo">Contacto</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body datos">
-            <label for="inptEmail">Email</label>
-            <p class="mx-2 py-2 text-muted loading" id="correo"></p>
-            <label for="codArea">Telefono</label>
-            <div class="list-group list-group-flush mx-2 text-muted loading" id="listadoTelefonos"></div>
-            <label for="calle">Direccion</label>
-            <div class="list-group list-group-flush mx-2 text-muted loading ldg-w-lg ldg-block" id="listadoDomicilios"></div>
-        </div>
-      </div>
-      </div>
-    </div>
-  </div>
-</div>
+@include("UIPerfilModales/UIModalCalificar")
+@include("UIPerfilModales/UIModalReportar")
+@include("UIPerfilModales/UIModalSubscribirse")
 
 @endsection
 
 @section('scripts')
     @parent
+    <script type="text/javascript" src="{{URL::asset('assets/js/utilidades.js')}}"></script>
+    <script type="text/javascript" src="{{URL::asset('assets/js/logueo.js')}}"></script>
     <script type="text/javascript" src="{{URL::asset('assets/js/visitanteDeColaborador.js')}}"></script>
 @endsection

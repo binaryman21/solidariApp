@@ -7,15 +7,8 @@ SolidariApp permite conectar organizaciones con personas interesadas en donar al
 Puedes unirte como colaborador o organizacion en https://www.solidariapp.com.ar
 
 ---
-### Requisitos
 
-* PHP 7.3^
-* Laravel 8.2^
-* MySQL 5
-* Composer 2.0
-
-
-### Instalacion
+#### Instalacion
 
 Clona el repositorio
 
@@ -23,20 +16,18 @@ Clona el repositorio
 
  `$ cd solidariApp`
 
-Instala las dependencias
+Actualiza las dependencias
 
-`$ composer install`
+`$ composer update`
 
 Incorpora el archivo `.env` manualmente en la carpeta `solidariApp`.
 Ejemplo del mismo disponible en [laravel/.env.example](https://github.com/laravel/laravel/blob/master/.env.example "laravel/.env.example") y luego ejecuta el siguiente comando:
 
 `$ php artisan key:generate`
 
-Configura las credenciales de la BD en el archivo `.env` 
-
 ---
 
-### Deploy
+#### Deploy
 
 `$ php artisan serve`
 
@@ -44,16 +35,16 @@ Dirigete a: http://localhost:8000/
 
 ---
 
-### Documentacion
+#### Documentacion
 
  Proyecto SolidariApp: [Documento de requisitos](https://docs.google.com/document/d/179b1s37myFMsTPGYTvLcGfkKxK6xCkuOezv0wqIAO0Q/edit?usp=sharing "Documento de requisitos")
 
 
 ----
 
-### Desarrollo de software  - Universidad Provincial de Ezeiza - 2020
+#### Desarrollo de software  - Universidad Provincial de Ezeiza - 2020
 
-#### Autores - Grupo II
+##### Autores - Grupo II
 
 - Dario Lalanne @bynariman21
 - Flavio Segade @flavio-segade
@@ -61,6 +52,6 @@ Dirigete a: http://localhost:8000/
 - Kevin Zelada @kevingzelada
 - Juan Salomon @EsJuanSalomon
 
-#### Profesores
+##### Profesores
 - Federico Brucchieri
 - Matias Bassi
