@@ -2,25 +2,21 @@
 
 document.addEventListener('DOMContentLoaded', () => {
 
-     //Obtengo la url para saber el id de organizacion
-     var url = $(location).attr('href').split("/");
-     //alert(url);
-     if(url.length == 5 && url[4] != "" && !isNaN(url[4])){
-        isLoggedIn();
-        getColaborador(url[4],1);
-        //  $("#editarMiPerfil").addClass("d-none");
+
+    var id = +location.pathname.slice("/organizacion/".length);
+    if(id && typeof(id)=='number'){
+
+        isLoggedIn({funcionSuccess:undefined, RedirectIfNot:true});
+        getColaborador(id);
         $('.soloColaborador').addClass('d-none');
         $('.soloVisitante').removeClass('d-none');
-     }
-     else if(url.length == 4 || (url.length == 5 && url[4] == "")){
-        isLoggedIn(getColaborador);
-        // $("#editarMiPerfil").removeClass("d-none");
+    }
+    else{
+
+        isLoggedIn({funcionSuccess:getColaborador, RedirectIfNot:true});
         $('.soloVisitante').addClass('d-none');
         $('.soloColaborador').removeClass('d-none');
-     }
-     else{
-         window.location = "/";
-     }
+    }
 
     // listarColaboraciones();
     agregarPaginacionComentarios();
@@ -46,22 +42,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 })
 
-/*Dar de baja el usuario logeado*/
-function bajaUsuario()
-{
-     axios.post("/bajaUsuario")
-    .then((response)=>{
-        if(response.data.resultado === 1 ){
-           /*Redireccionar a pagina principal*/
-           document.location.href="/";
-        }else{
-            /*Ocurrio un error*/
-            alert("Ocurrio un error inesperado.");
-            console.log(response.data.message);
-        }
-    });
 
-}
 
 /*Actualizar foto de perfil de usuario logeado*/
 /*NOTA: se ejecuto esta accion sin js, directamente desde el submit del formulario ejecutando el backend.*/

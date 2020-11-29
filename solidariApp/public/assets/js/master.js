@@ -10,6 +10,10 @@ document.addEventListener('DOMContentLoaded', () => {
     alertify.set('notifier', 'position', 'bottom-left')
 
 
+    alertify.defaults.transition = 'fade';
+    alertify.defaults.glossary.title = 'SolidariAPP';
+    alertify.defaults.glossary.cancel = 'cancelar';
+    alertify.defaults.glossary.ok = 'confirmar';
 })
 
 /*activo el menu que corresponde*/

@@ -1,5 +1,4 @@
 @extends("layouts.master")
-
 @section("contenido")
 @parent
  <!-- container -->
@@ -36,20 +35,18 @@
         </div>
         <div class="col-md-6">
             <!-- Insignias -->
-            <div class="card card.body insignias mt-xs-4">
+            <div class="card insignias mt-xs-4">
                 <div class="card-body">
                     <h6 class="card-title">Insignias</h6>
                     <div id="insignias"></div>
                 </div>
             </div>
-            <!-- calificaciones -->
-            <div class="card mt-4">
+
+            <!-- Calificaciones -->
+            <div class="card mt-sm-4">
                 <div class="card-body">
-                    <div class="d-flex align-items-center">
-                        <h6 class="card-title mr-auto">Comentarios</h6>
-                        <div id="InComentariosActionUser"></div>
-                    </div>
-                    <!-- TABS Positivas | Regulares | Negativas -->
+                    <h6 class="card-title">Comentarios</h6>
+                    <!-- TABS Buenas | Regulares | Malas -->
                     <ul class="nav nav-tabs" id="calificacionesTAB" role="tablist">
                         <li class="nav-item" role="presentation">
                             <a class="nav-link active" id="Positivos-tab" data-toggle="tab" href="#trato-3" role="tab" aria-controls="Positivos" aria-selected="true">Positivos</a>
@@ -96,10 +93,11 @@
     </div>
   </div>
 </div>
-
 @endsection
 
 @section('scripts')
     @parent
-    <script type="text/javascript" src="{{URL::asset('assets/js/visitanteDeColaborador.js')}}"></script>
+    <script type="text/javascript" src="{{URL::asset('assets/js/utilidades.js')}}"></script>
+    <script type="text/javascript" src="{{URL::asset('assets/js/logueo.js')}}"></script>
+    <script type="text/javascript" src="{{URL::asset('assets/js/perfilColaborador.js')}}"></script>
 @endsection

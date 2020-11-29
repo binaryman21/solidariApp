@@ -81,6 +81,7 @@ class ColaboracionController extends Controller
     }
 
     public function getColaboracionesPorUsuario($idUsuario){
+
         $colaboraciones = Colaboracion::where("idColaborador",$idUsuario)
         ->join("necesidad","necesidad.idNecesidad","=","colaboraciones.idNecesidad")
         ->join("estadoColaboracion","colaboraciones.estadoColaboracion","=","estadoColaboracion.idEstadoColaboracion")
@@ -89,8 +90,17 @@ class ColaboracionController extends Controller
         ->join("usuario","usuario.idUsuario","=","organizacion.idUsuario")
         ->orderBy('colaboraciones.estadoColaboracion', 'ASC')
         ->orderBy('colaboraciones.fechaColaboracion', 'DESC')
-        ->get();
+        ->select(
+
+            'idColaboracion', 'razonSocial', 'nombreCategoria', 'descripcionNecesidad',
+             'descripcionEstadoColaboracion', 'organizacion.idUsuario', 'fechaColaboracion',
+             'urlFotoPerfilUsuario'
+        )
+        ->get(array([]));
+
         return response()->json([
+
+            'resultado' => 1,
             'colaboraciones' => $colaboraciones
         ]);
     }

@@ -1,49 +1,44 @@
 document.addEventListener('DOMContentLoaded', () => {
-    
-    //isLoggedIn hara una redireccion a / si no se esta logueado
-    isLoggedIn();
-    //Obtengo la url para saber el id de organizacion
-    var id = +location.pathname.slice('/ver-organizacion/'.length);
-    getOrganizacion(id);
+
+    //isLoggedIn redirecciona si no esta logueado. y llamara a la funcion pasandole 
+    //el id del usuario que esta en la session
+    isLoggedIn({funcionSuccess: getOrganizacion, RedirectIfNot: true});
 })
 
 function getOrganizacion(idUsuario){
 
     axios.get("/getOrganizacion/"+idUsuario)
-    .then(response => {
+    .then((response)=>{
 
-        if(response.data.resultado){
+        let organizacion = response.data.organizacion;
+        let contacto = {
 
-            let organizacion = response.data.organizacion;
-            let contacto = {
+            correo: organizacion.emailUsuario,
+            telefonos: response.data.telefonos,
+            domicilios: response.data.domicilios
+        };
 
-                correo: organizacion.emailUsuario,
-                telefonos: response.data.telefonos,
-                domicilios: response.data.domicilios
-            };
-
-            cargarDatosPerfil(organizacion);
-            cargarNecesidades(idUsuario);
-            agregarModalContacto(contacto);
-            cargarComentariosOrganizacion(idUsuario);
-        }
-        else alertify.error("No se ha podido cargar el usuario!");
-    })
-    .catch(error => console.error);
+        cargarDatosPerfil(organizacion);
+        agregarModalContacto(contacto);
+        cargarNecesidades(idUsuario);
+        cargarInsignias( idUsuario );
+        cargarComentariosOrganizacion(idUsuario);
+    });
 }
 
 function cargarDatosPerfil(organizacion) {
-    
+
     $("#nombreOrganizacion").html(organizacion.razonSocial);
-    $("#tipoOrganizacion").html(organizacion.nombreTipoOrganizacion);
-    $("#urlFotoPerfilOrganizacion").attr("src",organizacion.urlFotoPerfilUsuario);
-    $("#cover").attr("src",organizacion.urlFotoPortadaUsuario);
-    if(organizacion.descripcionOrganizacion == "")
-    {
-        organizacion.descripcionOrganizacion = "La organización no ha especificado ninguna descripción todavia";
-    }
-    $("#descripcionOrganizacion").html(organizacion.descripcionOrganizacion);
-    $("#fechaAltaUsuario").html(`Usuario desde el ${moment(organizacion.fechaAltaUsuario, "YYYY-MM-DD HH:mm:ss").format('LL')}`);
+        $("#tipoOrganizacion").html(organizacion.nombreTipoOrganizacion);
+        $("#urlFotoPerfilOrganizacion").attr("src",organizacion.urlFotoPerfilUsuario);
+        $("#cover").attr("src",organizacion.urlFotoPortadaUsuario);
+        if(organizacion.descripcionOrganizacion == "")
+        {
+            organizacion.descripcionOrganizacion = "La organización no ha especificado ninguna descripción todavia";
+        }
+
+        $("#descripcionOrganizacion").html(organizacion.descripcionOrganizacion);
+        $("#fechaAltaUsuario").html(`Usuario desde el ${moment(organizacion.fechaAltaUsuario, "YYYY-MM-DD HH:mm:ss").format('LL')}`);
 }
 
 function cargarNecesidades(idUsuario){
@@ -55,6 +50,7 @@ function cargarNecesidades(idUsuario){
         let necesidades = data.necesidades;
         let divNecesidadesEnProgreso = $('#necesidadesEnProceso');
         let divNecesidadesCumplidas = $('#necesidadesCumplidas');
+        let divNecesidadesEliminadas = $('#necesidadesEliminadas');
         
 
         if(necesidades != null && necesidades.length>0){
@@ -70,7 +66,9 @@ function cargarNecesidades(idUsuario){
                         <div class="d-flex justify-content-between align-items-center">
                             <h6 class="card-title mb-n1">${capitalize(need.nombreCategoria)}</h6>
                             <button class="btn dropdown px-0 text-muted" type="button" id="OptionsNeed-forID-${need.idNecesidad}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="fas fa-ellipsis-v fa-xs"></i></button>
-                            <div class="dropdown-menu dropdown-menu-right shadow-sm mt-n4" aria-labelledby="OptionsNeed-forID-${need.idNecesidad}">                           
+                            <div class="dropdown-menu dropdown-menu-right shadow-sm mt-n4" aria-labelledby="OptionsNeed-forID-${need.idNecesidad}">
+                                <button class="dropdown-item" id="btnEdite-need${need.idNecesidad}" data-need="${need.idNecesidad}" type="button">Editar necesidad</button>
+                                <button class="dropdown-item" id="btnDelete-need${need.idNecesidad}" data-need="${need.idNecesidad}" type="button">Eliminar necesidad</button>                            
                                 <a target="_blank" class="dropdown-item fb-xfbml-parse-ignore"
                                     href="https://www.facebook.com/sharer/sharer.php?u=https://solidariapp.com.ar/organizacion/${need.idUsuario}/necesidad/${need.idNecesidad}">Compartir en Facebook</a>
                             </div>
@@ -100,21 +98,45 @@ function cargarNecesidades(idUsuario){
 
                     case 1: divNecesidadesEnProgreso.append(cardNeed); break;
                     case 2: divNecesidadesCumplidas.append(cardNeed); break;
-                    case 3: break; //Una necesidad eliminada es visible (?)
-                    default: console.error("Estado no reconocido");
+                    default: divNecesidadesEliminadas.append(cardNeed);
                 }
             })
         }
         
         agregarPaginacionNecesidades();
+        $("#btnNuevaNecesidad").click(function(){
+
+            limpiarValidaciones($("#inpFechaLimite"),  $("#errorFechaLimite") );
+            limpiarValidaciones($("#slctCategoria"), $("#errorCategoria"));
+            limpiarValidaciones($("#inpCantidad"), $("#errorCantidad"));
+            limpiarValidaciones($("#txtDescripcion"), $("#errorDescripcion"));
+            document.getElementById("formEditarNecesidad").reset();
+            $("#modalEditarNecesidad .modal-content").removeClass($("#categoriaActual").val());
+            $("#btnGuardarCambiosNecesidad").unbind( "click" );
+            $("#btnGuardarCambiosNecesidad").click(function(e){
+                e.preventDefault();
+                if( validarNecesidad() ){
+                    bloquearBoton($("#btnGuardarCambiosNecesidad"));
+                    registrarNecesidad(idUsuario);
+                }
+            });
+        });
     })
-    .catch(error => console.error);
 }
 
 function agregarPaginacionNecesidades(){
 
     paginarTabNecesidad({containerType:'EnProceso', ListType:'enproceso'});
     paginarTabNecesidad({containerType:'Cumplidas', ListType:'cumplida'});
+    paginarTabNecesidad({containerType:'Eliminadas', ListType:'eliminada'});
+}
+
+function agregarPaginacionComentarios(){
+
+    //llamo a la funcion para paginar cada seccion pasandole el nombre del contenedor y la clase de los elementos que contiene
+    paginarTabCalificacion({containerType:'trato-1', ListType:'trato-1'});//negativas
+    paginarTabCalificacion({containerType:'trato-2', ListType:'trato-2'});//regulares
+    paginarTabCalificacion({containerType:'trato-3', ListType:'trato-3'});//positivas
 }
 
 function paginarTabNecesidad({containerType = '', ListType = ''} = {}){
@@ -163,15 +185,8 @@ function paginarTabNecesidad({containerType = '', ListType = ''} = {}){
         `<img src="/assets/img/SinNecesidades${containerType}.svg">
          <p class="text-center my-5">No hay necesidades ${tabType}</p>`
         $necesidadesContainer.append(emptyStateOfNeed);
-    } 
-}
+    }
 
-function agregarPaginacionComentarios(){
-
-    //llamo a la funcion para paginar cada seccion pasandole el nombre del contenedor y la clase de los elementos que contiene
-    paginarTabCalificacion({containerType:'trato-1', ListType:'trato-1'});//negativas
-    paginarTabCalificacion({containerType:'trato-2', ListType:'trato-2'});//regulares
-    paginarTabCalificacion({containerType:'trato-3', ListType:'trato-3'});//positivas
 }
 
 function paginarTabCalificacion({containerType = "", ListType = ""} = {}) {
