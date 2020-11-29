@@ -15,6 +15,12 @@ document.addEventListener('DOMContentLoaded', () => {
     let btnGuardarCambiosDomicilio = $('#btnGuardarCambiosDomicilio');
     let btnGuardarTelefonos = $('#btnGuardarTelefonos');
     document.querySelector('#actualizarAvatar').addEventListener("change", cambiarFotoPerfil, false);
+    $('.btnCancelar').on('click', cerrar);
+
+    function cerrar (e) { 
+        $('[aria-expanded=true]').trigger('click'); 
+        $('#formularioDomicilio').removeClass('show');
+    }
 
     listarProvincias(-1);
 
@@ -40,13 +46,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
     opcionesPills.on('hide.bs.tab', (e) => {
-        
+        // console.log('hola');
         navTabs.find(`a[href="#${$(e.target).attr('aria-controls')}"]`).removeClass('active').attr('aria-selected', false);
-        navTabs.find(`[href="#${$(e.relatedTarget).attr('aria-controls')}"]`).addClass('active').attr('aria-selected', true);
+        // navTabs.find(`a[href="#${$(e.target).attr('aria-controls')}"]`).removeClass('show');
+        navTabs.find(`a[href="#${$(e.relatedTarget).attr('aria-controls')}"]`).addClass('active').attr('aria-selected', true);
     });
 
     opcionesTabs.on('hide.bs.tab', (e) => {
-        
+
         navPills.find(`[href="#${$(e.target).attr('aria-controls')}"]`).removeClass('active').attr('aria-selected', false);
         navPills.find(`[href="#${$(e.relatedTarget).attr('aria-controls')}"]`).addClass('active').attr('aria-selected', true);
     });
