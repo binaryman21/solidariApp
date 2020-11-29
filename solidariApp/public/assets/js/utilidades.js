@@ -26,7 +26,7 @@ function limpiarCamposLogin(){
     $('#formRegistroGoogle')[0].reset();
     // Error Login
     $("#errorLogin").hide();
-    // EmailEmail
+    // Email
     $('#emailUsuario').removeClass('is-invalid is-valid');
     $('#errorCorreo').fadeOut();
     // Pass
@@ -105,8 +105,7 @@ function listarLocalidades(idProvincia,defaultSelected)
         $.each(localidades, function (indexInArray, localidad) {
             $("#selectLocalidad").append("<option value = '" + localidad.idLocalidad + "'>" + localidad.nombreLocalidad +"</option");
         });
-        let def = $('#selectLocalidad > option').val();
-        $("#selectLocalidad").val(def);
+        $("#selectLocalidad").val(defaultSelected);
 
       });
 }
@@ -118,9 +117,6 @@ function limpiarValidaciones(inp,error){
             error.fadeOut();
         }else{
             inp.nextSibling.fadeOut();
-        }
-        if(inp.attr('type') == 'text' || inp.attr('type') == 'number'){
-            inp.val('');
         }
     }
 }
@@ -249,164 +245,71 @@ function filtrarPorUbicacion(){
 
 //TRAER LAS INSIGNIAS DE UN USUARIO
 function cargarInsignias( idUsuario ){
-
     fetch( "/getInsignias/" + idUsuario )
-    .then(response => response.json())
-    .then(data => {
-
-        if(data.resultado){
-
-            if(data.insignias.length) llenarInsignias( data.insignias );
-            else $('#insignias').append(
-
-                `<img src="/assets/img/SinInsignias.svg">
-                <p class="text-center my-5">No hay insignias otorgadas aun</p>`
-            );
-        }
-        else alertify.error("Hubo un problema al cargar las insignias");
-    })
-    .catch(error => console.error);
+        .then(response => response.json())
+        .then(data => {
+            let insignias = data.insignias;
+            llenarInsignias( insignias );
+        })
 }
 
 function llenarInsignias( insignias ){
-
-    let divInsignias = $('#insignias');
+    // console.log( insignias );
+    let divInsignias = $('.insignias');
     divInsignias.html('');
-    insignias.forEach(({icono, nombreInsignia, descripcionInsignia}) => {
-        let insignia = 
-        `<span class="badge badge-pill border border-secondary px-3 py-2 mt-2 mr-2 list-group-item-action w-auto" title="${descripcionInsignia}">
-            <i class="${icono} mr-2"></i>
-            ${nombreInsignia}
-        </span>`;
-
-        divInsignias.append(insignia);
+    insignias.forEach(insignia => {
+        let icono = document.createElement('i');
+        $(icono).addClass( insignia.icono );
+        $(icono).attr('title', insignia.descripcionInsignia);
+        // console.log( icono );
+        divInsignias.append(icono);
     });
 }
 
 //TRAER LOS COMENTARIOS DE UN USUARIO
-function cargarComentariosColaborador(idUsuario ){
-
-    fetch( "/getCalificaciones/" + idUsuario)
-    .then(response => response.json())
-    .then(data => llenarComentariosColaborador(data.calificaciones))
-    .catch(error => alertify.error('Ocurrio un problema al cargar los comentarios'));
-}
-
-function llenarComentariosColaborador(comentarios){
-
-    let calificacionesNegativas = $('#trato-1');
-    let calificacionesRegulares = $('#trato-2');
-    let calificacionesPositivas = $('#trato-3');
-
-    if( comentarios.length > 0 ){
-        comentarios.forEach(({
-
-            idUsuario,
-            tratoRecibido,
-            razonSocial,
-            ayudaConcretada,
-            fechaCalificacion,
-            comentario,
-            urlFotoPerfilUsuario,
-
-        }) => {
-
-            let comment = 
-            `<div class="card calificacion trato-${tratoRecibido}">
-                <div class="card-body rounded">
-                    <div class="media mb-2">
-                        <img src="${urlFotoPerfilUsuario}" alt="" class="imgPerfilCol rounded-circle">
-                        <div class="media-body ml-2">
-                            <a class="my-0 d-block mb-n1 text-reset" href="/ver-organizacion/${idUsuario}">${razonSocial}</a>
-                            <small class="card-subtitle text-muted fechaComentario">${moment(fechaCalificacion, "YYYY-MM-DD HH:mm:ss").format('LL')}</small>    
-                        </div>
-                    </div>
-                    <div class="card-text">${comentario}</div>
-                    <small class="card-subtitle text-muted">La ayuda ${(!ayudaConcretada) ? 'no fue':'fue'} concretada.</small> 
-                </div>
-            </div>`;
-
-            switch(tratoRecibido){
-                case 1: calificacionesNegativas.append(comment); break;
-                case 2: calificacionesRegulares.append(comment); break;
-                case 3: calificacionesPositivas.append(comment); break;
-                default: 
-                console.error("calificacion no registrada");
-                return false;
-            }
-        });
-    }
-
-    agregarPaginacionComentarios();
+function cargarComentarios( idUsuario ){
+    fetch( "/getCalificaciones/" + idUsuario )
+        .then(response => response.json())
+        .then(data => {
+            let comentarios = data.calificaciones;
+            llenarComentarios( comentarios );
+        })
 }
 
 //TRAER LOS COMENTARIOS DE UNA ORGANIZACION
 function cargarComentariosOrganizacion( idUsuario ){
-
-    fetch( "/getCalificacionesOrganizacion/" + idUsuario)
-    .then(response => response.json())
-    .then(data => {
-        
-<<<<<<< HEAD
-        let calificaciones = data.calificaciones
-        llenarComentariosOrganizacion(data.calificaciones);
-=======
-        let calificaciones = data.calificaciones;
-        llenarComentariosOrganizacion( data.calificaciones );
->>>>>>> 449ff225ddd462882b7449ba621017eaea1bec20
-    })
-    .catch(error => {
-        
-        alertify.error('Ocurrio un problema al cargar los comentarios');
-        console.error(error);
-    });
+    fetch( "/getCalificacionesOrganizacion/" + idUsuario )
+        .then(response => response.json())
+        .then(data => {
+            let comentarios = data.calificaciones;
+            llenarComentarios( comentarios );
+        })
 }
 
-function llenarComentariosOrganizacion(comentarios){
-
-    let calificacionesNegativas = $('#trato-1');
-    let calificacionesRegulares = $('#trato-2');
-    let calificacionesPositivas = $('#trato-3');
-
+function llenarComentarios( comentarios ){
+    // console.log( insignias );
+    let divComentarios = $('.comentarios');
+    divComentarios.html('');
     if( comentarios.length > 0 ){
-        comentarios.forEach(({
-
-            idCalificante,
-            tratoRecibido,
-            nombreColaborador,
-            apellidoColaborador,
-            fechaCalificacion,
-            comentario,
-            urlFotoPerfilUsuario,
-
-        }) => {
-
-            let comment = 
-            `<div class="card calificacion trato-${tratoRecibido}">
-                <div class="card-body rounded">
-                    <div class="media mb-2">
-                        <img src="${urlFotoPerfilUsuario}" alt="" class="imgPerfilCol rounded-circle">
-                        <div class="media-body ml-2">
-                            <a class="my-0 d-block mb-n1 text-reset" href="/ver-colaborador/${idCalificante}">${nombreColaborador} ${apellidoColaborador}</a>
-                            <small class="card-subtitle text-muted fechaComentario">${moment(fechaCalificacion, "YYYY-MM-DD HH:mm:ss").format('LL')}</small>    
-                        </div>
-                    </div>
-                    <div class="card-text">${comentario}</div>
+        comentarios.forEach(comentario => {
+            let coment = 
+            `<div class="card comentario">
+                <div class="card-body">
+                    <h5 class="card-title d-flex justify-content-between"> <span class="fechaComentario">${comentario.fechaCalificacion}</span></h5>
+                    <p class="card-text">${comentario.comentario}</p>
                 </div>
-            </div>`;
-
-            switch(tratoRecibido){
-                case 1: calificacionesNegativas.append(comment); break;
-                case 2: calificacionesRegulares.append(comment); break;
-                case 3: calificacionesPositivas.append(comment); break;
-                default: 
-                console.error("calificacion no registrada");
-                return false;
-            }
+            </div>`
+            divComentarios.append( coment );
         });
+        agregarPaginacionComentarios();
     }
-
-    agregarPaginacionComentarios();
+    else{
+        let coment = 
+        `<div class="alert alert-secondary" role="alert">
+            Aun no tiene comentarios.
+        </div>`
+        divComentarios.append( coment );
+    }
 }
 
 function calcularPorcentaje( necesidad ){

@@ -327,29 +327,19 @@ class OrganizacionController extends Controller
 
     public function actualizarDescripcion(Request $request)
     {
-        try{
-            session_start();
-            $usuario = $_SESSION['usuario'];
-            $datos = json_decode($request->getContent());
-    
-            $organizacion = Organizacion::find($usuario->idUsuario);
-    
-            $organizacion->descripcionOrganizacion = $datos->descripcion;
-    
-            $organizacion->save();
-    
-            return response()->json([
-                'resultado' => 1,
-                'message' => "descripcion actualizada"
-            ]);
-        }
-        catch (\Exception $e)
-        {
-            return response()->json([
-                'resultado' => 0,
-                'message' => $e->getMessage()
-            ]);
-        }
+        $datos = json_decode($request->getContent());
+
+        $flight = Organizacion::find($datos->idUsuario);
+
+        $flight->descripcionOrganizacion = $datos->descripcionOrganizacion;
+
+        $flight->save();
+
+        return response()->json([
+            'resultado' => 1,
+            'message' => "registro exitoso!"
+
+        ]);
 
     }
 }

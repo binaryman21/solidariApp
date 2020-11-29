@@ -1,12 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use Illuminate\Http\RedirectResponse;
 use App\Http\Controllers\ProvinciaController;
-use App\Http\Controllers\ColaboradorController;
-use App\Http\Controllers\OrganizacionController;
-use App\Http\Controllers\AdministradorController;
-use APP\Models\Usuario;
 use App\Http\Controllers\UsuarioController;
 /*
 |--------------------------------------------------------------------------
@@ -39,63 +34,11 @@ Route::get('/colaborador', function()
 
 })->name('UIColaborador');
 
-//PERFIL DEL COLABORADOR
-Route::get('/cuenta-colaborador/perfil', function()
-{
-    session_start();
-    if(!isset($_SESSION['usuario']) || $_SESSION['usuario']->rol->nombreRol != 'colaborador')
-    {
-        return view('Error403');
-    }
-    else
-    {
-        return view('UIPerfilDeColaborador');
-    }
-
-})->name('UIColaboradorPerfil');
-
-//AJUSTES DE LA CUENTA DEL COLABORADOR
-Route::get('/cuenta-colaborador/ajustes', function()
-{
-    session_start();
-    if(!isset($_SESSION['usuario']) || $_SESSION['usuario']->rol->nombreRol != 'colaborador')
-    {
-        return view('Error403');
-    }
-    else return view('UIConfiguracionPerfilColaborador');
-
-})->name('UIColaboradorAjustes');
-
 Route::get('/colaborador/{idUsuario}', function($idUsuario){return view('UIPerfilColaborador');})->name('UIColaboradorVisitante');
 Route::get('/organizacion/{idUsuario}', function($idUsuario){return view('UIPerfilOrganizacion');})->name('UIOrganizacionVisitante');
-
 //lo dejo de momento en otra ruta para no interferir en otras funcionalidades.
-Route::get('/ver-colaborador/{idUsuario}', function($idUsuario){
-    
-
-    if(UsuarioController::ExisteUsuario($idUsuario)){
-
-        session_start();
-        if(isset($_SESSION['usuario'])){
-            if( $_SESSION['usuario']->idUsuario == $idUsuario ){
-                return view('UIPerfilDeColaborador');
-            }
-            else{
-                $typeUser = $_SESSION['usuario']->rol->nombreRol;
-                return view('UIPerfilVisitanteDeColaborador', compact('typeUser'));
-            }
-        }
-        return view('UIUsuarioNoEncontrado');
-    } 
-    else return view('UIUsuarioNoEncontrado');
-
-;})->name('UIVisitanteDeColaborador');
-Route::get('/ver-organizacion/{idUsuario}', function($idUsuario){
-    
-    if(UsuarioController::ExisteUsuario($idUsuario)) return view('UIPerfilVisitanteDeOrganizacion');
-    else return view('UIUsuarioNoEncontrado');
-
-})->name('UIVisitanteDeOrganizacion');
+Route::get('/ver-colaborador/{idUsuario}', function($idUsuario){return view('UIPerfilVisitanteDeColaborador');})->name('UIColaboradorVisitante');
+Route::get('/ver-organizacion/{idUsuario}', function($idUsuario){return view('UIPerfilVisitanteDeOrganizacion');})->name('UIOrganizacionVisitante');
 //Route::get('/organizacion/{idUsuario}', 'App\Http\Controllers\OrganizacionController@getOrganizacion')->name('getOrganizacion');
 
 //RUTA DE LA ORGANIZACION
@@ -112,30 +55,6 @@ Route::get('/organizacion', function()
     }
 
 })->name('UIOrganizacion');
-
-//PERFIL DE LA CUENTA DE LA ORGANIZACION
-Route::get('/cuenta-organizacion/perfil', function()
-{
-    session_start();
-    if(!isset($_SESSION['usuario']) || $_SESSION['usuario']->rol->nombreRol != 'organizacion')
-    {
-        return view('Error403');
-    }
-    else return view('UIPerfilDeOrganizacion');
-
-})->name('UIOrganizacionPerfil');
-
-//AJUSTES DE LA CUENTA DE LA ORGANIZACIONS
-Route::get('/cuenta-organizacion/ajustes', function()
-{
-    session_start();
-    if(!isset($_SESSION['usuario']) || $_SESSION['usuario']->rol->nombreRol != 'organizacion')
-    {
-        return view('Error403');
-    }
-    else return view('UIConfiguracionPerfilOrganizacion');
-
-})->name('UIOrganizacionAjustes');
 
 //RUTA DEL ADMINISTRADOR
 Route::get('/administrador', function(){
@@ -232,7 +151,7 @@ Route::post('/altaDenuncia', 'App\Http\Controllers\DenunciaController@altaDenunc
 Route::post('/confirmarDenuncia', 'App\Http\Controllers\DenunciaController@confirmarDenuncia')->name('confirmarDenuncia');
 
 //Route::get('/tienePermisoPara/{pStringPermiso}', 'App\Http\Controllers\UsuarioController@tienePermisoPara')->name('confirmarDenuncia');
-Route::get('/actualizarInsignias/{idUsuario}', 'App\Http\Controllers\CalificacionController@actualizarInsignias')->name('actualizarInsignias');
+Route::get('/actualizarInsignias/{idUsuario}', 'App\Http\Controllers\CalificacionController@actualizarInsignias')->name('confirmarDenuncia');
 Route::get('/getCalificaciones/{idUsuario}', 'App\Http\Controllers\CalificacionController@getCalificaciones')->name('getCalificaciones');
 Route::get('/getCalificacionesOrganizacion/{idUsuario}', 'App\Http\Controllers\CalificacionController@getCalificacionesOrganizacion')->name('getCalificacionesOrganizacion');
 Route::get('/getInsignias/{idUsuario}', 'App\Http\Controllers\InsigniaUsuarioController@getInsignias')->name('getInsignias');
@@ -246,10 +165,6 @@ Route::post('/crearNotificacionCalificacionOrganizacion','App\Http\Controllers\N
 //SUSCRIPCION
 Route::post('/registrarSuscripcion', 'App\Http\Controllers\SuscripcionController@registrarSuscripcion')->name('registrarSuscripcion');
 Route::get('/getSuscriptores/{idOrganizacion}', 'App\Http\Controllers\SuscripcionController@getSuscriptores')->name('getSuscriptores');
-
-//FOTOS
-Route::post('/updateFotoPerfil', 'App\Http\Controllers\UsuarioController@updateFotoPerfil')->name('updateFotoPerfil');
-Route::post('/updateFotoPortada', 'App\Http\Controllers\UsuarioController@updateFotoPortada')->name('updateFotoPortada');
 
 //ERRORES
 Route::get('/error404', function(){return view('Error404');} );
