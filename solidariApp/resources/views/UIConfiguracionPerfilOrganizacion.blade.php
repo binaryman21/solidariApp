@@ -30,30 +30,33 @@
                 <section class="tab-pane fade show active" id="datos-perfil" role="tabpanel" aria-labelledby="datos-perfil-tab">
                     <h5>Administracion de datos basicos del perfil</h5>
                     <div class="card-text text-muted">Aqui puedes configurar los datos basicos de tu cuenta como portada, avatar y descripcion</div>
-                    <div class="card card-user shadow mt-4">
-                        <div class="card-img-block">
-                            <img id="cover" src="/assets/img/cover.svg" class="img-fluid" alt="portada de la organizacion">
-                            <label for="actualizarPortada" class="fas fa-camera">
-                                <input type="file" id="actualizarPortada">
-                            </label>
-                        </div>
-                        <div class="card-body pt-5">
-                            <div class="media">
-                                <img id="urlFotoPerfilOrganizacion" class="rounded-circle imgPerfilOrg align-self-start mr-auto" src="/assets/img/imgUserProfile.png" alt="imagen de usuario">
-                                <label for="actualizarAvatar" class="fas fa-camera">
-                                    <input type="file" id="actualizarAvatar">
-                                </label>
+                        <form action="" name="uploader">
+                            <div class="card card-user shadow mt-4">
+                                <div class="card-img-block">
+                                    <img id="cover" src="/assets/img/cover.svg" class="img-fluid" alt="portada de la organizacion">
+                                    <!-- <label for="actualizarPortada" class="fas fa-camera">
+                                        <input type="file" id="actualizarPortada">
+                                    </label> -->
+                                </div>
+                                <div class="card-body pt-5">
+                                    <div class="media">
+                                        <img id="urlFotoPerfilOrganizacion" class="rounded-circle imgPerfilOrg align-self-start mr-auto" src="/assets/img/imgUserProfile.png" alt="imagen de usuario">
+                                        <label for="actualizarAvatar" class="fas fa-camera">
+                                            <input type="file" id="actualizarAvatar" name="actualizarAvatar">
+                                        </label>
+                                    </div>
+                                    <div class="clearfix"></div>
+                                    <h5 class="card-title mt-2 loading ldg-w-sm" id="nombreOrganizacion"></h5>
+                                    <h6 class="card-subtitle text-muted loading" id="tipoOrganizacion"></h6>
+                                    <div class="form-group">
+                                        <textarea max-length="500" rows="5" class="form-control card-text mt-4 loading ldg-w-lg ldg-block" id="descripcionOrganizacion"></textarea>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="clearfix"></div>
-                            <h5 class="card-title mt-2 loading ldg-w-sm" id="nombreOrganizacion"></h5>
-                            <h6 class="card-subtitle text-muted loading" id="tipoOrganizacion"></h6>
-                            <div class="form-group">
-                                <textarea max-length="500" rows="5" class="form-control card-text mt-4 loading ldg-w-lg ldg-block" id="descripcionOrganizacion"></textarea>
+                            <div class="d-flex">
+                                <button type="submit" class="btn btn-primary mt-5 ml-auto" id="btnConfirmarCambiosPerfil">Guardar cambios</button>
                             </div>
-                        </div>
-                    </div>
-                    <div class="d-flex">
-                        <button type="button" class="btn btn-primary mt-5 ml-auto" id="btnConfirmarCambiosPerfil">Guardar cambios</button>
+                        </form>
                     </div>
                 </section>
                 <!-- Administracion de contacto y privacidad-->
@@ -77,11 +80,11 @@
                         <div class="list-group my-2 text-muted loading" id="listadoTelefonos"></div>
                         <!-- Listado de direcciones y boton de agregar una nuevo-->
                         <div class="d-flex align-items-center mt-5">
-                            <p class="card-title mr-auto">Direcciones</p>
+                            <p class="card-title mr-auto">Direccion</p>
                             <p class="card-title">
-                                <a id="btnAgregarDireccion" class="px-2 py-1 text-decoration-none rounded"
+                                <!-- <a id="btnAgregarDireccion" class="px-2 py-1 text-decoration-none rounded"
                                 data-toggle="collapse" href="#formularioDomicilio" role="button" aria-expanded="false"
-                                aria-controls="formularioDomicilio" style="background-color: aliceblue;">Agregar direccion</a>
+                                aria-controls="formularioDomicilio" style="background-color: aliceblue;">Agregar direccion</a> -->
                             </p>
                         </div>
                         <div class="list-group my-2 text-muted loading ldg-w-lg ldg-block" id="listadoDomicilios"></div>
@@ -92,7 +95,7 @@
                         <!-- NUEVO TELEFONO-->
                         <form id="nuevoTelefono" class="bg-white shadow-top rounded p-3 mb-n4 mx-n3 collapse">
                             <label for="calle" class="modal-header mx-n3 pt-0">
-                                <span id="formTelTitle">Agregar nueva direccion</span>
+                                <span id="formTelTitle">Agregar un nuevo telefono</span>
                                 <button type="button" class="close" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
@@ -108,7 +111,7 @@
                                 </div>
                             </div>
                             <div class="modal-footer row">
-                                <button type="button" class="btn btn-outline-secondary">Cancelar</button>
+                                <button type="button" class="btn btn-outline-secondary btnCancelar"">Cancelar</button>
                                 <button type="button" class="btn btn-primary" data-tel="" id="btnGuardarTelefonos">Guardar cambios</button>
                             </div>
                         </form>
@@ -121,6 +124,9 @@
                                 </button>
                             </label>
                             <div class="form-row mb-3 pt-0">
+                                <div class="col-9 col-md-6 d-none">
+                                    <input type="text" class="form-control" id="idDomicilio">
+                                </div>
                                 <div class="col-9 col-md-6">
                                     <input type="text" class="form-control" id="calle" placeholder="Calle" required="">
                                     <span class="error text-danger errorCalle"> </span>
@@ -152,7 +158,7 @@
                                 </div>
                             </div>
                             <div class="modal-footer row">
-                                <button type="button" class="btn btn-outline-secondary">Cancelar</button>
+                                <button type="button" class="btn btn-outline-secondary btnCancelar">Cancelar</button>
                                 <button type="button" class="btn btn-primary" data-dir="" id="btnGuardarCambiosDomicilio">Guardar cambios</button>
                             </div>
                         </form>

@@ -124,58 +124,42 @@ class UsuarioController extends Controller
     /*Actualizar foto de perfil del usuario logeado*/
     public function updateFotoPerfil()
     {
-        session_start();
-        if(isset($_SESSION['usuario'])){
-            /*Busco el ID del usuario logeado*/
-            $usuarioLogueado = $_SESSION['usuario'];
-            /*me traigo los archivos que recibo al realizar el submit*/
-            if ($_FILES['fotoPerfil']['error'] == 0) {
-                $fileName = $_FILES['fotoPerfil']['name'];
-                $ubicacionActual = $_FILES['fotoPerfil']['tmp_name'];
-                /*Concateno el ID usuario al nombre del archivo*/
-                $urlFotoPerfil = storage_path()."/app/public/fotosPerfil/".$usuarioLogueado->idUsuario.$fileName ;
-                move_uploaded_file($ubicacionActual, $urlFotoPerfil);
-            }
-    
-            /*Preparo la url relativa para guardarla en la BDD*/
-            $urlFotoPerfil = "/storage/fotosPerfil/".$usuarioLogueado->idUsuario.$fileName ;
-    
-            try
-            {
-                if(isset($_SESSION['usuario'])){
-                    Usuario::updateFotoPerfil($usuarioLogueado->idUsuario,$urlFotoPerfil);
+        try{
+            session_start();
+            if(isset($_SESSION['usuario'])){
+                /*Busco el ID del usuario logeado*/
+                $usuario = $_SESSION['usuario'];
+                /*me traigo los archivos que recibo al realizar el submit*/
+                if ($_FILES['fotoPerfil']['error'] == 0) {
+                    $fileName = $_FILES['fotoPerfil']['name'];
+                    $ubicacionActual = $_FILES['fotoPerfil']['tmp_name'];
+                    /*Concateno el ID usuario al nombre del archivo*/
+                    $urlFotoPerfil = storage_path()."/app/public/fotosPerfil/".$usuario->idUsuario.$fileName ;
+                    move_uploaded_file($ubicacionActual, $urlFotoPerfil);
                 }
-    
-                /**Si es un colaborador, vuelvo a UIColaborador  */
-                if($usuarioLogueado->idRolUsuario == '1'){
-                  return redirect()->route('UIColaborador');
-                }
-    
-                /**Si es un Organizacion, vuelvo a UIOrganizacion  */
-                if($usuarioLogueado->idRolUsuario == '2'){
-
-                    return response()->json([
-
-                        'resultado' => 1,
-                        'imgUrlTemp' => $urlFotoPerfil
-                    ]);
-                }
-    
-            }
-    
-            catch (\Exception $e)
-            {
+        
+                /*Preparo la url relativa para guardarla en la BDD*/
+                $urlFotoPerfil = "/storage/fotosPerfil/".$usuario->idUsuario.$fileName ;
+                Usuario::updateFotoPerfil($usuario->idUsuario,$urlFotoPerfil);
+                $_SESSION['usuario']->urlFotoPerfil = $urlFotoPerfil;
                 return response()->json([
-                    'resultado' => 0,
-                    'message' => $e->getMessage()
+                    'resultado' => 1,
+                    'message' => 'Foto actualizada',
+                    'imgUrlTemp' => $urlFotoPerfil
                 ]);
             }
-
+            else{
+                return response()->json([
+                    'resultado' => 0,
+                    'message' => 'no estas logueado'
+                ]);
+            }
         }
-        else{
+        catch (\Exception $e)
+        {
             return response()->json([
                 'resultado' => 0,
-                'message' => 'no estas logueado'
+                'message' => $e->getMessage()
             ]);
         }
     }

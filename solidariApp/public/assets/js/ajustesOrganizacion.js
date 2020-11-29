@@ -14,12 +14,14 @@ document.addEventListener('DOMContentLoaded', () => {
     let opcionesTabs = navTabs.find('a[role=tab]');
     let btnGuardarCambiosDomicilio = $('#btnGuardarCambiosDomicilio');
     let btnGuardarTelefonos = $('#btnGuardarTelefonos');
+    document.querySelector('#actualizarAvatar').addEventListener("change", cambiarFotoPerfil, false);
 
     listarProvincias(-1);
 
     btnGuardarCambiosDomicilio.on('click', e => {
 
-        ActualizarDomicilio(e);
+        if( validarDireccion() )
+            ActualizarDomicilio(e);
     });
     
     btnAgregarTelefono.on('click', e => {
@@ -32,9 +34,10 @@ document.addEventListener('DOMContentLoaded', () => {
     })
 
     btnAgregarDireccion.on('click', e => {
-
+    
         EstablecerFormDomiciliosEn({title:'Agregar nuevo domicilio'});
     });
+
 
     opcionesPills.on('hide.bs.tab', (e) => {
         
@@ -107,6 +110,7 @@ function configurarCuentaDeLaOrganizacion(idUsuario){
                 );
 
                 $domiciliosFragment.find(`#btnEdite-Dir${indexInArray}`).on('click', e => {EditarEnFormDomicilios(e)});
+                // console.log(indexInArray);
             });
     
             $listaDomicilios.html($domiciliosFragment);
@@ -129,13 +133,11 @@ function configurarCuentaDeLaOrganizacion(idUsuario){
                 `<a id="telefono${telefono.idTelefono}" class="list-group-item list-group-item list-group-item-action px-2 py-1 d-flex justify-content-between align-items-center">
                     <span class="m-1">${telefono.codAreaTelefono} - ${telefono.numeroTelefono}</span>
                     <button class="btn dropdown" type="button" id="telOptions-forID-${telefono.idTelefono}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="fas fa-ellipsis-v fa-xs"></i></button>
-                    <div class="dropdown-menu dropdown-menu-right shadow" aria-labelledby="telOptions-forID-${telefono.idTelefono}">
-                        <button class="dropdown-item" id="btnEdite-Tel${indexInArray}" data-tel="${indexInArray}" type="button">Editar</button>
+                    <div class="dropdown-menu dropdown-menu-right shadow" aria-labelledby="telOptionsDrop-forID-${telefono.idTelefono}">
                         <button class="dropdown-item" id="btnDelete-Tel${indexInArray}" data-tel="${indexInArray}" type="button">Eliminar</button>
                     </div>
                 </a>`);
 
-                $telefonosFragment.find(`#btnEdite-Tel${indexInArray}`).on('click', function (e) {EditarEnFormTelefonos(e)});
                 $telefonosFragment.find(`#btnDelete-Tel${indexInArray}`).on('click', function (e) {EliminarTelefono(e)});
             });
     
@@ -149,15 +151,9 @@ function EditarEnFormDomicilios(e){
 
     let index = $(e.target).data("dir");
     let dir = FetchedDomicilios[index];
+    // console.log( 'dir' + dir);
     EstablecerFormDomiciliosEn({title: 'Editar direccion', data: dir, id:index});
     $('#formularioDomicilio').collapse('show');
-}
-function EditarEnFormTelefonos(e){
-
-    let id = $(e.target).data('tel');
-    let tel = FetchedTelefonos[id];
-    EstablecerFormTelefonosEn({title: 'Editar telefono', data: tel});
-    $('#nuevoTelefono').collapse('show');
 }
 
 function EliminarTelefono(e){
@@ -191,7 +187,6 @@ function EliminarTelefono(e){
         },
         function(){
 
-
         }
     );
 }
@@ -212,18 +207,18 @@ function AgregarTelefono(e){
                 limpiarValidaciones($('#codArea'), $('.errorCodArea'));
                 limpiarValidaciones($('#numeroTelefono'), $('.errorNroTelefono'));
                 alertify.success('Telefono agregado');
+                FetchedTelefonos.push( telefono );
+                let indexInArray = FetchedTelefonos.length - 1;
                 var $listadoTelefonos = $('#listadoTelefonos');
                 $listadoTelefonos.append(
                 `<a id="telefono${telefono.idTelefono}" class="list-group-item list-group-item list-group-item-action px-2 py-1 d-flex justify-content-between align-items-center">
                     <span class="m-1">${telefono.codAreaTelefono} - ${telefono.numeroTelefono}</span>
                     <button class="btn dropdown" type="button" id="telOptions-forID-${telefono.idTelefono}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="fas fa-ellipsis-v fa-xs"></i></button>
                     <div class="dropdown-menu dropdown-menu-right shadow" aria-labelledby="telOptions-forID-${telefono.idTelefono}">
-                        <button class="dropdown-item" id="btnEdite-Tel${telefono.idTelefono}" data-tel="${telefono.idTelefono}" type="button">Editar</button>
-                        <button class="dropdown-item" id="btnDelete-Tel${telefono.idTelefono}" data-tel="${telefono.idTelefono}" type="button">Eliminar</button>
+                        <button class="dropdown-item" id="btnDelete-Tel${indexInArray}" data-tel="${indexInArray}" type="button">Eliminar</button>
                     </div>
                 </a>`);
-                $listadoTelefonos.find(`#btnEdite-Tel${telefono.idTelefono}`).on('click', function (e) {EditarEnFormTelefonos(e)});
-                $listadoTelefonos.find(`#btnDelete-Tel${telefono.idTelefono}`).on('click', function (e) {EliminarTelefono(e)});
+                $listadoTelefonos.find(`#btnDelete-Tel${indexInArray}`).on('click', function (e) {EliminarTelefono(e)});
             }
             else{
                 alertify.error( response.data.message );
@@ -234,11 +229,13 @@ function AgregarTelefono(e){
 
 function EstablecerFormDomiciliosEn({title="", data = {}, id = -1} = {}) {
 
+    // console.log( data );
+    $('#idDomicilio').val(data.idDomicilio || '');
     $('#formDirTitle').text(title);
     $('#calle').val(data.calle || '');
     $('#numero').val(data.numero || '');
     $('#piso').val(data.piso || '');
-    $('#dpto').val(data.depto || '');
+    $('#depto').val(data.depto || '');
     $('#selectLocalidad').val(data.idLocalidad || -1);
     $('#selectProvincia').val(data.idProvincia || -1);
     $('#btnGuardarCambiosDomicilio').data("dir", id);
@@ -253,46 +250,62 @@ function EstablecerFormTelefonosEn({title="", data = {}} = {}) {
 
 function ActualizarDomicilio(e){
 
-    let id = $(e.target).data("dir");
-    let nuevosDatos = ObtenerDiferenciasConDomicilioFedched(id);
-
-    axios.post("/actualizarDomicilio", nuevosDatos)
-    .then((response)=>{
-        
-        if(response.data.resultado){
-
-            if(response.data.resultado == 1) alertify.success('Cambios guardados');
-            else alertify.notify(response.data.message);
-        }
-        else console.log(response.data.message);
-    })
-    .catch(error => alertify.error('Ha ocurrido un problema y no se ha podido guardar los cambios'));
-}
-
-
-function ObtenerDiferenciasConDomicilioFedched(id){
-
-
-    if(id>0 && id<FetchedDomicilios.length){
-
-        let dirBefore = FetchedDomicilios[id];
-        let dirAfter = {
-            
-            id: dirBefore.idDomicilio
-        };
-
-        let calle = $('#calle').val();
-        let numero = $('#numero').val();
-        let piso = $('#piso').val();
-        let dpto = $('#dpto').val();
-        let idLocalidad = $('#selectLocalidad').val();
-
-        if(calle != dirBefore.calle) dirAfter.calle = calle;
-        if(numero != dirBefore.numero) dirAfter.numero = numero; 
-        if(piso != dirBefore.piso) dirAfter.piso = piso; 
-        if(dpto != dirBefore.dpto) dirAfter.dpto = dpto; 
-        if(idLocalidad != dirBefore.idLocalidad) dirAfter.idLocalidad = idLocalidad;
-    }
+    obtenerCoordenadas($("#calle").val(), $("#numero").val(), $("#selectLocalidad option:selected" ).text(), $("#selectProvincia option:selected" ).text())
+        .then(data => {
+            let coordenadas = {
+                lat: data.lat,
+                lon: data.lon
+            }
+            let domicilio = {
+                idDomicilio: $('#idDomicilio').val(),
+                calle: $("#calle").val(),
+                numero: $("#numero").val(),
+                piso: $("#piso").val(),
+                depto: $("#depto").val(),
+                idLocalidad: $("#selectLocalidad").val(),
+                idProvincia: $("#selectProvincia").val(),
+                nombreLocalidad: $("#selectLocalidad option:selected").text(),
+                nombreProvincia: $("#selectProvincia option:selected").text(),
+                latitud: coordenadas.lat,
+                longitud: coordenadas.lon
+            }
+            axios.post("/actualizarDomicilio",domicilio)
+            .then((response)=>{
+                
+                if(response.data.resultado){
+                    if(response.data.resultado == 1){
+                        alertify.success('Cambios guardados');
+                        limpiarValidaciones( $("#calle"), $(".errorCalle"));
+                        limpiarValidaciones( $("#numero"), $(".errorNumero"));
+                        limpiarValidaciones( $("#selectLocalidad"), $(".errorLocalidad"));
+                        limpiarValidaciones( $("#selectProvincia"), $(".errorProvincia"));
+                        $("#piso").val('');
+                        $("#depto").val('');
+                        //Actualizar en el front
+                        let $listadoDomicilios = $('#listadoDomicilios');
+                        $listadoDomicilios.html(
+                            `<li class="list-group-item list-group-item-action px-2 py-1 d-flex justify-content-between align-items-center" id="domicilio${domicilio.idDomicilio}">
+                                <div>
+                                    <small class="m-1 d-block  text-truncate">${domicilio.calle} ${domicilio.numero}, ${domicilio.piso}, ${domicilio.depto}</small>
+                                    <small class="m-1 text-black-50 text-truncate">${domicilio.nombreLocalidad}, ${domicilio.nombreProvincia}</small>
+                                </div>
+                                <button class="btn dropdown" type="button" id="dirOptions-forID-${domicilio.idDomicilio}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <i class="fas fa-ellipsis-v fa-xs"></i>
+                                </button>
+                                <div class="dropdown-menu dropdown-menu-lg-right shadow" aria-labelledby="telOptions-forID-${domicilio.idDomicilio}" style="">
+                                    <button class="dropdown-item" id="btnEdite-Dir${0}" data-dir="${0}" type="button">Editar</button>
+                                </div>
+                            </li>`
+                        );
+                        FetchedDomicilios[0] = domicilio;
+                        $listadoDomicilios.find(`#btnEdite-Dir${0}`).on('click', e => {EditarEnFormDomicilios(e)});
+                    }
+                    else alertify.notify(response.data.message);
+                }
+                else console.log(response.data.message);
+            })
+            .catch(error => alertify.error('Ha ocurrido un problema y no se ha podido guardar los cambios'));
+        })
 }
 
 //Esta accion no se puede deshacer, ¿Estas seguro que deseas darte de baja?

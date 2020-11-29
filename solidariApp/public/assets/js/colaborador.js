@@ -42,22 +42,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 })
 
-/*Dar de baja el usuario logeado*/
-function bajaUsuario()
-{
-     axios.post("/bajaUsuario")
-    .then((response)=>{
-        if(response.data.resultado === 1 ){
-           /*Redireccionar a pagina principal*/
-           document.location.href="/";
-        }else{
-            /*Ocurrio un error*/
-            alert("Ocurrio un error inesperado.");
-            console.log(response.data.message);
-        }
-    });
 
-}
 
 /*Actualizar foto de perfil de usuario logeado*/
 /*NOTA: se ejecuto esta accion sin js, directamente desde el submit del formulario ejecutando el backend.*/
