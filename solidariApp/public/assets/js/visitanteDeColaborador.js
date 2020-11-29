@@ -1,10 +1,12 @@
-document.addEventListener('DOMContentLoaded', () => {
 
+$(function () {
     //Obtengo la url para saber el id de colaborador
     var id = +location.pathname.slice('/ver-colaborador/'.length);
     isLoggedIn();
     getColaborador(id);
-})
+    console.log(id);
+    console.log('ola');
+});
 
 function getColaborador(idUsuario){
 
@@ -12,6 +14,7 @@ function getColaborador(idUsuario){
     .then(response =>{
 
         var colaborador = response.data.colaborador;
+        console.log( colaborador );
         let contacto = {
 
             correo: colaborador.emailUsuario,
@@ -28,7 +31,6 @@ function getColaborador(idUsuario){
 }
 
 function cargarDatosPerfil(colaborador) {
-    
     $("#nombreColaborador").html(colaborador.nombreColaborador + " " + colaborador.apellidoColaborador);
     $("#imgPerfilColaborador").attr("src",colaborador.urlFotoPerfilUsuario);
     $("#correo").html(colaborador.emailUsuario);

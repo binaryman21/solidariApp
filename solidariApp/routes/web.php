@@ -75,10 +75,15 @@ Route::get('/ver-colaborador/{idUsuario}', function($idUsuario){
 
     if(UsuarioController::ExisteUsuario($idUsuario)){
 
+        session_start();
         if(isset($_SESSION['usuario'])){
-
-            $typeUser = $_SESSION['usuario']->rol->nombreRol;
-            return view('UIPerfilVisitanteDeColaborador', compact('typeUser'));
+            if( $_SESSION['usuario']->idUsuario == $idUsuario ){
+                return view('UIPerfilDeColaborador');
+            }
+            else{
+                $typeUser = $_SESSION['usuario']->rol->nombreRol;
+                return view('UIPerfilVisitanteDeColaborador', compact('typeUser'));
+            }
         }
         return view('UIUsuarioNoEncontrado');
     } 

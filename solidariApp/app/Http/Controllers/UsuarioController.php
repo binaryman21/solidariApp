@@ -320,6 +320,9 @@ class UsuarioController extends Controller
 
     public static function ExisteUsuario($id){
 
-        return Usuario::EsUsuario($id);
+        if( Usuario::EsUsuario($id) )
+            return true;
+        else
+            return false;
     }
 }
