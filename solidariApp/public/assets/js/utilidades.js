@@ -253,7 +253,11 @@ function cargarInsignias( idUsuario ){
         if(data.resultado){
 
             if(data.insignias.length) llenarInsignias( data.insignias );
-            else console.log("No hay insignias");
+            else $('#insignias').append(
+
+                `<img src="/assets/img/SinInsignias.svg">
+                <p class="text-center my-5">No hay insignias otorgadas aun</p>`
+            );
         }
         else alertify.error("Hubo un problema al cargar las insignias");
     })
@@ -340,7 +344,7 @@ function cargarComentariosOrganizacion( idUsuario ){
     .then(data => {
         
         let calificaciones = data.calificaciones
-        //llenarComentariosOrganizacion({comentarios: calificaciones})
+        llenarComentariosOrganizacion(data.calificaciones);
     })
     .catch(error => {
         

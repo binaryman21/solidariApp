@@ -39,7 +39,7 @@
                         </div>
                         <div class="card-body pt-5">
                             <div class="media">
-                                <img id="urlFotoPerfilOrganizacion" class="rounded-circle imgPerfilOrg align-self-start mr-auto" src="/assets/img/imgUserProfile.png" alt="imagen de usuario">
+                                <img id="urlFotoPerfilOrganizacion" class="shadow-sm rounded-circle imgPerfilOrg align-self-start mr-auto" src="/assets/img/imgUserProfile.png" alt="imagen de usuario">
                                 <label for="actualizarAvatar" class="fas fa-camera">
                                     <input type="file" id="actualizarAvatar">
                                 </label>

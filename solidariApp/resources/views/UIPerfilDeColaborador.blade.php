@@ -9,10 +9,9 @@
         </div>
         <div class="card-body pt-5">
             <div class="media">
-                <img id="imgPerfilColaborador" class="rounded-circle imgPerfilOrg align-self-start mr-auto" src="{{URL::asset('assets/img/imgUserProfile.png')}}" alt="imagen de usuario">
+                <img id="imgPerfilColaborador" class="shadow-sm rounded-circle imgPerfilOrg align-self-start mr-auto" src="{{URL::asset('assets/img/imgUserProfile.png')}}" alt="imagen de usuario">
             </div>
-            <!-- <button class="user-action d-flex btn ml-auto p-0" type="button" data-toggle="modal" href="#modalSubscribirse" id="btnSuscribirse">Subscribirse</button> -->
-            <div class="clearfix mb-n4"></div>
+            <div class="clearfix"></div>
             <h5 class="card-title mt-2 loading ldg-w-sm" id="nombreColaborador"></h5>
             <small class="card-text text-muted loading" id="fechaAltaUsuario"></small>
             <button id="btn-contacto" type="button" class="btn btn-link btn-sm text-decoration-none d-none" data-toggle="modal" data-target="#contacto">Informacion de contacto</button>
@@ -30,9 +29,8 @@
                             <button class="btn btn-outline-secondary border-secondary border-left-0" id="btnBuscarNeccesidades" type="button"><i class="fa fa-search fa-xs"></i></button>
                         </div>
                     </div>
-                    <div id="colaboraciones"></div>
+                    <div class="accordion" id="colaboracionesConOrgs"></div>
                 </div>
-                <div id="navColaboraciones"></div>
             </div>
         </div>
         <div class="col-md-6">
@@ -44,29 +42,27 @@
                 </div>
             </div>
 
-            <div class="col-md-6">
-                <!-- Calificaciones -->
-                <div class="card mt-sm-4">
-                    <div class="card-body">
-                        <h6 class="card-title">Comentarios</h6>
-                        <!-- TABS Buenas | Regulares | Malas -->
-                        <ul class="nav nav-tabs" id="calificacionesTAB" role="tablist">
-                            <li class="nav-item" role="presentation">
-                                <a class="nav-link active" id="Positivos-tab" data-toggle="tab" href="#trato-1" role="tab" aria-controls="Positivos" aria-selected="true">Positivos</a>
-                            </li>
-                            <li class="nav-item" role="presentation">
-                                <a class="nav-link" id="Regulares-tab" data-toggle="tab" href="#trato-2" role="tab" aria-controls="Regulares" aria-selected="false">Regulares</a>
-                            </li>
-                            <li class="nav-item" role="presentation">
-                                <a class="nav-link" id="Negativos-tab" data-toggle="tab" href="#trato-3" role="tab" aria-controls="Negativos" aria-selected="false">Negativos</a>
-                            </li>
-                        </ul>
-                        <!-- Contenedor de la calificaciones -->
-                        <div class="tab-content" id="calificaciones">
-                            <div class="tab-pane fade active show" id="trato-1" role="tabpanel" aria-labelledby="Positivos-tab"></div>
-                            <div class="tab-pane fade" id="trato-2" role="tabpanel" aria-labelledby="Regulares-tab"></div>
-                            <div class="tab-pane fade" id="trato-3" role="tabpanel" aria-labelledby="Negativos-tab"></div>
-                        </div>
+            <!-- Calificaciones -->
+            <div class="card mt-sm-4">
+                <div class="card-body">
+                    <h6 class="card-title">Comentarios</h6>
+                    <!-- TABS Buenas | Regulares | Malas -->
+                    <ul class="nav nav-tabs" id="calificacionesTAB" role="tablist">
+                        <li class="nav-item" role="presentation">
+                            <a class="nav-link active" id="Positivos-tab" data-toggle="tab" href="#trato-3" role="tab" aria-controls="Positivos" aria-selected="true">Positivos</a>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <a class="nav-link" id="Regulares-tab" data-toggle="tab" href="#trato-2" role="tab" aria-controls="Regulares" aria-selected="false">Regulares</a>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <a class="nav-link" id="Negativos-tab" data-toggle="tab" href="#trato-1" role="tab" aria-controls="Negativos" aria-selected="false">Negativos</a>
+                        </li>
+                    </ul>
+                    <!-- Contenedor de la calificaciones -->
+                    <div class="tab-content" id="calificaciones">
+                        <div class="tab-pane fade active show" id="trato-3" role="tabpanel" aria-labelledby="Positivos-tab"></div>
+                        <div class="tab-pane fade" id="trato-2" role="tabpanel" aria-labelledby="Regulares-tab"></div>
+                        <div class="tab-pane fade" id="trato-1" role="tabpanel" aria-labelledby="Negativos-tab"></div>
                     </div>
                 </div>
             </div>
@@ -102,6 +98,6 @@
 @section('scripts')
     @parent
     <script type="text/javascript" src="{{URL::asset('assets/js/utilidades.js')}}"></script>
-    <script type="text/javascript" src="{{URL::asset('assets/js/logueo.js')}}"></script> -->
-    <script type="text/javascript" src="{{URL::asset('assets/js/perfilColaborador.js')}}"></script> -->
+    <script type="text/javascript" src="{{URL::asset('assets/js/logueo.js')}}"></script>
+    <script type="text/javascript" src="{{URL::asset('assets/js/perfilColaborador.js')}}"></script>
 @endsection

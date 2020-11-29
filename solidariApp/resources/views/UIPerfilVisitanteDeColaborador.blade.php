@@ -10,10 +10,9 @@
         </div>
         <div class="card-body pt-5">
             <div class="media">
-                <img id="imgPerfilColaborador" class="rounded-circle imgPerfilOrg align-self-start mr-auto" src="{{URL::asset('assets/img/imgUserProfile.png')}}" alt="imagen de usuario">
+                <img id="imgPerfilColaborador" class="shadow-sm rounded-circle imgPerfilOrg align-self-start mr-auto" src="{{URL::asset('assets/img/imgUserProfile.png')}}" alt="imagen de usuario">
             </div>
-            <button class="user-action d-flex btn ml-auto p-0" type="button" data-toggle="modal" href="#modalSubscribirse" id="btnSuscribirse">Subscribirse</button>
-            <div class="clearfix mb-n4"></div>
+            <div class="clearfix"></div>
             <h5 class="card-title mt-2 loading ldg-w-sm" id="nombreColaborador"></h5>
             <small class="card-text text-muted loading" id="fechaAltaUsuario"></small>
             <button id="btn-contacto" type="button" class="btn btn-link btn-sm text-decoration-none d-none" data-toggle="modal" data-target="#contacto">Informacion de contacto</button>
@@ -32,7 +31,6 @@
                         </div>
                     </div>
                     <div class="accordion" id="colaboracionesConOrgs"></div>
-                    <div class="colaboraciones"></div>
                 </div>
             </div>
         </div>

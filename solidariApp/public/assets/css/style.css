@@ -42,6 +42,11 @@ footer .container{
     width: 40px;
     height: 40px;
 }
+.imgPerfilOrgOnCol{
+
+    width: 35px;
+    height: 35px;
+}
 
 img#urlFotoPerfilOrganizacion, img#imgPerfilColaborador {
 
@@ -486,6 +491,57 @@ div[id^="trato-"]:empty{
      animation: shine-card-comment 1s infinite;
 }
 
+div#colaboracionesConOrgs:empty{
+
+    margin-top: 10px;
+    width: 100%;
+    height: 414px;
+    border: 1px solid var(--border-color);
+
+    --border-color: #dedede;
+    --collapse-height: 69px;
+    --collapse-body-color: rgb(253 253 253 / 1%);
+    --collapse-text-color: #f5f5f5;
+    --badge-color: #f3f3f3;
+
+    background-image:
+        radial-gradient( circle 20px at 35px 35px, var(--collapse-text-color) 99%, #ffffff61 0 ),
+        linear-gradient( 100deg, rgb(255 255 255 / 0%), rgb(255 255 255 / 16%) 50%, rgba(255, 255, 255, 0) 80% ),
+        linear-gradient( var(--collapse-text-color) 13px, transparent 0 ),/*collapse-col-name*/
+        radial-gradient( circle 11px at 90% 35px, var(--badge-color) 99%, transparent 0 ),/*collapse-badge*/
+        repeating-linear-gradient(
+            var(--collapse-body-color), var(--collapse-body-color) 0px,
+            var(--collapse-body-color), var(--collapse-body-color) 67px,
+             var(--border-color), var(--border-color) 67px,
+            var(--border-color), var(--border-color)  68px
+        );
+
+    background-repeat: repeat-y;
+
+    background-size:
+        100% var(--collapse-height), /* background */
+        100% var(--collapse-height), /* highlight */
+        40% var(--collapse-height);/*collapse-col-name*/
+
+    background-position:
+        0px 0px, /* background */
+        0 0, /* highlight */
+        65px 24px;/*collapse-col-name*/
+}
+
+div#insignias:empty{
+
+    width: 55%;
+    height: 36px;
+    
+    background-image:linear-gradient(#f5f5f5  360px, transparent 0 );
+
+    margin: 8px 8px 0px 0px;
+    padding: 8px 16x;
+    border: 1px solid transparent;
+    border-radius:20px;
+}
+
 @keyframes shine-card-comment{
 
     to {
@@ -633,8 +689,7 @@ textarea#descripcionOrganizacion{
     height: fit-content !important;
 }
 
-div#misNecesidades div[id^=necesidades] > img[src^="/assets/img/SinNecesidades"],
-div#calificaciones img[src^="/assets/img/noComments"]{
+div>img[src^="/assets/img/Sin"]{
 
     display: block;
     width: 190px;
@@ -756,12 +811,31 @@ div#misNecesidades div[id^=necesidades] > p{
     padding: 3px!important;
 }
 
+a[href="javascript:void(0);"] {
+
+    display: inline-block;
+    margin: 6px 2px 3px;
+    color:#b9b9b9;
+    text-decoration: none;
+}
+
+a[href="javascript:void(0);"]:hover{
+
+    color: #38adff;
+}
+
+a.active[href="javascript:void(0);"] {
+
+    color:#5772ff;
+}
+
 #logoApp span{
 
     color: black;
     font-size: large;
     font-weight: 600;
     font-family: sans-serif;
+    margin-top: 2px;
 }
 
 #logoApp img{

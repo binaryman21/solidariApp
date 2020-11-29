@@ -9,7 +9,7 @@
         </div>
         <div class="card-body pt-5">
             <div class="media">
-                <img id="urlFotoPerfilOrganizacion" class="rounded-circle imgPerfilOrg align-self-start mr-auto" src="{{URL::asset('assets/img/imgUserProfile.png')}}" alt="imagen de usuario">
+                <img id="urlFotoPerfilOrganizacion" class="shadow-sm rounded-circle imgPerfilOrg align-self-start mr-auto" src="{{URL::asset('assets/img/imgUserProfile.png')}}" alt="imagen de usuario">
             </div>
             <div class="clearfix"></div>
             <h5 class="card-title mt-2 loading ldg-w-sm" id="nombreOrganizacion"></h5>

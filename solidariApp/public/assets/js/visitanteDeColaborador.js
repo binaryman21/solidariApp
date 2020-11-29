@@ -62,7 +62,7 @@ function paginarTabCalificacion({containerType = "", ListType = ""} = {}) {
         for(i = 0; i < numPaginas; i++) {
     
             let numPag = i + 1;
-            let pagRel = `<a href="JavaScript:Void(0);" rel="${i}" ${!i ? 'class="active"':''}">${numPag}</a>`
+            let pagRel = `<a href="javascript:void(0);" rel="${i}" ${!i ? 'class="active"':''}">${numPag}</a>`
             $nav.append(pagRel);
         }
     
@@ -86,7 +86,7 @@ function paginarTabCalificacion({containerType = "", ListType = ""} = {}) {
                       
         let tabType = document.querySelector(`a.nav-link[href="#${containerType}"]`).textContent.toLowerCase();
         let emptyState = 
-        `<img src="/assets/img/noComments.png">
+        `<img src="/assets/img/SinComentarios.svg">
          <p class="text-center my-5">No hay comentarios ${tabType}</p>`
         $calificacionContainer.append(emptyState);
     }
@@ -98,79 +98,77 @@ function listarColaboraciones(idUsuario){
     .then(response => response.json())
     .then(data => {
 
-        let colaboraciones = data.colaboraciones;
-        let divNecesidades = $('.colaboraciones');
+        let divColaboraciones = $('div.accordion#colaboracionesConOrgs');
 
-        if( colaboraciones.length > 0 ){
-            divNecesidades.html("");
-            colaboraciones.forEach(colaboracion => {
-                crearCardColaboracion( colaboracion );
-            })
-            agregarPaginacionNecesidades();
+        if(data.colaboraciones.length > 0 ){
+
+            //agrupo las colaboraciones por id de usuario de la org: colaboraciones del colaborador actual)
+            let ColaboracionesPorOrg = data.colaboraciones.reduce((colaboracionesParaLaOrg, org) => {
+
+                colaboracionesParaLaOrg[org.idUsuario] = [...colaboracionesParaLaOrg[org.idUsuario] || [], org];
+                return colaboracionesParaLaOrg;
+            }, {});
+
+            console.log("ColaboracionesPorOrg: ", ColaboracionesPorOrg);
+            
+            let Agrupaciones = $(document.createDocumentFragment());
+
+            //lo cambio a array para manejarlo
+            Object.entries(ColaboracionesPorOrg).forEach(grupo => {
+
+                console.log("grupo ", grupo[0], ":", grupo);
+                let grupoColaboraciones = crearGrupoDeColaboraciones(grupo);
+
+                Agrupaciones.append(grupoColaboraciones);
+            });
+
+            divColaboraciones.append(Agrupaciones);
         }
-        else{
-            let mensaje = 
-            `<div class="alert alert-secondary" role="alert">
-                Aun no tiene colaboraciones.
-            </div>`
-            divNecesidades.append( mensaje );
-        }
+
+        agregarPaginacionColaboraciones();
     })
     .catch(error => console.error);
 }
 
 // MOSTRAR LAS COLABORACIONES
-function crearCardColaboracion( colaboracion ){
-
-    let organizacion = [];
- /*    let {
-        idColaboracion, razonSocial,  urlFotoPerfilUsuario,
-        nombreCategoria, descripcionNecesidad,
-        descripcionEstadoColaboracion, idUsuario, fechaColaboracion
-
-    } = colaboracion;
-
-    let cardColaboracion =
-    `<div class="accordion" id="colaboracionesConOrgs">
-        <div class="card">
-            <div class="card-header" id="OrgColaboration${idColaboracion}">
-                <h2 class="mb-0">
-                    <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
-                        
-                    </button>
-                </h2>
-            </div>
-            <div id="Colaborations" class="collapse" aria-labelledby="OrgColaboration${idColaboracion}" data-parent="#colaboracionesConOrgs">
-                <div class="card-body">
-                    Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
-                </div>
-            </div>
-        </div>
-    </div>
-     */
-
+function crearGrupoDeColaboraciones(grupo){
     
-    `<div class="col" id="colaboracion${colaboracion.idColaboracion}">
-        <div class="card necesidad ${colaboracion.nombreCategoria.toLowerCase()}">
-            <div class="card-body">
-                <p class="text-right">Colaboro el dia: ${colaboracion.fechaColaboracion}</p>
-                <div class="row">
-                    <div class="col-md-3">
-                        <img class="rounded-circle imgNecesidad" src="${colaboracion.urlFotoPerfilUsuario}" alt="img usr">
-                    </div>
-                    <div class="col-md-9">
-                        <p class="card-text h5">${colaboracion.nombreCategoria}</p>
-                        <p class="mt-2">${colaboracion.descripcionNecesidad}</p>
-                        <p class="mt-2 font-weight-bold">${colaboracion.descripcionEstadoColaboracion}</p>
+    let idOrg = grupo[0];
+    let razonSocial = grupo[1][0].razonSocial;
+    let avatarOrg = grupo[1][0].urlFotoPerfilUsuario;
+    let ListaColaboraciones = grupo[1]; 
+
+    let cardColaboracionGroup =
+        $('<li>').addClass('list-group-item list-group-item-action p-0')
+        .html(
+            `<div class="d-flex justify-content-between align-items-center p-3 collapse" id="OrgColaboration${idOrg}"
+             data-toggle="collapse" data-target="#ColaborationsFor${idOrg}" aria-expanded="false" aria-controls="ColaborationsFor${idOrg}">
+                <div class="media">
+                    <img src="${avatarOrg}" class="rounded-circle imgPerfilOrgOnCol mr-2" alt="Avatar de la org ${razonSocial}">
+                    <div class="media-body">
+                        <a href="/ver-organizacion/${idOrg}" class="text-decoration-none text-reset">${razonSocial}</a>
                     </div>
                 </div>
-                <h5 class="card-title"><a href="/organizacion/${colaboracion.idUsuario}">${colaboracion.razonSocial}</a></h5>
+                <span class="badge badge-primary badge-pill">${ListaColaboraciones.length}</span>
             </div>
-        </div>
-    </div>`;
+            <div id="ColaborationsFor${idOrg}" class="collapse list-group px-2 pb-2" aria-labelledby="OrgColaboration${idOrg}" data-parent="#colaboracionesConOrgs">
+            </div>`
+        );
 
+    ListaColaboraciones.forEach(colaboracion => {
 
-    $(".colaboraciones").append(cardColaboracion);
+        let  cardColaboracion = 
+            `<div class="list-group-item list-group-item-action need ${colaboracion.nombreCategoria.toLowerCase()}" id="colaboracion${colaboracion.idColaboracion}">
+                <p class="card-text">${colaboracion.nombreCategoria}</p>
+                <p class="text-muted">${colaboracion.descripcionNecesidad}
+                <small class="mt-2 text-black-50  d-block">${colaboracion.descripcionEstadoColaboracion == "concretado" ? 'Colaboro':'Incio la colaboracion'} ${moment(colaboracion.fechaColaboracion, "YYYY-MM-DD HH:mm:ss").fromNow()}</small>
+                <small class="text-black-50">Estado: ${colaboracion.descripcionEstadoColaboracion}</small>
+            </div>`;
+
+        cardColaboracionGroup.find(`#ColaborationsFor${idOrg}`).append(cardColaboracion);
+    });
+
+    return cardColaboracionGroup;
 }
 
 function agregarContacto(contacto){
@@ -222,4 +220,51 @@ function capitalize(text){
 
     let FirstLetterCap = text[0].toUpperCase();
     return FirstLetterCap+text.slice(1);
+}
+
+function agregarPaginacionColaboraciones(){
+
+    $(`#navColaboracionesParaLasOrg`).remove();
+    let $colaboracionesContainer = $("#colaboracionesConOrgs");
+    let GrupoDeColaboracionesParaOrgs = document.querySelectorAll(`div[id^="OrgColaboration"`);
+    let filasTotales= GrupoDeColaboracionesParaOrgs.length;
+    let filasParaMostrar = 6;
+
+    if(filasTotales>filasParaMostrar){
+
+        $colaboracionesContainer.append(`<div id=navColaboracionesParaLasOrg></div>`);
+        let $nav = $(`#navColaboracionesParaLasOrg`);
+    
+        let numPaginas = filasTotales/filasParaMostrar;
+    
+        for(i = 0; i < numPaginas; i++) {
+    
+            let numPag = i + 1;
+            let pagRel = `<a href="javascript:void(0);" rel="${i}" ${!i ? 'class="active"':''}">${numPag}</a>`
+            $nav.append(pagRel);
+        }
+    
+        $(GrupoDeColaboracionesParaOrgs).hide();
+        $(GrupoDeColaboracionesParaOrgs).slice(0, filasParaMostrar).show();
+    
+        $nav.find('a').bind('click', function(){
+    
+            $nav.find('a').removeClass('active');
+            $(this).addClass('active');
+    
+            let pagActual = $(this).attr('rel');
+    
+            let primerItem = pagActual * filasParaMostrar;
+            let ultimoItem = primerItem + filasParaMostrar;
+            $(GrupoDeColaboracionesParaOrgs).css('opacity','0.0').hide().slice(primerItem, ultimoItem).
+                css('display','block').animate({opacity:1}, 300);
+        });
+    }
+    else if(!filasTotales) {
+                      
+        let emptyState = 
+        `<img src="/assets/img/SinNecesidadesCumplidas.svg">
+         <p class="text-center my-5">No se encontraron colaboraciones</p>`
+        $colaboracionesContainer.append(emptyState);
+    }
 }

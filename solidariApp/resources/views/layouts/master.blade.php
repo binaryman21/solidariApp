@@ -26,16 +26,14 @@
 
 </head>
 <body class="d-flex flex-column h-100">
-    <header class="position-sticky" style="top:0;z-index:1000;">
+    <header class="position-sticky" style="top:0;z-index:1001;">
         <div class="d-flex ">
             <nav class="flex-fill mb-md-3 navbar navbar-expand-md navbar-light bg-light shadow-sm bg-white pl-lg-5">
                 <!-- LOGO SolidariApp -->
-                <a id="logoApp" class="navbar-brand mr-auto" href="{{url('/')}}"style="
-                    color: black;
-                    font-size: large;
-                    font-weight: 600;
-                    font-family: sans-serif;
-                " ><span class="mr-2"><img style="width: 42px;" src="{{URL::asset('assets/img/app-logo/Logo - Chico.png')}}" alt="logo"></span>SolidariAPP</a>
+                <a id="logoApp" class="navbar-brand mr-auto media" href="{{url('/')}}">
+                    <img class="mr-2" style="width: 42px;" src="{{URL::asset('assets/img/app-logo/Logo - Chico.png')}}" alt="logo">
+                    <span>SolidariAPP</span>
+                </a>
                 <!-- Notificaciones -->
                 <div class="order-md-11 d-none" id="notificaciones">
                     <a class="btn" type="button" data-toggle="modal" href="#modalNotificaciones" id="logoNotificacion">

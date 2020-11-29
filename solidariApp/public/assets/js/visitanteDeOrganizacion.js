@@ -74,7 +74,7 @@ function cargarNecesidades(idUsuario){
                                     href="https://www.facebook.com/sharer/sharer.php?u=https://solidariapp.com.ar/organizacion/${need.idUsuario}/necesidad/${need.idNecesidad}">Compartir en Facebook</a>
                             </div>
                         </div>
-                        <small class="card-subtitle text-muted font-weight-light">Creada hace ${capitalize(moment(need.fechaCreacionNecesidad, "YYYY-MM-DD HH:mm:ss").startOf('day').fromNow())} - ${capitalize(need.descripcionEstado)}</small>
+                        <small class="card-subtitle text-muted font-weight-light">Creada ${moment(need.fechaCreacionNecesidad, "YYYY-MM-DD HH:mm:ss").startOf('day').fromNow()} - ${capitalize(need.descripcionEstado)}</small>
                         <div class="card-text mt-2 text-muted">${capitalize(need.descripcionNecesidad)}</div>
                     </div>
                     <!-- PROGRESO (SOLICITADO Y RECIBIDO) -->
@@ -135,7 +135,7 @@ function paginarTabNecesidad({containerType = '', ListType = ''} = {}){
         for(i = 0; i < numPaginas; i++) {
     
             let numPag = i + 1;
-            let pagRel = `<a href="JavaScript:Void(0);" rel="${i}" ${!i ? 'class="active"':''}">${numPag}</a>`
+            let pagRel = `<a href="javascript:void(0);" rel="${i}" ${!i ? 'class="active"':''}">${numPag}</a>`
             $nav.append(pagRel);
         }
     
@@ -191,7 +191,7 @@ function paginarTabCalificacion({containerType = "", ListType = ""} = {}) {
         for(i = 0; i < numPaginas; i++) {
     
             let numPag = i + 1;
-            let pagRel = `<a href="JavaScript:Void(0);" rel="${i}" ${!i ? 'class="active"':''}">${numPag}</a>`
+            let pagRel = `<a href="javascript:void(0);" rel="${i}" ${!i ? 'class="active"':''}">${numPag}</a>`
             $nav.append(pagRel);
         }
     
@@ -215,7 +215,7 @@ function paginarTabCalificacion({containerType = "", ListType = ""} = {}) {
                       
         let tabType = document.querySelector(`a.nav-link[href="#${containerType}"]`).textContent.toLowerCase();
         let emptyState = 
-        `<img src="/assets/img/noComments.png">
+        `<img src="/assets/img/SinComentarios.svg">
          <p class="text-center my-5">No hay calificaciones ${tabType}</p>`
         $calificacionContainer.append(emptyState);
     }
