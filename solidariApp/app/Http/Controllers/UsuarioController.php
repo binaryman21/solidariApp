@@ -141,7 +141,7 @@ class UsuarioController extends Controller
                 /*Preparo la url relativa para guardarla en la BDD*/
                 $urlFotoPerfil = "/storage/fotosPerfil/".$usuario->idUsuario.$fileName ;
                 Usuario::updateFotoPerfil($usuario->idUsuario,$urlFotoPerfil);
-                $_SESSION['usuario']->urlFotoPerfil = $urlFotoPerfil;
+                $_SESSION['usuario']->urlFotoPerfilUsuario = $urlFotoPerfil;
                 return response()->json([
                     'resultado' => 1,
                     'message' => 'Foto actualizada',

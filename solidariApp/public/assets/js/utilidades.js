@@ -105,7 +105,8 @@ function listarLocalidades(idProvincia,defaultSelected)
         $.each(localidades, function (indexInArray, localidad) {
             $("#selectLocalidad").append("<option value = '" + localidad.idLocalidad + "'>" + localidad.nombreLocalidad +"</option");
         });
-        $("#selectLocalidad").val(defaultSelected);
+        let def = $('#selectLocalidad > option').val();
+        $("#selectLocalidad").val(def);
 
       });
 }

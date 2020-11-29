@@ -6,57 +6,14 @@ $(function () {
     $('#btnConfirmarReporte').on('click', reportar);
     //dar de baja
     $('#btnConfirmarDarmeDeBaja').on('click', bajaUsuario);
-    //cambiar foto
-    // document.querySelector('#actualizarPortada').addEventListener("change", cambiarFotoPortada, false);
-    //Actualizar datos
-    $("form[name='uploader']").on("submit", function(ev) {
-        ev.preventDefault(); // Prevent browser default submit.
-        let formData = new FormData(this);         
-        let fotoPerfil = $('#actualizarAvatar').prop('files')[0];
-        let descripcion = $('#descripcionOrganizacion').val();
-        let contador = 0;
-        formData.append('fotoPerfil', fotoPerfil);
-        //Actualizar descripcion
-        if( descripcion !== "No has especificado una descripcion todavia" ){
-            axios.post("/actualizarDescripcion",{descripcion}) 
-            .then((response)=>{
-                if ( response.data.resultado ){
-                    alertify.success( response.data.message )
-                }
-                else{
-                    alertify.error( response.data.message )
-                }
-            });
-            contador++;
-        }
-        //Actualizar foto de perfil
-        if( fotoPerfil ){
-            axios.post("/updateFotoPerfil",formData) 
-            .then((response)=>{
-                if ( response.data.resultado ){
-                    alertify.success( response.data.message )
-                }
-                else{
-                    alertify.error( response.data.message )
-                }
-            });
-            contador++;
-        } 
-        if(contador == 0){
-            alertify.error('Nada para actualizar');
-        }
+    //select provincia
+    $("#selectProvincia").change(function(){
+        let idProvincia = $("#selectProvincia").val();
+        $("#selectLocalidad").html("");
+        listarLocalidades(idProvincia,1);
     });
-});
+})
 
-function cambiarFotoPerfil() {
-    let fotoPerfil = $('#actualizarAvatar').prop('files')[0];
-    $('#urlFotoPerfilOrganizacion').attr('src', URL.createObjectURL( fotoPerfil ) );
-}
-
-function cambiarFotoPortada() {
-    let fotoPortada = $('#actualizarPortada').prop('files')[0];
-    $('#cover').attr('src', URL.createObjectURL( fotoPortada ) );
-}
 
 function cambiarPassWord( e ){
     e.preventDefault();
