@@ -170,7 +170,15 @@ function getColaboraciones(necesidad,modo = "colaborador")
         {
             $("#listadoColaboraciones").html("");
             $('#navUsuarios').html('');
-            $("#cantDeColaboraciones2").html("Aun no hay colaboraciones, animate y se el primero!");
+            if(modo == "colaborador")
+            {
+                $("#cantDeColaboraciones2").html("Aun no hay colaboraciones, animate y se el primero!");
+            }
+            else
+            {
+                $("#cantDeColaboraciones2").html("Todavia no hay colaboraciones para esta necesidad");
+            }
+            
         }
     });
 }

@@ -333,7 +333,7 @@ function llenarOrganizaciones( organizaciones ){
 
                     </div>
                     <div class="card-footer py-0 bg-transparent">
-                        <a href="/organizacion/${org.idUsuario}" class="btn btn-sm w-100 btn-link ml-auto text-decoration-none text-muted">Ver todas</a>
+                        <a href="/ver-organizacion/${org.idUsuario}" class="btn btn-sm w-100 btn-link ml-auto text-decoration-none text-muted">Ver todas</a>
                     </div>
                 </div>`
 
