@@ -617,7 +617,7 @@ div#insignias:empty{
 
     width: 55%;
     height: 36px;
-    
+
     background-image:linear-gradient(#f5f5f5  360px, transparent 0 );
 
     margin: 8px 8px 0px 0px;
@@ -947,4 +947,21 @@ a.active[href="javascript:void(0);"] {
         position: relative !important;
         left: -10px !important;
     }
+}
+
+.carouselNotif{
+    height: 200px;
+}
+
+.spnCarousel{
+    visibility: hidden;
+}
+
+#carouselNotif:hover .spnCarousel{
+    visibility: visible;
+}
+
+.carouselNotif{
+    background-color: rgb(162 159 159 / 8%);
+
 }

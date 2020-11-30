@@ -54,10 +54,10 @@
                     </div>
                     <!-- Buscador -->
                     <div class="input-group my-3">
-                        <input class="form-control border-secondary border-right-0" type="text" id="campoBuscarPorTexto" placeholder="Categoría, descripción o nombre de la Org.">
+                        {{-- <input class="form-control border-secondary border-right-0" type="text" id="campoBuscarPorTexto" placeholder="Categoría, descripción o nombre de la Org.">
                         <div class="input-group-append">
                             <button class="btn btn-outline-secondary border-secondary border-left-0" id="btnBuscarNeccesidades" type="button"><i class="fa fa-search fa-xs"></i></button>
-                        </div>
+                        </div> --}}
                     </div>
                     <!-- TABS En progreso | Cumplidas | Eliminadas -->
                     <ul class="nav nav-tabs" id="necesidadesTABS" role="tablist">

@@ -25,10 +25,10 @@
                 <div class="card-body">
                     <h6 class="card-title float-left">Colaboraciones</h6>
                     <div class="input-group my-3">
-                        <input class="form-control border-secondary border-right-0" type="text" id="campoBuscarPorTexto" placeholder="Categoría, descripción o nombre de la Org.">
+                        {{-- <input class="form-control border-secondary border-right-0" type="text" id="campoBuscarPorTexto" placeholder="Categoría, descripción o nombre de la Org.">
                         <div class="input-group-append">
                             <button class="btn btn-outline-secondary border-secondary border-left-0" id="btnBuscarNeccesidades" type="button"><i class="fa fa-search fa-xs"></i></button>
-                        </div>
+                        </div> --}}
                     </div>
                     <div class="accordion" id="colaboracionesConOrgs"></div>
                 </div>

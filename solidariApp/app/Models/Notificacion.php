@@ -30,5 +30,13 @@ class Notificacion extends Model
         return Notificacion::find($idNotificacion);
     }
 
+    public static function getNotificaciones()
+    {
+        return Notificacion::where('notificacion.idMensaje','not like','5')
+        ->orderBy('fechaNotificacion', 'DESC')
+        ->join('mensajeNotificacion','mensajeNotificacion.idMensaje', '=','notificacion.idMensaje')
+        ->take(20)
+        ->get();
+    }
 
 }

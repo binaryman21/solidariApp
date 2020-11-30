@@ -59,6 +59,12 @@ class NecesidadController extends Controller
                 $necesidad = Necesidad::find($necesidad->idNecesidad);
                 $suscriptores = Suscripcion::getSuscriptores( $_SESSION['usuario']->idUsuario );
 
+                $notificacion = new Notificacion;
+                $notificacion->idMensaje = "8";
+                $notificacion->idEmisor = $_SESSION['usuario']->idUsuario;
+                $notificacion->idNecesidad = $necesidad->idNecesidad;
+                $notificacion->save();
+
                 foreach ($suscriptores as $suscriptor){
                     $notificacion = new Notificacion;
                     $notificacion->idMensaje = "5";

@@ -53,7 +53,7 @@ Route::get('/cuenta-colaborador/ajustes', function()
 
 //lo dejo de momento en otra ruta para no interferir en otras funcionalidades.
 Route::get('/ver-colaborador/{idUsuario}', function($idUsuario){
-    
+
 
     if(UsuarioController::ExisteUsuario($idUsuario)){
         session_start();
@@ -67,12 +67,12 @@ Route::get('/ver-colaborador/{idUsuario}', function($idUsuario){
             }
         }
         return view('UIUsuarioNoEncontrado');
-    } 
+    }
     else return view('UIUsuarioNoEncontrado');
 ;})->name('UIVisitanteDeColaborador');
 
 Route::get('/ver-organizacion/{idUsuario}', function($idUsuario){
-    
+
     if(UsuarioController::ExisteUsuario($idUsuario)) return view('UIPerfilVisitanteDeOrganizacion');
     else return view('UIUsuarioNoEncontrado');
 
@@ -207,6 +207,7 @@ Route::post('/crearNotificacionColaboracion','App\Http\Controllers\NotificacionC
 Route::post('/upDateNotificacion', 'App\Http\Controllers\NotificacionController@upDateNotificacione')->name('upDateNotificacion');
 Route::post('/crearNotificacionCalificacionColaboracion','App\Http\Controllers\NotificacionController@crearNotificacionCalificacionColaboracion')->name('crearNotificacionCalificacionColaboracion');
 Route::post('/crearNotificacionCalificacionOrganizacion','App\Http\Controllers\NotificacionController@crearNotificacionCalificacionOrganizacion')->name('crearNotificacionCalificacionOrganizacion');
+Route::post('/cargarNotificacionesCarousel','App\Http\Controllers\NotificacionController@cargarNotificacionesCarousel')->name('cargarNotificacionesCarousel');
 
 //SUSCRIPCION
 Route::post('/registrarSuscripcion', 'App\Http\Controllers\SuscripcionController@registrarSuscripcion')->name('registrarSuscripcion');
