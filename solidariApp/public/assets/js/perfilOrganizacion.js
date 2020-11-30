@@ -12,7 +12,7 @@ document.addEventListener('DOMContentLoaded', () => {
         $("#categoriaActual").val(colorModal);
     })
 
-    
+
 })
 
 function getOrganizacion(idUsuario){
@@ -41,6 +41,7 @@ function cargarDatosPerfil(organizacion) {
     $("#nombreOrganizacion").html(organizacion.razonSocial);
         $("#tipoOrganizacion").html(organizacion.nombreTipoOrganizacion);
         $("#urlFotoPerfilOrganizacion").attr("src",organizacion.urlFotoPerfilUsuario);
+        $("#cover").attr("src",organizacion.urlFotoPortadaUsuario);
         if(organizacion.descripcionOrganizacion == "")
         {
             organizacion.descripcionOrganizacion = "La organización no ha especificado ninguna descripción todavia";
@@ -140,7 +141,7 @@ function paginarTabNecesidad({containerType = '', ListType = ''} = {}){
         for(i = 0; i < numPaginas; i++) {
     
             let numPag = i + 1;
-            let pagRel = `<a href="JavaScript:Void(0);" rel="${i}" ${!i ? 'class="active"':''}">${numPag}</a>`
+            let pagRel = `<a href="javascript:void(0);" rel="${i}" ${!i ? 'class="active"':''}">${numPag}</a>`
             $nav.append(pagRel);
         }
     
@@ -189,7 +190,7 @@ function paginarTabCalificacion({containerType = "", ListType = ""} = {}) {
         for(i = 0; i < numPaginas; i++) {
     
             let numPag = i + 1;
-            let pagRel = `<a href="JavaScript:Void(0);" rel="${i}" ${!i ? 'class="active"':''}">${numPag}</a>`
+            let pagRel = `<a href="javascript:void(0);" rel="${i}" ${!i ? 'class="active"':''}">${numPag}</a>`
             $nav.append(pagRel);
         }
     
@@ -213,7 +214,7 @@ function paginarTabCalificacion({containerType = "", ListType = ""} = {}) {
                       
         let tabType = document.querySelector(`a.nav-link[href="#${containerType}"]`).textContent.toLowerCase();
         let emptyState = 
-        `<img src="/assets/img/noComments.png">
+        `<img src="/assets/img/SinComentarios.svg">
          <p class="text-center my-5">No hay calificaciones ${tabType}</p>`
         $calificacionContainer.append(emptyState);
     }

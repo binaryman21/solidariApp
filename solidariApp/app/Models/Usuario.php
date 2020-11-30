@@ -94,6 +94,11 @@ class Usuario extends Model
         Usuario::where('idUsuario', $idUsuario)->update(array('urlFotoPerfilUsuario' => $urlFotoPerfil));
     }
 
+    public static function updateFotoPortada($idUsuario, $urlFotoPortada)
+    {
+        Usuario::where('idUsuario', $idUsuario)->update(array('urlFotoPortadaUsuario' => $urlFotoPortada));
+    }
+
     public static function cambiarClave( $datosClaves )
     {
         Usuario::where('idUsuario', $datosClaves->idUsuario)

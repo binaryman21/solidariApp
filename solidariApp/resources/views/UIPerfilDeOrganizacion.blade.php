@@ -1,15 +1,36 @@
 @extends("layouts.master")
+
+@section("meta")
+    @parent
+    <meta property="og:url"                content="https://www.solidariapp.com.ar" />
+    <meta property="og:type"               content="website" />
+    <meta property="og:title"              content="SolidariApp" />
+    <meta property="og:description"        content="Descripcion de la pag" />
+    <meta property="og:image"              content="http://static01.nyt.com/images/2015/02/19/arts/international/19iht-btnumbers19A/19iht-btnumbers19A-facebookJumbo-v2.jpg" />
+@endsection
+<!-- FACEBOOK -->
+<div id="fb-root"></div>
+<script async defer crossorigin="anonymous" src="https://connect.facebook.net/es_LA/sdk.js#xfbml=1&version=v9.0" nonce="hChYh6rj"></script>
+<script>
+        (function(d, s, id) {
+        var js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) return;
+        js = d.createElement(s); js.id = id;
+        js.src = "https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v3.0";
+        fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));
+</script>
 @section("contenido")
 @parent
  <!-- container -->
-<div class="container-sm perfil bg-white p-2 px-lg-4">
+<div class="container-sm perfil bg-white px-lg-4">
     <div class="card card-user mb-3">
         <div class="card-img-block">
             <img id="cover" src="{{URL::asset('assets/img/cover.svg')}}" class="img-fluid" alt="portada de la organizacion">
         </div>
         <div class="card-body pt-5">
             <div class="media">
-                <img id="urlFotoPerfilOrganizacion" class="rounded-circle imgPerfilOrg align-self-start mr-auto" src="{{URL::asset('assets/img/imgUserProfile.png')}}" alt="imagen de usuario">
+                <img id="urlFotoPerfilOrganizacion" class="shadow-sm rounded-circle imgPerfilOrg align-self-start mr-auto" src="{{URL::asset('assets/img/imgUserProfile.png')}}" alt="imagen de usuario">
             </div>
             <div class="clearfix"></div>
             <h5 class="card-title mt-2 loading ldg-w-sm" id="nombreOrganizacion"></h5>
@@ -59,8 +80,9 @@
                 </div>
             </div>
         </div>
+        <!-- Calificaciones -->
         <div class="col-md-6">
-            <div class="card">
+            <div class="card class="card mt-4 mt-lg-2"">
                 <div class="card-body">
                     <h6 class="card-title">Calificaciones</h6>
                     <!-- TABS Buenas | Regulares | Malas -->
@@ -121,7 +143,6 @@
 
 @section('scripts')
     @parent
-    <script type="text/javascript" src="{{URL::asset('assets/js/utilidades.js')}}"></script>
     <script type="text/javascript" src="{{URL::asset('assets/js/necesidad.js')}}"></script>
     <script type="text/javascript" src="{{URL::asset('assets/js/perfilOrganizacion.js')}}"></script>
     <!-- <script type="text/javascript" src="{{URL::asset('assets/js/calificacion.js')}}"></script> -->

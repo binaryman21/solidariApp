@@ -3,17 +3,17 @@
 @section("contenido")
 @parent
  <!-- container -->
-<div class="container-sm perfil bg-white p-2 px-lg-4">
+<div class="container-sm perfil bg-white px-lg-4">
     <div class="card card-user mb-3">
         <div class="card-img-block">
             <img id="cover" src="{{URL::asset('assets/img/cover.svg')}}" class="img-fluid" alt="portada de la organizacion">
         </div>
         <div class="card-body pt-5">
             <div class="media">
-                <img id="urlFotoPerfilOrganizacion" class="rounded-circle imgPerfilOrg align-self-start mr-auto" src="{{URL::asset('assets/img/imgUserProfile.png')}}" alt="imagen de usuario">
+                <img id="urlFotoPerfilOrganizacion" class="shadow-sm rounded-circle imgPerfilOrg align-self-start mr-auto" src="{{URL::asset('assets/img/imgUserProfile.png')}}" alt="imagen de usuario">
             </div>
             <div class="user-action d-flex">
-                <button class="btn ml-auto p-0" type="button" data-toggle="modal" href="#modalSubscribirse" id="btnSuscribirse">Subscribirse</button>
+                <button class="btn ml-auto p-0" type="button" data-toggle="modal" href="#modalSuscribirse" id="btnSuscribirse">Suscribirse</button>
                 <div class="btn-group">
                         <i class="fas fa-ellipsis-v fa-sm ml-2 mt-2 text-black" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></i>
                     <div class="dropdown-menu dropdown-menu-right shadow">
@@ -59,8 +59,9 @@
                 </div>
             </div>
         </div>
+        <!-- Calificaciones-->
         <div class="col-md-6">
-            <div class="card mt-sm-4">
+            <div class="card mt-4 mt-lg-2">
                 <div class="card-body">
                     <h6 class="card-title">Calificaciones</h6>
                     <!-- TABS Buenas | Regulares | Malas -->
@@ -113,12 +114,11 @@
 </div>
 
 
-@include("UIPerfilModales.UIModalReportar")
-@include("UIPerfilModales.UIModalSuscribirse")
+@include("UIPerfilModales/UIModalSuscribirse")
 @endsection
 
 @section('scripts')
     @parent
-    <script type="text/javascript" src="{{URL::asset('assets/js/utilidades.js')}}"></script>
+    <script type="text/javascript" src="{{URL::asset('assets/js/suscripcion.js')}}"></script>
     <script type="text/javascript" src="{{URL::asset('assets/js/visitanteDeOrganizacion.js')}}"></script>
 @endsection

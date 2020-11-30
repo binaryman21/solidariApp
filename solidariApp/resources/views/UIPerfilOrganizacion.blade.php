@@ -163,7 +163,6 @@
 @include("UIPerfilModales/UIModalEditarNecesidad")
 @include("UIPerfilModales/UIEditarDomicilio")
 @include("UIPerfilModales/UIModalBajaNecesidad")
-@include("UIPerfilModales/UIModalCalificarOrganizacion")
 @include("UIPerfilModales/UIModalSuscribirse")
 <!-- {{-- @include("UIDetalleNecesidad") --}} -->
 

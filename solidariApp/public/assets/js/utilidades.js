@@ -105,7 +105,8 @@ function listarLocalidades(idProvincia,defaultSelected)
         $.each(localidades, function (indexInArray, localidad) {
             $("#selectLocalidad").append("<option value = '" + localidad.idLocalidad + "'>" + localidad.nombreLocalidad +"</option");
         });
-        $("#selectLocalidad").val(defaultSelected);
+        let def = $('#selectLocalidad > option').val();
+        $("#selectLocalidad").val(def);
 
       });
 }
@@ -117,6 +118,9 @@ function limpiarValidaciones(inp,error){
             error.fadeOut();
         }else{
             inp.nextSibling.fadeOut();
+        }
+        if(inp.attr('type') == 'text' || inp.attr('type') == 'number'){
+            inp.val('');
         }
     }
 }
@@ -253,7 +257,11 @@ function cargarInsignias( idUsuario ){
         if(data.resultado){
 
             if(data.insignias.length) llenarInsignias( data.insignias );
-            else console.log("No hay insignias");
+            else $('#insignias').append(
+
+                `<img src="/assets/img/SinInsignias.svg">
+                <p class="text-center my-5">No hay insignias otorgadas aun</p>`
+            );
         }
         else alertify.error("Hubo un problema al cargar las insignias");
     })
@@ -340,7 +348,7 @@ function cargarComentariosOrganizacion( idUsuario ){
     .then(data => {
         
         let calificaciones = data.calificaciones
-        llenarComentariosOrganizacion(data.calificaciones)
+        llenarComentariosOrganizacion(data.calificaciones);
     })
     .catch(error => {
         
