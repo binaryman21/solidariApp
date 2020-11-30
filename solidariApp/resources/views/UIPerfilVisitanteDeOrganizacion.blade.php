@@ -18,7 +18,7 @@
                         <i class="fas fa-ellipsis-v fa-sm ml-2 mt-2 text-black" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></i>
                     <div class="dropdown-menu dropdown-menu-right shadow">
                         <button class="dropdown-item user-select-none" type="button" data-toggle="modal" href="#modalReportar"><i class="far fa-flag fa-sm mr-3"></i>Reportar</button>
-                        <button class="dropdown-item user-select-none" type="button" data-toggle="modal" href="#modalCalificarOrganizacion"><i class="far fa-flag fa-sm mr-3"></i>Calificar</button>
+                        <button class="dropdown-item user-select-none" type="button" data-toggle="modal" href="#modalCalificarOrganizacion"><i class="far fa-star fa-sm mr-3"></i>Calificar</button>
                     </div>
                 </div>
             </div>

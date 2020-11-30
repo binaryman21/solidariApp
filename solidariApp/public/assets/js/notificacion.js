@@ -35,7 +35,7 @@ function mostrarNotificaciones(notificaciones,noLeidas){
     $("#headNotif").html(`
         <div class="d-flex justify-content-between">
             <div>
-                <h3 class="pt-2">Notifiaciones</h3>
+                <h3 class="pt-2">Notificaciones</h3>
             </div>
             <div id="dropMarcarLeidas" class="">
                 <button class="btn p-2" type="button" id="btnNotifLeidas">
