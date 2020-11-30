@@ -95,7 +95,7 @@ function mostrarNotificaciones(notificaciones,noLeidas){
                                 <p>${fecha}</p>
                                 ${checkNoLeida}
                             </div>
-                            <a class="font-weight-bold text-dark text-decoration-none notificacionEmisor${notificacion.idNotificacion} " href="/colaborador/${notificacion.idEmisor}">${nombre}</a>
+                            <a class="font-weight-bold text-dark text-decoration-none notificacionEmisor${notificacion.idNotificacion} " href="/ver-colaborador/${notificacion.idEmisor}">${nombre}</a>
                             <div class="d-flex flex-wrap">
                             <p>${msj} con <a class="font-weight-bold text-dark text-decoration-none notificacionVerNecesidad${notificacion.idNotificacion}" href="#modalDetalleNecesidad" data-toggle="modal">${nombreCategoria}</a></p>
                             </div>
@@ -124,7 +124,7 @@ function mostrarNotificaciones(notificaciones,noLeidas){
                                 <p>${fecha}</p>
                                 ${checkNoLeida}
                             </div>
-                            <a class="font-weight-bold text-dark text-decoration-none notificacionEmisor${notificacion.idNotificacion} " href="/organizacion/${notificacion.idEmisor}">${nombre}</a>
+                            <a class="font-weight-bold text-dark text-decoration-none notificacionEmisor${notificacion.idNotificacion} " href="/ver-organizacion/${notificacion.idEmisor}">${nombre}</a>
                             <div class="d-flex flex-wrap">
                             <p>${msj} con  ${nombreCategoria} como ${trato}</p>
                             </div>
@@ -147,7 +147,7 @@ function mostrarNotificaciones(notificaciones,noLeidas){
                                 <p>${fecha}</p>
                                 ${checkNoLeida}
                             </div>
-                            <a class="font-weight-bold text-dark text-decoration-none notificacionEmisor${notificacion.idNotificacion} " href="/colaborador/${notificacion.idEmisor}">${nombre}</a>
+                            <a class="font-weight-bold text-dark text-decoration-none notificacionEmisor${notificacion.idNotificacion} " href="/ver-colaborador/${notificacion.idEmisor}">${nombre}</a>
                             se ha suscrito a tu organizacion
                         </div>
                     </div>
@@ -172,7 +172,7 @@ function mostrarNotificaciones(notificaciones,noLeidas){
                                 <p>${fecha}</p>
                                 ${checkNoLeida}
                             </div>
-                            <a class="font-weight-bold text-dark text-decoration-none notificacionEmisor${notificacion.idNotificacion} " href="/organizacion/${notificacion.idEmisor}">${nombre}</a>
+                            <a class="font-weight-bold text-dark text-decoration-none notificacionEmisor${notificacion.idNotificacion} " href="/ver-organizacion/${notificacion.idEmisor}">${nombre}</a>
                             <div class="d-flex flex-wrap">
                             <p>${msj} <a class="font-weight-bold text-dark text-decoration-none notificacionVerNecesidad${notificacion.idNotificacion}" href="#modalDetalleNecesidad" data-toggle="modal">necesidad</a></p>
                             </div>
@@ -197,10 +197,10 @@ function mostrarNotificaciones(notificaciones,noLeidas){
                                 <p>${fecha}</p>
                                 ${checkNoLeida}
                             </div>
-                            <a class="font-weight-bold text-dark text-decoration-none notificacionEmisor${notificacion.idNotificacion} " href="/colaborador/${notificacion.idEmisor}">${nombre}</a>
+                            <a class="font-weight-bold text-dark text-decoration-none notificacionEmisor${notificacion.idNotificacion} " href="/ver-colaborador/${notificacion.idEmisor}">${nombre}</a>
                             <div class="d-flex flex-wrap">
                             <p>${msj} como ${trato}</p><br>
-                            <a class="font-weight-bold text-dark text-decoration-none notificacionVerNecesidad${notificacion.idNotificacion}" href="/organizacion/${notificacion.idReceptor}">¿Quieres ver tus calificaciones?</a>
+                            <a class="font-weight-bold text-dark text-decoration-none notificacionVerNecesidad${notificacion.idNotificacion}" href="/ver-organizacion/${notificacion.idReceptor}">¿Quieres ver tus calificaciones?</a>
                             </div>
                         </div>
                     </div>

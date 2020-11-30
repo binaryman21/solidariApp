@@ -513,8 +513,8 @@ function mostrarNotificacionesCarousel(notificaciones){
                                 </div>
                             </div>
                             <div class="card-text align-self-center mx-2 w-100 row text-center">
-                                <p>¡<a class="font-weight-bold text-dark text-decoration-none notificacionEmisor${notificacion.idNotificacion} " href="/colaborador/${notificacion.idEmisor}">${notificacion.emisor.nombre[0].nombre}</a>
-                                se comprometió con  <a class="font-weight-bold text-dark text-decoration-none notificacionReceptor${notificacion.idNotificacion}" href="/organizacion/${notificacion.idReceptor}">${notificacion.receptor.nombre[0].nombre}</a>
+                                <p>¡<a class="font-weight-bold text-dark text-decoration-none notificacionEmisor${notificacion.idNotificacion} " href="/ver-colaborador/${notificacion.idEmisor}">${notificacion.emisor.nombre[0].nombre}</a>
+                                se comprometió con  <a class="font-weight-bold text-dark text-decoration-none notificacionReceptor${notificacion.idNotificacion}" href="/ver-organizacion/${notificacion.idReceptor}">${notificacion.receptor.nombre[0].nombre}</a>
                                 para colaborar con <a class="font-weight-bold text-dark text-decoration-none notificacionVerNecesidad${notificacion.idNotificacion}" href="#modalDetalleNecesidad" data-toggle="modal">${nombreCategoria}</a>!
                                 </p>
                             </div>
@@ -547,8 +547,8 @@ function mostrarNotificacionesCarousel(notificaciones){
                                 </div>
                             </div>
                             <div class="card-text align-self-center mx-2 w-100 row text-center">
-                                <p>¡<a class="font-weight-bold text-dark text-decoration-none notificacionEmisor${notificacion.idNotificacion} " href="/organizacion/${notificacion.idEmisor}">${notificacion.emisor.nombre[0].nombre}</a>
-                                ha calificado como "${trato}" la colaboración de <a class="font-weight-bold text-dark text-decoration-none notificacionReceptor${notificacion.idNotificacion}" href="/colaborador/${notificacion.idReceptor}">${notificacion.receptor.nombre[0].nombre}</a>
+                                <p>¡<a class="font-weight-bold text-dark text-decoration-none notificacionEmisor${notificacion.idNotificacion} " href="/ver-organizacion/${notificacion.idEmisor}">${notificacion.emisor.nombre[0].nombre}</a>
+                                ha calificado como "${trato}" la colaboración de <a class="font-weight-bold text-dark text-decoration-none notificacionReceptor${notificacion.idNotificacion}" href="/ver-colaborador/${notificacion.idReceptor}">${notificacion.receptor.nombre[0].nombre}</a>
                                 con <a class="font-weight-bold text-dark text-decoration-none notificacionVerNecesidad${notificacion.idNotificacion}" href="#modalDetalleNecesidad" data-toggle="modal">${nombreCategoria}</a>!</p>
                             </div>
                             <div class="row">
@@ -572,8 +572,8 @@ function mostrarNotificacionesCarousel(notificaciones){
                                 </div>
                             </div>
                             <div class="card-text align-self-center mx-2 w-100 row text-center">
-                                <p>¡<a class="font-weight-bold text-dark text-decoration-none notificacionEmisor${notificacion.idNotificacion} " href="/colaborador/${notificacion.idEmisor}">${notificacion.emisor.nombre[0].nombre}</a>
-                                se ha suscrito a <a class="font-weight-bold text-dark text-decoration-none notificacionReceptor${notificacion.idNotificacion} " href="/organizacion/${notificacion.idReceptor}">${notificacion.receptor.nombre[0].nombre}</a>!</p>
+                                <p>¡<a class="font-weight-bold text-dark text-decoration-none notificacionEmisor${notificacion.idNotificacion} " href="/ver-colaborador/${notificacion.idEmisor}">${notificacion.emisor.nombre[0].nombre}</a>
+                                se ha suscrito a <a class="font-weight-bold text-dark text-decoration-none notificacionReceptor${notificacion.idNotificacion} " href="/ver-organizacion/${notificacion.idReceptor}">${notificacion.receptor.nombre[0].nombre}</a>!</p>
                             </div>
                             <div class="row">
                                 <p class="m-auto">${fecha}</p>
@@ -600,7 +600,7 @@ function mostrarNotificacionesCarousel(notificaciones){
                                 </div>
                             </div>
                             <div class="card-text align-self-center mx-2 w-100 row text-center">
-                                <p>¡<a class="font-weight-bold text-dark text-decoration-none notificacionEmisor${notificacion.idNotificacion} " href="/organizacion/${notificacion.idEmisor}">${notificacion.emisor.nombre[0].nombre}</a>
+                                <p>¡<a class="font-weight-bold text-dark text-decoration-none notificacionEmisor${notificacion.idNotificacion} " href="/ver-organizacion/${notificacion.idEmisor}">${notificacion.emisor.nombre[0].nombre}</a>
                                 Necesita colaboración con <a class="font-weight-bold text-dark text-decoration-none notificacionVerNecesidad${notificacion.idNotificacion}" href="#modalDetalleNecesidad" data-toggle="modal">${necesidad.nombreCategoria}</a>!</p>
                             </div>
                             <div class="row">
@@ -626,9 +626,9 @@ function mostrarNotificacionesCarousel(notificaciones){
                                 </div>
                             </div>
                             <div class="card-text align-self-center mx-2 w-100 row text-center">
-                                <p>¡<a class="font-weight-bold text-dark text-decoration-none notificacionEmisor${notificacion.idNotificacion} " href="/colaborador/${notificacion.idEmisor}">${notificacion.emisor.nombre[0].nombre}</a>
+                                <p>¡<a class="font-weight-bold text-dark text-decoration-none notificacionEmisor${notificacion.idNotificacion} " href="/ver-colaborador/${notificacion.idEmisor}">${notificacion.emisor.nombre[0].nombre}</a>
                                 calificó como "${trato}" el trato recibido de parte de la organizacion
-                                <a class="font-weight-bold text-dark text-decoration-none notificacionVerNecesidad${notificacion.idNotificacion}" href="/organizacion/${notificacion.idReceptor}">${notificacion.receptor.nombre[0].nombre}</a>!</p>
+                                <a class="font-weight-bold text-dark text-decoration-none notificacionVerNecesidad${notificacion.idNotificacion}" href="/ver-organizacion/${notificacion.idReceptor}">${notificacion.receptor.nombre[0].nombre}</a>!</p>
                             </div>
                             <div class="row">
                                 <p class="m-auto">${fecha}</p>
@@ -653,7 +653,7 @@ function mostrarNotificacionesCarousel(notificaciones){
                                 </div>
                             </div>
                             <div class="card-text align-self-center mx-2 w-100 row text-center">
-                                <p>¡<a class="font-weight-bold text-dark text-decoration-none notificacionEmisor${notificacion.idNotificacion} " href="/colaborador/${notificacion.idReceptor}">${notificacion.receptor.nombre[0].nombre}</a>
+                                <p>¡<a class="font-weight-bold text-dark text-decoration-none notificacionEmisor${notificacion.idNotificacion} " href="/ver-colaborador/${notificacion.idReceptor}">${notificacion.receptor.nombre[0].nombre}</a>
                                 ha recibido una nueva insignia! </p>
                             </div>
                             <div class="row">
