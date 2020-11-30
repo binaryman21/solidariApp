@@ -63,12 +63,12 @@
                         <li class="nav-item px-3 active" id="navInicio">
                             <a class="nav-link" href="{{url('/')}}">Inicio</a>
                         </li>
-                        <li class="nav-item px-3" id="navContacto">
+                        <!-- <li class="nav-item px-3" id="navContacto">
                             <a class="nav-link" href="{{url('/contacto')}}">Contacto</a>
                         </li>
                         <li class="nav-item px-3" id="navAcerca">
                             <a class="nav-link" href="{{url('/acerca')}}">Acerca de</a>
-                        </li>
+                        </li> -->
                     </ul>
                 </div>
             </nav>

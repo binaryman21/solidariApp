@@ -16,13 +16,13 @@
             </div>
         </div>
     </div>
-    <div><a href="{{url('/administrador')}}" class="text-secondary">Menú Administrador</a></div>
+    <div><a href="{{url('/cuenta-administrador/perfil')}}" class="text-secondary">Menú Administrador</a></div>
     <h4>Reportes de Denuncias</h4>
 
-    <div class="container-fluid px-sm-3 px-lg-5 h-100">
+    <div class="container-fluid px-sm-3 px-lg-5">
         <div class="row bg-white rounded justify-content-lg-center">
             <div class="col-12 p-0 p-md-2">
-                <div id="listaDenuncias" class="overflow-auto px-lg-2 pb-2 h-100">
+                <div id="listaDenuncias" class="overflow-auto px-lg-2 pb-22">
 
                 </div>
             </div>

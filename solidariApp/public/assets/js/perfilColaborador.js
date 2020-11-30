@@ -210,7 +210,7 @@ function paginarTabCalificacion({containerType = "", ListType = ""} = {}) {
     if(filasTotales>filasParaMostrar){
 
         $calificacionContainer.append(`<div id=navCalificaciones${containerType}></div>`);
-        let $nav = $(`#navNecesidades${containerType}`);
+        let $nav = $(`#navCalificaciones${containerType}`);
     
         let numPaginas = filasTotales/filasParaMostrar;
     

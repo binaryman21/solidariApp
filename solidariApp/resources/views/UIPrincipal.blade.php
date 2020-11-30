@@ -23,7 +23,7 @@
                             <button type="button" class="btn btn-outline-secondary rounded-0 border-left-0 border-right-0" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id="filtros">
                                 <i class="fas fa-filter fa-xs"></i>
                             </button>
-                            <div class="dropdown-menu dropdown-menu-right" id="filtrosCategoria" 
+                            <div class="dropdown-menu dropdown-menu-right" id="filtrosCategoria"
                             aria-labelledby="filtros" x-placement="bottom-end"></div>
                         </div>
                         <button class="btn btn-outline-secondary border-secondary border-left-0" id="btnBuscarNeccesidades" type="button"><i class="fa fa-search fa-xs"></i></button>
@@ -47,6 +47,11 @@
                 <div class="row p-2" >
                     <div class = "d-flex flex-column rounded p-2" style = "width:100%;height:100%;">
                         <div id="mapa" class = "mapa"></div>
+                    </div>
+                </div>
+                <div class="row p-2" >
+                    <div class = "d-flex flex-column rounded p-2 h-auto" style = "width:100%;height:100%;">
+                        <div id="carouselNotif" class="carouselNotif"></div>
                     </div>
                 </div>
                 <div class="row px-2" id = "botonesRegistro">
@@ -73,7 +78,6 @@
     @include("UIPrincipalRegistro")
     <!-- {{-- @include("UIDetalleNecesidad") --}} -->
     <!-- {{-- @include("UIPrincipalResultadoRegistro") --}} -->
-    @include("UIPrincipalModalOrganizaciones")
 @endsection
 
 @section('scripts')

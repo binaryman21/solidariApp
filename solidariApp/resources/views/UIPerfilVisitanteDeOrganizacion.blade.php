@@ -18,6 +18,7 @@
                         <i class="fas fa-ellipsis-v fa-sm ml-2 mt-2 text-black" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></i>
                     <div class="dropdown-menu dropdown-menu-right shadow">
                         <button class="dropdown-item user-select-none" type="button" data-toggle="modal" href="#modalReportar"><i class="far fa-flag fa-sm mr-3"></i>Reportar</button>
+                        <button class="dropdown-item user-select-none" type="button" data-toggle="modal" href="#modalCalificarOrganizacion"><i class="far fa-flag fa-sm mr-3"></i>Calificar</button>
                     </div>
                 </div>
             </div>
@@ -37,10 +38,10 @@
                     <h6 class="card-title float-left">Necesidades</h6>
                     <!-- Buscador -->
                     <div class="input-group my-3">
-                        <input class="form-control border-secondary border-right-0" type="text" id="campoBuscarPorTexto" placeholder="Categoría, descripción o nombre de la Org.">
+                        {{-- <input class="form-control border-secondary border-right-0" type="text" id="campoBuscarPorTexto" placeholder="Categoría, descripción o nombre de la Org.">
                         <div class="input-group-append">
                             <button class="btn btn-outline-secondary border-secondary border-left-0" id="btnBuscarNeccesidades" type="button"><i class="fa fa-search fa-xs"></i></button>
-                        </div>
+                        </div> --}}
                     </div>
                     <!-- TABS En progreso | Finalizadas -->
                     <ul class="nav nav-tabs" id="necesidadesTABS" role="tablist">
@@ -115,6 +116,7 @@
 
 
 @include("UIPerfilModales/UIModalSuscribirse")
+@include("UIPerfilModales/UIModalCalificarOrganizacion")
 @endsection
 
 @section('scripts')

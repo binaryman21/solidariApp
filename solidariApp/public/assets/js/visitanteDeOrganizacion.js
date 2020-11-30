@@ -195,7 +195,7 @@ function paginarTabCalificacion({containerType = "", ListType = ""} = {}) {
     if(filasTotales>filasParaMostrar){
 
         $calificacionContainer.append(`<div id=navCalificaciones${containerType}></div>`);
-        let $nav = $(`#navNecesidades${containerType}`);
+        let $nav = $(`#navCalificaciones${containerType}`);
     
         let numPaginas = filasTotales/filasParaMostrar;
     
@@ -228,6 +228,7 @@ function paginarTabCalificacion({containerType = "", ListType = ""} = {}) {
         let emptyState = 
         `<img src="/assets/img/SinComentarios.svg">
          <p class="text-center my-5">No hay calificaciones ${tabType}</p>`
+        $calificacionContainer.html('');
         $calificacionContainer.append(emptyState);
     }
 }

@@ -64,7 +64,7 @@ class CalificacionController extends Controller
 
                         $necesidad = Necesidad::find($datos->idNecesidad);
                         $necesidad->cantidadRecibida += $datos->cantidadRecibida;
-                        if($necesidad->cantidadRecibida > $necesidad->cantidadNecesidad){
+                        if($necesidad->cantidadRecibida >= $necesidad->cantidadNecesidad){
                             $necesidad->estadoNecesidad = 2;
                         }
                         $necesidad->save();

@@ -59,6 +59,12 @@ class NecesidadController extends Controller
                 $necesidad = Necesidad::find($necesidad->idNecesidad);
                 $suscriptores = Suscripcion::getSuscriptores( $_SESSION['usuario']->idUsuario );
 
+                $notificacion = new Notificacion;
+                $notificacion->idMensaje = "8";
+                $notificacion->idEmisor = $_SESSION['usuario']->idUsuario;
+                $notificacion->idNecesidad = $necesidad->idNecesidad;
+                $notificacion->save();
+
                 foreach ($suscriptores as $suscriptor){
                     $notificacion = new Notificacion;
                     $notificacion->idMensaje = "5";
@@ -180,6 +186,7 @@ class NecesidadController extends Controller
     {
         try
         {
+            session_start();
             if(UsuarioController::tienePermisoPara("editarNecesidad"))
             {
                 $fechaBaja = Carbon::now();
@@ -192,7 +199,8 @@ class NecesidadController extends Controller
 
                 return response()->json([
                     'resultado' => 1,
-                    'message' => 'La necesidad se ha eliminado'
+                    'message' => 'La necesidad se ha eliminado',
+                    'idUsuario' => $_SESSION['usuario']->idUsuario
                 ]);
             }
             else

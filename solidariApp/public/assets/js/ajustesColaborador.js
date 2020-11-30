@@ -2,8 +2,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
     //isLoggedIn redirecciona si no esta logueado. y llamara a la funcion pasandole 
     //el id del usuario que esta en la session
-    isLoggedIn({funcionSuccess: configurarCuentaDelColaborador, RedirectIfNot: true});
-    
+    isLoggedIn({
+        funcionSuccess: configurarCuentaDelColaborador,
+        RedirectIfNot: true
+    });
+
     let btnAgregarTelefono = $('#btnAgregarTelefono');
     let btnAgregarDireccion = $('#btnAgregarDireccion');
     var formularioTelefono = $('#nuevoTelefono');
@@ -17,8 +20,8 @@ document.addEventListener('DOMContentLoaded', () => {
     document.querySelector('#actualizarAvatar').addEventListener("change", cambiarFotoPerfil, false);
     $('.btnCancelar').on('click', cerrar);
 
-    function cerrar (e) { 
-        $('[aria-expanded=true]').trigger('click'); 
+    function cerrar(e) {
+        $('[aria-expanded=true]').trigger('click');
         $('#formularioDomicilio').removeClass('show');
     }
 
@@ -26,13 +29,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
     btnGuardarCambiosDomicilio.on('click', e => {
 
-        if( validarDireccion() )
+        if (validarDireccion())
             ActualizarDomicilio(e);
     });
-    
+
     btnAgregarTelefono.on('click', e => {
 
-        EstablecerFormTelefonosEn({title:'Agregar nuevo telefono'});
+        EstablecerFormTelefonosEn({
+            title: 'Agregar nuevo telefono'
+        });
     });
 
     btnGuardarTelefonos.on('click', e => {
@@ -40,8 +45,10 @@ document.addEventListener('DOMContentLoaded', () => {
     })
 
     btnAgregarDireccion.on('click', e => {
-    
-        EstablecerFormDomiciliosEn({title:'Agregar nuevo domicilio'});
+
+        EstablecerFormDomiciliosEn({
+            title: 'Agregar nuevo domicilio'
+        });
     });
 
 
@@ -66,42 +73,40 @@ document.addEventListener('DOMContentLoaded', () => {
     //cambiar foto
     document.querySelector('#actualizarAvatar').addEventListener("change", cambiarFotoPerfil, false);
     document.querySelector('#actualizarPortada').addEventListener("change", cambiarFotoPortada, false);
- 
+
     //Actualizar datos
-    $("form[name='uploader']").on("submit", function(ev) {
+    $("form[name='uploader']").on("submit", function (ev) {
         ev.preventDefault(); // Prevent browser default submit.
-        let formData = new FormData(this);         
+        let formData = new FormData(this);
         let fotoPerfil = $('#actualizarAvatar').prop('files')[0];
         let fotoPortada = $('#actualizarPortada').prop('files')[0];
         let contador = 0;
         formData.append('fotoPerfil', fotoPerfil);
         formData.append('fotoPortada', fotoPortada);
         //Actualizar foto de perfil
-        if( fotoPerfil ){
-            axios.post("/updateFotoPerfil",formData) 
-            .then((response)=>{
-                if ( response.data.resultado ){
-                    alertify.success( response.data.message )
-                }
-                else{
-                    alertify.error( response.data.message )
-                }
-            });
-            contador ++;
-        } 
-        if( fotoPortada ){
-            axios.post("/updateFotoPortada",formData) 
-            .then((response)=>{
-                if ( response.data.resultado ){
-                    alertify.success( response.data.message )
-                }
-                else{
-                    alertify.error( response.data.message )
-                }
-            });
-            contador ++;
+        if (fotoPerfil) {
+            axios.post("/updateFotoPerfil", formData)
+                .then((response) => {
+                    if (response.data.resultado) {
+                        alertify.success(response.data.message)
+                    } else {
+                        alertify.error(response.data.message)
+                    }
+                });
+            contador++;
         }
-        if(contador == 0){
+        if (fotoPortada) {
+            axios.post("/updateFotoPortada", formData)
+                .then((response) => {
+                    if (response.data.resultado) {
+                        alertify.success(response.data.message)
+                    } else {
+                        alertify.error(response.data.message)
+                    }
+                });
+            contador++;
+        }
+        if (contador == 0) {
             alertify.error('Nada para actualizar');
         }
     });
@@ -109,48 +114,48 @@ document.addEventListener('DOMContentLoaded', () => {
 
 function cambiarFotoPerfil() {
     let fotoPerfil = $('#actualizarAvatar').prop('files')[0];
-    $('#imgPerfilColaborador').attr('src', URL.createObjectURL( fotoPerfil ) );
-    $('#imgPerfil').attr('src', URL.createObjectURL( fotoPerfil ));
+    $('#imgPerfilColaborador').attr('src', URL.createObjectURL(fotoPerfil));
+    $('#imgPerfil').attr('src', URL.createObjectURL(fotoPerfil));
 }
 
 function cambiarFotoPortada() {
     let fotoPortada = $('#actualizarPortada').prop('files')[0];
-    $('#cover').attr('src', URL.createObjectURL( fotoPortada ) );
+    $('#cover').attr('src', URL.createObjectURL(fotoPortada));
 }
 
 var FetchedDomicilios = [];
 var FetchedTelefonos = [];
 
-function configurarCuentaDelColaborador(idUsuario){
+function configurarCuentaDelColaborador(idUsuario) {
 
-    axios.get("/getColaborador/"+idUsuario)
-    .then((response)=>{
-        
-        let colaborador = response.data.colaborador;
-        $("#nombreColaborador").html(`${colaborador.nombreColaborador} ${colaborador.apellidoColaborador}`);
-        $("#imgPerfilColaborador").attr("src",colaborador.urlFotoPerfilUsuario);
-        $("#cover").attr("src",colaborador.urlFotoPortadaUsuario);
-    
-        $("#fechaAltaUsuario").html(`Eres usuario desde el ${moment(colaborador.fechaAltaUsuario, "YYYY-MM-DD HH:mm:ss").format('LL')}`);
-        
-        $("#emailColaborador").html(colaborador.emailUsuario);
+    axios.get("/getColaborador/" + idUsuario)
+        .then((response) => {
 
-        //DOMICILIOS
-        
-        var $listaDomicilios = $('#listadoDomicilios');
-        if(response.data.domicilios && response.data.domicilios.length){
-            
-            FetchedDomicilios = response.data.domicilios;
-            var $domiciliosFragment = $(document.createDocumentFragment());
-            $.each(FetchedDomicilios, function (indexInArray, domicilio) {
-    
-                if(!indexInArray) listarLocalidades(domicilio.idProvincia, -1);
+            let colaborador = response.data.colaborador;
+            $("#nombreColaborador").html(`${colaborador.nombreColaborador} ${colaborador.apellidoColaborador}`);
+            $("#imgPerfilColaborador").attr("src", colaborador.urlFotoPerfilUsuario);
+            $("#cover").attr("src", colaborador.urlFotoPortadaUsuario);
 
-                var piso = (domicilio.piso != '') ? `Piso ${domicilio.piso}` : '';
-                var depto = (domicilio.depto != '') ? `Depto ${domicilio.depto}` : '';
+            $("#fechaAltaUsuario").html(`Eres usuario desde el ${moment(colaborador.fechaAltaUsuario, "YYYY-MM-DD HH:mm:ss").format('LL')}`);
 
-                $domiciliosFragment.append(
-                    `<li class="list-group-item list-group-item-action px-2 py-1 d-flex justify-content-between align-items-center" id="domicilio${domicilio.idDomicilio}">
+            $("#emailColaborador").html(colaborador.emailUsuario);
+
+            //DOMICILIOS
+
+            var $listaDomicilios = $('#listadoDomicilios');
+            if (response.data.domicilios && response.data.domicilios.length) {
+
+                FetchedDomicilios = response.data.domicilios;
+                var $domiciliosFragment = $(document.createDocumentFragment());
+                $.each(FetchedDomicilios, function (indexInArray, domicilio) {
+
+                    if (!indexInArray) listarLocalidades(domicilio.idProvincia, -1);
+
+                    var piso = (domicilio.piso != '') ? `Piso ${domicilio.piso}` : '';
+                    var depto = (domicilio.depto != '') ? `Depto ${domicilio.depto}` : '';
+
+                    $domiciliosFragment.append(
+                        `<li class="list-group-item list-group-item-action px-2 py-1 d-flex justify-content-between align-items-center" id="domicilio${domicilio.idDomicilio}">
                         <div>
                             <small class="m-1 d-block  text-truncate">${domicilio.calle} ${domicilio.numero}, ${piso}, ${depto}</small>
                             <small class="m-1 text-black-50 text-truncate">${domicilio.nombreLocalidad}, ${domicilio.nombreProvincia}</small>
@@ -162,30 +167,31 @@ function configurarCuentaDelColaborador(idUsuario){
                             <button class="dropdown-item" id="btnEdite-Dir${indexInArray}" data-dir="${indexInArray}" type="button">Editar</button>
                         </div>
                     </li>`
-                );
+                    );
 
-                $domiciliosFragment.find(`#btnEdite-Dir${indexInArray}`).on('click', e => {EditarEnFormDomicilios(e)});
-                // console.log(indexInArray);
+                    $domiciliosFragment.find(`#btnEdite-Dir${indexInArray}`).on('click', e => {
+                        EditarEnFormDomicilios(e)
+                    });
+                    // console.log(indexInArray);
+                });
+
+                $listaDomicilios.html($domiciliosFragment);
+            } else $listaDomicilios.html('<p class="mb-2">No hay domicilios registrados</p>');
+
+            $('#selectProvincia').on('change', e => {
+
+                listarProvincias(e.target.value, -1);
             });
-    
-            $listaDomicilios.html($domiciliosFragment);
-        }
-        else $listaDomicilios.html('<p class="mb-2">No hay domicilios registrados</p>');
 
-        $('#selectProvincia').on('change', e => {
+            //TELEFONOS
+            var $listadoTelefonos = $("#listadoTelefonos");
+            if (response.data.telefonos && response.data.telefonos.length) {
 
-            listarProvincias(e.target.value, -1);
-        });
-        
-        //TELEFONOS
-        var $listadoTelefonos = $("#listadoTelefonos");
-        if(response.data.telefonos && response.data.telefonos.length){
-            
-            FetchedTelefonos = response.data.telefonos;
-            var $telefonosFragment = $(document.createDocumentFragment())
-            $.each(FetchedTelefonos, function (indexInArray, telefono) {
-                $telefonosFragment.append(
-                `<a id="telefono${telefono.idTelefono}" class="list-group-item list-group-item list-group-item-action px-2 py-1 d-flex justify-content-between align-items-center">
+                FetchedTelefonos = response.data.telefonos;
+                var $telefonosFragment = $(document.createDocumentFragment())
+                $.each(FetchedTelefonos, function (indexInArray, telefono) {
+                    $telefonosFragment.append(
+                        `<a id="telefono${telefono.idTelefono}" class="list-group-item list-group-item list-group-item-action px-2 py-1 d-flex justify-content-between align-items-center">
                     <span class="m-1">${telefono.codAreaTelefono} - ${telefono.numeroTelefono}</span>
                     <button class="btn dropdown" type="button" id="telOptions-forID-${telefono.idTelefono}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="fas fa-ellipsis-v fa-xs"></i></button>
                     <div class="dropdown-menu dropdown-menu-right shadow" aria-labelledby="telOptionsDrop-forID-${telefono.idTelefono}">
@@ -193,96 +199,108 @@ function configurarCuentaDelColaborador(idUsuario){
                     </div>
                 </a>`);
 
-                $telefonosFragment.find(`#btnDelete-Tel${indexInArray}`).on('click', function (e) {EliminarTelefono(e)});
-            });
-    
-            $listadoTelefonos.html($telefonosFragment);
-        }
-        else $listadoTelefonos.html('<p class="mb-2">No hay telefonos registrados</p>');
-    });
+                    $telefonosFragment.find(`#btnDelete-Tel${indexInArray}`).on('click', function (e) {
+                        EliminarTelefono(e)
+                    });
+                });
+
+                $listadoTelefonos.html($telefonosFragment);
+            } else $listadoTelefonos.html('<p class="mb-2">No hay telefonos registrados</p>');
+        });
 }
 
-function EditarEnFormDomicilios(e){
+function EditarEnFormDomicilios(e) {
 
     let index = $(e.target).data("dir");
     let dir = FetchedDomicilios[index];
     // console.log( 'dir' + dir);
-    EstablecerFormDomiciliosEn({title: 'Editar direccion', data: dir, id:index});
+    EstablecerFormDomiciliosEn({
+        title: 'Editar direccion',
+        data: dir,
+        id: index
+    });
     $('#formularioDomicilio').collapse('show');
 }
 
-function EliminarTelefono(e){
+function EliminarTelefono(e) {
 
     let id = $(e.target).data('tel');
     let tel = FetchedTelefonos[id];
     alertify.confirm(
-        
+
         'Eliminar telefono',
         `Estas seguro que quieres eliminar el telefono ${tel.codAreaTelefono} ${tel.numeroTelefono}`,
-        function(){ 
+        function () {
 
-            axios.post("/eliminarTelefono", {idTelefono:tel.idTelefono})
-            .then((response)=>{
-                
-                if(response.data.resultado){
+            axios.post("/eliminarTelefono", {
+                    idTelefono: tel.idTelefono
+                })
+                .then((response) => {
 
-                    $(e.target).parent()
-                    // .replacewith('Eliminado')
-                    .fadeOut(1000)
-                    .animate({
-                        "opacity" : "0",
-                    }, function() {
-                        alertify.success(response.data.message);
-                        $(this).parent().remove();
-                        FetchedTelefonos.slice(id, 1);
-                    });
-                };
-            })
-            .catch(error => console.log(error));
+                    if (response.data.resultado) {
+
+                        $(e.target).parent()
+                            // .replacewith('Eliminado')
+                            .fadeOut(1000)
+                            .animate({
+                                "opacity": "0",
+                            }, function () {
+                                alertify.success(response.data.message);
+                                $(this).parent().remove();
+                                FetchedTelefonos.slice(id, 1);
+                            });
+                    };
+                })
+                .catch(error => console.log(error));
         },
-        function(){
+        function () {
 
         }
     );
 }
 
-function AgregarTelefono(e){
+function AgregarTelefono(e) {
     let telefono = {
-        idTelefono:0,
-        codAreaTelefono:$("#codArea").val(),
-        numeroTelefono:$("#numeroTelefono").val(),
-        esCelular:0,
+        idTelefono: 0,
+        codAreaTelefono: $("#codArea").val(),
+        numeroTelefono: $("#numeroTelefono").val(),
+        esCelular: 0,
     }
 
-    if( validarTelefono( '' ) ){
-        axios.post("/registrarTelefono",telefono)
-        .then((response)=>{
-            if( response.data.resultado ){
-                telefono.idTelefono = response.data.idTelefono;
-                limpiarValidaciones($('#codArea'), $('.errorCodArea'));
-                limpiarValidaciones($('#numeroTelefono'), $('.errorNroTelefono'));
-                alertify.success('Telefono agregado');
-                FetchedTelefonos.push( telefono );
-                let indexInArray = FetchedTelefonos.length - 1;
-                var $listadoTelefonos = $('#listadoTelefonos');
-                $listadoTelefonos.append(
-                `<a id="telefono${telefono.idTelefono}" class="list-group-item list-group-item list-group-item-action px-2 py-1 d-flex justify-content-between align-items-center">
+    if (validarTelefono('')) {
+        axios.post("/registrarTelefono", telefono)
+            .then((response) => {
+                if (response.data.resultado) {
+                    telefono.idTelefono = response.data.idTelefono;
+                    limpiarValidaciones($('#codArea'), $('.errorCodArea'));
+                    limpiarValidaciones($('#numeroTelefono'), $('.errorNroTelefono'));
+                    alertify.success('Telefono agregado');
+                    FetchedTelefonos.push(telefono);
+                    let indexInArray = FetchedTelefonos.length - 1;
+                    var $listadoTelefonos = $('#listadoTelefonos');
+                    $listadoTelefonos.append(
+                        `<a id="telefono${telefono.idTelefono}" class="list-group-item list-group-item list-group-item-action px-2 py-1 d-flex justify-content-between align-items-center">
                     <span class="m-1">${telefono.codAreaTelefono} - ${telefono.numeroTelefono}</span>
                     <button class="btn dropdown" type="button" id="telOptions-forID-${telefono.idTelefono}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="fas fa-ellipsis-v fa-xs"></i></button>
                     <div class="dropdown-menu dropdown-menu-right shadow" aria-labelledby="telOptions-forID-${telefono.idTelefono}">
                         <button class="dropdown-item" id="btnDelete-Tel${indexInArray}" data-tel="${indexInArray}" type="button">Eliminar</button>
                     </div>
                 </a>`);
-                $listadoTelefonos.find(`#btnDelete-Tel${indexInArray}`).on('click', function (e) {EliminarTelefono(e)});
-            }
-            else{
-                alertify.error( response.data.message );
-            }
-        });
+                    $listadoTelefonos.find(`#btnDelete-Tel${indexInArray}`).on('click', function (e) {
+                        EliminarTelefono(e)
+                    });
+                } else {
+                    alertify.error(response.data.message);
+                }
+            });
     }
 }
 
-function EstablecerFormDomiciliosEn({title="", data = {}, id = -1} = {}) {
+function EstablecerFormDomiciliosEn({
+    title = "",
+    data = {},
+    id = -1
+} = {}) {
 
     // console.log( data );
     $('#idDomicilio').val(data.idDomicilio || '');
@@ -296,16 +314,19 @@ function EstablecerFormDomiciliosEn({title="", data = {}, id = -1} = {}) {
     $('#btnGuardarCambiosDomicilio').data("dir", id);
 }
 
-function EstablecerFormTelefonosEn({title="", data = {}} = {}) {
+function EstablecerFormTelefonosEn({
+    title = "",
+    data = {}
+} = {}) {
 
     $('#formTelTitle').text(title);
     $('#codArea').val(data.codAreaTelefono || '');
     $('#numeroTelefono').val(data.numeroTelefono || '');
 }
 
-function ActualizarDomicilio(e){
+function ActualizarDomicilio(e) {
 
-    obtenerCoordenadas($("#calle").val(), $("#numero").val(), $("#selectLocalidad option:selected" ).text(), $("#selectProvincia option:selected" ).text())
+    obtenerCoordenadas($("#calle").val(), $("#numero").val(), $("#selectLocalidad option:selected").text(), $("#selectProvincia option:selected").text())
         .then(data => {
             let coordenadas = {
                 lat: data.lat,
@@ -324,23 +345,23 @@ function ActualizarDomicilio(e){
                 latitud: coordenadas.lat,
                 longitud: coordenadas.lon
             }
-            axios.post("/actualizarDomicilio",domicilio)
-            .then((response)=>{
-                
-                if(response.data.resultado){
-                    if(response.data.resultado == 1){
-                        alertify.success('Cambios guardados');
-                        limpiarValidaciones( $("#calle"), $(".errorCalle"));
-                        limpiarValidaciones( $("#numero"), $(".errorNumero"));
-                        limpiarValidaciones( $("#selectLocalidad"), $(".errorLocalidad"));
-                        limpiarValidaciones( $("#selectProvincia"), $(".errorProvincia"));
-                        $("#piso").val('');
-                        $("#depto").val('');
-                        $('#formularioDomicilio').removeClass('show');
-                        //Actualizar en el front
-                        let $listadoDomicilios = $('#listadoDomicilios');
-                        $listadoDomicilios.html(
-                            `<li class="list-group-item list-group-item-action px-2 py-1 d-flex justify-content-between align-items-center" id="domicilio${domicilio.idDomicilio}">
+            axios.post("/actualizarDomicilio", domicilio)
+                .then((response) => {
+
+                    if (response.data.resultado) {
+                        if (response.data.resultado == 1) {
+                            alertify.success('Cambios guardados');
+                            limpiarValidaciones($("#calle"), $(".errorCalle"));
+                            limpiarValidaciones($("#numero"), $(".errorNumero"));
+                            limpiarValidaciones($("#selectLocalidad"), $(".errorLocalidad"));
+                            limpiarValidaciones($("#selectProvincia"), $(".errorProvincia"));
+                            $("#piso").val('');
+                            $("#depto").val('');
+                            $('#formularioDomicilio').removeClass('show');
+                            //Actualizar en el front
+                            let $listadoDomicilios = $('#listadoDomicilios');
+                            $listadoDomicilios.html(
+                                `<li class="list-group-item list-group-item-action px-2 py-1 d-flex justify-content-between align-items-center" id="domicilio${domicilio.idDomicilio}">
                                 <div>
                                     <small class="m-1 d-block  text-truncate">${domicilio.calle} ${domicilio.numero}, ${domicilio.piso}, ${domicilio.depto}</small>
                                     <small class="m-1 text-black-50 text-truncate">${domicilio.nombreLocalidad}, ${domicilio.nombreProvincia}</small>
@@ -352,15 +373,15 @@ function ActualizarDomicilio(e){
                                     <button class="dropdown-item" id="btnEdite-Dir${0}" data-dir="${0}" type="button">Editar</button>
                                 </div>
                             </li>`
-                        );
-                        FetchedDomicilios[0] = domicilio;
-                        $listadoDomicilios.find(`#btnEdite-Dir${0}`).on('click', e => {EditarEnFormDomicilios(e)});
-                    }
-                    else alertify.notify(response.data.message);
-                }
-                else console.log(response.data.message);
-            })
-            .catch(error => alertify.error('Ha ocurrido un problema y no se ha podido guardar los cambios'));
+                            );
+                            FetchedDomicilios[0] = domicilio;
+                            $listadoDomicilios.find(`#btnEdite-Dir${0}`).on('click', e => {
+                                EditarEnFormDomicilios(e)
+                            });
+                        } else alertify.notify(response.data.message);
+                    } else console.log(response.data.message);
+                })
+                .catch(error => alertify.error('Ha ocurrido un problema y no se ha podido guardar los cambios'));
         })
 }
 

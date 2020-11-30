@@ -1,17 +1,24 @@
 .mapa {
-    height:  400px;
-}
-.mapaExtendido {
-    height:  600px;
+    height: 400px;
 }
 
-.alertify,.alertify-notifier,.alertify-confirm{
-    z-index:999999 !important;
+.mapaExtendido {
+    height: 600px;
+}
+
+#listaDenuncias{
+    height: 600px;
+}
+
+.alertify,
+.alertify-notifier,
+.alertify-confirm {
+    z-index: 999999 !important;
     /* margin-top: -50px; */
 }
 
 :root {
-    --alimentos-color:#fdf5e7;
+    --alimentos-color: #fdf5e7;
     --ropa-color: #C7C6F5;
     --limpieza-color: #d4f1f5;
     --varios-color: #F5B4B4;
@@ -25,15 +32,16 @@ body {
     min-width: 325px !important;
 }
 
-.container{
+.container {
     background-color: white;
 }
 
-footer .container{
+footer .container {
 
     background-color: inherit;
 }
-#cover{
+
+#cover {
 
     height: inherit;
     width: 100%;
@@ -55,14 +63,15 @@ img#imgPerfil {
     height: 35px;
 }
 
-img#urlFotoPerfilOrganizacion, img#imgPerfilColaborador {
+img#urlFotoPerfilOrganizacion,
+img#imgPerfilColaborador {
 
     width: 125px;
     height: 125px;
     border: 4px solid rgb(255 255 255);
 }
 
-.imgNecesidad{
+.imgNecesidad {
     height: 80px;
     width: 80px;
 }
@@ -78,18 +87,23 @@ p {
 .alimentos {
     background-color: var(--alimentos-color);
 }
+
 .ropa {
     background-color: var(--ropa-color);
 }
+
 .limpieza {
     background-color: var(--limpieza-color);
 }
+
 .varios {
     background-color: var(--varios-color);
 }
+
 .servicios {
     background-color: var(--servicios-color);
 }
+
 .dinero {
     background-color: var(--dinero-color);
 }
@@ -99,42 +113,47 @@ p {
     border: 1px solid #a5a5a5;
 }
 
-.need{
+.need {
 
     border-bottom: 1px solid #b7b7b7;
 }
 
-.need.alimentos{
+.need.alimentos {
 
     box-shadow: inset 5px 0px 0 0 var(--alimentos-color), inset 6px 0px 0 0 #a5a5a5;
     background-color: white;
     color: #92764c;
 }
-.need.ropa{
+
+.need.ropa {
 
     box-shadow: inset 5px 0px 0 0 var(--ropa-color), inset 6px 0px 0 0 #a5a5a5;
     background-color: white;
     color: #8b88ff;
 }
-.need.varios{
+
+.need.varios {
 
     box-shadow: inset 5px 0px 0 0 var(--varios-color), inset 6px 0px 0 0 #a5a5a5;
     background-color: white;
     color: #a06f6f;
 }
-.need.servicios{
+
+.need.servicios {
 
     box-shadow: inset 5px 0px 0 0 var(--servicios-color), inset 6px 0px 0 0 #a5a5a5;
     background-color: white;
     color: #688098;
 }
-.need.dinero{
+
+.need.dinero {
 
     box-shadow: inset 5px 0px 0 0 var(--dinero-color), inset 6px 0px 0 0 #a5a5a5;
     background-color: white;
     color: #549253;
 }
-.need.limpieza{
+
+.need.limpieza {
 
     box-shadow: inset 5px 0px 0 0 var(--limpieza-color), inset 6px 0px 0 0 #a5a5a5;
     background-color: white;
@@ -145,7 +164,7 @@ i {
     font-size: 1.5em;
 }
 
-.agregarNecesidad{
+.agregarNecesidad {
     color: yellowgreen;
     font-size: 2em;
 }
@@ -156,7 +175,7 @@ i {
     color: inherit;
 }
 
-#card-org-name a:first-child{
+#card-org-name a:first-child {
 
     display: block;
     font-size: 88%;
@@ -165,58 +184,58 @@ i {
     line-height: 10px;
 }
 
-#card-org-name a:last-child{
-    font-size:85%;
+#card-org-name a:last-child {
+    font-size: 85%;
     color: #4c4c4c;
 }
 
-div.g-signin2 > .abcRioButtonLightBlue{
+div.g-signin2>.abcRioButtonLightBlue {
     width: 100% !important;
 }
 
-.oculto{
+.oculto {
     display: none;
 }
 
-.inputError{
-    border-color:red;
-    color:red;
+.inputError {
+    border-color: red;
+    color: red;
 }
 
-.inputError:focus{
-    border-color:red;
-    color:red;
+.inputError:focus {
+    border-color: red;
+    color: red;
 }
 
-#modalAltaNecesidad{
+#modalAltaNecesidad {
     padding-right: 8px;
 }
 
 
-.cointainer.perfil{
+.cointainer.perfil {
 
     max-width: 960px;
 }
 
-.card-user .card-img-block{
+.card-user .card-img-block {
 
     height: 190px;
     overflow: hidden;
 }
 
-.card-user .card-body{
+.card-user .card-body {
 
     position: relative;
 }
 
-.card-user .media{
+.card-user .media {
 
     position: absolute;
     top: -85px;
     left: 17px;
 }
 
-.card-user .user-action{
+.card-user .user-action {
 
     position: relative;
     top: -35px;
@@ -225,49 +244,51 @@ div.g-signin2 > .abcRioButtonLightBlue{
     color: #6d6d6d;
 }
 
-.ldg-w-lg:empty{
+.ldg-w-lg:empty {
 
     width: 100% !important;
 }
 
-.ldg-w-md:empty{
+.ldg-w-md:empty {
 
     width: 75% !important;
 }
 
-.ldg-w-sm:empty{
+.ldg-w-sm:empty {
 
     width: 50% !important;
 }
 
-.ldg-block:empty{
+.ldg-block:empty {
 
     height: 40px !important;
 }
 
-.ldg-block-lg:empty{
+.ldg-block-lg:empty {
 
     height: 190px !important;
     margin-bottom: 20px;
 }
 
-.loading:empty{
+.loading:empty {
 
     width: 25%;
     height: 20px;
 
     background-image:
-        linear-gradient( 100deg, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.5) 50%, rgba(255, 255, 255, 0) 80% ),
-        linear-gradient(#f5f5f5  20px, transparent 0 );
+        linear-gradient(100deg, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.5) 50%, rgba(255, 255, 255, 0) 80%),
+        linear-gradient(#f5f5f5 20px, transparent 0);
 
     background-repeat: repeat-y;
 
     background-size:
-        50px 20px, /* highlight */
+        50px 20px,
+        /* highlight */
         100% 20px;
 
     background-position:
-        0 0, /* highlight */
+        0 0,
+        /* highlight */
         0 100%;
 
     animation: loading 1s infinite;
@@ -275,18 +296,18 @@ div.g-signin2 > .abcRioButtonLightBlue{
 
 [contenteditable] {
     outline: 0px solid transparent;
-  }
-
-.domicilioInfo1{
-    font-weight:bold;
-    font-size:1.2em;
 }
 
-.domicilio{
-    background-color:lightgray;
+.domicilioInfo1 {
+    font-weight: bold;
+    font-size: 1.2em;
 }
 
-#campoBuscarPorTexto::placeholder{
+.domicilio {
+    background-color: lightgray;
+}
+
+#campoBuscarPorTexto::placeholder {
 
     font-size: 85%;
     color: #868686;
@@ -295,19 +316,22 @@ div.g-signin2 > .abcRioButtonLightBlue{
 div#filtrosCategoria:empty {
     width: inherit;
     height: 300px;
-    background-image: linear-gradient( 100deg, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.5) 50%, rgba(255, 255, 255, 0) 80% ),
-     linear-gradient( #f5f5f5 20px, transparent 0 );
+    background-image: linear-gradient(100deg, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.5) 50%, rgba(255, 255, 255, 0) 80%),
+        linear-gradient(#f5f5f5 20px, transparent 0);
     background-size: 30px 40px, 80% 34px;
     background-position: 0 0, 15px 10px;
     background-repeat: repeat-y;
     animation: shine 1s infinite;
 }
 
-#necesidadesEnProceso:empty, #necesidadesCumplidas:empty, #necesidadesEliminadas:empty{
+#necesidadesEnProceso:empty,
+#necesidadesCumplidas:empty,
+#necesidadesEliminadas:empty {
 
     margin-top: 20px;
     width: 100%;
-    height: 600px; /* change height to see repeat-y behavior */
+    height: 600px;
+    /* change height to see repeat-y behavior */
     --card-height: 152px;
     --card-header-color: rgb(162 159 159 / 8%);
     --card-body-color: rgb(0 0 0 / 0.01);
@@ -316,41 +340,55 @@ div#filtrosCategoria:empty {
     --card-text-secondary-color: #f7f7f7;
 
     background-image:
-        linear-gradient( 100deg, rgb(0 0 0 / 0), hsl(0 0% 100% / 0.30) 50%, rgba(255, 255, 255, 0) 80% ),
-        linear-gradient( var(--card-header-color) 17px, transparent 0 ),/*card-need-category*/
-        linear-gradient( var(--card-text-secondary-color) 12px, transparent 0 ),/*card-need-state*/
-        linear-gradient( var(--card-text-color) 25px, transparent 0 ),/*card-need-description*/
-        linear-gradient( var(--card-text-secondary-color) 10px, transparent 0 ),/*card-need-count*/
-        linear-gradient( var(--card-header-color) 10px, transparent 0 ),/*card-need-limit*/
-        linear-gradient( var(--card-header-color) 10px, transparent 0 ),/*card-need-colab*/
-        repeating-linear-gradient(
-            var(--card-body-color), var(--card-body-color) 0,
+        linear-gradient(100deg, rgb(0 0 0 / 0), hsl(0 0% 100% / 0.30) 50%, rgba(255, 255, 255, 0) 80%),
+        linear-gradient(var(--card-header-color) 17px, transparent 0),
+        /*card-need-category*/
+        linear-gradient(var(--card-text-secondary-color) 12px, transparent 0),
+        /*card-need-state*/
+        linear-gradient(var(--card-text-color) 25px, transparent 0),
+        /*card-need-description*/
+        linear-gradient(var(--card-text-secondary-color) 10px, transparent 0),
+        /*card-need-count*/
+        linear-gradient(var(--card-header-color) 10px, transparent 0),
+        /*card-need-limit*/
+        linear-gradient(var(--card-header-color) 10px, transparent 0),
+        /*card-need-colab*/
+        repeating-linear-gradient(var(--card-body-color), var(--card-body-color) 0,
             var(--card-body-color), var(--card-body-color) 108px,
             var(--card-action-color), var(--card-action-color) 108px,
             var(--card-action-color), var(--card-action-color) 132px,
             transparent, transparent 132px,
-            transparent, transparent 152px
-        );
+            transparent, transparent 152px);
 
 
     background-repeat: repeat-y;
 
     background-size:
-        50px var(--card-height), /* highlight */
-        45% var(--card-height),/*card-need-category*/
-        60% var(--card-height),/*card-need-state*/
-        90% var(--card-height),/*card-need-description*/
-        35% var(--card-height),/*card-need-count*/
+        50px var(--card-height),
+        /* highlight */
+        45% var(--card-height),
+        /*card-need-category*/
+        60% var(--card-height),
+        /*card-need-state*/
+        90% var(--card-height),
+        /*card-need-description*/
+        35% var(--card-height),
+        /*card-need-count*/
         40% var(--card-height),
         8% var(--card-height),
         100% var(--card-height);
 
     background-position:
-        0 0, /* highlight */
-        20px 8px,/*card-need-category*/
-        20px 30px,/*card-need-state*/
-        20px 55px,/*card-need-description*/
-        20px 90px,/*card-need-count*/
+        0 0,
+        /* highlight */
+        20px 8px,
+        /*card-need-category*/
+        20px 30px,
+        /*card-need-state*/
+        20px 55px,
+        /*card-need-description*/
+        20px 90px,
+        /*card-need-count*/
         20px 114px,
         95% 114px,
         0px 152px;
@@ -358,26 +396,32 @@ div#filtrosCategoria:empty {
     animation: shine-card-need 1s infinite;
 }
 
-@keyframes shine-card-need{
+@keyframes shine-card-need {
 
     to {
         background-position:
-        100% 0, /* move highlight to right */
-        20px 8px,/*card-need-category*/
-        20px 30px,/*card-need-state*/
-        20px 55px,/*card-need-description*/
-        20px 90px,/*card-need-count*/
-        20px 114px,
-        95% 114px,
-        0px 152px;
+            100% 0,
+            /* move highlight to right */
+            20px 8px,
+            /*card-need-category*/
+            20px 30px,
+            /*card-need-state*/
+            20px 55px,
+            /*card-need-description*/
+            20px 90px,
+            /*card-need-count*/
+            20px 114px,
+            95% 114px,
+            0px 152px;
     }
 }
 
-div.listaOrganizaciones:empty{
+div.listaOrganizaciones:empty {
 
     margin-top: 20px;
     width: 100%;
-    height: 640px; /* change height to see repeat-y behavior */
+    height: 640px;
+    /* change height to see repeat-y behavior */
     --card-height: 320px;
     --card-header-color: rgb(0 0 0 / 4%);
     --card-body-color: rgb(0 0 0 / 0.01);
@@ -386,16 +430,21 @@ div.listaOrganizaciones:empty{
     --card-text-secondary-color: #f3f3f3;
 
     background-image:
-        radial-gradient( circle 20px at 30px 30px, var(--card-text-color) 99%, #ffffff61 0 ),
-        linear-gradient( 100deg, rgba(255, 255, 255, 0), rgb(255 255 255 / 16%) 50%, rgba(255, 255, 255, 0) 80% ),
-        linear-gradient( var(--card-text-color) 13px, transparent 0 ),/*card-org-name*/
-        linear-gradient( var(--card-text-color) 10px, transparent 0 ),/*card-org-type*/
-        linear-gradient( var(--card-text-color) 12px, transparent 0 ),/*card-need-category*/
-        linear-gradient( var(--card-text-secondary-color) 25px, transparent 0 ),/*card-need-description*/
-        linear-gradient( var(--card-text-color) 12px, transparent 0 ),/*card-need-category*/
-        linear-gradient( var(--card-text-secondary-color) 25px, transparent 0 ),/*card-need-description*/
-        repeating-linear-gradient(
-            var(--card-header-color), var(--card-header-color) 60px,
+        radial-gradient(circle 20px at 30px 30px, var(--card-text-color) 99%, #ffffff61 0),
+        linear-gradient(100deg, rgba(255, 255, 255, 0), rgb(255 255 255 / 16%) 50%, rgba(255, 255, 255, 0) 80%),
+        linear-gradient(var(--card-text-color) 13px, transparent 0),
+        /*card-org-name*/
+        linear-gradient(var(--card-text-color) 10px, transparent 0),
+        /*card-org-type*/
+        linear-gradient(var(--card-text-color) 12px, transparent 0),
+        /*card-need-category*/
+        linear-gradient(var(--card-text-secondary-color) 25px, transparent 0),
+        /*card-need-description*/
+        linear-gradient(var(--card-text-color) 12px, transparent 0),
+        /*card-need-category*/
+        linear-gradient(var(--card-text-secondary-color) 25px, transparent 0),
+        /*card-need-description*/
+        repeating-linear-gradient(var(--card-header-color), var(--card-header-color) 60px,
             var(--card-body-color), var(--card-body-color)60px,
             var(--card-body-color), var(--card-body-color) 135px,
             var(--card-action-color), var(--card-action-color) 135px,
@@ -407,28 +456,39 @@ div.listaOrganizaciones:empty{
             var(--card-body-color), var(--card-body-color) 260px,
             var(--card-body-color), var(--card-body-color) 300px,
             transparent, transparent 10px,
-            transparent, transparent 640px
-        );
+            transparent, transparent 640px);
 
     background-repeat: repeat-y;
 
     background-size:
-        100% var(--card-height), /* circle */
-        50px var(--card-height), /* highlight */
-        50% var(--card-height),/*card-org-name*/
-        30% var(--card-height),/*card-org-type*/
-        35% var(--card-height),/*card-need-category*/
-        90% var(--card-height),/*card-need-description*/
-        35% var(--card-height),/*card-need-category*/
-        90% var(--card-height),/*card-need-description*/
+        100% var(--card-height),
+        /* circle */
+        50px var(--card-height),
+        /* highlight */
+        50% var(--card-height),
+        /*card-org-name*/
+        30% var(--card-height),
+        /*card-org-type*/
+        35% var(--card-height),
+        /*card-need-category*/
+        90% var(--card-height),
+        /*card-need-description*/
+        35% var(--card-height),
+        /*card-need-category*/
+        90% var(--card-height),
+        /*card-need-description*/
         100% var(--card-height),
         1px var(--card-height);
 
     background-position:
-        5px 0, /* circle */
-        0 0, /* highlight */
-        70px 15px,/*card-org-name*/
-        70px 35px,/*card-org-type*/
+        5px 0,
+        /* circle */
+        0 0,
+        /* highlight */
+        70px 15px,
+        /*card-org-name*/
+        70px 35px,
+        /*card-org-type*/
         15px 75px,
         15px 100px,
         15px 175px,
@@ -438,23 +498,24 @@ div.listaOrganizaciones:empty{
     animation: shine-card-org 1s infinite;
 }
 
-@keyframes shine-card-org{
+@keyframes shine-card-org {
 
     to {
         background-position:
-        5px 0,
-        100% 0, /* move highlight to right */
-        70px 15px,
-        70px 35px,
-        15px 75px,
-        15px 100px,
-        15px 175px,
-        15px 200px,
-        5px 320px;
+            5px 0,
+            100% 0,
+            /* move highlight to right */
+            70px 15px,
+            70px 35px,
+            15px 75px,
+            15px 100px,
+            15px 175px,
+            15px 200px,
+            5px 320px;
     }
 }
 
-div[id^="trato-"]:empty{
+div[id^="trato-"]:empty {
 
     margin-top: 10px;
     width: 100%;
@@ -465,37 +526,48 @@ div[id^="trato-"]:empty{
     --card-text-secondary-color: #f3f3f3;
 
     background-image:
-        radial-gradient( circle 20px at 45px 40px, var(--card-text-color) 99%, #ffffff61 0 ),
-        linear-gradient( 100deg, rgba(255, 255, 255, 0), rgb(255 255 255 / 16%) 50%, rgba(255, 255, 255, 0) 80% ),
-        linear-gradient( var(--card-text-color) 13px, transparent 0 ),/*card-col-name*/
-        linear-gradient( var(--card-text-secondary-color) 10px, transparent 0 ),/*card-date*/
-        linear-gradient( var(--card-text-secondary-color) 20px, transparent 0 ),/*card-comment*/
-        repeating-linear-gradient(
-            var(--card-body-color), var(--card-body-color) 0px,
+        radial-gradient(circle 20px at 45px 40px, var(--card-text-color) 99%, #ffffff61 0),
+        linear-gradient(100deg, rgba(255, 255, 255, 0), rgb(255 255 255 / 16%) 50%, rgba(255, 255, 255, 0) 80%),
+        linear-gradient(var(--card-text-color) 13px, transparent 0),
+        /*card-col-name*/
+        linear-gradient(var(--card-text-secondary-color) 10px, transparent 0),
+        /*card-date*/
+        linear-gradient(var(--card-text-secondary-color) 20px, transparent 0),
+        /*card-comment*/
+        repeating-linear-gradient(var(--card-body-color), var(--card-body-color) 0px,
             var(--card-body-color), var(--card-body-color) 116px,
-             transparent, transparent 116px,
+            transparent, transparent 116px,
             transparent, transparent 126px,
             transparent, transparent 20px,
-            transparent, transparent 270px
-        );
+            transparent, transparent 270px);
 
     background-repeat: repeat-y;
 
     background-size:
-        100% var(--card-height), /* background */
-        50px var(--card-height), /* highlight */
-        55% var(--card-height),/*card-col-name*/
-        40% var(--card-height),/*card-date*/
-        85% var(--card-height);/*card-comment*/
+        100% var(--card-height),
+        /* background */
+        50px var(--card-height),
+        /* highlight */
+        55% var(--card-height),
+        /*card-col-name*/
+        40% var(--card-height),
+        /*card-date*/
+        85% var(--card-height);
+    /*card-comment*/
 
     background-position:
-        0px 0px, /* background */
-        0 0, /* highlight */
-        80px 24px,/*card-col-name*/
-        80px 45px,/*card-date*/
-        25px 75px;/*card-comment*/
+        0px 0px,
+        /* background */
+        0 0,
+        /* highlight */
+        80px 24px,
+        /*card-col-name*/
+        80px 45px,
+        /*card-date*/
+        25px 75px;
+    /*card-comment*/
 
-     animation: shine-card-comment 1s infinite;
+    animation: shine-card-comment 1s infinite;
 }
 
 div#colaboracionesConOrgs:empty{
@@ -540,7 +612,7 @@ div#insignias:empty{
 
     width: 55%;
     height: 36px;
-    
+
     background-image:linear-gradient(#f5f5f5  360px, transparent 0 );
 
     margin: 8px 8px 0px 0px;
@@ -553,18 +625,24 @@ div#insignias:empty{
 
     to {
         background-position:
-        0px 0px, /* background */
-        100% 0, /* highlight */
-        80px 24px,/*card-col-name*/
-        80px 45px,/*card-date*/
-        25px 75px;/*card-comment*/
+            0px 0px,
+            /* background */
+            100% 0,
+            /* highlight */
+            80px 24px,
+            /*card-col-name*/
+            80px 45px,
+            /*card-date*/
+            25px 75px;
+        /*card-comment*/
     }
 }
 
 @keyframes shine {
     to {
         background-position:
-            100% 0, /* move highlight to right */
+            100% 0,
+            /* move highlight to right */
             15px 10px;
     }
 }
@@ -572,12 +650,13 @@ div#insignias:empty{
 @keyframes loading {
     to {
         background-position:
-            100% 0, /* move highlight to right */
+            100% 0,
+            /* move highlight to right */
             100% 0;
     }
 }
 
-.custom-file-input:lang(es) ~ .custom-file-label::after {
+.custom-file-input:lang(es)~.custom-file-label::after {
 
     content: '\f093';
     font-weight: 900;
@@ -589,26 +668,31 @@ div#insignias:empty{
     -webkit-font-smoothing: antialiased;
     background-color: #ffffff;
 }
-#necesidadesTABS, #calificacionesTAB{
+
+#necesidadesTABS,
+#calificacionesTAB {
     border-bottom: none;
     color: #6d6d6d;
 }
 
-#necesidadesTABS .nav-link, #calificacionesTAB .nav-link{
+#necesidadesTABS .nav-link,
+#calificacionesTAB .nav-link {
     color: #6d6d6d;
     font-size: 0.9em;
     padding: 10px 6px;
 }
 
-#necesidadesTABS.nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link.active,
-#calificacionesTAB .nav-item.show .nav-link{
-    
+#necesidadesTABS.nav-tabs .nav-item.show .nav-link,
+.nav-tabs .nav-link.active,
+#calificacionesTAB .nav-item.show .nav-link {
+
     font-weight: 500;
     border-color: transparent;
     border-bottom-color: #d0deea;
     border-bottom-width: 4px;
 }
-.sinPaddingBotton{
+
+.sinPaddingBotton {
     padding-bottom: 0;
 }
 
@@ -617,12 +701,12 @@ div#insignias:empty{
     opacity: 0.8;
 } */
 
-.sombra:hover{
+.sombra:hover {
     /* box-shadow: 0 0 11px rgba(33,33,33,.3); */
     background-color: rgb(209, 206, 206);
 }
 
-.noLeida{
+.noLeida {
     background-color: rgb(253, 251, 115);
 }
 
@@ -633,7 +717,7 @@ div#insignias:empty{
 }
 
 
-.tooltipText{
+.tooltipText {
     visibility: hidden;
     width: 120px;
     background-color: black;
@@ -674,23 +758,24 @@ label.fas.fa-camera {
     border-radius: 50px;
 }
 
-label[for=actualizarAvatar].fas.fa-camera{
+label[for=actualizarAvatar].fas.fa-camera {
 
     left: -50%;
     top: 45px;
 }
 
-label[for=actualizarPortada].fas.fa-camera{
+label[for=actualizarPortada].fas.fa-camera {
 
     left: 50%;
     top: -65%;
 }
 
-input#actualizarPortada, input#actualizarAvatar {
+input#actualizarPortada,
+input#actualizarAvatar {
     display: none;
 }
 
-textarea#descripcionOrganizacion{
+textarea#descripcionOrganizacion {
 
     resize: vertical;
     height: fit-content !important;
@@ -704,8 +789,8 @@ div>img[src^="/assets/img/Sin"]{
     padding-top: 50px;
 }
 
-div#misNecesidades div[id^=necesidades] > p{
-    
+div#misNecesidades div[id^=necesidades]>p {
+
     font-size: 1.2em;
     font-weight: 500;
     color: #636363;
@@ -719,7 +804,7 @@ div#misNecesidades div[id^=necesidades] > p{
     width: 100%;
 }
 
-.need .progress{
+.need .progress {
 
     margin-left: 6px;
     border-radius: 0px;
@@ -727,59 +812,60 @@ div#misNecesidades div[id^=necesidades] > p{
     background-color: floralwhite;
 }
 
-.need .progress-bar{
+.need .progress-bar {
 
     background-color: #e3fbe3;
- }
+}
 
-#menu-usuario{
+#menu-usuario {
     right: 8px;
 }
 
-.btn:focus, button:focus{
+.btn:focus,
+button:focus {
 
     box-shadow: none;
     outline: 0 none;
 }
 
-#config-panels .tab-pane{
+#config-panels .tab-pane {
 
     min-height: 700px !important;
     display: flex;
-    flex-direction:column;
+    flex-direction: column;
 }
 
-#config-panels .tab-pane:not(.show){
+#config-panels .tab-pane:not(.show) {
 
-    display: none!important;
+    display: none !important;
 }
 
-#v-nav-tab{
+#v-nav-tab {
 
-   background-color: #fdfdfd;
-   min-height: 700px;
+    background-color: #fdfdfd;
+    min-height: 700px;
 }
 
-.shadow-top{
+.shadow-top {
 
     box-shadow: 1px -4px 7px 2px #b9b9b973;
     -webkit-box-shadow: 1px -4px 7px 2px #b9b9b973;
     -moz-box-shadow: 1px -4px 7px 2px #b9b9b973;
 }
 
-#nav-tab .nav-link{
+#nav-tab .nav-link {
 
     font-size: .9em;
-    padding:  10px 14px;
+    padding: 10px 14px;
     color: #848483;
 }
 
-#v-pills-tab .nav-link{
+#v-pills-tab .nav-link {
 
     color: #585858;
 }
 
-#v-pills-tab .nav-link.active{
+#v-pills-tab .nav-link.active {
 
     color: #216bc1;
     background-color: #f6f9ff;
@@ -787,12 +873,12 @@ div#misNecesidades div[id^=necesidades] > p{
     border-radius: 0;
 }
 
-.dropdown-menu[aria-labelledby^="telOptions-forID"]{
+.dropdown-menu[aria-labelledby^="telOptions-forID"] {
 
     left: -25px !important;
 }
 
-#fomrs-contact{
+#fomrs-contact {
 
     background: white;
     bottom: 0;
@@ -801,17 +887,17 @@ div#misNecesidades div[id^=necesidades] > p{
 
 .alertify .ajs-header {
 
-    font-size: 17px!important;
-    padding: 14px 24px!important;
+    font-size: 17px !important;
+    padding: 14px 24px !important;
 }
 
 .alertify .ajs-body .ajs-content {
-    padding: 24px 24px 24px 16px!important;
+    padding: 24px 24px 24px 16px !important;
 }
 
-.alertify .ajs-footer{
+.alertify .ajs-footer {
 
-    padding: 3px!important;
+    padding: 3px !important;
 }
 
 a[href="javascript:void(0);"] {
@@ -841,13 +927,36 @@ a.active[href="javascript:void(0);"] {
     margin-top: 2px;
 }
 
-#logoApp img{
-    
+#logoApp img {
+
     width: 42px;
 }
 
-@media (min-width: 768px){
+@media (min-width: 768px) {
 
-    li#dropDownUsuario {right: -50px !important;}
-    #notificaciones{position: relative!important;left: -10px !important;}
+    li#dropDownUsuario {
+        right: -50px !important;
+    }
+
+    #notificaciones {
+        position: relative !important;
+        left: -10px !important;
+    }
+}
+
+.carouselNotif{
+    height: 200px;
+}
+
+.spnCarousel{
+    visibility: hidden;
+}
+
+#carouselNotif:hover .spnCarousel{
+    visibility: visible;
+}
+
+.carouselNotif{
+    background-color: rgb(162 159 159 / 8%);
+
 }
