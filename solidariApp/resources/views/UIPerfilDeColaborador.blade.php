@@ -100,4 +100,5 @@
     <script type="text/javascript" src="{{URL::asset('assets/js/utilidades.js')}}"></script>
     <script type="text/javascript" src="{{URL::asset('assets/js/logueo.js')}}"></script>
     <script type="text/javascript" src="{{URL::asset('assets/js/perfilColaborador.js')}}"></script>
+    <script src="https://apis.google.com/js/platform.js?onload=onLoad" async defer></script>
 @endsection

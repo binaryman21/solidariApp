@@ -4,8 +4,6 @@ $(function () {
     var id = +location.pathname.slice('/ver-colaborador/'.length);
     isLoggedIn();
     getColaborador(id);
-    console.log(id);
-    console.log('ola');
 });
 
 function getColaborador(idUsuario){
@@ -14,7 +12,6 @@ function getColaborador(idUsuario){
     .then(response =>{
 
         var colaborador = response.data.colaborador;
-        console.log( colaborador );
         let contacto = {
 
             correo: colaborador.emailUsuario,

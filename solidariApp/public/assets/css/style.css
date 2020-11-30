@@ -22,7 +22,7 @@
 body {
     background-color: #e5e5e5;
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='36' height='72' viewBox='0 0 36 72'%3E%3Cg fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.4'%3E%3Cpath d='M2 6h12L8 18 2 6zm18 36h12l-6 12-6-12z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
-    min-width: 320px !important;
+    min-width: 325px !important;
 }
 
 .container{
@@ -37,6 +37,12 @@ footer .container{
 
     height: inherit;
     width: 100%;
+}
+
+img#imgPerfil {
+    width: 33px;
+    height: 33px;
+    border: 1px solid #efefef;
 }
 
 .imgPerfilCol,.imgPerfilOrg{
@@ -734,10 +740,6 @@ div#misNecesidades div[id^=necesidades] > p{
 
     box-shadow: none;
     outline: 0 none;
-}
-#nav-tab{
-    
-    width: 100vw;
 }
 
 #config-panels .tab-pane{

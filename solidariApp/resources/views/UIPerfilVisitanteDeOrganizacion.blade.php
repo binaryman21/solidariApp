@@ -3,7 +3,7 @@
 @section("contenido")
 @parent
  <!-- container -->
-<div class="container-sm perfil bg-white p-2 px-lg-4">
+<div class="container-sm perfil bg-white px-lg-4">
     <div class="card card-user mb-3">
         <div class="card-img-block">
             <img id="cover" src="{{URL::asset('assets/img/cover.svg')}}" class="img-fluid" alt="portada de la organizacion">
@@ -59,8 +59,9 @@
                 </div>
             </div>
         </div>
+        <!-- Calificaciones-->
         <div class="col-md-6">
-            <div class="card mt-sm-4">
+            <div class="card mt-4 mt-lg-2">
                 <div class="card-body">
                     <h6 class="card-title">Calificaciones</h6>
                     <!-- TABS Buenas | Regulares | Malas -->

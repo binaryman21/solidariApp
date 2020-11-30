@@ -6,7 +6,7 @@
 <div class="container-sm perfil bg-white">
     <div class="row">
         <!-- tabs horizontal en xs -->
-        <nav class="d-md-none">
+        <nav class="d-md-none w-100">
             <div class="nav nav-tabs" id="nav-tab" role="tablist">
                 <a class="nav-link active" id="datos-perfil-tab" data-toggle="tab" href="#datos-perfil" role="tab" aria-controls="datos-perfil" aria-selected="true">Perfil</a>
                 <a class="nav-link" id="datos-contacto-tab" data-toggle="tab" href="#datos-contacto" role="tab" aria-controls="datos-contacto" aria-selected="false">Contacto</a>
@@ -24,7 +24,7 @@
             </div>
         </div>
         <!-- PANELES DE LAS CONFIGURACIONES -->
-        <div class="col col-md-9 p-4" id="config-panels">
+        <div class="col-md-9 p-4" id="config-panels">
             <div class="tab-content" id="v-pills-tabContent">
                 <!-- Administracion de datos basicos -->
                 <section class="tab-pane fade show active" id="datos-perfil" role="tabpanel" aria-labelledby="datos-perfil-tab">

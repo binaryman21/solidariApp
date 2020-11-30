@@ -158,7 +158,7 @@ function configurarCuentaDelColaborador(idUsuario){
                         <button class="btn dropdown" type="button" id="dirOptions-forID-${domicilio.idDomicilio}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <i class="fas fa-ellipsis-v fa-xs"></i>
                         </button>
-                        <div class="dropdown-menu dropdown-menu-lg-right shadow" aria-labelledby="telOptions-forID-${domicilio.idDomicilio}" style="">
+                        <div class="dropdown-menu dropdown-menu-lg-right shadow" aria-labelledby="telOptions-forID-${domicilio.idDomicilio}">
                             <button class="dropdown-item" id="btnEdite-Dir${indexInArray}" data-dir="${indexInArray}" type="button">Editar</button>
                         </div>
                     </li>`

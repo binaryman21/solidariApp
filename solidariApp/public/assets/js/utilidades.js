@@ -347,13 +347,8 @@ function cargarComentariosOrganizacion( idUsuario ){
     .then(response => response.json())
     .then(data => {
         
-<<<<<<< HEAD
         let calificaciones = data.calificaciones
         llenarComentariosOrganizacion(data.calificaciones);
-=======
-        let calificaciones = data.calificaciones;
-        llenarComentariosOrganizacion( data.calificaciones );
->>>>>>> 449ff225ddd462882b7449ba621017eaea1bec20
     })
     .catch(error => {
         
