@@ -487,7 +487,13 @@ function mostrarNotificacionesCarousel(notificaciones){
 
         //INDIFERENTE PARA CUALQUIER NOTIFICACION
         let fecha = new Date(notificacion.fechaNotificacion).toLocaleDateString('es-AR')
-        let img = notificacion.emisor[0].urlFotoPerfilUsuario;
+        let img;
+        if( notificacion.idMensaje == 7 ){
+            img = notificacion.receptor[0].urlFotoPerfilUsuario;
+        }
+        else{
+            img = notificacion.emisor[0].urlFotoPerfilUsuario;
+        }
         let cardNotificacion;
 
         if(cont > 0){
