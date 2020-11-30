@@ -109,13 +109,14 @@ function mostrarInterfazSesionIniciada(usuario)
     $("#dropDownUsuario").show();
     $("#botonesRegistro").hide();
     $("#imgPerfil").attr("src",usuario.urlFotoPerfilUsuario);
-    $("#mapa").removeClass("mapa");
-    $("#mapa").addClass("mapaExtendido");
+    // $("#mapa").removeClass("mapa");
+    // $("#mapa").addClass("mapaExtendido");
     $("#btnVerMiPerfil").attr("href","/"+ usuario.rol.nombreRol);
     $("#notificaciones").removeClass("d-none");
 
     // console.log("usuario "+usuario.idUsuario);
     cargarNotificaciones(usuario);
+
 }
 
 function signOut() {

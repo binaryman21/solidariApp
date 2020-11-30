@@ -11,6 +11,7 @@ use App\Models\Calificacion;
 use App\Models\CalificacionOrganizacion;
 use App\Models\Necesidad;
 use App\Models\TratoCalificacion;
+use App\Models\usuario;
 use App\Models\CategoriNecesidad;
 use App\Models\Insignia;
 use Illuminate\Http\Request;
@@ -222,5 +223,75 @@ class NotificacionController extends Controller
         }
     }
 
+    public static function cargarNotificacionesCarousel(){
+        set_time_limit(1000);
 
+        try
+        {
+            $notificaciones = Notificacion::getNotificaciones();
+
+
+            foreach($notificaciones as $notificacion){
+
+                //SI ES TIPO 7 EL RECEPTOR OBTUVO UNA NUEVA INSIGNIA Y EL EMISOR ES EL SISTEMA
+                if($notificacion->idMensaje == 7){
+                    $insignia =  Insignia::where('idInsignia', '=', $notificacion->idInsignia)->first();
+                    $notificacion['insignia'] = $insignia;
+                    $notificacion['emisor'] = '0';
+                    $usuario = Usuario::getUsuario($notificacion->idReceptor);
+                    $notificacion['receptor'] = $usuario;
+                }
+                elseif($notificacion->idMensaje == 8)
+                {
+                    $notificacion['receptor'] = '0';
+                    $usuario = Usuario::getUsuario($notificacion->idEmisor);
+                    $notificacion['emisor'] = $usuario;
+                }
+                else
+                {
+                    $usuario = Usuario::getUsuario($notificacion->idEmisor);
+                    $notificacion['emisor'] = $usuario;
+
+                    $usuario = Usuario::getUsuario($notificacion->idReceptor);
+                    $notificacion['receptor'] = $usuario;
+                }
+
+                //SI ES DE TIPO 1, 2 o 5 TIENE NECECEISDADES
+                if($notificacion->idMensaje == 1 || $notificacion->idMensaje == 8 || $notificacion->idMensaje == 2){
+                    $necesidad = Necesidad::getNecesidad($notificacion->idNecesidad);
+                    $categoria = CategoriaNecesidad::getCategoria($necesidad->idCategoriaNecesidad);
+                    $tipoNecesidad = $categoria->nombreCategoria;
+                    $notificacion['tipoNecesidad'] = $tipoNecesidad;
+                    $notificacion['necesidad'] = $necesidad;
+
+                }
+                //SI ES DE TIPO 2 TIENE UNA AYUDA CALIFICADA
+                if($notificacion->idMensaje == 2){
+                    $calificacion = Calificacion::where('idColaboracion', '=', $notificacion->idColaboracion)->first();
+                    $tratoRecibido = TratoCalificacion::where('idTrato','=', $calificacion->tratoRecibido)->first();;
+                    $notificacion['tratoRecibido'] = $tratoRecibido->descripcion;
+                }
+                //SI ES TIPO 6 TIENE UNA CALIFICACION SOBRE SU ORGANIZACION
+                if($notificacion->idMensaje == 6){
+                    $calificacion = CalificacionOrganizacion::where('idCalificado',$notificacion->idReceptor)->where('idCalificante',$notificacion->idEmisor)->first();
+                    $tratoRecibido = TratoCalificacion::where('idTrato','=', $calificacion->tratoRecibido)->first();
+                    $notificacion['tratoRecibido'] = $tratoRecibido->descripcion;
+                }
+
+            }
+
+            return response()->json([
+                'notificaciones' => $notificaciones,
+                'result' => 1
+            ]);
+        }
+        catch(\Exception $e)
+        {
+            return response()->json([
+                'result' => 0,
+                'message' => $e->getMessage(),
+            ]);
+        }
+    }
 }
+

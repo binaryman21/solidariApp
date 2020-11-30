@@ -13,9 +13,6 @@ function cargarNotificaciones(usuario){
 
             if(!notificaciones == ''){
                 mostrarNotificaciones(notificaciones,noLeidas)
-                $("btnNotifLeidas").on('click',()=>{
-
-                })
             }
         }else{
              console.log('result '+response.data.result+ " msj: "+response.data.message);
@@ -57,7 +54,7 @@ function mostrarNotificaciones(notificaciones,noLeidas){
     })
 
     notificaciones.forEach(notificacion => {
-        // console.log(  notificacion );
+
         //INDIFERENTE PARA CUALQUIER NOTIFICACION
         let fecha = new Date(notificacion.fechaNotificacion).toLocaleDateString('es-AR')
         let nombre;
@@ -338,7 +335,6 @@ function crearNotificacionCalificacionOrganizacion(calificacion){
 }
 
 function marcarNotifLeidas(notificaciones, noLeidas){
-    console.log('Entro');
     notificaciones.forEach(notificacion =>{
         if(!notificacion.leido){
             notificacion.leido = "1";

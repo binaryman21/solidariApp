@@ -17,10 +17,6 @@ class Notificacion extends Model
         return Notificacion::where("idReceptor",$idUsuario)
         ->leftJoin('usuario', 'usuario.idusuario', '=', 'notificacion.idEmisor')
         ->join('mensajeNotificacion','mensajeNotificacion.idMensaje', '=','notificacion.idMensaje')
-        // ->join('colaborador','colaborador.idUsuario', '=', 'notificacion.idEmisor')
-        // ->where('usuario.idRolUsuario','=', 1 )
-        // ->join('organizacion','organizacion.idUsuario', '=', 'notificacion.idEmisor')
-        // ->where('usuario.idRolUsuario','=', 2 )
         ->orderBy('fechaNotificacion', 'DESC')
         ->get();
     }
@@ -29,6 +25,16 @@ class Notificacion extends Model
     {
         return Notificacion::find($idNotificacion);
     }
+
+    public static function getNotificaciones()
+    {
+        return Notificacion::where('notificacion.idMensaje','not like','5')
+        ->orderBy('fechaNotificacion', 'DESC')
+        ->join('mensajeNotificacion','mensajeNotificacion.idMensaje', '=','notificacion.idMensaje')
+        ->take(20)
+        ->get();
+    }
+
 
 
 }

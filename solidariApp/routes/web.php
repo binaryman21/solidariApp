@@ -161,6 +161,7 @@ Route::post('/crearNotificacionColaboracion','App\Http\Controllers\NotificacionC
 Route::post('/upDateNotificacion', 'App\Http\Controllers\NotificacionController@upDateNotificacione')->name('upDateNotificacion');
 Route::post('/crearNotificacionCalificacionColaboracion','App\Http\Controllers\NotificacionController@crearNotificacionCalificacionColaboracion')->name('crearNotificacionCalificacionColaboracion');
 Route::post('/crearNotificacionCalificacionOrganizacion','App\Http\Controllers\NotificacionController@crearNotificacionCalificacionOrganizacion')->name('crearNotificacionCalificacionOrganizacion');
+Route::post('/cargarNotificacionesCarousel','App\Http\Controllers\NotificacionController@cargarNotificacionesCarousel')->name('cargarNotificacionesCarousel');
 
 //SUSCRIPCION
 Route::post('/registrarSuscripcion', 'App\Http\Controllers\SuscripcionController@registrarSuscripcion')->name('registrarSuscripcion');

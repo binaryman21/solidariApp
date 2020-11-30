@@ -4,7 +4,9 @@
 .mapaExtendido {
     height:  600px;
 }
-
+.carouselNotif{
+    height: 200px;
+}
 .alertify,.alertify-notifier,.alertify-confirm{
     z-index:999999 !important;
     /* margin-top: -50px; */
@@ -513,3 +515,15 @@ div.listaOrganizaciones:empty{
 }
 
 
+.spnCarousel{
+    visibility: hidden;
+}
+
+#carouselNotif:hover .spnCarousel{
+    visibility: visible;
+}
+
+.carouselNotif{
+    background-color: rgb(162 159 159 / 8%);
+
+}

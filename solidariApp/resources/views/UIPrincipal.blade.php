@@ -23,7 +23,7 @@
                             <button type="button" class="btn btn-outline-secondary rounded-0 border-left-0 border-right-0" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id="filtros">
                                 <i class="fas fa-filter fa-xs"></i>
                             </button>
-                            <div class="dropdown-menu dropdown-menu-right" id="filtrosCategoria" 
+                            <div class="dropdown-menu dropdown-menu-right" id="filtrosCategoria"
                             aria-labelledby="filtros" x-placement="bottom-end"></div>
                         </div>
                         <button class="btn btn-outline-secondary border-secondary border-left-0" id="btnBuscarNeccesidades" type="button"><i class="fa fa-search fa-xs"></i></button>
@@ -49,8 +49,13 @@
                         <div id="mapa" class = "mapa"></div>
                     </div>
                 </div>
+                <div class="row p-2" >
+                    <div class = "d-flex flex-column rounded p-2 h-auto" style = "width:100%;height:100%;">
+                        <div id="carouselNotif" class="carouselNotif"></div>
+                    </div>
+                </div>
                 <div class="row px-2" id = "botonesRegistro">
-                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-xs-12 rounded p-2" >
+                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-xs-12 rounded p-2">
                     <div class = "d-flex flex-column rounded justify-content-between p-4" style = "background-color:#C3E4DF;width:100%;height:100%;">
                         <h5>¿Quieres ayudar?</h5>
                         <p class="mb-4">Al registrarte como colaborador podrás ayudar a una organización con diferentes recursos</p>
