@@ -19,9 +19,11 @@ function registrarNecesidad(idUsuario)
         // console.log( 'respuestaaa ' + response.data.message);
         // console.log(necesidad);
         necesidad.idNecesidad = response.data.id;
+        necesidad.descripcionEstado = "En proceso";
+        necesidad.fechaCreacionNecesidad = response.data.fecha;
         desbloquearBoton($("#btnGuardarCambiosNecesidad"));
-        let divNecesidades = $('.necesidades');
-        divNecesidades.prepend(`<div class="col-md-6" id="necesidad${necesidad.idNecesidad}"></div>`);
+        let divNecesidades = $('#necesidadesEnProceso');
+        divNecesidades.prepend(`<div class="card need ${necesidad.nombreCategoria.toLowerCase()} ${necesidad.descripcionEstado.replace(/\s+/g, "")}" id="necesidad${necesidad.idNecesidad}"></div>`);
         crearCardNecesidad(necesidad, 0);
         agregarPaginacionNecesidades();
         limpiarValidaciones($("#inpFechaLimite"),  $("#errorFechaLimite") );

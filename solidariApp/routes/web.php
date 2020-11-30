@@ -74,6 +74,7 @@ Route::get('/ver-colaborador/{idUsuario}', function($idUsuario){
     
 
     if(UsuarioController::ExisteUsuario($idUsuario)){
+        session_start();
 
         if(isset($_SESSION['usuario'])){
 

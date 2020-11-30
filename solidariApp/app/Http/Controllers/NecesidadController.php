@@ -73,7 +73,8 @@ class NecesidadController extends Controller
                 return response()->json([
                     'resultado' => 1,
                     'message' => 'registro exitoso',
-                    'id' => $necesidad->idNecesidad
+                    'id' => $necesidad->idNecesidad,
+                    'fecha' => $necesidad->fechaCreacionNecesidad
                 ]);
             }
             else

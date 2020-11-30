@@ -340,7 +340,7 @@ function cargarComentariosOrganizacion( idUsuario ){
     .then(data => {
         
         let calificaciones = data.calificaciones
-        //llenarComentariosOrganizacion({comentarios: calificaciones})
+        llenarComentariosOrganizacion(data.calificaciones)
     })
     .catch(error => {
         

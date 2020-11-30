@@ -12,7 +12,7 @@
             <div class="media">
                 <img id="imgPerfilColaborador" class="rounded-circle imgPerfilOrg align-self-start mr-auto" src="{{URL::asset('assets/img/imgUserProfile.png')}}" alt="imagen de usuario">
             </div>
-            <button class="user-action d-flex btn ml-auto p-0" type="button" data-toggle="modal" href="#modalSubscribirse" id="btnSuscribirse">Subscribirse</button>
+        <button class="user-action d-flex btn ml-auto p-0" type="button" data-toggle="modal" href="#modalSubscribirse" id="btnSuscribirse">Subscribirse</button>
             <div class="clearfix mb-n4"></div>
             <h5 class="card-title mt-2 loading ldg-w-sm" id="nombreColaborador"></h5>
             <small class="card-text text-muted loading" id="fechaAltaUsuario"></small>

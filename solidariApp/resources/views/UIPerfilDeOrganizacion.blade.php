@@ -111,8 +111,12 @@
   </div>
 </div>
 
-@include("UIPerfilModales.UIModalEditarNecesidad")
-@include("UIPerfilModales.UIModalBajaNecesidad")
+@include("UIPerfilModales/UIModalEditarNecesidad")
+@include("UIPerfilModales/UIModalBajaNecesidad")
+<!--agregue includes-->
+@include("UIPerfilModales/UIModalCalificarOrganizacion")
+@include("UIPerfilModales/UIModalSuscribirse")
+@include("UIDetalleNecesidad")
 @endsection
 
 @section('scripts')
@@ -120,4 +124,7 @@
     <script type="text/javascript" src="{{URL::asset('assets/js/utilidades.js')}}"></script>
     <script type="text/javascript" src="{{URL::asset('assets/js/necesidad.js')}}"></script>
     <script type="text/javascript" src="{{URL::asset('assets/js/perfilOrganizacion.js')}}"></script>
+    <!-- <script type="text/javascript" src="{{URL::asset('assets/js/calificacion.js')}}"></script> -->
+    <!-- <script type="text/javascript" src="{{URL::asset('assets/js/colaboracion.js')}}"></script> -->
+    <!-- <script type="text/javascript" src="{{URL::asset('assets/js/validaciones.js')}}"></script> -->
 @endsection
