@@ -13,9 +13,6 @@ function cargarNotificaciones(usuario){
 
             if(!notificaciones == ''){
                 mostrarNotificaciones(notificaciones,noLeidas)
-                $("btnNotifLeidas").on('click',()=>{
-
-                })
             }
         }else{
              console.log('result '+response.data.result+ " msj: "+response.data.message);

@@ -106,7 +106,7 @@ function isLoggedIn({funcionSuccess = undefined, RedirectIfNot = false} = {})
             $("#btnIngresar").show();
             $("#botonesRegistro").show();
             if(RedirectIfNot) window.location = '/';
-        } 
+        }
     });
 }
 
@@ -116,8 +116,8 @@ function mostrarInterfazSesionIniciada(usuario)
     $("#dropDownUsuario").show();
     $("#botonesRegistro").hide();
     $("#imgPerfil").attr("src",usuario.urlFotoPerfilUsuario);
-    $("#mapa").removeClass("mapa");
-    $("#mapa").addClass("mapaExtendido");
+    // $("#mapa").removeClass("mapa");
+    // $("#mapa").addClass("mapaExtendido");
     $("#btnVerMiPerfil").attr("href", `/cuenta-${usuario.rol.nombreRol}/perfil`);
     //asi estaba antes en las rutas que defini uso "/cuenta-rol/perfil", ademas "./"
     // concatenaria el path acutal con el que este en un href y si estas en tu perfil

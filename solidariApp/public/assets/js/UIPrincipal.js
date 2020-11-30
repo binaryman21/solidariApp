@@ -19,6 +19,8 @@ $( document ).ready(function() {
     listarProvincias(1);
     listarTiposOrganizaciones();
     listarCategoriasNecesidad();
+    cargarCarousel();
+
     // agregarPaginacionUsuarios();
     // EVENTOS
     $(document).on('click', '.alert-close', function() {
@@ -428,4 +430,257 @@ function capitalize(text){
 
     let FirstLetterCap = text[0].toUpperCase();
     return FirstLetterCap+text.slice(1);
+}
+
+function cargarCarousel(){
+    $("#carouselNotif").html(`
+    <div class = "d-flex d-flex align-items-center row rounded m-auto border" style = "width:100%;height:100%;">
+        <div class="m-auto row">
+            <span class="spinner-border spinner-border-sm mr-2 mt-2" role="status" aria-hidden="true" id="spinnerNotif"></span>
+            <div>
+                <h4>Cargando Noticias...</h4>
+            </div>
+        </div>
+    </div>
+    `)
+
+    axios.post("/cargarNotificacionesCarousel")
+    .then((response)=>{
+        if(response.data.result){
+            let notificaciones = response.data.notificaciones;
+            if(!notificaciones == ''){
+                console.log("Carousel notif");
+                console.log(notificaciones);
+                mostrarNotificacionesCarousel(notificaciones);
+            }
+        }else{
+             console.log('Carousel notif result '+response.data.result+ " msj: "+response.data.message);
+        }
+
+    })
+
+}
+
+function mostrarNotificacionesCarousel(notificaciones){
+
+    // $("#carouselNotif").empty();
+    $("#carouselNotif").html(`
+        <div id="carouselNoticias" class="carousel slide h-100" data-ride="carousel">
+            <div class="carousel-inner h-100" id="carouselInnerNotif">
+
+            </div>
+        <a class="carousel-control-prev" href="#carouselNoticias" role="button" data-slide="prev">
+            <span class="carousel-control-prev-icon bg-secondary p-2 spnCarousel" aria-hidden="true"></span>
+            <span class="sr-only">Previous</span>
+        </a>
+        <a class="carousel-control-next" href="#carouselNoticias" role="button" data-slide="next">
+            <span class="carousel-control-next-icon bg-secondary p-2 spnCarousel" aria-hidden="true"></span>
+            <span class="sr-only">Next</span>
+        </a>
+    </div>
+    `)
+
+    let cont = 0;
+    let active = 'active';
+
+    notificaciones.forEach(notificacion => {
+
+        //INDIFERENTE PARA CUALQUIER NOTIFICACION
+        let fecha = new Date(notificacion.fechaNotificacion).toLocaleDateString('es-AR')
+        let img = notificacion.emisor[0].urlFotoPerfilUsuario;
+        let cardNotificacion;
+
+        if(cont > 0){
+            active = '';
+        }
+
+
+
+        //NOTIFICACIONES EXCLUSIVAS PARA CUANDO ES POR UNA NECESIDAD
+        if( notificacion.idMensaje == 1 ){
+            let nombreCategoria = notificacion.tipoNecesidad;
+            let necesidad = notificacion.necesidad;
+            necesidad["nombreCategoria"] = nombreCategoria;
+
+            cardNotificacion = `
+            <div class="carousel-item ${active} h-100">
+                <div class="container border w-100 h-100 d-flex alig-items-center">
+                    <div class="m-auto">
+                        <div>
+                            <div class="row">
+                                <div class="m-auto">
+                                    <img class="rounded-circle imgPerfilOrg" src="${img}" alt="">
+                                </div>
+                            </div>
+                            <div class="card-text align-self-center mx-2 w-100 row text-center">
+                                <p>¡<a class="font-weight-bold text-dark text-decoration-none notificacionEmisor${notificacion.idNotificacion} " href="/colaborador/${notificacion.idEmisor}">${notificacion.emisor.nombre[0].nombre}</a>
+                                se comprometió con  <a class="font-weight-bold text-dark text-decoration-none notificacionReceptor${notificacion.idNotificacion}" href="/organizacion/${notificacion.idReceptor}">${notificacion.receptor.nombre[0].nombre}</a>
+                                para colaborar con <a class="font-weight-bold text-dark text-decoration-none notificacionVerNecesidad${notificacion.idNotificacion}" href="#modalDetalleNecesidad" data-toggle="modal">${nombreCategoria}</a>!
+                                </p>
+                            </div>
+                            <div class="row">
+                                <p class="m-auto">${fecha}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>`
+        }
+        //NOTIFICACIONES EXCLUSIVAS PARA CUANDO UNA ORGANIZACION CALIFICA UNA AYUDA
+        else if(notificacion.idMensaje == 2){
+            let nombreCategoria = notificacion.tipoNecesidad;
+            let necesidad = notificacion.necesidad;
+            let trato = notificacion.tratoRecibido;
+
+            necesidad["nombreCategoria"] = nombreCategoria;
+            if(trato === 'Bueno') trato ='Buena';
+            if(trato === 'Malo') trato = 'Mala';
+
+            cardNotificacion = `
+            <div class="carousel-item ${active} h-100">
+                <div class="container border w-100 h-100 d-flex alig-items-center">
+                    <div class="m-auto">
+                        <div>
+                            <div class="row">
+                                <div class="m-auto">
+                                    <img class="rounded-circle imgPerfilOrg" src="${img}" alt="">
+                                </div>
+                            </div>
+                            <div class="card-text align-self-center mx-2 w-100 row text-center">
+                                <p>¡<a class="font-weight-bold text-dark text-decoration-none notificacionEmisor${notificacion.idNotificacion} " href="/organizacion/${notificacion.idEmisor}">${notificacion.emisor.nombre[0].nombre}</a>
+                                ha calificado como "${trato}" la colaboración de <a class="font-weight-bold text-dark text-decoration-none notificacionReceptor${notificacion.idNotificacion}" href="/colaborador/${notificacion.idReceptor}">${notificacion.receptor.nombre[0].nombre}</a>
+                                con <a class="font-weight-bold text-dark text-decoration-none notificacionVerNecesidad${notificacion.idNotificacion}" href="#modalDetalleNecesidad" data-toggle="modal">${nombreCategoria}</a>!</p>
+                            </div>
+                            <div class="row">
+                                <p class="m-auto">${fecha}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>`
+        }
+        // NOTIFICACIONES EXCLUSIVAS PARA CUANDO ES UNA SUSCRIPCION
+        else if(notificacion.idMensaje == 3){
+            cardNotificacion = `
+            <div class="carousel-item ${active} h-100">
+                <div class="container border w-100 h-100 d-flex alig-items-center">
+                    <div class="m-auto">
+                        <div>
+                            <div class="row">
+                                <div class="m-auto">
+                                    <img class="rounded-circle imgPerfilOrg" src="${img}" alt="">
+                                </div>
+                            </div>
+                            <div class="card-text align-self-center mx-2 w-100 row text-center">
+                                <p>¡<a class="font-weight-bold text-dark text-decoration-none notificacionEmisor${notificacion.idNotificacion} " href="/colaborador/${notificacion.idEmisor}">${notificacion.emisor.nombre[0].nombre}</a>
+                                se ha suscrito a <a class="font-weight-bold text-dark text-decoration-none notificacionReceptor${notificacion.idNotificacion} " href="/organizacion/${notificacion.idReceptor}">${notificacion.receptor.nombre[0].nombre}</a>!</p>
+                            </div>
+                            <div class="row">
+                                <p class="m-auto">${fecha}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>`
+        }
+        // NOTIFICACIONES EXCLUSIVAS PARA CUANDO UNA ORGANIZACION CREA UNA NECESIDAD
+        else if(notificacion.idMensaje == 8){
+            let nombreCategoria = notificacion.tipoNecesidad;
+            let necesidad = notificacion.necesidad;
+            necesidad["nombreCategoria"] = nombreCategoria;
+
+            cardNotificacion = `
+            <div class="carousel-item ${active} h-100" >
+                <div class="container border w-100 h-100 d-flex alig-items-center">
+                    <div class="m-auto">
+                        <div>
+                            <div class="row">
+                                <div class="m-auto">
+                                    <img class="rounded-circle imgPerfilOrg" src="${img}" alt="">
+                                </div>
+                            </div>
+                            <div class="card-text align-self-center mx-2 w-100 row text-center">
+                                <p>¡<a class="font-weight-bold text-dark text-decoration-none notificacionEmisor${notificacion.idNotificacion} " href="/organizacion/${notificacion.idEmisor}">${notificacion.emisor.nombre[0].nombre}</a>
+                                Necesita colaboración con <a class="font-weight-bold text-dark text-decoration-none notificacionVerNecesidad${notificacion.idNotificacion}" href="#modalDetalleNecesidad" data-toggle="modal">${necesidad.nombreCategoria}</a>!</p>
+                            </div>
+                            <div class="row">
+                                <p class="m-auto">${fecha}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>`
+        }
+        //NOTIFICACIONES EXCLUSIVAS PARA CUANDO UN COLABORADOR CALIFICA UNA ORGANIZACION
+        else if(notificacion.idMensaje == 6){
+            let trato = notificacion.tratoRecibido;
+
+            cardNotificacion = `
+            <div class="carousel-item ${active} h-100">
+                <div class="container border w-100 h-100 d-flex alig-items-center">
+                    <div class="m-auto">
+                        <div>
+                            <div class="row">
+                                <div class="m-auto">
+                                    <img class="rounded-circle imgPerfilOrg" src="${img}" alt="">
+                                </div>
+                            </div>
+                            <div class="card-text align-self-center mx-2 w-100 row text-center">
+                                <p>¡<a class="font-weight-bold text-dark text-decoration-none notificacionEmisor${notificacion.idNotificacion} " href="/colaborador/${notificacion.idEmisor}">${notificacion.emisor.nombre[0].nombre}</a>
+                                calificó como "${trato}" el trato recibido de parte de la organizacion
+                                <a class="font-weight-bold text-dark text-decoration-none notificacionVerNecesidad${notificacion.idNotificacion}" href="/organizacion/${notificacion.idReceptor}">${notificacion.receptor.nombre[0].nombre}</a>!</p>
+                            </div>
+                            <div class="row">
+                                <p class="m-auto">${fecha}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>`
+        }
+
+        else if(notificacion.idMensaje == 7){
+            let trato = notificacion.tratoRecibido;
+
+            cardNotificacion = `
+            <div class="carousel-item ${active} h-100">
+                <div class="container border w-100 h-100 d-flex alig-items-center">
+                    <div class="m-auto">
+                        <div>
+                            <div class="row">
+                                <div class="m-auto">
+                                    <img class="rounded-circle imgPerfilOrg" src="${img}" alt="">
+                                </div>
+                            </div>
+                            <div class="card-text align-self-center mx-2 w-100 row text-center">
+                                <p>¡<a class="font-weight-bold text-dark text-decoration-none notificacionEmisor${notificacion.idNotificacion} " href="/colaborador/${notificacion.idReceptor}">${notificacion.receptor.nombre[0].nombre}</a>
+                                ha recibido una nueva insignia! </p>
+                            </div>
+                            <div class="row">
+                                <p class = "text-primary m-auto"><i class ="${notificacion.insignia.icono} mr-2" ></i>${notificacion.insignia.nombreInsignia}</p>
+                            </div>
+                            <div class="row">
+                                <p class="m-auto">${fecha}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>`
+        }
+        $("#carouselInnerNotif").append(cardNotificacion);
+        cont++;
+
+        if( notificacion.idMensaje == 1 || notificacion.idMensaje == 5 || notificacion.idMensaje == 6){
+            let necesidad = notificacion.necesidad;
+            $(`.notificacionVerNecesidad${notificacion.idNotificacion}`).on('click',function(){
+                // if(notificacion.idReceptor ==  )
+                //     cargarDatosModalDetalleNecesidad(necesidad, "organizacion");
+                // else
+                    cargarDatosModalDetalleNecesidad(necesidad);
+
+            })
+        }
+
+    })
+
 }
