@@ -56,7 +56,7 @@ class NecesidadController extends Controller
                 $necesidad->idCategoriaNecesidad = $datosNecesidad ->idCategoria;
                 $necesidad->idUsuario = $datosNecesidad ->idUsuario;
                 $necesidad->save();
-
+                $necesidad = Necesidad::find($necesidad->idNecesidad);
                 $suscriptores = Suscripcion::getSuscriptores( $_SESSION['usuario']->idUsuario );
 
                 foreach ($suscriptores as $suscriptor){

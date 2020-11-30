@@ -21,6 +21,7 @@ function registrarNecesidad(idUsuario)
         necesidad.idNecesidad = response.data.id;
         necesidad.descripcionEstado = "En proceso";
         necesidad.fechaCreacionNecesidad = response.data.fecha;
+        alert(response.data.fecha);
         desbloquearBoton($("#btnGuardarCambiosNecesidad"));
         let divNecesidades = $('#necesidadesEnProceso');
         divNecesidades.prepend(`<div class="card need ${necesidad.nombreCategoria.toLowerCase()} ${necesidad.descripcionEstado.replace(/\s+/g, "")}" id="necesidad${necesidad.idNecesidad}"></div>`);
@@ -89,7 +90,7 @@ function bajaNecesidad(idNecesidad){
 
             $("#necesidad" + idNecesidad).remove();
             $("#modalBajaNecesidad").modal('toggle');
-            $("#modalEditarNecesidad").modal('toggle');
+            $("#modalEditarNecesidad").modal('hide');
             document.getElementById("formEditarNecesidad").reset();
             alertify.error('Necesidad eliminada');
             agregarPaginacionNecesidades();

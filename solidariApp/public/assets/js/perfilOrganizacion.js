@@ -12,7 +12,9 @@ document.addEventListener('DOMContentLoaded', () => {
         $("#categoriaActual").val(colorModal);
     })
 
-
+    $("#btnEliminarNecesidad").click(function(e){
+        e.preventDefault();
+    });
 })
 
 function getOrganizacion(idUsuario){
@@ -294,7 +296,7 @@ function crearCardNecesidad(necesidad,vistaVisitante)
             <button class="btn dropdown px-0 text-muted" type="button" id="OptionsNeed-forID-${necesidad.idNecesidad}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="fas fa-ellipsis-v fa-xs"></i></button>
             <div class="dropdown-menu dropdown-menu-right shadow-sm mt-n4" aria-labelledby="OptionsNeed-forID-${necesidad.idNecesidad}">
                 <button class="dropdown-item" data-toggle="modal" data-target="#modalEditarNecesidad" id="btnEdite-need${necesidad.idNecesidad}" data-need="${necesidad.idNecesidad}" type="button">Editar necesidad</button>
-                <button class="dropdown-item" id="btnDelete-need${necesidad.idNecesidad}" data-need="${necesidad.idNecesidad}" type="button">Eliminar necesidad</button>                            
+                <button class="dropdown-item" data-toggle="modal" href="#modalBajaNecesidad" id="btnDelete-need${necesidad.idNecesidad}" data-need="${necesidad.idNecesidad}" type="button">Eliminar necesidad</button>                            
                 <a target="_blank" class="dropdown-item fb-xfbml-parse-ignore"
                     href="https://www.facebook.com/sharer/sharer.php?u=https://solidariapp.com.ar/organizacion/${necesidad.idUsuario}/necesidad/${necesidad.idNecesidad}">Compartir en Facebook</a>
             </div>
@@ -322,6 +324,13 @@ function crearCardNecesidad(necesidad,vistaVisitante)
     $("#necesidad" + necesidad.idNecesidad).append(cardNecesidad);
 
     if(vistaVisitante == 0){
+        $("#btnDelete-need" + necesidad.idNecesidad).click(function(){
+            $("#btnConfirmarEliminarNecesidad").unbind("click");
+            $("#btnConfirmarEliminarNecesidad").click((e)=>{
+                bloquearBoton($("#btnConfirmarEliminarNecesidad"));
+                bajaNecesidad(necesidad.idNecesidad);
+            }) 
+        });
         $("#btnEdite-need" + necesidad.idNecesidad).unbind("click");
         //evento click del btn editar necesidad
         $("#btnEdite-need" + necesidad.idNecesidad).click(()=>{
