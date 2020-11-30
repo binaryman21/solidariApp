@@ -75,8 +75,6 @@ Route::get('/ver-colaborador/{idUsuario}', function($idUsuario){
 
     if(UsuarioController::ExisteUsuario($idUsuario)){
         session_start();
-
-        session_start();
         if(isset($_SESSION['usuario'])){
             if( $_SESSION['usuario']->idUsuario == $idUsuario ){
                 return view('UIPerfilDeColaborador');

@@ -76,12 +76,12 @@ function cargarNecesidades(idUsuario){
                     
                 </div>`;
                 
-
+                console.log(need.estadoNecesidad);
                 switch(need.estadoNecesidad){
 
                     case 1: divNecesidadesEnProgreso.append(cardNeed); break;
                     case 2: divNecesidadesCumplidas.append(cardNeed); break;
-                    default: divNecesidadesEliminadas.append(cardNeed);
+                    case 3: divNecesidadesEliminadas.append(cardNeed); break;
                 }
 
                 crearCardNecesidad(need,0);
@@ -307,7 +307,7 @@ function crearCardNecesidad(necesidad,vistaVisitante)
     <!-- PROGRESO (SOLICITADO Y RECIBIDO) -->
     <div class="progress">
         <div class="progress-count d-flex mx-3">
-            <p class="mr-auto">Se solicita: ${necesidad.cantidadNecesidad}</p>
+            <p class="mr-auto" id = "cantidadSolicitada${necesidad.idNecesidad}">Se solicita: ${necesidad.cantidadNecesidad}</p>
             <p class="mr-auto">Se recibio: ${necesidad.cantidadRecibida || 0}</p>
         </div>
         <div class="progress-bar" role="progressbar" style="width:${ porcentajeAvance }%;" aria-valuenow="${ porcentajeAvance }" aria-valuemin="0" aria-valuemax="100"></div>
@@ -323,6 +323,10 @@ function crearCardNecesidad(necesidad,vistaVisitante)
 
     $("#necesidad" + necesidad.idNecesidad).append(cardNecesidad);
 
+    if(necesidad.cantidadNecesidad == 0)
+                {
+                    $("#cantidadSolicitada" + necesidad.idNecesidad).html("Sin limite de cantidad");
+                }
     if(vistaVisitante == 0){
         $("#btnDelete-need" + necesidad.idNecesidad).click(function(){
             $("#btnConfirmarEliminarNecesidad").unbind("click");

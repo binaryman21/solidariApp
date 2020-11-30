@@ -21,7 +21,6 @@ function registrarNecesidad(idUsuario)
         necesidad.idNecesidad = response.data.id;
         necesidad.descripcionEstado = "En proceso";
         necesidad.fechaCreacionNecesidad = response.data.fecha;
-        alert(response.data.fecha);
         desbloquearBoton($("#btnGuardarCambiosNecesidad"));
         let divNecesidades = $('#necesidadesEnProceso');
         divNecesidades.prepend(`<div class="card need ${necesidad.nombreCategoria.toLowerCase()} ${necesidad.descripcionEstado.replace(/\s+/g, "")}" id="necesidad${necesidad.idNecesidad}"></div>`);

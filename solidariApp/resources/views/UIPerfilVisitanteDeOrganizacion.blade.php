@@ -121,4 +121,5 @@
     @parent
     <script type="text/javascript" src="{{URL::asset('assets/js/suscripcion.js')}}"></script>
     <script type="text/javascript" src="{{URL::asset('assets/js/visitanteDeOrganizacion.js')}}"></script>
+    <script type="text/javascript" src="{{URL::asset('assets/js/colaboracion.js')}}"></script>
 @endsection

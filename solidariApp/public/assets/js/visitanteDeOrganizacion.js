@@ -81,7 +81,7 @@ function cargarNecesidades(idUsuario){
                     <!-- PROGRESO (SOLICITADO Y RECIBIDO) -->
                     <div class="progress">
                         <div class="progress-count d-flex mx-3">
-                            <p class="mr-auto">Se solicita: ${need.cantidadNecesidad}</p>
+                            <p class="mr-auto" id = "cantidadSolicitada${need.idNecesidad}">Se solicita: ${need.cantidadNecesidad}</p>
                             <p class="mr-auto">Se recibio: ${need.cantidadRecibida || 0}</p>
                         </div>
                         <div class="progress-bar" role="progressbar" style="width:${ porcentajeAvance }%;" aria-valuenow="${ porcentajeAvance }" aria-valuemin="0" aria-valuemax="100"></div>
@@ -96,12 +96,22 @@ function cargarNecesidades(idUsuario){
                     </div>
                 </div>`;
 
+                
                 switch(need.estadoNecesidad){
 
                     case 1: divNecesidadesEnProgreso.append(cardNeed); break;
                     case 2: divNecesidadesCumplidas.append(cardNeed); break;
                     case 3: break; //Una necesidad eliminada es visible (?)
                     default: console.error("Estado no reconocido");
+                }
+
+                $("#btnDetalleNecesidad"+ need.idNecesidad).click(()=>{
+                    cargarDatosModalDetalleNecesidad(need);
+                });
+
+                if(need.cantidadNecesidad == 0)
+                {
+                    $("#cantidadSolicitada" + need.idNecesidad).html("Sin limite de cantidad");
                 }
             })
         }

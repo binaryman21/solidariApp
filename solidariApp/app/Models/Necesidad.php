@@ -16,7 +16,6 @@ class Necesidad extends Model
     {
         return Necesidad::select('necesidad.*', 'categoriaNecesidad.*', 'estadoNecesidad.descripcionEstado')
         ->where("idUsuario",$idUsuario)
-        ->where("necesidad.estadoNecesidad",'<>',3)
         ->join('categoriaNecesidad', 'categoriaNecesidad.idCategoria', '=', 'necesidad.idCategoriaNecesidad')
         ->join('estadoNecesidad', 'estadoNecesidad.idEstadoNecesidad', '=', 'necesidad.estadoNecesidad')    
         ->withCount('colaboraciones')

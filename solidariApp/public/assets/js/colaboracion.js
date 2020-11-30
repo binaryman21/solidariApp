@@ -9,7 +9,7 @@ function cargarDatosModalDetalleNecesidad( necesidad, modo = "colaborador")
                     <div class="datosNecesidad">
                         <p class="font-weight-bold">${necesidad.nombreCategoria}</p>
                         <p>${necesidad.descripcionNecesidad}</p>
-                        <p>Cantidad solicitada: ${necesidad.cantidadNecesidad}</p>
+                        <p id = "cantidadSolicitada">Cantidad solicitada: ${necesidad.cantidadNecesidad}</p>
                         <p>Cantidad recibida: ${necesidad.cantidadRecibida}</p>
                         <p>Cumplimiento: ${ porcentajeAvance }%</p>
                         <div class="progress">
@@ -22,7 +22,9 @@ function cargarDatosModalDetalleNecesidad( necesidad, modo = "colaborador")
                 <button type="button" class="btn btnColaborar btn-block btn-outline-primary mt-4" data-toggle="modal" data-target="#modalColaborar" id = "btnColaborar"><i class="far fa-handshake"></i>COLABORAR</button>
             </div>
         </div>`);
-
+        if(necesidad.cantidadNecesidad == 0){
+            $("#cantidadSolicitada").html("Sin limite de cantidad");
+        }
         if(modo === "organizacion")
         {
             $("#btnColaborar").addClass("d-none");
@@ -125,7 +127,7 @@ function getColaboraciones(necesidad,modo = "colaborador")
 
                                         </div>
                                         <div class="col-md-3">
-                                            <a href= "/colaborador/`+colaboracion.idUsuario+`">Ver perfil</a>
+                                            <a href= "/ver-colaborador/`+colaboracion.idUsuario+`">Ver perfil</a>
                                         </div>
                                     </div>
                                 </div>
