@@ -124,6 +124,10 @@ function mostrarInterfazSesionIniciada(usuario)
     // y pulsas en  "tu perfil" devuevo iria a "/orgaizacion/organizacion" por ejemplo
     //dejo comentado lo anterio igual -> $("#btnVerMiPerfil").attr("href","./"+ usuario.rol.nombreRol);
     $("#btnAjustes").attr("href", `/cuenta-${usuario.rol.nombreRol}/ajustes`);
+    $("#btnAjustes").removeClass('d-none');
+    if( usuario.rol.nombreRol == 'administrador'){
+        $("#btnAjustes").addClass('d-none');
+    }
     $("#notificaciones").removeClass("d-none");
     cargarNotificaciones(usuario);
 }

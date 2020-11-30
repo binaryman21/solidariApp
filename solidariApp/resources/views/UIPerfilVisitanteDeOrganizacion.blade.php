@@ -3,14 +3,14 @@
 @section("contenido")
 @parent
  <!-- container -->
-<div class="container-sm perfil bg-white p-2 px-lg-4">
+<div class="container-sm perfil bg-white px-lg-4">
     <div class="card card-user mb-3">
         <div class="card-img-block">
             <img id="cover" src="{{URL::asset('assets/img/cover.svg')}}" class="img-fluid" alt="portada de la organizacion">
         </div>
         <div class="card-body pt-5">
             <div class="media">
-                <img id="urlFotoPerfilOrganizacion" class="rounded-circle imgPerfilOrg align-self-start mr-auto" src="{{URL::asset('assets/img/imgUserProfile.png')}}" alt="imagen de usuario">
+                <img id="urlFotoPerfilOrganizacion" class="shadow-sm rounded-circle imgPerfilOrg align-self-start mr-auto" src="{{URL::asset('assets/img/imgUserProfile.png')}}" alt="imagen de usuario">
             </div>
             <div class="user-action d-flex">
                 <button class="btn ml-auto p-0" type="button" data-toggle="modal" href="#modalSuscribirse" id="btnSuscribirse">Suscribirse</button>
@@ -18,6 +18,7 @@
                         <i class="fas fa-ellipsis-v fa-sm ml-2 mt-2 text-black" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></i>
                     <div class="dropdown-menu dropdown-menu-right shadow">
                         <button class="dropdown-item user-select-none" type="button" data-toggle="modal" href="#modalReportar"><i class="far fa-flag fa-sm mr-3"></i>Reportar</button>
+                        <button class="dropdown-item user-select-none" type="button" data-toggle="modal" href="#modalCalificarOrganizacion"><i class="far fa-flag fa-sm mr-3"></i>Calificar</button>
                     </div>
                 </div>
             </div>
@@ -59,8 +60,9 @@
                 </div>
             </div>
         </div>
+        <!-- Calificaciones-->
         <div class="col-md-6">
-            <div class="card mt-sm-4">
+            <div class="card mt-4 mt-lg-2">
                 <div class="card-body">
                     <h6 class="card-title">Calificaciones</h6>
                     <!-- TABS Buenas | Regulares | Malas -->
@@ -114,10 +116,12 @@
 
 
 @include("UIPerfilModales/UIModalSuscribirse")
+@include("UIPerfilModales/UIModalCalificarOrganizacion")
 @endsection
 
 @section('scripts')
     @parent
     <script type="text/javascript" src="{{URL::asset('assets/js/suscripcion.js')}}"></script>
     <script type="text/javascript" src="{{URL::asset('assets/js/visitanteDeOrganizacion.js')}}"></script>
+    <script type="text/javascript" src="{{URL::asset('assets/js/colaboracion.js')}}"></script>
 @endsection

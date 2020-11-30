@@ -73,7 +73,6 @@
     @include("UIPrincipalRegistro")
     <!-- {{-- @include("UIDetalleNecesidad") --}} -->
     <!-- {{-- @include("UIPrincipalResultadoRegistro") --}} -->
-    @include("UIPrincipalModalOrganizaciones")
 @endsection
 
 @section('scripts')

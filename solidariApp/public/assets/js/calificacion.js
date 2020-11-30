@@ -36,7 +36,7 @@ function configModalCalificar(idRolCalificado,colaboracion,necesidad)
                         </p>
                     </div>
                     <div class="col-md-3">
-                        <a href= "colaborador/`+colaboracion.idUsuario+`">Ver perfil</a>
+                        <a href= "ver-colaborador/`+colaboracion.idUsuario+`">Ver perfil</a>
                     </div>
                 </div>
             </div>
@@ -97,6 +97,7 @@ function registrarCalificacionOrganizacion(idCalificado){
             crearNotificacionCalificacionOrganizacion(calificacion)
             limpiarValidaciones($("#textoComentarios"), $("#errorTextoComentarios"));
             $("#textoComentarios").val('');
+            cargarComentariosOrganizacion(idCalificado);
         }
         else{
             alertify.error(response.data.message);

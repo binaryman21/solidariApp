@@ -19,6 +19,7 @@ function getColaborador(idUsuario){
         agregarContacto(response.data);
         listarColaboraciones(idUsuario);
         cargarInsignias(idUsuario);
+        cargarComentariosColaborador(idUsuario);
     });
 }
 
@@ -66,68 +67,184 @@ function agregarContacto(contacto){
     $("#btn-contacto").toggleClass('d-none');
 }
 
-function listarColaboraciones ( idUsuario  ){
+function listarColaboraciones(idUsuario){
 
-    fetch(`/getColaboracionesPorUsuario/${idUsuario}`)
+    fetch(`/getColaboracionesPorUsuario/${ idUsuario }`)
     .then(response => response.json())
     .then(data => {
 
-        data.colaboraciones.forEach(colaboracion => {
+        let divColaboraciones = $('div.accordion#colaboracionesConOrgs');
+
+        if(data.colaboraciones.length > 0 ){
+        
+            //agrupo las colaboraciones por id de usuario de la org: colaboraciones del colaborador actual)
+            let ColaboracionesPorOrg = data.colaboraciones.reduce((colaboracionesParaLaOrg, org) => {
+
+                colaboracionesParaLaOrg[org.idUsuario] = [...colaboracionesParaLaOrg[org.idUsuario] || [], org];
+                return colaboracionesParaLaOrg;
+            }, {});
             
-            crearCardColaboracion(colaboracion);
-        })
-        agregarPaginacionColaboraciones();
+            let Agrupaciones = $(document.createDocumentFragment());
+
+            //lo cambio a array para manejarlo
+            Object.entries(ColaboracionesPorOrg).forEach(grupo => {
+
+                let grupoColaboraciones = crearGrupoDeColaboraciones(grupo);
+                Agrupaciones.append(grupoColaboraciones);
+            });
+
+            divColaboraciones.append(Agrupaciones);
+        }
+
+        //agregarPaginacionNecesidades();
     })
+    .catch(error => console.error);
 }
 
 // MOSTRAR LAS COLABORACIONES
-function crearCardColaboracion( colaboracion )
-{
-    let cardColaboracion =
-    `<div id="colaboracion${colaboracion.idColaboracion}">
-        <div class="card necesidad ${colaboracion.nombreCategoria.toLowerCase()}">
-            <div class="card-body">
-                <p class="text-right">Colaboro el dia: ${colaboracion.fechaColaboracion}</p>
-                <div class="row">
-                    <div class="col-md-3">
-                        <img class="rounded-circle imgNecesidad" src="${colaboracion.urlFotoPerfilUsuario}" alt="img usr">
-                    </div>
-                    <div class="col-md-9">
-                        <p class="card-text h5">${colaboracion.nombreCategoria}</p>
-                        <p class="mt-2">${colaboracion.descripcionNecesidad}</p>
+function crearGrupoDeColaboraciones(grupo){
+    
+    let idOrg = grupo[0];
+    let razonSocial = grupo[1][0].razonSocial;
+    let avatarOrg = grupo[1][0].urlFotoPerfilUsuario;
+    let ListaColaboraciones = grupo[1]; 
+
+    let cardColaboracionGroup =
+        $('<li>').addClass('list-group-item list-group-item-action p-0')
+        .html(
+            `<div class="d-flex justify-content-between align-items-center p-3 collapse" id="OrgColaboration${idOrg}"
+             data-toggle="collapse" data-target="#ColaborationsFor${idOrg}" aria-expanded="false" aria-controls="ColaborationsFor${idOrg}">
+                <div class="media">
+                    <img src="${avatarOrg}" class="rounded-circle imgPerfilOrgOnCol mr-2" alt="Avatar de la org ${razonSocial}">
+                    <div class="media-body">
+                        <a href="/ver-organizacion/${idOrg}" class="text-decoration-none text-reset">${razonSocial}</a>
                     </div>
                 </div>
-                <h5 class="card-title"><a href="/organizacion/${colaboracion.idUsuario}">${colaboracion.razonSocial}</a></h5>
+                <span class="badge badge-primary badge-pill">${ListaColaboraciones.length}</span>
             </div>
-        </div>
-    </div>`;
-    $("#colaboraciones").append(cardColaboracion);
+            <div id="ColaborationsFor${idOrg}" class="collapse list-group px-2 pb-2" aria-labelledby="OrgColaboration${idOrg}" data-parent="#colaboracionesConOrgs">
+            </div>`
+        );
+
+    ListaColaboraciones.forEach(colaboracion => {
+
+        let  cardColaboracion = 
+            `<div class="list-group-item list-group-item-action need ${colaboracion.nombreCategoria.toLowerCase()}" id="colaboracion${colaboracion.idColaboracion}">
+                <p class="card-text">${colaboracion.nombreCategoria}</p>
+                <p class="text-muted">${colaboracion.descripcionNecesidad}
+                <small class="mt-2 text-black-50  d-block">${colaboracion.descripcionEstadoColaboracion == "concretado" ? 'Colaboro':'Incio la colaboracion'} ${moment(colaboracion.fechaColaboracion, "YYYY-MM-DD HH:mm:ss").fromNow()}</small>
+                <small class="text-black-50">Estado: ${colaboracion.descripcionEstadoColaboracion}</small>
+            </div>`;
+
+        cardColaboracionGroup.find(`#ColaborationsFor${idOrg}`).append(cardColaboracion);
+    });
+
+    return cardColaboracionGroup;
 }
 
-function agregarPaginacionColaboraciones() {
-    $('.necesidades').after('<div id="navNecesidades"></div>');
-    let necesidad = document.querySelectorAll('.necesidad')
-    let filasMostradas = 4;
-    let filasTotales = necesidad.length;
 
-    let numPaginas = filasTotales / filasMostradas;
-    for (i = 0; i < numPaginas; i++) {
-        let numPag = i + 1;
-        $('#navColaboracopnes').append('<a href="JavaScript:Void(0);" rel="' + i + '">' + numPag + '</a> ');
+function agregarPaginacionColaboraciones(){
+
+    $(`#navColaboracionesParaLasOrg`).remove();
+    let $colaboracionesContainer = $("#colaboracionesConOrgs");
+    let GrupoDeColaboracionesParaOrgs = document.querySelectorAll(`div[id^="OrgColaboration"`);
+    let filasTotales= GrupoDeColaboracionesParaOrgs.length;
+    let filasParaMostrar = 6;
+
+    if(filasTotales>filasParaMostrar){
+
+        $colaboracionesContainer.append(`<div id=navColaboracionesParaLasOrg></div>`);
+        let $nav = $(`#navColaboracionesParaLasOrg`);
+    
+        let numPaginas = filasTotales/filasParaMostrar;
+    
+        for(i = 0; i < numPaginas; i++) {
+    
+            let numPag = i + 1;
+            let pagRel = `<a href="javascript:void(0);" rel="${i}" ${!i ? 'class="active"':''}">${numPag}</a>`
+            $nav.append(pagRel);
+        }
+    
+        $(GrupoDeColaboracionesParaOrgs).hide();
+        $(GrupoDeColaboracionesParaOrgs).slice(0, filasParaMostrar).show();
+    
+        $nav.find('a').bind('click', function(){
+    
+            $nav.find('a').removeClass('active');
+            $(this).addClass('active');
+    
+            let pagActual = $(this).attr('rel');
+    
+            let primerItem = pagActual * filasParaMostrar;
+            let ultimoItem = primerItem + filasParaMostrar;
+            $(GrupoDeColaboracionesParaOrgs).css('opacity','0.0').hide().slice(primerItem, ultimoItem).
+                css('display','block').animate({opacity:1}, 300);
+        });
     }
+    else if(!filasTotales) {
+                      
+        let emptyState = 
+        `<img src="/assets/img/SinNecesidadesCumplidas.svg">
+         <p class="text-center my-5">No se encontraron colaboraciones</p>`
+        $colaboracionesContainer.append(emptyState);
+    }
+}
 
-    $(necesidad).hide();
-    $(necesidad).slice(0, filasMostradas).show();
-    $('#navNecesidades a:first').addClass('active');
-    $('#navNecesidades a').bind('click', function () {
-        $('#navNecesidades a').removeClass('active');
-        $(this).addClass('active');
-        let pagActual = $(this).attr('rel');
-        let primerItem = pagActual * filasMostradas;
-        let ultimoItem = primerItem + filasMostradas;
-        $(necesidad).css('opacity', '0.0').hide().slice(primerItem, ultimoItem).
-            css('display', 'block').animate({ opacity: 1 }, 300);
-    });
+function agregarPaginacionComentarios(){
+
+    //llamo a la funcion para paginar cada seccion pasandole el nombre del contenedor y la clase de los elementos que contiene
+    paginarTabCalificacion({containerType:'trato-1', ListType:'trato-1'});//negativas
+    paginarTabCalificacion({containerType:'trato-2', ListType:'trato-2'});//regulares
+    paginarTabCalificacion({containerType:'trato-3', ListType:'trato-3'});//positivas
+}
+
+
+function paginarTabCalificacion({containerType = "", ListType = ""} = {}) {
+
+    $(`#navCalificaciones${containerType}`).remove();
+    let $calificacionContainer = $(`#${containerType}`);
+    let calificaciones = document.querySelectorAll(`.${ListType}`);
+    let filasTotales= calificaciones.length;
+    let filasParaMostrar = 2;
+
+    if(filasTotales>filasParaMostrar){
+
+        $calificacionContainer.append(`<div id=navCalificaciones${containerType}></div>`);
+        let $nav = $(`#navCalificaciones${containerType}`);
+    
+        let numPaginas = filasTotales/filasParaMostrar;
+    
+        for(i = 0; i < numPaginas; i++) {
+    
+            let numPag = i + 1;
+            let pagRel = `<a href="javascript:void(0);" rel="${i}" ${!i ? 'class="active"':''}">${numPag}</a>`
+            $nav.append(pagRel);
+        }
+    
+        $(calificaciones).hide();
+        $(calificaciones).slice(0, filasParaMostrar).show();
+    
+        $nav.find('a').bind('click', function(){
+    
+            $nav.find('a').removeClass('active');
+            $(this).addClass('active');
+    
+            let pagActual = $(this).attr('rel');
+    
+            let primerItem = pagActual * filasParaMostrar;
+            let ultimoItem = primerItem + filasParaMostrar;
+            $(calificaciones).css('opacity','0.0').hide().slice(primerItem, ultimoItem).
+                css('display','block').animate({opacity:1}, 300);
+        });
+    }
+    else if(!filasTotales) {
+                      
+        let tabType = document.querySelector(`a.nav-link[href="#${containerType}"]`).textContent.toLowerCase();
+        let emptyState = 
+        `<img src="/assets/img/SinComentarios.svg">
+         <p class="text-center my-5">No hay comentarios ${tabType}</p>`
+        $calificacionContainer.append(emptyState);
+    }
 }
 
 function capitalize(text){

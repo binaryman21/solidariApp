@@ -6,7 +6,7 @@
 <div class="container-sm perfil bg-white">
     <div class="row">
         <!-- tabs horizontal en xs -->
-        <nav class="d-md-none">
+        <nav class="d-md-none w-100">
             <div class="nav nav-tabs" id="nav-tab" role="tablist">
                 <a class="nav-link active" id="datos-perfil-tab" data-toggle="tab" href="#datos-perfil" role="tab"
                     aria-controls="datos-perfil" aria-selected="true">Perfil</a>
@@ -32,7 +32,7 @@
             </div>
         </div>
         <!-- PANELES DE LAS CONFIGURACIONES -->
-        <div class="col col-md-9 p-4" id="config-panels">
+        <div class="col-md-9 p-4" id="config-panels">
             <div class="tab-content" id="v-pills-tabContent">
                 <!-- Administracion de datos basicos -->
                 <section class="tab-pane fade show active" id="datos-perfil" role="tabpanel"
@@ -51,9 +51,7 @@
                             </div>
                             <div class="card-body pt-5">
                                 <div class="media">
-                                    <img id="urlFotoPerfilOrganizacion"
-                                        class="rounded-circle imgPerfilOrg align-self-start mr-auto"
-                                        src="/assets/img/imgUserProfile.png" alt="imagen de usuario">
+                                    <img id="urlFotoPerfilOrganizacion" class="shadow-sm rounded-circle imgPerfilOrg align-self-start mr-auto" src="/assets/img/imgUserProfile.png" alt="imagen de usuario">
                                     <label for="actualizarAvatar" class="fas fa-camera">
                                         <input type="file" id="actualizarAvatar" name="actualizarAvatar">
                                     </label>

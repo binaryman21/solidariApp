@@ -75,13 +75,13 @@ function cargarNecesidades(idUsuario){
                                     href="https://www.facebook.com/sharer/sharer.php?u=https://solidariapp.com.ar/organizacion/${need.idUsuario}/necesidad/${need.idNecesidad}">Compartir en Facebook</a>
                             </div>
                         </div>
-                        <small class="card-subtitle text-muted font-weight-light">Creada hace ${capitalize(moment(need.fechaCreacionNecesidad, "YYYY-MM-DD HH:mm:ss").startOf('day').fromNow())} - ${capitalize(need.descripcionEstado)}</small>
+                        <small class="card-subtitle text-muted font-weight-light">Creada ${moment(need.fechaCreacionNecesidad, "YYYY-MM-DD HH:mm:ss").startOf('day').fromNow()} - ${capitalize(need.descripcionEstado)}</small>
                         <div class="card-text mt-2 text-muted">${capitalize(need.descripcionNecesidad)}</div>
                     </div>
                     <!-- PROGRESO (SOLICITADO Y RECIBIDO) -->
                     <div class="progress">
                         <div class="progress-count d-flex mx-3">
-                            <p class="mr-auto">Se solicita: ${need.cantidadNecesidad}</p>
+                            <p class="mr-auto" id = "cantidadSolicitada${need.idNecesidad}">Se solicita: ${need.cantidadNecesidad}</p>
                             <p class="mr-auto">Se recibio: ${need.cantidadRecibida || 0}</p>
                         </div>
                         <div class="progress-bar" role="progressbar" style="width:${ porcentajeAvance }%;" aria-valuenow="${ porcentajeAvance }" aria-valuemin="0" aria-valuemax="100"></div>
@@ -96,12 +96,22 @@ function cargarNecesidades(idUsuario){
                     </div>
                 </div>`;
 
+                
                 switch(need.estadoNecesidad){
 
                     case 1: divNecesidadesEnProgreso.append(cardNeed); break;
                     case 2: divNecesidadesCumplidas.append(cardNeed); break;
                     case 3: break; //Una necesidad eliminada es visible (?)
                     default: console.error("Estado no reconocido");
+                }
+
+                $("#btnDetalleNecesidad"+ need.idNecesidad).click(()=>{
+                    cargarDatosModalDetalleNecesidad(need);
+                });
+
+                if(need.cantidadNecesidad == 0)
+                {
+                    $("#cantidadSolicitada" + need.idNecesidad).html("Sin limite de cantidad");
                 }
             })
         }
@@ -136,7 +146,7 @@ function paginarTabNecesidad({containerType = '', ListType = ''} = {}){
         for(i = 0; i < numPaginas; i++) {
     
             let numPag = i + 1;
-            let pagRel = `<a href="JavaScript:Void(0);" rel="${i}" ${!i ? 'class="active"':''}">${numPag}</a>`
+            let pagRel = `<a href="javascript:void(0);" rel="${i}" ${!i ? 'class="active"':''}">${numPag}</a>`
             $nav.append(pagRel);
         }
     
@@ -185,14 +195,14 @@ function paginarTabCalificacion({containerType = "", ListType = ""} = {}) {
     if(filasTotales>filasParaMostrar){
 
         $calificacionContainer.append(`<div id=navCalificaciones${containerType}></div>`);
-        let $nav = $(`#navNecesidades${containerType}`);
+        let $nav = $(`#navCalificaciones${containerType}`);
     
         let numPaginas = filasTotales/filasParaMostrar;
     
         for(i = 0; i < numPaginas; i++) {
     
             let numPag = i + 1;
-            let pagRel = `<a href="JavaScript:Void(0);" rel="${i}" ${!i ? 'class="active"':''}">${numPag}</a>`
+            let pagRel = `<a href="javascript:void(0);" rel="${i}" ${!i ? 'class="active"':''}">${numPag}</a>`
             $nav.append(pagRel);
         }
     
@@ -216,8 +226,9 @@ function paginarTabCalificacion({containerType = "", ListType = ""} = {}) {
                       
         let tabType = document.querySelector(`a.nav-link[href="#${containerType}"]`).textContent.toLowerCase();
         let emptyState = 
-        `<img src="/assets/img/noComments.png">
+        `<img src="/assets/img/SinComentarios.svg">
          <p class="text-center my-5">No hay calificaciones ${tabType}</p>`
+        $calificacionContainer.html('');
         $calificacionContainer.append(emptyState);
     }
 }

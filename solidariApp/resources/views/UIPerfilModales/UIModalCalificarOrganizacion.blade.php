@@ -30,7 +30,7 @@
                     </div>
                 </div>
                 <div class="modal-footer justify-content-between">
-                    <button type="button" class="btn btn-lg btn-outline-danger" data-toggle="modal" href="#modalReportar" data-dismiss="modal">Reportar</button>
+                    <!-- <button type="button" class="btn btn-lg btn-outline-danger" data-toggle="modal" href="#modalReportar" data-dismiss="modal">Reportar</button> -->
                     <button type="submit" class="btn btn-lg btn-primary" id = "btnEnviarCalificacionOrganizacion">Calificar</button>
                 </div>
             </form>

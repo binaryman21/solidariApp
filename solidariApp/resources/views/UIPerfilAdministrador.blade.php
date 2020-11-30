@@ -39,7 +39,7 @@
                                 <h5 class="card-title">Visualizar reporte de denuncias</h5>
                                 <p class="card-text">Permite visualizar todos los reportes de denuncias con posibilidad de confirmarlos, dando como resultado el bloqueo del usuario denunciado.</p>
                                 <br>
-                                <a href="{{url('administrador/reportes')}}" class="btn btn-primary">Ver Reporte</a>
+                                <a href="{{url('/cuenta-administrador/reportes')}}" class="btn btn-primary">Ver Reporte</a>
                             </div>
                         </div>
                     </div>

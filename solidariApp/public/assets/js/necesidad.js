@@ -19,9 +19,12 @@ function registrarNecesidad(idUsuario)
         // console.log( 'respuestaaa ' + response.data.message);
         // console.log(necesidad);
         necesidad.idNecesidad = response.data.id;
+        necesidad.descripcionEstado = "En proceso";
+        necesidad.fechaCreacionNecesidad = response.data.fecha;
         desbloquearBoton($("#btnGuardarCambiosNecesidad"));
-        let divNecesidades = $('.necesidades');
-        divNecesidades.prepend(`<div class="col-md-6" id="necesidad${necesidad.idNecesidad}"></div>`);
+        let divNecesidades = $('#necesidadesEnProceso');
+        const pag = $('#navNecesidadesEnProceso .active').html();
+        divNecesidades.prepend(`<div class="card need ${necesidad.nombreCategoria.toLowerCase()} ${necesidad.descripcionEstado.replace(/\s+/g, "")}" id="necesidad${necesidad.idNecesidad}"></div>`);
         crearCardNecesidad(necesidad, 0);
         agregarPaginacionNecesidades();
         limpiarValidaciones($("#inpFechaLimite"),  $("#errorFechaLimite") );
@@ -32,7 +35,7 @@ function registrarNecesidad(idUsuario)
         $("#slctCategoria").val('');
         $("#inpCantidad").val('');
         $("#txtDescripcion").val('');
-        $('#navNecesidades a:first').trigger('click');
+        $('#navNecesidadesEnProceso a:contains('+pag+')').trigger('click');
         alertify.success('Necesidad creada');
     });
 }
@@ -62,14 +65,16 @@ function updateNecesidad(necesidad){
     axios.post("/updateNecesidad",necesidad)
     .then((response)=>{
         if(response.data.resultado){
-            //cargarNecesidades(idUsuario);
+            const pag = $('#navNecesidadesEnProceso .active').html();
             crearCardNecesidad(necesidad, 0);
             agregarPaginacionNecesidades();
             $("#modalEditarNecesidad").modal('toggle');
             document.getElementById("formEditarNecesidad").reset();
             desbloquearBoton($("#btnGuardarCambiosNecesidad"));
-            $('#navNecesidades a:first').trigger('click');
-            // alert(response.data.message);
+            if( necesidad.estadoNecesidad == 1 )
+                $('#navNecesidadesEnProceso a:contains('+pag+')').trigger('click');
+            else
+                $('#navNecesidadesCumplidas a:contains('+pag+')').trigger('click');
             alertify.success('Necesidad modificada');
 
         }else{
@@ -84,15 +89,11 @@ function bajaNecesidad(idNecesidad){
     .then((response)=>{
         desbloquearBoton($("#btnConfirmarEliminarNecesidad"));
         if(response.data.resultado){
-
-            $("#necesidad" + idNecesidad).remove();
+            cargarNecesidades( response.data.idUsuario );
             $("#modalBajaNecesidad").modal('toggle');
-            $("#modalEditarNecesidad").modal('toggle');
+            $("#modalEditarNecesidad").modal('hide');
             document.getElementById("formEditarNecesidad").reset();
             alertify.error('Necesidad eliminada');
-            agregarPaginacionNecesidades();
-            $('#navNecesidades a:first').trigger('click');
-
         }else{
             alert(response.data.message);
         }

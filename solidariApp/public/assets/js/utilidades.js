@@ -1,4 +1,4 @@
-function limpiarCamposRegistro(){
+function limpiarCamposRegistro() {
     limpiarCamposLogin();
     $('#formularioRegistroDatos')[0].reset();
     // Nombre organizacion
@@ -22,7 +22,7 @@ function limpiarCamposRegistro(){
     $('.errorTipoOrg').fadeOut();
 }
 
-function limpiarCamposLogin(){
+function limpiarCamposLogin() {
     $('#formRegistroGoogle')[0].reset();
     // Error Login
     $("#errorLogin").hide();
@@ -34,34 +34,33 @@ function limpiarCamposLogin(){
     $('.errorPass').fadeOut();
 }
 
-function limpiarDomicilio(){
-        // Calle
-        $('#calle').removeClass('is-invalid is-valid');
-        $('.errorCalle').fadeOut();
-        // Nro
-        $('#numero').removeClass('is-invalid is-valid');
-        $('.errorNro').fadeOut();
-        // Localidad
-        $('#selectLocalidad').removeClass('is-invalid is-valid');
-        $('.errorLocalidad').fadeOut();
-        // Provincia
-        $('#selectProvincia').removeClass('is-invalid is-valid');
-        $('.errorProvincia').fadeOut();
+function limpiarDomicilio() {
+    // Calle
+    $('#calle').removeClass('is-invalid is-valid');
+    $('.errorCalle').fadeOut();
+    // Nro
+    $('#numero').removeClass('is-invalid is-valid');
+    $('.errorNro').fadeOut();
+    // Localidad
+    $('#selectLocalidad').removeClass('is-invalid is-valid');
+    $('.errorLocalidad').fadeOut();
+    // Provincia
+    $('#selectProvincia').removeClass('is-invalid is-valid');
+    $('.errorProvincia').fadeOut();
 }
 
-function mostrarComo ( tipoUsuario ){
+function mostrarComo(tipoUsuario) {
     signOut();
     let exclusivoOrg = $('.exclusivoOrg');
     let exclusivoCol = $('.exclusivoCol');
-    if( tipoUsuario === 'colaborador' ){
+    if (tipoUsuario === 'colaborador') {
         exclusivoOrg.hide();
         exclusivoCol.show();
-    }
-    else if( tipoUsuario === 'organizacion' ){
+    } else if (tipoUsuario === 'organizacion') {
         exclusivoCol.hide();
         exclusivoOrg.show();
     }
-    $("#modoRegistro").val( tipoUsuario );
+    $("#modoRegistro").val(tipoUsuario);
     $("#tituloModalLogin").html("Registrarse como " + tipoUsuario);
     $("#errorLogin").hide();
     $("#btnLogin").attr("disabled", false);
@@ -69,208 +68,214 @@ function mostrarComo ( tipoUsuario ){
     limpiarCamposRegistro();
 }
 
-function listarTiposOrganizaciones()
-{
+function listarTiposOrganizaciones() {
     fetch("/listarTipoOrganizaciones")
-    .then(response => response.json())
-    .then(data => {
-        let tiposOrganizaciones = data.tipoOrganizaciones;
-        $.each(tiposOrganizaciones, function (indexInArray, tipoOrganizacion) {
-            $("#selectTipoOrganizacion").append("<option value = '" + tipoOrganizacion.idTipoOrganizacion + "'>" + tipoOrganizacion.nombreTipoOrganizacion +"</option");
-        });
+        .then(response => response.json())
+        .then(data => {
+            let tiposOrganizaciones = data.tipoOrganizaciones;
+            $.each(tiposOrganizaciones, function (indexInArray, tipoOrganizacion) {
+                $("#selectTipoOrganizacion").append("<option value = '" + tipoOrganizacion.idTipoOrganizacion + "'>" + tipoOrganizacion.nombreTipoOrganizacion + "</option");
+            });
 
-      });
+        });
 }
 
-function listarProvincias(defaultSelected)
-{
+function listarProvincias(defaultSelected) {
     fetch("/listarProvincias")
-    .then(response => response.json())
-    .then(data => {
-        let provincias = data.provincias;
-        $.each(provincias, function (indexInArray, provincia) {
-            $("#selectProvincia").append("<option value = '" + provincia.idProvincia + "'>" + provincia.nombreProvincia +"</option");
+        .then(response => response.json())
+        .then(data => {
+            let provincias = data.provincias;
+            $.each(provincias, function (indexInArray, provincia) {
+                $("#selectProvincia").append("<option value = '" + provincia.idProvincia + "'>" + provincia.nombreProvincia + "</option");
 
+            });
+            $("#selectProvincia").val(defaultSelected);
         });
-        $("#selectProvincia").val(defaultSelected);
-      });
 }
 
-function listarLocalidades(idProvincia,defaultSelected)
-{
-    fetch("/listarLocalidades/"+idProvincia)
-    .then(response => response.json())
-    .then(data => {
-        let localidades = data.localidades;
-        $.each(localidades, function (indexInArray, localidad) {
-            $("#selectLocalidad").append("<option value = '" + localidad.idLocalidad + "'>" + localidad.nombreLocalidad +"</option");
-        });
-        let def = $('#selectLocalidad > option').val();
-        $("#selectLocalidad").val(def);
+function listarLocalidades(idProvincia, defaultSelected) {
+    fetch("/listarLocalidades/" + idProvincia)
+        .then(response => response.json())
+        .then(data => {
+            let localidades = data.localidades;
+            $.each(localidades, function (indexInArray, localidad) {
+                $("#selectLocalidad").append("<option value = '" + localidad.idLocalidad + "'>" + localidad.nombreLocalidad + "</option");
+            });
+            let def = $('#selectLocalidad > option').val();
+            $("#selectLocalidad").val(def);
 
-      });
+        });
 }
 
-function limpiarValidaciones(inp,error){
-    if(inp){
+function limpiarValidaciones(inp, error) {
+    if (inp) {
         inp.removeClass('is-invalid is-valid');
-        if(error){
+        if (error) {
             error.fadeOut();
-        }else{
+        } else {
             inp.nextSibling.fadeOut();
         }
-        if(inp.attr('type') == 'text' || inp.attr('type') == 'number'){
+        if (inp.attr('type') == 'text' || inp.attr('type') == 'number') {
             inp.val('');
         }
     }
 }
 
-function bloquearBoton(boton)
-{
+function bloquearBoton(boton) {
     idBoton = boton.attr('id');
     textoBoton = boton.html();
-    boton.html("<span class='spinner-border spinner-border-sm' role='status' aria-hidden='true'></span>Un momento...<p class = 'd-none' id = 'texto-"+idBoton+"'>"+textoBoton+"</p>");
-    boton.attr("disabled",true);
+    boton.html("<span class='spinner-border spinner-border-sm' role='status' aria-hidden='true'></span>Un momento...<p class = 'd-none' id = 'texto-" + idBoton + "'>" + textoBoton + "</p>");
+    boton.attr("disabled", true);
 }
 
-function desbloquearBoton(boton){
+function desbloquearBoton(boton) {
     idBoton = boton.attr('id');
-    textoBoton = $("#texto-"+idBoton).html();
+    textoBoton = $("#texto-" + idBoton).html();
     boton.html(textoBoton);
-    boton.attr("disabled",false);
+    boton.attr("disabled", false);
 }
 
 
 //OBTENGO LAS COORDENADAS DESDE LA API
-async function obtenerCoordenadas(calle, nro, localidad, provincia){
-    if(provincia == 'Buenos Aires-GBA' || provincia == 'Capital Federal'){
+async function obtenerCoordenadas(calle, nro, localidad, provincia) {
+    if (provincia == 'Buenos Aires-GBA' || provincia == 'Capital Federal') {
         provincia = 'Buenos Aires';
     }
-    console.log( calle, nro, localidad, provincia );
+    console.log(calle, nro, localidad, provincia);
     // let url = `https://nominatim.openstreetmap.org/search?q=${calle}+${nro},+${localidad},+${provincia}&format=json&polygon_geojson=1&addressdetails=1`;
     let url = `https://nominatim.openstreetmap.org/search.php?street=${calle}+${nro}&city=${localidad}&state=${provincia}&country=argentina&polygon_geojson=1&dedupe=0&format=jsonv2`;
 
-    let respuesta = await fetch( url );
+    let respuesta = await fetch(url);
     let data = await respuesta.json();
     let coordenadas = {
-      lat: 0,
-      lon: 0
+        lat: 0,
+        lon: 0
     }
 
-    if( data.length > 0){
+    if (data.length > 0) {
         coordenadas.lat = data[0].lat;
         coordenadas.lon = data[0].lon;
     }
     // console.log( lat + lon );
-    console.log( coordenadas );
+    console.log(coordenadas);
     return coordenadas;
-  }
+}
 
 
-  function agregarPaginacionUsuarios(){
+function agregarPaginacionUsuarios() {
     $('#navUsuarios').html('');
     $('#listadoColaboraciones').after('<div id="navUsuarios"></div>');
     let usuario = $('.usuario').not('.d-none');
-    let filasMostradas = 2;
+    let filasMostradas = 4;
     let filasTotales = usuario.length;
-    let numPaginas = filasTotales/filasMostradas;
-    for(i = 0; i < numPaginas; i++) {
-        let numPag = i + 1;
-        $('#navUsuarios').append('<a href="javascript:void(0)" class="closeLink" rel="' + i + '">' + numPag + '</a> ');
+    if (filasTotales > filasMostradas) {
+        let numPaginas = filasTotales / filasMostradas;
+        for (i = 0; i < numPaginas; i++) {
+            let numPag = i + 1;
+            $('#navUsuarios').append('<a href="javascript:void(0)" class="closeLink" rel="' + i + '">' + numPag + '</a> ');
+        }
+        $(usuario).hide();
+        $(usuario).slice(0, filasMostradas).show();
+        $('#navUsuarios a:first').addClass('active');
+        $('#navUsuarios a').bind('click', function () {
+            $('#navUsuarios a').removeClass('active');
+            $(this).addClass('active');
+            let pagActual = $(this).attr('rel');
+            let primerItem = pagActual * filasMostradas;
+            let ultimoItem = primerItem + filasMostradas;
+            $(usuario).css('opacity', '0.0').hide().slice(primerItem, ultimoItem).
+            css('display', 'block').animate({
+                opacity: 1
+            }, 300);
+        });
     }
-    $( usuario ).hide();
-    $( usuario ).slice(0, filasMostradas).show();
-    $('#navUsuarios a:first').addClass('active');
-    $('#navUsuarios a').bind('click', function(){
-        $('#navUsuarios a').removeClass('active');
-        $(this).addClass('active');
-        let pagActual = $(this).attr('rel');
-        let primerItem = pagActual * filasMostradas;
-        let ultimoItem = primerItem + filasMostradas;
-        $( usuario ).css('opacity','0.0').hide().slice(primerItem, ultimoItem).
-            css('display','block').animate({opacity:1}, 300);
-    });
 }
 
-function listarTiposOrganizaciones()
-{
+function listarTiposOrganizaciones() {
     return axios.get('/listarTipoOrganizaciones')
-        .then((response)=>{
+        .then((response) => {
             let tiposOrganizaciones = response.data.tipoOrganizaciones;
             $.each(tiposOrganizaciones, function (indexInArray, tipoOrganizacion) {
-                $("#selectTipoOrganizacion").append("<option value = '" + tipoOrganizacion.idTipoOrganizacion + "'>" + tipoOrganizacion.nombreTipoOrganizacion +"</option");
+                $("#selectTipoOrganizacion").append("<option value = '" + tipoOrganizacion.idTipoOrganizacion + "'>" + tipoOrganizacion.nombreTipoOrganizacion + "</option");
             });
         });
 }
 
 //BUSCAR UNA NECESIDAD POR EL FILTRO DEL CAMPO TEXTO
-function buscarNecesidadPorTexto( ){
+function buscarNecesidadPorTexto() {
     let filtroBusqueda = $('#campoBuscarPorTexto').val();
-    if( filtroBusqueda !== ''){
-        fetch( "/buscarOrganizaciones/" + filtroBusqueda )
+    if (filtroBusqueda !== '') {
+        fetch("/buscarOrganizaciones/" + filtroBusqueda)
             .then(response => response.json())
             .then(data => {
                 let organizaciones = data.organizaciones;
-                llenarOrganizaciones( organizaciones );
+                llenarOrganizaciones(organizaciones);
             })
     }
 }
 
 //BUSCAR UNA NECESIDAD POR EL FILTRO DE CATEGORIA
-function filtrarPorCategoria( e ){
+function filtrarPorCategoria(e) {
     let target = e.target; // where was the click?
     let filtroBusqueda = target.title;
-    if( filtroBusqueda === ''){
+    if (filtroBusqueda === '') {
         filtroBusqueda = target.parentElement.title
     }
     $('#filtrosCategoria button').attr('disabled', true);
-    fetch( "/buscarOrganizacionesPorCategoria/" + filtroBusqueda )
+    fetch("/buscarOrganizacionesPorCategoria/" + filtroBusqueda)
         .then(response => response.json())
         .then(data => {
             let organizaciones = data.organizaciones;
-            llenarOrganizaciones( organizaciones );
+            llenarOrganizaciones(organizaciones);
             $('#filtrosCategoria button').attr('disabled', false);
         })
 }
 
 //BUSCAR UNA ORGANIZACION POR FILTRO DE UBICACION
-function filtrarPorUbicacion(){
+function filtrarPorUbicacion() {
     let filtroBusqueda = $('#ubicacion').val();
-    if( filtroBusqueda !== '' ){
-        fetch( "/buscarOrganizacionesPorUbicacion/" + filtroBusqueda )
+    if (filtroBusqueda !== '') {
+        fetch("/buscarOrganizacionesPorUbicacion/" + filtroBusqueda)
             .then(response => response.json())
             .then(data => {
                 let organizaciones = data.organizaciones;
-                llenarOrganizaciones( organizaciones );
+                llenarOrganizaciones(organizaciones);
             })
     }
     // console.log( filtroBusqueda );
 }
 
 //TRAER LAS INSIGNIAS DE UN USUARIO
-function cargarInsignias( idUsuario ){
+function cargarInsignias(idUsuario) {
 
-    fetch( "/getInsignias/" + idUsuario )
-    .then(response => response.json())
-    .then(data => {
+    fetch("/getInsignias/" + idUsuario)
+        .then(response => response.json())
+        .then(data => {
 
-        if(data.resultado){
+            if (data.resultado) {
 
-            if(data.insignias.length) llenarInsignias( data.insignias );
-            else console.log("No hay insignias");
-        }
-        else alertify.error("Hubo un problema al cargar las insignias");
-    })
-    .catch(error => console.error);
+                if (data.insignias.length) llenarInsignias(data.insignias);
+                else $('#insignias').append(
+
+                    `<img src="/assets/img/SinInsignias.svg">
+                <p class="text-center my-5">No hay insignias otorgadas aun</p>`
+                );
+            } else alertify.error("Hubo un problema al cargar las insignias");
+        })
+        .catch(error => console.error);
 }
 
-function llenarInsignias( insignias ){
+function llenarInsignias(insignias) {
 
     let divInsignias = $('#insignias');
     divInsignias.html('');
-    insignias.forEach(({icono, nombreInsignia, descripcionInsignia}) => {
-        let insignia = 
-        `<span class="badge badge-pill border border-secondary px-3 py-2 mt-2 mr-2 list-group-item-action w-auto" title="${descripcionInsignia}">
+    insignias.forEach(({
+        icono,
+        nombreInsignia,
+        descripcionInsignia
+    }) => {
+        let insignia =
+            `<span class="badge badge-pill border border-secondary px-3 py-2 mt-2 mr-2 list-group-item-action w-auto" title="${descripcionInsignia}">
             <i class="${icono} mr-2"></i>
             ${nombreInsignia}
         </span>`;
@@ -280,21 +285,21 @@ function llenarInsignias( insignias ){
 }
 
 //TRAER LOS COMENTARIOS DE UN USUARIO
-function cargarComentariosColaborador(idUsuario ){
+function cargarComentariosColaborador(idUsuario) {
 
-    fetch( "/getCalificaciones/" + idUsuario)
-    .then(response => response.json())
-    .then(data => llenarComentariosColaborador(data.calificaciones))
-    .catch(error => alertify.error('Ocurrio un problema al cargar los comentarios'));
+    fetch("/getCalificaciones/" + idUsuario)
+        .then(response => response.json())
+        .then(data => llenarComentariosColaborador(data.calificaciones))
+        .catch(error => alertify.error('Ocurrio un problema al cargar los comentarios'));
 }
 
-function llenarComentariosColaborador(comentarios){
+function llenarComentariosColaborador(comentarios) {
 
     let calificacionesNegativas = $('#trato-1');
     let calificacionesRegulares = $('#trato-2');
     let calificacionesPositivas = $('#trato-3');
 
-    if( comentarios.length > 0 ){
+    if (comentarios.length > 0) {
         comentarios.forEach(({
 
             idUsuario,
@@ -306,9 +311,8 @@ function llenarComentariosColaborador(comentarios){
             urlFotoPerfilUsuario,
 
         }) => {
-
-            let comment = 
-            `<div class="card calificacion trato-${tratoRecibido}">
+            let comment =
+                `<div class="card calificacion trato-${tratoRecibido}">
                 <div class="card-body rounded">
                     <div class="media mb-2">
                         <img src="${urlFotoPerfilUsuario}" alt="" class="imgPerfilCol rounded-circle">
@@ -322,13 +326,19 @@ function llenarComentariosColaborador(comentarios){
                 </div>
             </div>`;
 
-            switch(tratoRecibido){
-                case 1: calificacionesNegativas.append(comment); break;
-                case 2: calificacionesRegulares.append(comment); break;
-                case 3: calificacionesPositivas.append(comment); break;
-                default: 
-                console.error("calificacion no registrada");
-                return false;
+            switch (tratoRecibido) {
+                case 1:
+                    calificacionesNegativas.append(comment);
+                    break;
+                case 2:
+                    calificacionesRegulares.append(comment);
+                    break;
+                case 3:
+                    calificacionesPositivas.append(comment);
+                    break;
+                default:
+                    console.error("calificacion no registrada");
+                    return false;
             }
         });
     }
@@ -337,29 +347,32 @@ function llenarComentariosColaborador(comentarios){
 }
 
 //TRAER LOS COMENTARIOS DE UNA ORGANIZACION
-function cargarComentariosOrganizacion( idUsuario ){
+function cargarComentariosOrganizacion(idUsuario) {
 
-    fetch( "/getCalificacionesOrganizacion/" + idUsuario)
-    .then(response => response.json())
-    .then(data => {
-        
-        let calificaciones = data.calificaciones;
-        llenarComentariosOrganizacion( data.calificaciones );
-    })
-    .catch(error => {
-        
-        alertify.error('Ocurrio un problema al cargar los comentarios');
-        console.error(error);
-    });
+    fetch("/getCalificacionesOrganizacion/" + idUsuario)
+        .then(response => response.json())
+        .then(data => {
+
+            let calificaciones = data.calificaciones
+            llenarComentariosOrganizacion(data.calificaciones);
+        })
+        .catch(error => {
+
+            alertify.error('Ocurrio un problema al cargar los comentarios');
+            console.error(error);
+        });
 }
 
-function llenarComentariosOrganizacion(comentarios){
+function llenarComentariosOrganizacion(comentarios) {
 
     let calificacionesNegativas = $('#trato-1');
     let calificacionesRegulares = $('#trato-2');
     let calificacionesPositivas = $('#trato-3');
+    calificacionesNegativas.html('');
+    calificacionesRegulares.html('');
+    calificacionesPositivas.html('');
 
-    if( comentarios.length > 0 ){
+    if (comentarios.length > 0) {
         comentarios.forEach(({
 
             idCalificante,
@@ -372,8 +385,8 @@ function llenarComentariosOrganizacion(comentarios){
 
         }) => {
 
-            let comment = 
-            `<div class="card calificacion trato-${tratoRecibido}">
+            let comment =
+                `<div class="card calificacion trato-${tratoRecibido}">
                 <div class="card-body rounded">
                     <div class="media mb-2">
                         <img src="${urlFotoPerfilUsuario}" alt="" class="imgPerfilCol rounded-circle">
@@ -386,13 +399,19 @@ function llenarComentariosOrganizacion(comentarios){
                 </div>
             </div>`;
 
-            switch(tratoRecibido){
-                case 1: calificacionesNegativas.append(comment); break;
-                case 2: calificacionesRegulares.append(comment); break;
-                case 3: calificacionesPositivas.append(comment); break;
-                default: 
-                console.error("calificacion no registrada");
-                return false;
+            switch (tratoRecibido) {
+                case 1:
+                    calificacionesNegativas.append(comment);
+                    break;
+                case 2:
+                    calificacionesRegulares.append(comment);
+                    break;
+                case 3:
+                    calificacionesPositivas.append(comment);
+                    break;
+                default:
+                    console.error("calificacion no registrada");
+                    return false;
             }
         });
     }
@@ -400,22 +419,20 @@ function llenarComentariosOrganizacion(comentarios){
     agregarPaginacionComentarios();
 }
 
-function calcularPorcentaje( necesidad ){
+function calcularPorcentaje(necesidad) {
     let porcentajeAvance;
-    if( !necesidad.cantidadRecibida ) necesidad.cantidadRecibida = 0;
-    if( necesidad.cantidadNecesidad != 0){
+    if (!necesidad.cantidadRecibida) necesidad.cantidadRecibida = 0;
+    if (necesidad.cantidadNecesidad != 0) {
         porcentajeAvance = necesidad.cantidadRecibida / necesidad.cantidadNecesidad;
-    }
-    else{
-        if( necesidad.cantidadRecibida>0){
+    } else {
+        if (necesidad.cantidadRecibida > 0) {
             porcentajeAvance = 1;
-        }
-        else{
+        } else {
             porcentajeAvance = 0;
         }
     }
 
-    if( porcentajeAvance > 1) porcentajeAvance = 1;
+    if (porcentajeAvance > 1) porcentajeAvance = 1;
     porcentajeAvance = Math.trunc(porcentajeAvance * 100);
-    return porcentajeAvance; 
+    return porcentajeAvance;
 }
