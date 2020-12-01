@@ -34,7 +34,7 @@ class Necesidad extends Model
         ->orderBy('categoriaNecesidad.idPrioridad', 'ASC')
         ->orderBy('necesidad.estadoNecesidad', 'ASC')
         ->orderBy('fechaLimiteNecesidad', 'ASC')
-        ->take(2)
+        ->take(3)
         ->get();
     }
 
@@ -57,7 +57,7 @@ class Necesidad extends Model
             ->orderBy('necesidad.estadoNecesidad', 'ASC')
             ->orderBy('fechaLimiteNecesidad', 'ASC')
             ->orderBy('categoriaNecesidad.idPrioridad', 'ASC')
-            ->take(2)
+            ->take(3)
             ->get();
     }
 
@@ -76,7 +76,7 @@ class Necesidad extends Model
             ->orderBy('necesidad.estadoNecesidad', 'ASC')
             ->orderBy('fechaLimiteNecesidad', 'ASC')
             ->orderBy('categoriaNecesidad.idPrioridad', 'ASC')
-            ->take(2)
+            ->take(3)
             ->get();
     }
 
