@@ -30,7 +30,6 @@ $( document ).ready(function() {
 
     
 
-    // agregarPaginacionUsuarios();
     // EVENTOS
     $(document).on('click', '.alert-close', function() {
         $(this).parent().hide();

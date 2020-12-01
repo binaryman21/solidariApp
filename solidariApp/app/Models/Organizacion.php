@@ -28,10 +28,12 @@ class Organizacion extends Model
             ->join('tipoOrganizacion', 'tipoOrganizacion.idTipoOrganizacion', '=', 'organizacion.idTipoOrganizacion')    
             ->join('domicilio', 'domicilio.idUsuario', '=', 'organizacion.idUsuario')
             ->where('usuario.idEstadoUsuario','=',1)
-            // ->leftJoin('necesidad', 'organizacion.idUsuario', '=', 'necesidad.idUsuario')->first()
-            // ->distinct('usuario.idUsuario')
-            // ->skip( $desde )
-            // ->take( $hasta )
+            ->whereIn('usuario.idUsuario',  function ($query){
+                $query->select('necesidad.idUsuario')
+                ->from('necesidad');
+            })
+            ->skip( $desde )
+            ->take( $hasta )
             ->get();
     }
 
@@ -57,8 +59,12 @@ class Organizacion extends Model
             ->where('domicilio.calle', 'like', '%' . $ubicacion . '%')
             ->where('usuario.idEstadoUsuario','=',1)    
             ->orWhere('localidad.nombreLocalidad', 'like', '%' . $ubicacion . '%')
-            // ->skip( $desde )
-            // ->take( $hasta )
+            ->whereIn('usuario.idUsuario',  function ($query){
+                $query->select('necesidad.idUsuario')
+                ->from('necesidad');
+            })
+            ->skip( $desde )
+            ->take( $hasta )
             ->get();
     }
 }
