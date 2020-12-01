@@ -15,6 +15,7 @@ class Denuncia extends Model
     public static function getDenuncias(){
         return Denuncia::join('motivoDenuncia', 'motivoDenuncia.idMotivoDenuncia','denuncia.idMotivoDenuncia')
         ->where('denuncia.confirmada','0')
+        ->orderBy('denuncia.idDenuncia', 'DESC')
         ->get();
     }
 

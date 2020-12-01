@@ -28,7 +28,7 @@ Route::get('/', function(){
 Route::get('/cuenta-colaborador/perfil', function()
 {
     session_start();
-    if(!isset($_SESSION['usuario']) || $_SESSION['usuario']->rol->nombreRol != 'colaborador')
+    if(!isset($_SESSION['usuario']) || !UsuarioController::tienePermisoPara("verPerfilColaborador"))
     {
         return view('Error403');
     }
@@ -43,7 +43,7 @@ Route::get('/cuenta-colaborador/perfil', function()
 Route::get('/cuenta-colaborador/ajustes', function()
 {
     session_start();
-    if(!isset($_SESSION['usuario']) || $_SESSION['usuario']->rol->nombreRol != 'colaborador')
+    if(!isset($_SESSION['usuario']) || !UsuarioController::tienePermisoPara("verPerfilColaborador"))
     {
         return view('Error403');
     }
@@ -54,26 +54,31 @@ Route::get('/cuenta-colaborador/ajustes', function()
 //lo dejo de momento en otra ruta para no interferir en otras funcionalidades.
 Route::get('/ver-colaborador/{idUsuario}', function($idUsuario){
 
-
     if(UsuarioController::ExisteUsuario($idUsuario)){
         session_start();
-        if(isset($_SESSION['usuario'])){
+        if( isset($_SESSION['usuario']) ){
             if( $_SESSION['usuario']->idUsuario == $idUsuario ){
                 return view('UIPerfilDeColaborador');
             }
-            else{
-                $typeUser = $_SESSION['usuario']->rol->nombreRol;
-                return view('UIPerfilVisitanteDeColaborador', compact('typeUser'));
-            }
+            $typeUser = $_SESSION['usuario']->rol->nombreRol;
+            return view('UIPerfilVisitanteDeColaborador', compact('typeUser'));
         }
-        return view('UIUsuarioNoEncontrado');
+        return view('UIPerfilVisitanteDeColaborador');
     }
     else return view('UIUsuarioNoEncontrado');
 ;})->name('UIVisitanteDeColaborador');
 
 Route::get('/ver-organizacion/{idUsuario}', function($idUsuario){
 
-    if(UsuarioController::ExisteUsuario($idUsuario)) return view('UIPerfilVisitanteDeOrganizacion');
+    if(UsuarioController::ExisteUsuario($idUsuario)){
+        session_start();
+        if( isset($_SESSION['usuario']) ){
+            if( $_SESSION['usuario']->idUsuario == $idUsuario ){
+                return view('UIPerfilDeOrganizacion');
+            }
+        }
+        return view('UIPerfilVisitanteDeOrganizacion');
+    }
     else return view('UIUsuarioNoEncontrado');
 
 })->name('UIVisitanteDeOrganizacion');
@@ -83,7 +88,7 @@ Route::get('/ver-organizacion/{idUsuario}', function($idUsuario){
 Route::get('/cuenta-organizacion/perfil', function()
 {
     session_start();
-    if(!isset($_SESSION['usuario']) || $_SESSION['usuario']->rol->nombreRol != 'organizacion')
+    if(!isset($_SESSION['usuario']) || !UsuarioController::tienePermisoPara("verPerfilOrganizacion"))
     {
         return view('Error403');
     }
@@ -95,7 +100,7 @@ Route::get('/cuenta-organizacion/perfil', function()
 Route::get('/cuenta-organizacion/ajustes', function()
 {
     session_start();
-    if(!isset($_SESSION['usuario']) || $_SESSION['usuario']->rol->nombreRol != 'organizacion')
+    if(!isset($_SESSION['usuario']) || !UsuarioController::tienePermisoPara("verPerfilOrganizacion"))
     {
         return view('Error403');
     }

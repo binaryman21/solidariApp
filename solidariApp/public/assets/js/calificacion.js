@@ -95,8 +95,8 @@ function registrarCalificacionOrganizacion(idCalificado){
             alertify.success(response.data.message);
             $("#modalCalificarOrganizacion").modal("hide");
             crearNotificacionCalificacionOrganizacion(calificacion)
-            limpiarValidaciones($("#textoComentarios"), $("#errorTextoComentarios"));
-            $("#textoComentarios").val('');
+            limpiarValidaciones($("#textoComentariosOrg"), $("#errorTextoComentariosOrg"));
+            $("#textoComentariosOrg").val('');
             cargarComentariosOrganizacion(idCalificado);
         }
         else{

@@ -13,7 +13,7 @@
                 <img id="imgPerfilColaborador" class="shadow-sm rounded-circle imgPerfilOrg align-self-start mr-auto" src="{{URL::asset('assets/img/imgUserProfile.png')}}" alt="imagen de usuario">
             </div>
             <div class="clearfix"></div>
-            <h5 class="card-title mt-2 loading ldg-w-sm">Usuario no encotrado</h5>
+            <h5 class="card-title mt-2 loading ldg-w-sm">Usuario no encontrado</h5>
             <div class="card-text">Este usuario no existe o probablemente no tenga una cuenta activa</div>
         </div>
     </div>
