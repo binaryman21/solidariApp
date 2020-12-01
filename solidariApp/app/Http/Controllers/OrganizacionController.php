@@ -240,78 +240,130 @@ class OrganizacionController extends Controller
         }
     }
 
-    public function busquedaOrganizaciones($filtroTexto){
-        $organizaciones = Organizacion::getOrganizaciones();
-        $organizacionesConNecesidad = [];
 
-        foreach( $organizaciones as  $key => $organizacion ){
-            $necesidades = Necesidad::buscarNecesidad( $filtroTexto, $organizacion->idUsuario );
-            $json_array  = json_decode($necesidades, true);
-            $organizacion['necesidades'] = $necesidades;
-            //Si hay necesidades entonces traigo esa organizacion, sino no
-            if( count($json_array) > 0 ){
-                array_push($organizacionesConNecesidad, $organizacion);
+    public function buscarOrganizacionesPaginacion( Request $request ){
+        try{
+
+            $datosFiltros = json_decode($request->getContent());
+    
+            if( $datosFiltros->filtroUbicacion != '' ){
+                $organizaciones = Organizacion::buscarOrganizacionesPorUbicacion( $datosFiltros );
             }
+            else{
+                $organizaciones = Organizacion::getOrganizaciones( $datosFiltros );
+            }
+            $organizacionesConNecesidad = [];
+    
+    
+            foreach( $organizaciones as  $key => $organizacion ){
+                if( $datosFiltros->filtroUbicacion ){
+                    $necesidades = Necesidad::listarNecesidadesPantallaPrincipal( $organizacion->idUsuario );
+                }
+                else if( $datosFiltros->filtroCategoria ){
+                    $necesidades = Necesidad::buscarNecesidadPorCategoria( $datosFiltros, $organizacion->idUsuario );
+                }
+                else if( $datosFiltros->filtroTexto ){
+                    $necesidades = Necesidad::buscarNecesidad( $datosFiltros, $organizacion->idUsuario );
+                }
+                else{
+                    $necesidades = Necesidad::listarNecesidadesPantallaPrincipal( $organizacion->idUsuario );
+                }
+                $json_array  = json_decode($necesidades, true);
+                $organizacion['necesidades'] = $necesidades;
+                //Si hay necesidades entonces traigo esa organizacion, sino no
+                if( count($json_array) > 0 ){
+                    array_push($organizacionesConNecesidad, $organizacion);
+                }
+            }
+            
+            $organizaciones = $organizacionesConNecesidad;
+            $organizaciones = array_slice($organizaciones, $datosFiltros->desde, $datosFiltros->hasta);      // devuelve "c", "d", y "e"
+            return json_encode([
+                'resultado' => 1,
+                'organizaciones' => $organizaciones
+            ]);
         }
-        $organizaciones = $organizacionesConNecesidad;
-        return json_encode([
-            'organizaciones' => $organizaciones
-        ]);
+        catch (\Exception $e)
+        {
+            return response()->json([
+                'resultado' => 0,
+                'message' => $e->getMessage()
+            ]);
+        }
     }
 
-    public function busquedaOrganizacionesPorCategoria($filtroTexto){
-        $organizaciones = Organizacion::getOrganizaciones();
-        $organizacionesConNecesidad = [];
+    // public function busquedaOrganizaciones($filtroTexto){
+    //     $organizaciones = Organizacion::getOrganizaciones();
+    //     $organizacionesConNecesidad = [];
 
-        foreach( $organizaciones as  $key => $organizacion ){
-            $necesidades = Necesidad::buscarNecesidadPorCategoria( $filtroTexto, $organizacion->idUsuario );
-            $json_array  = json_decode($necesidades, true);
-            $organizacion['necesidades'] = $necesidades;
-            //Si hay necesidades entonces traigo esa organizacion, sino no
-            if( count($json_array) > 0 ){
-                array_push($organizacionesConNecesidad, $organizacion);
-            }
-        }
-        $organizaciones = $organizacionesConNecesidad;
+    //     foreach( $organizaciones as  $key => $organizacion ){
+    //         $necesidades = Necesidad::buscarNecesidad( $filtroTexto, $organizacion->idUsuario );
+    //         $json_array  = json_decode($necesidades, true);
+    //         $organizacion['necesidades'] = $necesidades;
+    //         //Si hay necesidades entonces traigo esa organizacion, sino no
+    //         if( count($json_array) > 0 ){
+    //             array_push($organizacionesConNecesidad, $organizacion);
+    //         }
+    //     }
+    //     $organizaciones = $organizacionesConNecesidad;
+    //     return json_encode([
+    //         'organizaciones' => $organizaciones
+    //     ]);
+    // }
 
-        return json_encode([
-            'organizaciones' => $organizaciones
-        ]);
-    }
+    // public function busquedaOrganizacionesPorCategoria($filtroTexto){
+    //     $organizaciones = Organizacion::getOrganizaciones();
+    //     $organizacionesConNecesidad = [];
 
-    public function busquedaOrganizacionesPorUbicacion($ubicacion){
-        $organizaciones = Organizacion::buscarOrganizacionesPorUbicacion( $ubicacion );
-        $organizacionesConNecesidad = [];
+    //     foreach( $organizaciones as  $key => $organizacion ){
+    //         $necesidades = Necesidad::buscarNecesidadPorCategoria( $filtroTexto, $organizacion->idUsuario );
+    //         $json_array  = json_decode($necesidades, true);
+    //         $organizacion['necesidades'] = $necesidades;
+    //         //Si hay necesidades entonces traigo esa organizacion, sino no
+    //         if( count($json_array) > 0 ){
+    //             array_push($organizacionesConNecesidad, $organizacion);
+    //         }
+    //     }
+    //     $organizaciones = $organizacionesConNecesidad;
 
-        foreach( $organizaciones as  $key => $organizacion ){
-            $necesidades = Necesidad::listarNecesidadesPantallaPrincipal( $organizacion->idUsuario );
-            $json_array  = json_decode($necesidades, true);
-            $organizacion['necesidades'] = $necesidades;
-            //Si hay necesidades entonces traigo esa organizacion, sino no
-            if( count($json_array) > 0 ){
-                array_push($organizacionesConNecesidad, $organizacion);
-            }
-        }
-        $organizaciones = $organizacionesConNecesidad;
+    //     return json_encode([
+    //         'organizaciones' => $organizaciones
+    //     ]);
+    // }
 
-        return json_encode([
-            'organizaciones' => $organizaciones
-        ]);
-    }
+    // public function busquedaOrganizacionesPorUbicacion($ubicacion){
+    //     $organizaciones = Organizacion::buscarOrganizacionesPorUbicacion( $ubicacion );
+    //     $organizacionesConNecesidad = [];
+
+    //     foreach( $organizaciones as  $key => $organizacion ){
+    //         $necesidades = Necesidad::listarNecesidadesPantallaPrincipal( $organizacion->idUsuario );
+    //         $json_array  = json_decode($necesidades, true);
+    //         $organizacion['necesidades'] = $necesidades;
+    //         //Si hay necesidades entonces traigo esa organizacion, sino no
+    //         if( count($json_array) > 0 ){
+    //             array_push($organizacionesConNecesidad, $organizacion);
+    //         }
+    //     }
+    //     $organizaciones = $organizacionesConNecesidad;
+
+    //     return json_encode([
+    //         'organizaciones' => $organizaciones
+    //     ]);
+    // }
 
     //Traerme todas las organizaciones
-    public function getOrganizaciones(){
+    // public function getOrganizaciones(){
 
-        $organizaciones = Organizacion::getOrganizaciones();
+    //     $organizaciones = Organizacion::getOrganizaciones();
 
-        foreach( $organizaciones as $organizacion ){
-            $organizacion['necesidades'] = Necesidad::listarNecesidadesPantallaPrincipal( $organizacion->idUsuario );
-        }
+    //     foreach( $organizaciones as $organizacion ){
+    //         $organizacion['necesidades'] = Necesidad::listarNecesidadesPantallaPrincipal( $organizacion->idUsuario );
+    //     }
 
-        return json_encode([
-            'organizaciones' => $organizaciones
-        ]);
-    }
+    //     return json_encode([
+    //         'organizaciones' => $organizaciones
+    //     ]);
+    // }
 
     //Traerme la organizacion del link
     public function traerOrganizacion($idOrganizacion, $idNecesidad){

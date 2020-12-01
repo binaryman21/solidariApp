@@ -159,6 +159,7 @@ Route::get('/buscarOrganizacionesPorUbicacion/{ubicacion}', 'App\Http\Controller
 Route::get('/buscarOrganizaciones/{filtro}', 'App\Http\Controllers\OrganizacionController@busquedaOrganizaciones')->name('busquedaOrganizaciones');
 Route::get('/buscarOrganizacionesPorCategoria/{filtro}', 'App\Http\Controllers\OrganizacionController@busquedaOrganizacionesPorCategoria')->name('busquedaOrganizacionesPorCategoria');
 Route::get('/organizacion/{idOrganizacion}/necesidad/{idNecesidad}', 'App\Http\Controllers\NecesidadController@necesidad')->name('necesidad');
+Route::post('/buscarOrganizacionesPaginacion', 'App\Http\Controllers\OrganizacionController@buscarOrganizacionesPaginacion')->name('buscarOrganizacionesPaginacion');
 
 //COLABORADOR
 Route::get('/getColaborador/{idUsuario}', 'App\Http\Controllers\ColaboradorController@getColaborador')->name('getColaborador');
