@@ -9,7 +9,7 @@ function cargarNotificaciones(usuario){
             let noLeidas = response.data.noLeidas;
 
             //console.log(noLeidas);
-            console.log(notificaciones);
+            // console.log(notificaciones);
 
             if(!notificaciones == ''){
                 mostrarNotificaciones(notificaciones,noLeidas)

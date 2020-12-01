@@ -64,9 +64,9 @@ function cargarDatosModalDetalleDenuncia( denuncia ){
     $('#spnFechaDenuncia').text( new Date(denuncia.fechaDenuncia).toLocaleDateString('es-AR') );
     $('#spnMotivoDenuncia').text( denuncia.descripcionMotivoDenuncia );
     $('#spnDenunciante').text( denuncia.idDenunciante );
-    $('#spnNombreDenunciante').text( ' ' + denuncia.denunciante.nombre[0].nombre );
+    $('#spnNombreDenunciante').text( denuncia.denunciante.nombre[0].nombre );
     $('#spnDenunciado').text( denuncia.idDenunciado );
-    $('#spnNombreDenunciado').text( ' ' + denuncia.denunciado.nombre[0].nombre );
+    $('#spnNombreDenunciado').text( denuncia.denunciado.nombre[0].nombre );
     $(`#verPerfilDenunciante`).attr('href', `/ver-${denuncia.denunciante[0].rol.nombreRol}/${denuncia.idDenunciante}`);
     $(`#verPerfilDenunciado`).attr('href', `/ver-${denuncia.denunciado[0].rol.nombreRol}/${denuncia.idDenunciado}`);
     $(`#spnDescripcionDenuncia`).text( denuncia.descripcionDenuncia );

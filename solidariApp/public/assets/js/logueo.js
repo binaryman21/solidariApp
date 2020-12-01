@@ -92,7 +92,7 @@ function isLoggedIn({funcionSuccess = undefined, RedirectIfNot = false} = {})
     fetch("/isLoggedIn")
     .then(response => response.json())
     .then(data => {
-        console.log( data.usuario );
+        // console.log( data.usuario );
         if(data.usuario != null)
         {
             mostrarInterfazSesionIniciada(data.usuario);
@@ -115,7 +115,7 @@ function mostrarInterfazSesionIniciada(usuario)
     $("#btnIngresar").hide();
     $("#dropDownUsuario").show();
     $("#botonesRegistro").hide();
-    $("#imgPerfil").attr("src",usuario.urlFotoPerfilUsuario);
+    $("#imgPerfil").attr("src",'/'+usuario.urlFotoPerfilUsuario);
     // $("#mapa").removeClass("mapa");
     // $("#mapa").addClass("mapaExtendido");
     $("#btnVerMiPerfil").attr("href", `/cuenta-${usuario.rol.nombreRol}/perfil`);
