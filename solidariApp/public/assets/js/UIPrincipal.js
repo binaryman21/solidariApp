@@ -20,30 +20,30 @@ $( document ).ready(function() {
     listarTiposOrganizaciones();
     listarCategoriasNecesidad();
     cargarCarousel();
-    cargarOrgPaginacion();
+    // cargarOrgPaginacion();
 
-    function cargarOrgPaginacion() {
-        let datosFiltros = {
-            desde: 0,
-            hasta: 10,
-            filtroTexto: '',
-            filtroUbicacion: '',
-            filtroCategoria: ''
-        }
-        JSON.stringify(datosFiltros);
-        console.log( datosFiltros );
+    // function cargarOrgPaginacion() {
+    //     let datosFiltros = {
+    //         desde: 0,
+    //         hasta: 10,
+    //         filtroTexto: '',
+    //         filtroUbicacion: '',
+    //         filtroCategoria: ''
+    //     }
+    //     JSON.stringify(datosFiltros);
+    //     console.log( datosFiltros );
 
-        axios.post("/buscarOrganizacionesPaginacion",datosFiltros)
-            .then((response)=>{
-                if( response.data.resultado ){
-                    console.log( response.data.organizaciones );
-                }
-                else{
-                    console.log( response.data.message );
-                }            
-            })
-            .catch(error => console.log(error))
-    }
+    //     axios.post("/buscarOrganizacionesPaginacion",datosFiltros)
+    //         .then((response)=>{
+    //             if( response.data.resultado ){
+    //                 console.log( response.data.organizaciones );
+    //             }
+    //             else{
+    //                 console.log( response.data.message );
+    //             }            
+    //         })
+    //         .catch(error => console.log(error))
+    // }
 
     // EVENTOS
     $(document).on('click', '.alert-close', function() {
