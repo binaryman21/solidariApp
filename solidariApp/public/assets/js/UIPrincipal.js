@@ -105,7 +105,7 @@ $( document ).ready(function() {
 function cargarOrgPaginacion() {
     let datosFiltros = {
         desde: parseInt($("#cantidadRegistros").val()),
-        hasta: parseInt($("#cantidadRegistros").val()) + 5,
+        hasta: parseInt($("#cantidadRegistros").val()) + 4,
         filtro:  $("#valorFiltroActual").val(),
         tipoFiltro: $("#filtroActual").val()
 
@@ -120,7 +120,7 @@ function cargarOrgPaginacion() {
                 let organizaciones = response.data.organizaciones;
                 llenarOrganizaciones(organizaciones);
                 let cantidadRegistros = parseInt($("#cantidadRegistros").val());
-                $("#cantidadRegistros").val(cantidadRegistros + 5);
+                $("#cantidadRegistros").val(cantidadRegistros + 4);
                 $("#spinner1").remove();
                 
                 if(organizaciones.length > 0)
