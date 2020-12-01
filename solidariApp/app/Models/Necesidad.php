@@ -25,7 +25,7 @@ class Necesidad extends Model
         ->get();
     }
 
-    public static function listarNecesidadesPantallaPrincipal($idUsuario)
+    public static function listarNecesidadesPantallaPrincipal( $idUsuario )
     {
         return Necesidad::where("idUsuario",$idUsuario)
         ->where("necesidad.estadoNecesidad",'<>',3)
@@ -34,12 +34,14 @@ class Necesidad extends Model
         ->orderBy('categoriaNecesidad.idPrioridad', 'ASC')
         ->orderBy('necesidad.estadoNecesidad', 'ASC')
         ->orderBy('fechaLimiteNecesidad', 'ASC')
-        ->take(2)->get();
+        ->get();
     }
 
     //BUSCAR NECESIDAD POR FILTRO DE TEXTO
-    public static function buscarNecesidad($filtroTexto, $idUsuario)
+    public static function buscarNecesidad($datosFiltros, $idUsuario)
     {
+        $filtroTexto = $datosFiltros->filtroTexto;
+        
         return Necesidad::select('necesidad.*', 'categoriaNecesidad.*','estadoNecesidad.descripcionEstado')
             ->where("necesidad.idUsuario",$idUsuario)
             ->where("necesidad.estadoNecesidad",'<>',3)
@@ -54,12 +56,14 @@ class Necesidad extends Model
             ->orderBy('necesidad.estadoNecesidad', 'ASC')
             ->orderBy('fechaLimiteNecesidad', 'ASC')
             ->orderBy('categoriaNecesidad.idPrioridad', 'ASC')
-            ->take(2)->get();
+            ->get();
     }
 
     //BUSCAR NECESIDAD POR CATEGORIA
-    public static function buscarNecesidadPorCategoria($filtroTexto, $idUsuario)
+    public static function buscarNecesidadPorCategoria($datosFiltros, $idUsuario)
     {
+        $filtroTexto = $datosFiltros->filtroCategoria;
+
         return Necesidad::where("idUsuario",$idUsuario)
             ->where("necesidad.estadoNecesidad",'<>',3)
             ->where(function ($query) use ($filtroTexto) {
@@ -70,7 +74,7 @@ class Necesidad extends Model
             ->orderBy('necesidad.estadoNecesidad', 'ASC')
             ->orderBy('fechaLimiteNecesidad', 'ASC')
             ->orderBy('categoriaNecesidad.idPrioridad', 'ASC')
-            ->take(2)->get();
+            ->get();
     }
 
     //TRAER NECESIDAD

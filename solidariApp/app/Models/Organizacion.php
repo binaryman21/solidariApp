@@ -20,16 +20,19 @@ class Organizacion extends Model
                     ->first();
     }
 
-    public static function getOrganizaciones()
+    public static function getOrganizaciones( $datosFiltros )
     {
+        $desde = $datosFiltros->desde;
+        $hasta = $datosFiltros->hasta;
         return Organizacion::join('usuario', 'organizacion.idUsuario', '=', 'usuario.idUsuario')
             ->join('tipoOrganizacion', 'tipoOrganizacion.idTipoOrganizacion', '=', 'organizacion.idTipoOrganizacion')    
-            ->join('domicilio', 'domicilio.idUsuario', '=', 'organizacion.idUsuario')    
-            ->where('usuario.idEstadoUsuario','=',1)    
-            // ->join('necesidad', 'necesidad.idUsuario', '=', 'organizacion.idUsuario')    
-            // ->join('categoriaNecesidad', 'categoriaNecesidad.idCategoria', '=', 'necesidad.idCategoriaNecesidad')    
-                ->take(30)
-                ->get();
+            ->join('domicilio', 'domicilio.idUsuario', '=', 'organizacion.idUsuario')
+            ->where('usuario.idEstadoUsuario','=',1)
+            // ->leftJoin('necesidad', 'organizacion.idUsuario', '=', 'necesidad.idUsuario')->first()
+            // ->distinct('usuario.idUsuario')
+            // ->skip( $desde )
+            // ->take( $hasta )
+            ->get();
     }
 
     public static function traerOrganizacion($idOrganizacion)
@@ -42,8 +45,11 @@ class Organizacion extends Model
             ->get();
     }
 
-    public static function buscarOrganizacionesPorUbicacion( $ubicacion )
+    public static function buscarOrganizacionesPorUbicacion( $datosFiltros )
     {
+        $desde = $datosFiltros->desde;
+        $hasta = $datosFiltros->hasta;
+        $ubicacion = $datosFiltros->filtroUbicacion;
         return Organizacion::join('usuario', 'organizacion.idUsuario', '=', 'usuario.idUsuario')
             ->join('tipoOrganizacion', 'tipoOrganizacion.idTipoOrganizacion', '=', 'organizacion.idTipoOrganizacion')    
             ->join('domicilio', 'domicilio.idUsuario', '=', 'organizacion.idUsuario')    
@@ -51,7 +57,8 @@ class Organizacion extends Model
             ->where('domicilio.calle', 'like', '%' . $ubicacion . '%')
             ->where('usuario.idEstadoUsuario','=',1)    
             ->orWhere('localidad.nombreLocalidad', 'like', '%' . $ubicacion . '%')
-                ->take(30)
-                ->get();
+            // ->skip( $desde )
+            // ->take( $hasta )
+            ->get();
     }
 }
