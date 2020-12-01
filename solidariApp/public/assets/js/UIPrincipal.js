@@ -239,7 +239,7 @@ function registrarColaborador()
         })
 }
 
-//PAGINAR LAS ORGANIZACIONES EN LA LISTA
+/*PAGINAR LAS ORGANIZACIONES EN LA LISTA
 function agregarPaginacionListaOrganizaciones(){
     $('#navListaOrganizaciones').html('');
     $('.listaOrganizaciones').after('<div id="navListaOrganizaciones"></div>');
@@ -264,7 +264,7 @@ function agregarPaginacionListaOrganizaciones(){
         $( organizacion ).css('opacity','0.0').hide().slice(primerItem, ultimoItem).
             css('display','block').animate({opacity:1}, 300);
     });
-}
+}*/
 
 
 //MOSTRAR EL MODAL DE REGISTRO COMO ORGANIZACION
@@ -279,6 +279,10 @@ function mostrarRegistrarseComoColaborador(){
 
 //TRAER TODAS LAS ORGANIZACIONES
 function getOrganizaciones(){
+
+    $("#filtroActual").val("");
+    $("#valorFiltroActual").val(""); 
+
     fetch('/getOrganizaciones/')
         .then(response => response.json())
         .then(data => {
@@ -367,7 +371,7 @@ function llenarOrganizaciones( organizaciones ){
             }
         })
     }
-    agregarPaginacionListaOrganizaciones();
+    //agregarPaginacionListaOrganizaciones();
 }
 
 //CARGAR LAS NECESIDADES EN EL MODAL

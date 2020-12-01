@@ -9,13 +9,17 @@
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
     integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
     crossorigin=""/>
+
+
 @endsection
 @section("contenido")
+    <input type="hidden" name="" id = "filtroActual">
+    <input type="hidden" name="" id = "valorFiltroActual">
     <div id="necesidadOculta" class="d-none">{{$idNecesidad}}</div>
     <div id="organizacionOculta" class="d-none">{{$idOrganizacion}}</div>
     <div class="container-fluid px-sm-3 px-lg-5">
         <div class="row bg-white rounded justify-content-lg-center pb-3">
-            <div class="col-xs-12 col-sm-4 col-lg-3 p-sm-1 p-md-2 mr-n3">
+            <div class="col-xs-12 col-sm-4 col-lg-3 p-sm-1 p-md-2 mr-n3" style = "height:100%;">
                 <div class="input-group my-2 mt-3 mt-lg-2">
                     <input class="form-control border-secondary border-right-0" type="text" id="campoBuscarPorTexto" placeholder="¿Con qué querés colaborar?">
                     <div class="input-group-append">
@@ -29,7 +33,9 @@
                         <button class="btn btn-outline-secondary border-secondary border-left-0" id="btnBuscarNeccesidades" type="button"><i class="fa fa-search fa-xs"></i></button>
                     </div>
                 </div>
-                <div class = "card listaOrganizaciones border-0" ></div>
+                <div class = "card scrollpane border-0 overflow-auto" style = "height:650px;">
+                    <div class = "card listaOrganizaciones border-0" id= "results" ></div>
+                </div>
             </div>
             <div class="col mr-n2">
                 <div class="row px-2 pt-3 justify-content-between align-items-center">
@@ -96,4 +102,44 @@
     <!-- <script src="https://unpkg.com/axios/dist/axios.min.js" defer></script> -->
     <!-- Validaciones -->
     <script type="text/javascript" src="{{URL::asset('assets/js/validaciones.js')}}" defer></script>
+
+
+    
+    <script>
+    
+
+        $(function() {
+          for(var i = 0;i<10;i++){
+            $("#results").append("<li>asdasd</li>");
+          }
+          $(".scrollpane").scroll(eventoScroll);
+        
+        });
+        
+        function eventoScroll() {
+                var $this = $(this);
+                var $results = $("#results");
+                console.log($this.scrollTop());
+                var cargando = false;
+                if (($this.scrollTop() >= $results.height() - $this.height() - 10)) {
+                    $this.unbind("scroll");
+                    $results.append(`<div class="spinner-border text-primary" id = "spinner1" role="status">
+                    <span class="sr-only">Loading...</span> </div>`);
+                   
+                    setTimeout(
+                    function() 
+                    {
+                        for(var i = 0;i<10;i++)
+                    {
+                        $("#results").append("<li>asdasd</li>");
+                        $("#spinner1").remove();
+                        
+                    }
+                    $(".scrollpane").scroll(eventoScroll);
+                    }, 2000);
+                    
+                }
+            }
+            </script>
+            
 @endsection

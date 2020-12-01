@@ -205,6 +205,10 @@ function listarTiposOrganizaciones() {
 function buscarNecesidadPorTexto() {
     let filtroBusqueda = $('#campoBuscarPorTexto').val();
     if (filtroBusqueda !== '') {
+
+        $("#filtroActual").val("texto");
+        $("#valorFiltroActual").val(filtroBusqueda); 
+
         fetch("/buscarOrganizaciones/" + filtroBusqueda)
             .then(response => response.json())
             .then(data => {
@@ -216,11 +220,14 @@ function buscarNecesidadPorTexto() {
 
 //BUSCAR UNA NECESIDAD POR EL FILTRO DE CATEGORIA
 function filtrarPorCategoria(e) {
+
     let target = e.target; // where was the click?
     let filtroBusqueda = target.title;
     if (filtroBusqueda === '') {
         filtroBusqueda = target.parentElement.title
     }
+    $("#filtroActual").val("categoria");
+    $("#valorFiltroActual").val(filtroBusqueda); 
     $('#filtrosCategoria button').attr('disabled', true);
     fetch("/buscarOrganizacionesPorCategoria/" + filtroBusqueda)
         .then(response => response.json())
@@ -235,6 +242,10 @@ function filtrarPorCategoria(e) {
 function filtrarPorUbicacion() {
     let filtroBusqueda = $('#ubicacion').val();
     if (filtroBusqueda !== '') {
+
+        $("#filtroActual").val("categoria");
+        $("#valorFiltroActual").val(filtroBusqueda); 
+
         fetch("/buscarOrganizacionesPorUbicacion/" + filtroBusqueda)
             .then(response => response.json())
             .then(data => {
