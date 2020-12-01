@@ -49,7 +49,7 @@ class Organizacion extends Model
     {
         $desde = $datosFiltros->desde;
         $hasta = $datosFiltros->hasta;
-        $ubicacion = $datosFiltros->filtroUbicacion;
+        $ubicacion = $datosFiltros->filtro;
         return Organizacion::join('usuario', 'organizacion.idUsuario', '=', 'usuario.idUsuario')
             ->join('tipoOrganizacion', 'tipoOrganizacion.idTipoOrganizacion', '=', 'organizacion.idTipoOrganizacion')    
             ->join('domicilio', 'domicilio.idUsuario', '=', 'organizacion.idUsuario')    

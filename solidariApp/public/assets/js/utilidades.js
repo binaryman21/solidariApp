@@ -203,56 +203,19 @@ function listarTiposOrganizaciones() {
 
 //BUSCAR UNA NECESIDAD POR EL FILTRO DEL CAMPO TEXTO
 function buscarNecesidadPorTexto() {
-    let filtroBusqueda = $('#campoBuscarPorTexto').val();
-    if (filtroBusqueda !== '') {
-
-        $("#filtroActual").val("texto");
-        $("#valorFiltroActual").val(filtroBusqueda); 
-
-        fetch("/buscarOrganizaciones/" + filtroBusqueda)
-            .then(response => response.json())
-            .then(data => {
-                let organizaciones = data.organizaciones;
-                llenarOrganizaciones(organizaciones);
-            })
-    }
+   
 }
 
 //BUSCAR UNA NECESIDAD POR EL FILTRO DE CATEGORIA
 function filtrarPorCategoria(e) {
 
-    let target = e.target; // where was the click?
-    let filtroBusqueda = target.title;
-    if (filtroBusqueda === '') {
-        filtroBusqueda = target.parentElement.title
-    }
-    $("#filtroActual").val("categoria");
-    $("#valorFiltroActual").val(filtroBusqueda); 
-    $('#filtrosCategoria button').attr('disabled', true);
-    fetch("/buscarOrganizacionesPorCategoria/" + filtroBusqueda)
-        .then(response => response.json())
-        .then(data => {
-            let organizaciones = data.organizaciones;
-            llenarOrganizaciones(organizaciones);
-            $('#filtrosCategoria button').attr('disabled', false);
-        })
+    
+   
 }
 
 //BUSCAR UNA ORGANIZACION POR FILTRO DE UBICACION
 function filtrarPorUbicacion() {
-    let filtroBusqueda = $('#ubicacion').val();
-    if (filtroBusqueda !== '') {
-
-        $("#filtroActual").val("categoria");
-        $("#valorFiltroActual").val(filtroBusqueda); 
-
-        fetch("/buscarOrganizacionesPorUbicacion/" + filtroBusqueda)
-            .then(response => response.json())
-            .then(data => {
-                let organizaciones = data.organizaciones;
-                llenarOrganizaciones(organizaciones);
-            })
-    }
+ 
     // console.log( filtroBusqueda );
 }
 

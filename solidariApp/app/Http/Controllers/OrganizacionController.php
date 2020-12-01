@@ -246,7 +246,7 @@ class OrganizacionController extends Controller
 
             $datosFiltros = json_decode($request->getContent());
     
-            if( $datosFiltros->filtroUbicacion != '' ){
+            if( $datosFiltros->tipoFiltro == "ubicacion" ){
                 $organizaciones = Organizacion::buscarOrganizacionesPorUbicacion( $datosFiltros );
             }
             else{
@@ -256,13 +256,13 @@ class OrganizacionController extends Controller
     
     
             foreach( $organizaciones as  $key => $organizacion ){
-                if( $datosFiltros->filtroUbicacion ){
+                if( $datosFiltros->tipoFiltro == "" ){
                     $necesidades = Necesidad::listarNecesidadesPantallaPrincipal( $organizacion->idUsuario );
                 }
-                else if( $datosFiltros->filtroCategoria ){
+                else if( $datosFiltros->tipoFiltro == "categoria" ){
                     $necesidades = Necesidad::buscarNecesidadPorCategoria( $datosFiltros, $organizacion->idUsuario );
                 }
-                else if( $datosFiltros->filtroTexto ){
+                else if( $datosFiltros->tipoFiltro == "texto" ){
                     $necesidades = Necesidad::buscarNecesidad( $datosFiltros, $organizacion->idUsuario );
                 }
                 else{

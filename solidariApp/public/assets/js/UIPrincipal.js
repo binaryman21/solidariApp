@@ -1,7 +1,13 @@
 isLoggedIn({funcionSuccess:undefined, RedirectIfNot: false});
 
 $( document ).ready(function() {
+    $("#cantidadRegistros").val(0);
 
+
+    $(".scrollpane").scroll(eventoScroll);
+        
+      
+        
     if( $('#necesidadOculta').text() == '' && $('#organizacionOculta').text() == ''  ){
         getOrganizaciones();
     }
@@ -15,35 +21,14 @@ $( document ).ready(function() {
             $(this).parent().hide();
         })
     //  });
-
+    
     listarProvincias(1);
     listarTiposOrganizaciones();
     listarCategoriasNecesidad();
     cargarCarousel();
-    cargarOrgPaginacion();
+    
 
-    function cargarOrgPaginacion() {
-        let datosFiltros = {
-            desde: 0,
-            hasta: 10,
-            filtroTexto: '',
-            filtroUbicacion: 'Monte',
-            filtroCategoria: ''
-        }
-        JSON.stringify(datosFiltros);
-        console.log( datosFiltros );
-
-        axios.post("/buscarOrganizacionesPaginacion",datosFiltros)
-            .then((response)=>{
-                if( response.data.resultado ){
-                    console.log( response.data.organizaciones );
-                }
-                else{
-                    console.log( response.data.message );
-                }            
-            })
-            .catch(error => console.log(error))
-    }
+    
 
     // agregarPaginacionUsuarios();
     // EVENTOS
@@ -62,10 +47,30 @@ $( document ).ready(function() {
     });
 
     //Evento click para buscar una necesidad
-    $('#btnBuscarNeccesidades').on('click', buscarNecesidadPorTexto);
+    $('#btnBuscarNeccesidades').on('click', function()
+    {
+        $("#cantidadRegistros").val(0);
+        let filtroBusqueda = $('#campoBuscarPorTexto').val();
+        if (filtroBusqueda !== '') 
+        {
+            $("#filtroActual").val("texto");
+            $("#valorFiltroActual").val(filtroBusqueda); 
+            cargarOrgPaginacion();
+        }
+    });
 
     //Evento click para el filtro por ubicacion
-    $('#btnBuscarPorUbicacion').on('click', filtrarPorUbicacion);
+    $('#btnBuscarPorUbicacion').on('click', function()
+    {
+        $("#cantidadRegistros").val(0);
+        let filtroBusqueda = $('#ubicacion').val();
+        if (filtroBusqueda !== '') {
+    
+            $("#filtroActual").val("ubicacion");
+            $("#valorFiltroActual").val(filtroBusqueda); 
+        }
+        cargarOrgPaginacion();
+    });
 
     //evento click en el btnCrearCuenta del modalRegistroColOrg
     $("#btnCrearCuenta").click(function(){
@@ -96,6 +101,58 @@ $( document ).ready(function() {
     });
 });
 
+
+
+function cargarOrgPaginacion() {
+    let datosFiltros = {
+        desde: parseInt($("#cantidadRegistros").val()),
+        hasta: parseInt($("#cantidadRegistros").val()) + 5,
+        filtro:  $("#valorFiltroActual").val(),
+        tipoFiltro: $("#filtroActual").val()
+
+    }
+    JSON.stringify(datosFiltros);
+    console.log( datosFiltros );
+
+    axios.post("/buscarOrganizacionesPaginacion",datosFiltros)
+        .then((response)=>{
+            if( response.data.resultado ){
+                console.log( response.data.organizaciones );
+                let organizaciones = response.data.organizaciones;
+                llenarOrganizaciones(organizaciones);
+                let cantidadRegistros = parseInt($("#cantidadRegistros").val());
+                $("#cantidadRegistros").val(cantidadRegistros + 5);
+                $("#spinner1").remove();
+                
+                if(organizaciones.length > 0)
+                {
+                    $(".scrollpane").scroll(eventoScroll);
+                }
+                
+            }
+            else{
+                console.log( response.data.message );
+            }            
+        })
+        .catch(error => console.log(error))
+}
+
+
+function eventoScroll() {
+    var $this = $(this);
+    var $results = $("#results");
+    console.log($this.scrollTop());
+    var cargando = false;
+    if (($this.scrollTop() >= $results.height() - $this.height() - 10)) {
+        $this.unbind("scroll");
+        $results.append(`<div class="spinner-border text-primary" id = "spinner1" role="status">
+        <span class="sr-only">Loading...</span> </div>`);
+        cargarOrgPaginacion();
+   
+           
+        
+    }
+}
 
 function registrarOrganizacion()
 {
@@ -307,12 +364,8 @@ function getOrganizaciones(){
     $("#filtroActual").val("");
     $("#valorFiltroActual").val(""); 
 
-    fetch('/getOrganizaciones/')
-        .then(response => response.json())
-        .then(data => {
-            let organizaciones = data.organizaciones;
-            llenarOrganizaciones( organizaciones );
-        })
+    cargarOrgPaginacion();
+    
 }
 
 //TRAER LA ORGANIZACION DEL LINK
@@ -328,21 +381,26 @@ function traerOrganizacion(idOrganizacion, idNecesidad){
 
 //CARGAR LAS ORGANIZACIONES EN LA LISTA
 function llenarOrganizaciones( organizaciones ){
+    var divOrganizaciones = $('.listaOrganizaciones');
+    if(parseInt($("#cantidadRegistros").val()) == 0)
+    {
+        // Borro los marcadores del mapa
+        $(".leaflet-marker-icon").remove(); $(".leaflet-popup").remove();
+        $(".leaflet-pane.leaflet-shadow-pane").remove();
 
-    // Borro los marcadores del mapa
-    $(".leaflet-marker-icon").remove(); $(".leaflet-popup").remove();
-    $(".leaflet-pane.leaflet-shadow-pane").remove();
-
-    let divOrganizaciones = $('.listaOrganizaciones');
-    divOrganizaciones.html('');
-
+        
+        divOrganizaciones.html('');
+    }
     //SI NO HAY ORGANIZACIONES CON NO LAS CARGO
     if( organizaciones.length < 1){
+        if(parseInt($("#cantidadRegistros").val()) == 0)
+    {
         divOrganizaciones.html(
             `<div class="alert alert-danger" role="alert">
                 No se encontraron resultados
             </div>`
         );
+    }
     }
     else{
 
@@ -451,7 +509,19 @@ function llenarFiltrosDeCategoria(CategoriasNecesidad){
     document.querySelector('#filtrosCategoria').appendChild(FiltersFragent);
 
     //Evento click para los filtros por categoria
-    $('#filtrosCategoria button').on('click', filtrarPorCategoria);
+    $('#filtrosCategoria button').on('click', function(e)
+    {
+        $("#cantidadRegistros").val(0);
+        let target = e.target; // where was the click?
+    let filtroBusqueda = target.title;
+    if (filtroBusqueda === '') {
+        filtroBusqueda = target.parentElement.title
+    }
+    $("#filtroActual").val("categoria");
+    $("#valorFiltroActual").val(filtroBusqueda); 
+    $('#filtrosCategoria button').attr('disabled', true);
+    cargarOrgPaginacion();
+    });
 }
 
 function capitalize(text){

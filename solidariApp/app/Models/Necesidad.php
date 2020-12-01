@@ -40,7 +40,7 @@ class Necesidad extends Model
     //BUSCAR NECESIDAD POR FILTRO DE TEXTO
     public static function buscarNecesidad($datosFiltros, $idUsuario)
     {
-        $filtroTexto = $datosFiltros->filtroTexto;
+        $filtroTexto = $datosFiltros->filtro;
         
         return Necesidad::select('necesidad.*', 'categoriaNecesidad.*','estadoNecesidad.descripcionEstado')
             ->where("necesidad.idUsuario",$idUsuario)
@@ -62,7 +62,7 @@ class Necesidad extends Model
     //BUSCAR NECESIDAD POR CATEGORIA
     public static function buscarNecesidadPorCategoria($datosFiltros, $idUsuario)
     {
-        $filtroTexto = $datosFiltros->filtroCategoria;
+        $filtroTexto = $datosFiltros->filtro;
 
         return Necesidad::where("idUsuario",$idUsuario)
             ->where("necesidad.estadoNecesidad",'<>',3)

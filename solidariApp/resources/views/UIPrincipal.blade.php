@@ -15,6 +15,7 @@
 @section("contenido")
     <input type="hidden" name="" id = "filtroActual">
     <input type="hidden" name="" id = "valorFiltroActual">
+    <input type="hidden" name="" id = "cantidadRegistros">
     <div id="necesidadOculta" class="d-none">{{$idNecesidad}}</div>
     <div id="organizacionOculta" class="d-none">{{$idOrganizacion}}</div>
     <div class="container-fluid px-sm-3 px-lg-5">
@@ -105,41 +106,5 @@
 
 
     
-    <script>
     
-
-        $(function() {
-          for(var i = 0;i<10;i++){
-            $("#results").append("<li>asdasd</li>");
-          }
-          $(".scrollpane").scroll(eventoScroll);
-        
-        });
-        
-        function eventoScroll() {
-                var $this = $(this);
-                var $results = $("#results");
-                console.log($this.scrollTop());
-                var cargando = false;
-                if (($this.scrollTop() >= $results.height() - $this.height() - 10)) {
-                    $this.unbind("scroll");
-                    $results.append(`<div class="spinner-border text-primary" id = "spinner1" role="status">
-                    <span class="sr-only">Loading...</span> </div>`);
-                   
-                    setTimeout(
-                    function() 
-                    {
-                        for(var i = 0;i<10;i++)
-                    {
-                        $("#results").append("<li>asdasd</li>");
-                        $("#spinner1").remove();
-                        
-                    }
-                    $(".scrollpane").scroll(eventoScroll);
-                    }, 2000);
-                    
-                }
-            }
-            </script>
-            
 @endsection
