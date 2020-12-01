@@ -27,7 +27,7 @@ $( document ).ready(function() {
             desde: 0,
             hasta: 10,
             filtroTexto: '',
-            filtroUbicacion: 'Monte',
+            filtroUbicacion: '',
             filtroCategoria: ''
         }
         JSON.stringify(datosFiltros);
@@ -45,7 +45,6 @@ $( document ).ready(function() {
             .catch(error => console.log(error))
     }
 
-    // agregarPaginacionUsuarios();
     // EVENTOS
     $(document).on('click', '.alert-close', function() {
         $(this).parent().hide();
