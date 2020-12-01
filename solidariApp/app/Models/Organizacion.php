@@ -56,9 +56,11 @@ class Organizacion extends Model
             ->join('tipoOrganizacion', 'tipoOrganizacion.idTipoOrganizacion', '=', 'organizacion.idTipoOrganizacion')    
             ->join('domicilio', 'domicilio.idUsuario', '=', 'organizacion.idUsuario')    
             ->join('localidad', 'domicilio.idLocalidad', '=', 'localidad.idLocalidad')    
-            ->where('domicilio.calle', 'like', '%' . $ubicacion . '%')
             ->where('usuario.idEstadoUsuario','=',1)    
-            ->orWhere('localidad.nombreLocalidad', 'like', '%' . $ubicacion . '%')
+            ->where(function ($query) use ($ubicacion) {
+                $query->where('domicilio.calle', 'like', '%' . $ubicacion . '%')
+                      ->orWhere('localidad.nombreLocalidad', 'like', '%' . $ubicacion . '%');
+            })
             ->whereIn('usuario.idUsuario',  function ($query){
                 $query->select('necesidad.idUsuario')
                 ->from('necesidad');

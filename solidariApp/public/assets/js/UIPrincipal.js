@@ -63,7 +63,6 @@ $(document).ready(function () {
         $("#cantidadRegistros").val(0);
         let filtroBusqueda = $('#ubicacion').val();
         if (filtroBusqueda !== '') {
-
             $("#filtroActual").val("ubicacion");
             $("#valorFiltroActual").val(filtroBusqueda);
         }
@@ -124,6 +123,8 @@ function cargarOrgPaginacion() {
             } else {
                 console.log(response.data.message);
             }
+            $('#filtrosCategoria button').attr('disabled', false);
+
         })
         .catch(error => console.log(error))
 }
@@ -467,6 +468,14 @@ function listarCategoriasNecesidad() {
 function llenarFiltrosDeCategoria(CategoriasNecesidad) {
 
     var FiltersFragent = document.createDocumentFragment();
+    let btnCateogoryTemplate =
+                `<button class="dropdown-item" title="Todas" type="button">
+                <span>Todas</span>
+            </button>`
+
+            let dropdwonItem = document.createRange().createContextualFragment(btnCateogoryTemplate);
+            FiltersFragent.appendChild(dropdwonItem);
+    
     CategoriasNecesidad.forEach(category => {
 
         if (category.activo) {
