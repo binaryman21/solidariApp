@@ -52,13 +52,6 @@
                             <a class="px-2 py-1 text-decoration-none rounded" data-toggle="modal" href="#modalEditarNecesidad" id="btnNuevaNecesidad" style="background-color: aliceblue;">Nueva necesidad</a>
                         </h6>
                     </div>
-                    <!-- Buscador -->
-                    <div class="input-group my-3">
-                        {{-- <input class="form-control border-secondary border-right-0" type="text" id="campoBuscarPorTexto" placeholder="Categoría, descripción o nombre de la Org.">
-                        <div class="input-group-append">
-                            <button class="btn btn-outline-secondary border-secondary border-left-0" id="btnBuscarNeccesidades" type="button"><i class="fa fa-search fa-xs"></i></button>
-                        </div> --}}
-                    </div>
                     <!-- TABS En progreso | Cumplidas | Eliminadas -->
                     <ul class="nav nav-tabs" id="necesidadesTABS" role="tablist">
                         <li class="nav-item" role="presentation">

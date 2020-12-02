@@ -925,16 +925,22 @@ a.active[href="javascript:void(0);"] {
 
 #logoApp span{
 
-    color: black;
+    color: #3c3c3c;
     font-size: large;
     font-weight: 600;
-    font-family: sans-serif;
+    font-family: 'Exo', sans-serif;
     margin-top: 2px;
 }
 
 #logoApp img {
 
     width: 42px;
+}
+
+#notificationIcon{
+fill: #8c8c8c;
+height: 2em;
+width: 1.2em;
 }
 
 @media (min-width: 768px) {
@@ -964,4 +970,10 @@ a.active[href="javascript:void(0);"] {
 .carouselNotif{
     background-color: rgb(162 159 159 / 8%);
 
+}
+
+.modal .card.detalle {
+    height: 100%;
+    border-radius: 0;
+    border: 0;
 }
