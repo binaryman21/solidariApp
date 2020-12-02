@@ -2,48 +2,39 @@ function cargarDatosModalDetalleNecesidad( necesidad, modo = "colaborador")
 {
     // console.log( necesidad );
     let porcentajeAvance = calcularPorcentaje( necesidad );
-        $('.detalleNecesidadModal').html(
-        `<div class="card necesidad ${necesidad.nombreCategoria.toLowerCase()}">
-            <div class="card-body">
-                <div class="container-fluid">
-                    <div class="datosNecesidad">
-                        <p class="font-weight-bold">${necesidad.nombreCategoria}</p>
-                        <p>${necesidad.descripcionNecesidad}</p>
-                        <p id = "cantidadSolicitada">Cantidad solicitada: ${necesidad.cantidadNecesidad}</p>
-                        <p>Cantidad recibida: ${necesidad.cantidadRecibida}</p>
-                        <p>Cumplimiento: ${ porcentajeAvance }%</p>
-                        <div class="progress">
-                            <div class="progress-bar progress-bar-striped bg-success" role="progressbar" style="width: ${ porcentajeAvance }%" aria-valuenow="${ porcentajeAvance }" aria-valuemin="0" aria-valuemax="100"></div>
-                        </div>
-                        <p>Fecha limite: ${ new Date(necesidad.fechaLimiteNecesidad).toLocaleDateString('es-AR') }</p>
-                        <p>Estado: ${necesidad.descripcionEstado}</p>
+    $('.detalleNecesidadModal').html(
+    /*html*/`
+    <div class="card detalle ${necesidad.nombreCategoria.toLowerCase()} mt-0">
+        <div class="card-body">
+                <div class="datosNecesidad">
+                    <p class="font-weight-bold">${necesidad.nombreCategoria}</p>
+                    <p>${necesidad.descripcionNecesidad}</p>
+                    <p id = "cantidadSolicitada">Cantidad solicitada: ${necesidad.cantidadNecesidad || 'Sin limite de cantidad'}</p>
+                    <p>Cantidad recibida: ${necesidad.cantidadRecibida}</p>
+                    <p>Cumplimiento: ${ porcentajeAvance }%</p>
+                    <div class="progress">
+                        <div class="progress-bar bg-success" role="progressbar" style="width: ${ porcentajeAvance }%" aria-valuenow="${ porcentajeAvance }" aria-valuemin="0" aria-valuemax="100"></div>
                     </div>
+                    <p>Fecha limite: ${ new Date(necesidad.fechaLimiteNecesidad).toLocaleDateString('es-AR') }</p>
+                    <p>Estado: ${necesidad.descripcionEstado}</p>
                 </div>
-                <button type="button" class="btn btnColaborar btn-block btn-outline-primary mt-4" data-toggle="modal" data-target="#modalColaborar" id = "btnColaborar"><i class="far fa-handshake"></i>COLABORAR</button>
             </div>
-        </div>`);
-        if(necesidad.cantidadNecesidad == 0){
-            $("#cantidadSolicitada").html("Sin limite de cantidad");
-        }
-        if(modo === "organizacion")
-        {
-            $("#btnColaborar").addClass("d-none");
-            getColaboraciones(necesidad,"organizacion");
-            $("#inputBuscarColaboraciones input").keyup(function(){
-                buscarColaboradoresEnNecesidad();
-            })
-        }
-        else{
-            getColaboraciones(necesidad);
-            $("#btnConfirmarColaboracion").unbind("click");
-            $("#btnConfirmarColaboracion").click(function(){
-                registrarColaboracion(necesidad);
-            });
-            $("#inputBuscarColaboraciones input").keyup(function(){
-                buscarColaboradoresEnNecesidad();
-            })
-        }
+            <button type="button" class="btn btnColaborar btn-block btn-outline-primary mt-4" data-toggle="modal" data-target="#modalColaborar" id = "btnColaborar"><i class="far fa-handshake"></i>COLABORAR</button>
+    </div>`);
+    if(modo === "organizacion")
+    {
+        $("#btnColaborar").addClass("d-none");
+        getColaboraciones(necesidad,"organizacion");
+    }
+    else{
+        getColaboraciones(necesidad);
+        $("#btnConfirmarColaboracion").unbind("click");
+        $("#btnConfirmarColaboracion").click(function(){
+            registrarColaboracion(necesidad);
+        });
+    }
 
+    $("#inputBuscarColaboraciones input").on('keyup search ', () => buscarColaboradoresEnNecesidad());
 }
 
 function registrarColaboracion(necesidad)
@@ -88,122 +79,114 @@ function registrarColaboracion(necesidad)
     });
 }
 
-function getColaboraciones(necesidad,modo = "colaborador")
+function getColaboraciones(necesidad, modo = "colaborador")
 {
+    let listadoDeColaboraciones = $("#listadoColaboraciones");
+    let lastshowed = listadoDeColaboraciones.data("lastshowed");
 
-    $("#alertDetalleNecesidad").hide();
-    $("#inputBuscarColaboraciones").addClass("d-none");
-    $("#cantDeColaboraciones2").html("");
-    $("#listadoColaboraciones").html(`<div class="spinner-border text-primary" role="status">
-    <span class="sr-only">Loading...</span>
-  </div>`);
+    //si la necesidad que se desea buscar no coincide con la ultima necesidad consultada se carga (planeo poner un boton para cargar bajo demanda)
+    if(lastshowed != necesidad.idNecesidad){
 
-    axios.get("/getColaboraciones/"+ necesidad.idNecesidad)
-    .then((response)=>
-    {
+        $("#alertDetalleNecesidad").hide();
+        $("#inputBuscarColaboraciones").addClass("d-none");
+        $("#cantDeColaboraciones2").html("");
+        listadoDeColaboraciones.html("");
 
-        cantColaboraciones = response.data.colaboraciones.length;
-        if(cantColaboraciones > 0)
-        {
-            $("#inputBuscarColaboraciones").removeClass("d-none");
-            $("#cantDeColaboraciones2").html("Ayudando en esta necesidad: " + cantColaboraciones + " colaborador/es");
-            //alert(JSON.stringify(response.data.colaboraciones));
-            $("#listadoColaboraciones").html("");
-            $.each(response.data.colaboraciones, function (indexInArray, colaboracion) {
-                $("#listadoColaboraciones").append(`<div class="usuario">
-                                <div class="alert alert-secondary" role="alert" id="colaborador${colaboracion.idColaborador}">
-                                <div class = "font-weight-bold" id = "estadoColaboracion`+colaboracion.idColaboracion +`"></div>
-                                    <div class="row align-items-center">
-                                        <div class="col-md-2">
-                                            <img class="rounded-circle imgPerfilOrg" style="height: 50px;"src="`+colaboracion.urlFotoPerfilUsuario +`" alt="imagen de usuario">
-                                        </div>
-                                        <div class="col-md-3">
-                                            <p class="lead nombreColaborador">`+colaboracion.nombreColaborador +` `+ colaboracion.apellidoColaborador+`</p>
+        axios.get("/getColaboraciones/"+ necesidad.idNecesidad)
+        .then((response)=> {
+            cantColaboraciones = response.data.colaboraciones.length;
+            if(cantColaboraciones > 0)
+            {
+                $("#inputBuscarColaboraciones").removeClass("d-none");
+                $("#cantDeColaboraciones2").html("Ayudando en esta necesidad: " + cantColaboraciones + " colaborador/es");
 
-                                        </div>
-                                        <div class="col-md-4">
-                                        <a href= "#" class = "d-none" data-toggle="modal" data-target="#modalCalificar" id = "btnCalificar`+colaboracion.idColaboracion+`">Calificar</a>
-                                        <a href= "#" class = "d-none" data-toggle="modal" data-target="#modalCalificar" id = "btnVerCalificacion`+colaboracion.idColaboracion+`">Ver calificacion</a>
+                var estado = ['pendiente', 'concretada', 'no concretada'];
+                var contexto = ['info', 'success', 'danger'];
+                response.data.colaboraciones.forEach(colaboracion => {
 
-                                        </div>
-                                        <div class="col-md-3">
-                                            <a href= "/ver-colaborador/`+colaboracion.idUsuario+`">Ver perfil</a>
-                                        </div>
-                                    </div>
+                    let fullName = `${colaboracion.nombreColaborador} ${colaboracion.apellidoColaborador}`
+                    let usuarioHtml =`
+                    <li data-name="${fullName.toLowerCase()}" class="usuario list-group-item list-group-item-action">
+                        <!--<div class="collapse" id="colaborador${colaboracion.idColaborador}" data-toggle="collapse"
+                         data-target="#ColaborationFrom${colaboracion.idUsuario}" aria-expanded="false" aria-controls="ColaborationFrom${colaboracion.idUsuario}">-->
+                        <div id="colaborador${colaboracion.idColaborador}">
+                            <div class="media">
+                                <a  href= "/ver-colaborador/${colaboracion.idUsuario}">
+                                    <img src="${colaboracion.urlFotoPerfilUsuario}" class="rounded-circle imgPerfilCol align-self-start mr-2" alt="Avatar de ${fullName}">
+                                </a>
+                                <div class="media-body">
+                                    <a  href= "/ver-colaborador/${colaboracion.idUsuario}" class="text-decoration-none text-reset">
+                                        <span class"text-black">${fullName}</span>
+                                    </a>
+                                    <small class="d-block text-${contexto[colaboracion.estadoColaboracion]}">Colaboracion ${estado[colaboracion.estadoColaboracion]}</small>
+                                </div>
+                                <button class="btn dropdown ml-4 px-0 text-muted" type="button" id="OptionsCol-forID-${colaboracion.idUsuario}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <i class="fas fa-ellipsis-v fa-xs"></i>
+                                </button>
+                                <div class="dropdown-menu dropdown-menu-right shadow-sm mt-n4" aria-labelledby="OptionsCol-forID-${colaboracion.idUsuario}" data-parent="#accordionExample">
+                                    <a class="dropdown-item" href= "#" class = "d-none" data-toggle="modal" data-target="#modalCalificar" id = "btnCalificar${colaboracion.idColaboracion}">Calificar</a>
                                 </div>
                             </div>
-                        </div>`);
+                        </div>
+                        <!--<div id="ColaborationFrom${colaboracion.idUsuario}" class="collapse list-group px-2 pb-2" aria-labelledby="colaborador${colaboracion.idColaborador}" data-parent="#listadoColaboraciones">-->
+                            <small class="text-muted text-dark">${moment(colaboracion.fechaColaboracion, "YYYY-MM-DD HH:mm:ss").format("LL")}</small>
+                        <!--</div>-->
+                    </li>`
 
-                        if(modo === "organizacion")
-                        {
+                    listadoDeColaboraciones.append(usuarioHtml);
 
-                            if(colaboracion.estadoColaboracion == 0)
-                            {
-                                $("#btnCalificar"+colaboracion.idColaboracion).removeClass("d-none");
-                                $("#btnCalificar"+colaboracion.idColaboracion).click(function(){
-                                    $("#modalDetalleNecesidad").modal("hide");
-                                    configModalCalificar(1,colaboracion,necesidad);
-                                });
-                            }
+                    if(modo === "organizacion")
+                    {
+                        if(colaboracion.estadoColaboracion == 0)
+                        {
+                            $("#btnCalificar"+colaboracion.idColaboracion).removeClass("d-none");
+                            $("#btnCalificar"+colaboracion.idColaboracion).click(function(){
+                                $("#modalDetalleNecesidad").modal("hide");
+                                configModalCalificar(1,colaboracion,necesidad);
+                            });
+                        }
+                    }
+                });
 
-                        }
-
-                        if(colaboracion.estadoColaboracion  == 0)
-                        {
-                            $("#estadoColaboracion" + colaboracion.idColaboracion).html("Colaboracion pendiente");
-                            $("#estadoColaboracion" + colaboracion.idColaboracion).addClass("text-warning");
-                        }
-                        else if(colaboracion.estadoColaboracion == 1)
-                        {
-                            $("#estadoColaboracion" + colaboracion.idColaboracion).html("Colaboracion concretada");
-                            $("#estadoColaboracion" + colaboracion.idColaboracion).addClass("text-success");
-                        }
-                        else
-                        {
-                            $("#estadoColaboracion" + colaboracion.idColaboracion).html("Colaboracion no concretada");
-                            $("#estadoColaboracion" + colaboracion.idColaboracion).addClass("text-danger");
-                        }
-            });
-            agregarPaginacionUsuarios();
-        }
-        else
-        {
-            $("#listadoColaboraciones").html("");
-            $('#navUsuarios').html('');
-            if(modo == "colaborador")
-            {
-                $("#cantDeColaboraciones2").html("Aun no hay colaboraciones, animate y se el primero!");
+                agregarPaginacionUsuarios();
             }
             else
             {
-                $("#cantDeColaboraciones2").html("Todavia no hay colaboraciones para esta necesidad");
+                $("#listadoColaboraciones").html("");
+                $('#navUsuarios').html('');
+                if(modo == "colaborador")
+                {
+                    $("#cantDeColaboraciones2").html("Aun no hay colaboraciones, animate y se el primero!");
+                }
+                else
+                {
+                    $("#cantDeColaboraciones2").html("Todavia no hay colaboraciones para esta necesidad");
+                }
             }
-            
-        }
-    });
+            listadoDeColaboraciones.data("lastshowed", necesidad.idNecesidad);
+        });
+    }
 }
 
-
 function buscarColaboradoresEnNecesidad(){
-    const text = $("#inputBuscarColaboraciones input").val().toLowerCase();
+
+    let findingText = $('#inputBuscarColaboraciones input').val().toLowerCase();
     const usuarios = $('.usuario');
-    const nombres = document.querySelectorAll(".nombreColaborador");
-    let nombre;
-    console.log("textBus: "+text);
+
     //Filtro los colaboradores que coinciden con el texto de busqueda
-    if(text == ''){
-        for(i = 0 ; i < usuarios.length ; i++ ){
-            $(usuarios[i]).removeClass('d-none');
-        }
+    if(findingText == ""){
+
+        usuarios.show();
     }
-    for(i = 0 ; i < usuarios.length ; i++ ){
-        nombre = nombres[i].innerHTML.toLowerCase();
-        console.log("nombreCol: "+nombre);
-        if(!nombre.includes(text)){
-            $(usuarios[i]).addClass('d-none');
-        }else{
-            $(usuarios[i]).removeClass('d-none');
+    else{
+
+        usuarios.hide();
+        //obtengo la cantidad de usuarios que han sido encontrados y mostrados como resultado
+        
+        let resultados = usuarios.filter((i, usuario) => $(usuario).data('name').includes(findingText)).show().length;
+        if(!resultados){
         }
+
     }
     agregarPaginacionUsuarios();
 }
