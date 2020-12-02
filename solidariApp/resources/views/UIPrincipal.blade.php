@@ -85,6 +85,7 @@
 
     <!-- {{-- @include("UIPrincipalRegistroGoogle") --}} -->
     @include("UIPrincipalRegistro")
+    @include("UIPrincipalModalOrganizaciones")
     <!-- {{-- @include("UIDetalleNecesidad") --}} -->
     <!-- {{-- @include("UIPrincipalResultadoRegistro") --}} -->
 @endsection
