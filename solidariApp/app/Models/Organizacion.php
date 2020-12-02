@@ -24,6 +24,7 @@ class Organizacion extends Model
     {
         $desde = $datosFiltros->desde;
         $hasta = $datosFiltros->hasta;
+
         return Organizacion::join('usuario', 'organizacion.idUsuario', '=', 'usuario.idUsuario')
             ->join('tipoOrganizacion', 'tipoOrganizacion.idTipoOrganizacion', '=', 'organizacion.idTipoOrganizacion')    
             ->join('domicilio', 'domicilio.idUsuario', '=', 'organizacion.idUsuario')
@@ -32,8 +33,8 @@ class Organizacion extends Model
                 $query->select('necesidad.idUsuario')
                 ->from('necesidad');
             })
-            ->skip( $desde )
-            ->take( $hasta )
+            // ->skip( $desde )
+            // ->take( $hasta )
             ->get();
     }
 
@@ -65,8 +66,8 @@ class Organizacion extends Model
                 $query->select('necesidad.idUsuario')
                 ->from('necesidad');
             })
-            ->skip( $desde )
-            ->take( $hasta )
+            // ->skip( $desde )
+            // ->take( $hasta )
             ->get();
     }
 }

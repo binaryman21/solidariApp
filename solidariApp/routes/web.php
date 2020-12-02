@@ -58,7 +58,8 @@ Route::get('/ver-colaborador/{idUsuario}', function($idUsuario){
         session_start();
         if( isset($_SESSION['usuario']) ){
             if( $_SESSION['usuario']->idUsuario == $idUsuario ){
-                return view('UIPerfilDeColaborador');
+                return redirect('/cuenta-colaborador/perfil');
+                // return view('UIPerfilDeColaborador');
             }
             $typeUser = $_SESSION['usuario']->rol->nombreRol;
             return view('UIPerfilVisitanteDeColaborador', compact('typeUser'));
@@ -74,7 +75,8 @@ Route::get('/ver-organizacion/{idUsuario}', function($idUsuario){
         session_start();
         if( isset($_SESSION['usuario']) ){
             if( $_SESSION['usuario']->idUsuario == $idUsuario ){
-                return view('UIPerfilDeOrganizacion');
+                return redirect('/cuenta-organizacion/perfil');
+                // return view('UIPerfilDeOrganizacion');
             }
         }
         return view('UIPerfilVisitanteDeOrganizacion');

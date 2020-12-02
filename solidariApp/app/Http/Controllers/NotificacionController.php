@@ -230,7 +230,6 @@ class NotificacionController extends Controller
         {
             $notificaciones = Notificacion::getNotificaciones();
 
-
             foreach($notificaciones as $notificacion){
 
                 //SI ES TIPO 7 EL RECEPTOR OBTUVO UNA NUEVA INSIGNIA Y EL EMISOR ES EL SISTEMA
