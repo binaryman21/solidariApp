@@ -260,7 +260,12 @@ class OrganizacionController extends Controller
                     $necesidades = Necesidad::listarNecesidadesPantallaPrincipal( $organizacion->idUsuario );
                 }
                 else if( $datosFiltros->tipoFiltro == "categoria" ){
-                    $necesidades = Necesidad::buscarNecesidadPorCategoria( $datosFiltros, $organizacion->idUsuario );
+                    if( $datosFiltros->filtro == 'Todas'){
+                        $necesidades = Necesidad::listarNecesidadesPantallaPrincipal( $organizacion->idUsuario );
+                    }
+                    else{
+                        $necesidades = Necesidad::buscarNecesidadPorCategoria( $datosFiltros, $organizacion->idUsuario );
+                    }
                 }
                 else if( $datosFiltros->tipoFiltro == "texto" ){
                     $necesidades = Necesidad::buscarNecesidad( $datosFiltros, $organizacion->idUsuario );
@@ -277,7 +282,7 @@ class OrganizacionController extends Controller
             }
             
             $organizaciones = $organizacionesConNecesidad;
-            // $organizaciones = array_slice($organizaciones, $datosFiltros->desde, $datosFiltros->hasta);      // devuelve "c", "d", y "e"
+            $organizaciones = array_slice($organizaciones, $datosFiltros->desde, $datosFiltros->hasta);      // devuelve "c", "d", y "e"
             return json_encode([
                 'resultado' => 1,
                 'organizaciones' => $organizaciones

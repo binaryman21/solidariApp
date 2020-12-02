@@ -29,7 +29,9 @@
                                 <i class="fas fa-filter fa-xs"></i>
                             </button>
                             <div class="dropdown-menu dropdown-menu-right" id="filtrosCategoria"
-                            aria-labelledby="filtros" x-placement="bottom-end"></div>
+                            aria-labelledby="filtros" x-placement="bottom-end">
+
+                            </div>
                         </div>
                         <button class="btn btn-outline-secondary border-secondary border-left-0" id="btnBuscarNeccesidades" type="button"><i class="fa fa-search fa-xs"></i></button>
                     </div>
@@ -83,6 +85,7 @@
 
     <!-- {{-- @include("UIPrincipalRegistroGoogle") --}} -->
     @include("UIPrincipalRegistro")
+    @include("UIPrincipalModalOrganizaciones")
     <!-- {{-- @include("UIDetalleNecesidad") --}} -->
     <!-- {{-- @include("UIPrincipalResultadoRegistro") --}} -->
 @endsection

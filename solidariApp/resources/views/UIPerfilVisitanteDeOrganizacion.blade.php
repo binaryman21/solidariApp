@@ -1,5 +1,14 @@
 @extends("layouts.master")
 
+@section("meta")
+    @parent
+    <meta property="og:url"                content="https://www.solidariapp.com.ar" />
+    <meta property="og:type"               content="website" />
+    <meta property="og:title"              content="SolidariApp" />
+    <meta property="og:description"        content="Descripcion de la pag" />
+    <meta property="og:image"              content="http://static01.nyt.com/bookJumbo-v2.jpg" />
+@endsection
+
 @section("contenido")
 @parent
  <!-- container -->

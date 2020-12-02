@@ -48,8 +48,8 @@ function crearCardDenuncia( denuncia ){
             <div class="col-lg-3"">${new Date(denuncia.fechaDenuncia).toLocaleDateString('es-AR')}</div>
             <div class="col-lg-3"">Motivo: ${denuncia.descripcionMotivoDenuncia}</div>
             <div class="d-none">Código: ${denuncia.idDenuncia}</div>
-            <div class="col-lg-3">Denunciante: <a href="/${denuncia.denunciante[0].rol.nombreRol}/${denuncia.idDenunciante}">${denuncia.denunciante.nombre[0].nombre}</a></div>
-            <div class="col-lg-3">Denunciado: <a href="/${denuncia.denunciado[0].rol.nombreRol}/${denuncia.idDenunciado}">${denuncia.denunciado.nombre[0].nombre}</a></div>
+            <div class="col-lg-3">Denunciante: <a href="/ver-${denuncia.denunciante[0].rol.nombreRol}/${denuncia.idDenunciante}">${denuncia.denunciante.nombre[0].nombre}</a></div>
+            <div class="col-lg-3">Denunciado: <a href="/ver-${denuncia.denunciado[0].rol.nombreRol}/${denuncia.idDenunciado}">${denuncia.denunciado.nombre[0].nombre}</a></div>
             <a  data-toggle="modal" href="#modalVisualizarDenuncia" id="visualizarDenuncia${denuncia.idDenuncia}" class="col-lg-2 btn btn-primary mx-2">Ver</a>
         </div>
     </div>`	
@@ -64,10 +64,10 @@ function cargarDatosModalDetalleDenuncia( denuncia ){
     $('#spnFechaDenuncia').text( new Date(denuncia.fechaDenuncia).toLocaleDateString('es-AR') );
     $('#spnMotivoDenuncia').text( denuncia.descripcionMotivoDenuncia );
     $('#spnDenunciante').text( denuncia.idDenunciante );
-    $('#spnNombreDenunciante').text( ' ' + denuncia.denunciante.nombre[0].nombre );
+    $('#spnNombreDenunciante').text( denuncia.denunciante.nombre[0].nombre );
     $('#spnDenunciado').text( denuncia.idDenunciado );
-    $('#spnNombreDenunciado').text( ' ' + denuncia.denunciado.nombre[0].nombre );
-    $(`#verPerfilDenunciante`).attr('href', `/${denuncia.denunciante[0].rol.nombreRol}/${denuncia.idDenunciante}`);
-    $(`#verPerfilDenunciado`).attr('href', `/${denuncia.denunciado[0].rol.nombreRol}/${denuncia.idDenunciado}`);
+    $('#spnNombreDenunciado').text( denuncia.denunciado.nombre[0].nombre );
+    $(`#verPerfilDenunciante`).attr('href', `/ver-${denuncia.denunciante[0].rol.nombreRol}/${denuncia.idDenunciante}`);
+    $(`#verPerfilDenunciado`).attr('href', `/ver-${denuncia.denunciado[0].rol.nombreRol}/${denuncia.idDenunciado}`);
     $(`#spnDescripcionDenuncia`).text( denuncia.descripcionDenuncia );
 }

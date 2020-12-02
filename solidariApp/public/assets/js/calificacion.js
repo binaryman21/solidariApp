@@ -1,20 +1,13 @@
-$(document).ready(function () {
-    
-});
-
-function configModalCalificar(idRolCalificado,colaboracion,necesidad)
-{
+function configModalCalificar(idRolCalificado, colaboracion, necesidad) {
     limpiarValidaciones($("#textoComentarios"), $("#errorTextoComentarios"));
     $("#textoComentarios").val('');
     $("input[name='radioConcretoAyuda']").change(
 
-        function(){
-            if($("input[name='radioConcretoAyuda']:checked").val() == 1)
-            {
-                $("#cantidadRecibida").attr("disabled",false);
-            }
-            else{
-                $("#cantidadRecibida").attr("disabled",true);
+        function () {
+            if ($("input[name='radioConcretoAyuda']:checked").val() == 1) {
+                $("#cantidadRecibida").attr("disabled", false);
+            } else {
+                $("#cantidadRecibida").attr("disabled", true);
                 $("#cantidadRecibida").val("");
                 limpiarValidaciones($("#cantidadRecibida"), $("#errorCantidadRecibida"));
             }
@@ -32,18 +25,18 @@ function configModalCalificar(idRolCalificado,colaboracion,necesidad)
                     </div>
                     <div class="col-md-3">
                         <p class="lead">
-                        `+colaboracion.nombreColaborador +` `+ colaboracion.apellidoColaborador+`
+                        ${colaboracion.nombreColaborador} ${colaboracion.apellidoColaborador}
                         </p>
                     </div>
                     <div class="col-md-3">
-                        <a href= "ver-colaborador/`+colaboracion.idUsuario+`">Ver perfil</a>
+                        <a href= "ver-colaborador/${colaboracion.idUsuario}">Ver perfil</a>
                     </div>
                 </div>
             </div>
         </div>
     </div>`);
-        $("#necesidadCalificada").html("");
-        $("#necesidadCalificada").append(`<div class="card necesidad ${necesidad.nombreCategoria.toLowerCase()}">
+    $("#necesidadCalificada").html("");
+    $("#necesidadCalificada").append(`<div class="card necesidad ${necesidad.nombreCategoria.toLowerCase()}">
         <div class="card-body">
             <div class="row">
                 <div class="col-md-6">
@@ -54,59 +47,50 @@ function configModalCalificar(idRolCalificado,colaboracion,necesidad)
         </div>
     </div>`);
 
-
     $("#btnEnviarCalificacion").unbind("click");
-    $("#btnEnviarCalificacion").click(function(event){
+    $("#btnEnviarCalificacion").click(function (event) {
         event.preventDefault();
-        if( ( $("input[name='radioConcretoAyuda']:checked").val() == 0 || validarCantidadRecibida( $("#cantidadRecibida"), $("#errorCantidadRecibida")) ) && validarComentario($('#textoComentarios'), $('#errorTextoComentarios')))
-        {
-            registrarCalificacion(idRolCalificado,colaboracion.idColaboracion,colaboracion.idNecesidad);
+        if (($("input[name='radioConcretoAyuda']:checked").val() == 0 || validarCantidadRecibida($("#cantidadRecibida"), $("#errorCantidadRecibida"))) && validarComentario($('#textoComentarios'), $('#errorTextoComentarios'))) {
+            registrarCalificacion(idRolCalificado, colaboracion.idColaboracion, colaboracion.idNecesidad);
         }
     });
 }
 
 //CALIFICAR A UNA ORGANIZACION
-$('#btnEnviarCalificacionOrganizacion').click(function(e){
+$('#btnEnviarCalificacionOrganizacion').click(function (e) {
     e.preventDefault();
     let idCalificado = $(location).attr('href').split("/")[4];
-    if( validarComentario($('#textoComentariosOrg'), $('#errorTextoComentariosOrg')) ){
+    if (validarComentario($('#textoComentariosOrg'), $('#errorTextoComentariosOrg'))) {
         registrarCalificacionOrganizacion(idCalificado);
     }
-    // registrarCalificacion(idRolCalificado,colaboracion.idColaboracion,colaboracion.idNecesidad);
 });
 
-function registrarCalificacionOrganizacion(idCalificado){
+function registrarCalificacionOrganizacion(idCalificado) {
     bloquearBoton($("#btnEnviarCalificacionOrganizacion"));
     var calificacion = {
         idCalificado,
-        idCalificante:0,
+        idCalificante: 0,
         tratoRecibido: $("input[name='radioTratoOrg']:checked").val(),
         comentario: $("#textoComentariosOrg").val()
     };
 
-    // console.log( calificacion );
-    axios.post("/registrarCalificacionOrganizacion",calificacion)
-    .then((response)=>{
-        // console.log( response.data );
-        // console.log( response.data.resultado );
-        desbloquearBoton($("#btnEnviarCalificacionOrganizacion"));
-        if(response.data.resultado)
-        {
-            alertify.success(response.data.message);
-            $("#modalCalificarOrganizacion").modal("hide");
-            crearNotificacionCalificacionOrganizacion(calificacion)
-            limpiarValidaciones($("#textoComentarios"), $("#errorTextoComentarios"));
-            $("#textoComentarios").val('');
-            cargarComentariosOrganizacion(idCalificado);
-        }
-        else{
-            alertify.error(response.data.message);
-        }
-    });
+    axios.post("/registrarCalificacionOrganizacion", calificacion)
+        .then((response) => {
+            desbloquearBoton($("#btnEnviarCalificacionOrganizacion"));
+            if (response.data.resultado) {
+                alertify.success(response.data.message);
+                $("#modalCalificarOrganizacion").modal("hide");
+                crearNotificacionCalificacionOrganizacion(calificacion)
+                limpiarValidaciones($("#textoComentariosOrg"), $("#errorTextoComentariosOrg"));
+                $("#textoComentariosOrg").val('');
+                cargarComentariosOrganizacion(idCalificado);
+            } else {
+                alertify.error(response.data.message);
+            }
+        });
 }
 
-function registrarCalificacion(idRolCalificado,idColaboracion,idNecesidad)
-{
+function registrarCalificacion(idRolCalificado, idColaboracion, idNecesidad) {
     bloquearBoton($("#btnEnviarCalificacion"));
     var calificacion = {
         idCalificacion: 0,
@@ -119,21 +103,16 @@ function registrarCalificacion(idRolCalificado,idColaboracion,idNecesidad)
         idNecesidad: idNecesidad
     };
 
-    axios.post("/registrarCalificacion",calificacion)
-    .then((response)=>{
-        // console.log( response.data );
-        // console.log( response.data.resultado );
-        desbloquearBoton($("#btnEnviarCalificacion"));
-        if(response.data.resultado)
-        {
-            alertify.success(response.data.message);
-            $("#modalCalificar").modal("hide");
-            crearNotificacionCalificacionColaboracion(idColaboracion);
+    axios.post("/registrarCalificacion", calificacion)
+        .then((response) => {
+            desbloquearBoton($("#btnEnviarCalificacion"));
+            if (response.data.resultado) {
+                alertify.success(response.data.message);
+                $("#modalCalificar").modal("hide");
+                crearNotificacionCalificacionColaboracion(idColaboracion);
 
-        }
-        else{
-            alertify.error(response.data.message);
-        }
-
-    });
+            } else {
+                alertify.error(response.data.message);
+            }
+        });
 }

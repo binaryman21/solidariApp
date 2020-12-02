@@ -337,7 +337,7 @@ function crearCardNecesidad(necesidad, vistaVisitante) {
                 <button class="dropdown-item" data-toggle="modal" data-target="#modalEditarNecesidad" id="btnEdite-need${necesidad.idNecesidad}" data-need="${necesidad.idNecesidad}" type="button">Editar necesidad</button>
                 ${btnDeleteNeed}
                 <a target="_blank" class="dropdown-item fb-xfbml-parse-ignore"
-                    href="https://www.facebook.com/sharer/sharer.php?u=https://solidariapp.com.ar/organizacion/${necesidad.idUsuario}/necesidad/${necesidad.idNecesidad}">Compartir en Facebook</a>
+                    href="https://www.facebook.com/sharer.php?u=https://solidariapp.com.ar/organizacion/${necesidad.idUsuario}/necesidad/${necesidad.idNecesidad}">Compartir en Facebook</a>
             </div>
         </div>
         <small class="card-subtitle text-muted font-weight-light">Creada hace ${capitalize(moment(necesidad.fechaCreacionNecesidad, "YYYY-MM-DD HH:mm:ss").startOf('day').fromNow())} - ${capitalize(necesidad.descripcionEstado)}</small>

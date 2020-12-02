@@ -1,37 +1,28 @@
-isLoggedIn({funcionSuccess:undefined, RedirectIfNot: false});
+isLoggedIn({
+    funcionSuccess: undefined,
+    RedirectIfNot: false
+});
 
-$( document ).ready(function() {
+$(document).ready(function () {
     $("#cantidadRegistros").val(0);
 
-
     $(".scrollpane").scroll(eventoScroll);
-        
-      
-        
-    if( $('#necesidadOculta').text() == '' && $('#organizacionOculta').text() == ''  ){
+
+    if ($('#necesidadOculta').text() == '' && $('#organizacionOculta').text() == '') {
         getOrganizaciones();
-    }
-    else{
+    } else {
         let idOrganizacion = $('#organizacionOculta').text();
         let idNecesidad = $('#necesidadOculta').text();
-        traerOrganizacion( idOrganizacion, idNecesidad );
+        traerOrganizacion(idOrganizacion, idNecesidad);
     }
-    // $(function() {
-        $(document).on('click', '.alert-close', function() {
-            $(this).parent().hide();
-        })
-    //  });
-    
+
     listarProvincias(1);
     listarTiposOrganizaciones();
     listarCategoriasNecesidad();
     cargarCarousel();
-    
-
-    
 
     // EVENTOS
-    $(document).on('click', '.alert-close', function() {
+    $(document).on('click', '.alert-close', function () {
         $(this).parent().hide();
     })
 
@@ -39,60 +30,52 @@ $( document ).ready(function() {
     $("#btnRegistrarseComoColaborador").on('click', mostrarRegistrarseComoColaborador);
 
     //evento change en el selectProvincia
-    $("#selectProvincia").change(function(){
+    $("#selectProvincia").change(function () {
         let idProvincia = $("#selectProvincia").val();
         $("#selectLocalidad").html("");
-        listarLocalidades(idProvincia,1);
+        listarLocalidades(idProvincia, 1);
     });
 
     //Evento click para buscar una necesidad
-    $('#btnBuscarNeccesidades').on('click', function()
-    {
+    $('#btnBuscarNeccesidades').on('click', function () {
         $("#cantidadRegistros").val(0);
         let filtroBusqueda = $('#campoBuscarPorTexto').val();
-        if (filtroBusqueda !== '') 
-        {
+        if (filtroBusqueda !== '') {
             $("#filtroActual").val("texto");
-            $("#valorFiltroActual").val(filtroBusqueda); 
+            $("#valorFiltroActual").val(filtroBusqueda);
             cargarOrgPaginacion();
         }
     });
 
     //Evento click para el filtro por ubicacion
-    $('#btnBuscarPorUbicacion').on('click', function()
-    {
+    $('#btnBuscarPorUbicacion').on('click', function () {
         $("#cantidadRegistros").val(0);
         let filtroBusqueda = $('#ubicacion').val();
         if (filtroBusqueda !== '') {
-    
             $("#filtroActual").val("ubicacion");
-            $("#valorFiltroActual").val(filtroBusqueda); 
+            $("#valorFiltroActual").val(filtroBusqueda);
         }
         cargarOrgPaginacion();
     });
 
     //evento click en el btnCrearCuenta del modalRegistroColOrg
-    $("#btnCrearCuenta").click(function(){
+    $("#btnCrearCuenta").click(function () {
         //Deshabilito el boton y muestro el spinner
         $("#btnCrearCuenta").html("<span id = 'spinnerBtnLogin' class='spinner-border spinner-border-sm' role='status' aria-hidden='true'></span>Un momento...");
         $("#btnCrearCuenta").attr("disabled", true);
 
         //Acciones segun el modoRegistro
-        if($("#modoRegistro").val() == "colaborador")
-        {
-            if( validarRegistroColaborador() ){
+        if ($("#modoRegistro").val() == "colaborador") {
+            if (validarRegistroColaborador()) {
                 registrarColaborador();
-            }
-            else{
+            } else {
                 $("#btnCrearCuenta").html("Crear cuenta");
                 $("#btnCrearCuenta").attr("disabled", false);
             }
-        }
-        else if ($("#modoRegistro").val() == "organizacion"){
-            if( validarRegistroOrganizacion() ){
+        } else if ($("#modoRegistro").val() == "organizacion") {
+            if (validarRegistroOrganizacion()) {
                 registrarOrganizacion();
-            }
-            else{
+            } else {
                 $("#btnCrearCuenta").html("Crear cuenta");
                 $("#btnCrearCuenta").attr("disabled", false);
             }
@@ -106,32 +89,29 @@ function cargarOrgPaginacion() {
     let datosFiltros = {
         desde: parseInt($("#cantidadRegistros").val()),
         hasta: parseInt($("#cantidadRegistros").val()) + 4,
-        filtro:  $("#valorFiltroActual").val(),
+        filtro: $("#valorFiltroActual").val(),
         tipoFiltro: $("#filtroActual").val()
-
     }
     JSON.stringify(datosFiltros);
-    console.log( datosFiltros );
 
-    axios.post("/buscarOrganizacionesPaginacion",datosFiltros)
-        .then((response)=>{
-            if( response.data.resultado ){
-                console.log( response.data.organizaciones );
+    axios.post("/buscarOrganizacionesPaginacion", datosFiltros)
+        .then((response) => {
+            if (response.data.resultado) {
                 let organizaciones = response.data.organizaciones;
                 llenarOrganizaciones(organizaciones);
                 let cantidadRegistros = parseInt($("#cantidadRegistros").val());
                 $("#cantidadRegistros").val(cantidadRegistros + 4);
                 $("#spinner1").remove();
-                
-                if(organizaciones.length > 0)
-                {
+
+                if (organizaciones.length > 0) {
                     $(".scrollpane").scroll(eventoScroll);
                 }
-                
+
+            } else {
+                console.log(response.data.message);
             }
-            else{
-                console.log( response.data.message );
-            }            
+            $('#filtrosCategoria button').attr('disabled', false);
+
         })
         .catch(error => console.log(error))
 }
@@ -140,182 +120,158 @@ function cargarOrgPaginacion() {
 function eventoScroll() {
     var $this = $(this);
     var $results = $("#results");
-    console.log($this.scrollTop());
-    var cargando = false;
+    // console.log($this.scrollTop());
+    // var cargando = false;
     if (($this.scrollTop() >= $results.height() - $this.height() - 10)) {
         $this.unbind("scroll");
         $results.append(`<div class="spinner-border text-primary" id = "spinner1" role="status">
         <span class="sr-only">Loading...</span> </div>`);
         cargarOrgPaginacion();
-   
-           
-        
     }
 }
 
-function registrarOrganizacion()
-{
-    obtenerCoordenadas($("#calle").val(), $("#numero").val(), $("#selectLocalidad option:selected" ).text(), $("#selectProvincia option:selected" ).text())
+function registrarOrganizacion() {
+    obtenerCoordenadas($("#calle").val(), $("#numero").val(), $("#selectLocalidad option:selected").text(), $("#selectProvincia option:selected").text())
         .then(data => {
             let coordenadas = {
                 lat: data.lat,
                 lon: data.lon
             }
-            console.log( coordenadas );
-            let organizacion =
-            {
-                idUsuario:0,
-                claveUsuario:$("#claveUsuario").val(),
-                emailUsuario:$("#emailUsuario").val(),
-                tokenGoogle:$("#idGoogle").val(),
-                urlFotoPerfilUsuario:$("#urlFotoPerfilUsuario").val(),
-                rol:{idRolUsuario:0,nombreRolUsuario:""},
-                estado:{idEstadoUsuario:0,nombreEstadoUsuario:""},
-                razonSocial:$("#nombreOrganizacion").val(),
-                tipoOrganizacion:
-                {
-                    idTipoOrganizacion:$("#selectTipoOrganizacion").val(),
-                    nombreTipoOrganizacion:$("#selectTipoOrganizacion :selected").text()
+            console.log(coordenadas);
+            let organizacion = {
+                idUsuario: 0,
+                claveUsuario: $("#claveUsuario").val(),
+                emailUsuario: $("#emailUsuario").val(),
+                tokenGoogle: $("#idGoogle").val(),
+                urlFotoPerfilUsuario: $("#urlFotoPerfilUsuario").val(),
+                rol: {
+                    idRolUsuario: 0,
+                    nombreRolUsuario: ""
                 },
-                telefonos:
-                [
-                    {
-                        idTelefono:0,
-                        codAreaTelefono:$("#codArea").val(),
-                        numeroTelefono:$("#numeroTelefono").val(),
-                        esCelular:0
+                estado: {
+                    idEstadoUsuario: 0,
+                    nombreEstadoUsuario: ""
+                },
+                razonSocial: $("#nombreOrganizacion").val(),
+                tipoOrganizacion: {
+                    idTipoOrganizacion: $("#selectTipoOrganizacion").val(),
+                    nombreTipoOrganizacion: $("#selectTipoOrganizacion :selected").text()
+                },
+                telefonos: [{
+                    idTelefono: 0,
+                    codAreaTelefono: $("#codArea").val(),
+                    numeroTelefono: $("#numeroTelefono").val(),
+                    esCelular: 0
+                }],
+                domicilios: [{
+                    idDomicilio: 0,
+                    calle: $("#calle").val(),
+                    numero: $("#numero").val(),
+                    piso: $("#piso").val(),
+                    depto: $("#depto").val(),
+                    latitud: coordenadas.lat,
+                    longitud: coordenadas.lon,
+                    localidad: {
+                        idLocalidad: $("#selectLocalidad").val(),
+                        nombreLocalidad: ""
                     }
-                ],
-                domicilios:
-                [
-                    {
-                        idDomicilio:0,
-                        calle:$("#calle").val(),
-                        numero:$("#numero").val(),
-                        piso:$("#piso").val(),
-                        depto:$("#depto").val(),
-                        latitud: coordenadas.lat,
-                        longitud: coordenadas.lon,
-                        localidad:
-                        {
-                            idLocalidad:$("#selectLocalidad").val(),
-                            nombreLocalidad:""
-                        }
-                    }
-                ],
-                links:
-                [
+                }],
+                links: [
                     //{idLink:0,urlLink:"",tipoLink:{idTipoLink:0,nombreTipoLink:""}}
                 ]
             }
-            axios.post("/registrarOrganizacion",JSON.stringify(organizacion))
-            .then((response)=>{
-                // console.log('registrando..');
-                // alert(response.data.message);
-                $("#btnCrearCuenta").html("Guardar");
-                $("#btnCrearCuenta").attr("disabled", false);
-                if(response.data.resultado == 1){
-                    $("#modalRegistroColOrg").modal("hide");
-                    // $("#msjResultadoRegistro").html("Registro exitoso!");
-                    // $("#modalResultadoRegistro").modal("show");
-                    alertify.success('Registro exitoso!')
+            axios.post("/registrarOrganizacion", JSON.stringify(organizacion))
+                .then((response) => {
+                    $("#btnCrearCuenta").html("Guardar");
+                    $("#btnCrearCuenta").attr("disabled", false);
+                    if (response.data.resultado == 1) {
+                        $("#modalRegistroColOrg").modal("hide");
+                        alertify.success('Registro exitoso!')
 
-                    let datosLogin = {
-                        email: organizacion.emailUsuario,
-                        idGoogle: organizacion.tokenGoogle,
-                        pass:organizacion.claveUsuario
-                    };
-                    login(datosLogin);
-                }
-                else{
-                    $("#modalRegistroColOrg").modal("hide");
-                    alertify.error( response.data.message )
-                    // $("#msjResultadoRegistro").html("Algo fallo, intentalo mas tarde");
-                    // $("#modalResultadoRegistro").modal("show");
-                }
+                        let datosLogin = {
+                            email: organizacion.emailUsuario,
+                            idGoogle: organizacion.tokenGoogle,
+                            pass: organizacion.claveUsuario
+                        };
+                        login(datosLogin);
+                    } else {
+                        $("#modalRegistroColOrg").modal("hide");
+                        alertify.error(response.data.message)
+                    }
                 });
 
         });
 }
 
 
-function registrarColaborador()
-{
-    obtenerCoordenadas($("#calle").val(), $("#numero").val(), $("#selectLocalidad option:selected" ).text(), $("#selectProvincia option:selected" ).text())
+function registrarColaborador() {
+    obtenerCoordenadas($("#calle").val(), $("#numero").val(), $("#selectLocalidad option:selected").text(), $("#selectProvincia option:selected").text())
         .then(data => {
             let coordenadas = {
                 lat: data.lat,
                 lon: data.lon
             }
-            var colaborador =
-            {
-                idUsuario:0,
-                claveUsuario:$("#claveUsuario").val(),
-                emailUsuario:$("#emailUsuario").val(),
-                tokenGoogle:$("#idGoogle").val(),
-                urlFotoPerfilUsuario:$("#urlFotoPerfilUsuario").val(),
-                rol:{idRolUsuario:0,nombreRolUsuario:""},
-                estado:{idEstadoUsuario:0,nombreEstadoUsuario:""},
-                nombreColaborador:$("#nombreColaborador").val(),
-                apellidoColaborador:$("#apellidoColaborador").val(),
+            var colaborador = {
+                idUsuario: 0,
+                claveUsuario: $("#claveUsuario").val(),
+                emailUsuario: $("#emailUsuario").val(),
+                tokenGoogle: $("#idGoogle").val(),
+                urlFotoPerfilUsuario: $("#urlFotoPerfilUsuario").val(),
+                rol: {
+                    idRolUsuario: 0,
+                    nombreRolUsuario: ""
+                },
+                estado: {
+                    idEstadoUsuario: 0,
+                    nombreEstadoUsuario: ""
+                },
+                nombreColaborador: $("#nombreColaborador").val(),
+                apellidoColaborador: $("#apellidoColaborador").val(),
 
-                telefonos:
-                [
-                    {idTelefono:0,
-                        codAreaTelefono:$("#codArea").val(),
-                        numeroTelefono:$("#numeroTelefono").val(),
-                        esCelular:0
+                telefonos: [{
+                    idTelefono: 0,
+                    codAreaTelefono: $("#codArea").val(),
+                    numeroTelefono: $("#numeroTelefono").val(),
+                    esCelular: 0
+                }],
+                domicilios: [{
+                    idDomicilio: 0,
+                    calle: $("#calle").val(),
+                    numero: $("#numero").val(),
+                    piso: $("#piso").val(),
+                    depto: $("#depto").val(),
+                    latitud: coordenadas.lat,
+                    longitud: coordenadas.lon,
+                    localidad: {
+                        idLocalidad: $("#selectLocalidad").val(),
+                        nombreLocalidad: ""
                     }
-                ],
-                domicilios:
-                [
-                    {
-                        idDomicilio:0,
-                        calle:$("#calle").val(),
-                        numero:$("#numero").val(),
-                        piso:$("#piso").val(),
-                        depto:$("#depto").val(),
-                        latitud:coordenadas.lat,
-                        longitud:coordenadas.lon,
-                        localidad:
-                        {
-                            idLocalidad:$("#selectLocalidad").val(),
-                            nombreLocalidad:""
-                        }
-                    }
-                ],
-                links:
-                [
+                }],
+                links: [
                     //{idLink:0,urlLink:"",tipoLink:{idTipoLink:0,nombreTipoLink:""}}
                 ]
             }
-            axios.post("/registrarColaborador",JSON.stringify(colaborador))
-            .then((response)=>{
-                $("#btnCrearCuenta").html("Guardar");
-                $("#btnCrearCuenta").attr("disabled", false);
-                // alert(response.data.message);
-                if(response.data.resultado == 1){
-                    $("#modalRegistroColOrg").modal("hide");
-                    alertify.success('Registro exitoso!')
-                    // $("#msjResultadoRegistro").html("Registro exitoso!");
-                    // $("#modalResultadoRegistro").modal("show");
+            axios.post("/registrarColaborador", JSON.stringify(colaborador))
+                .then((response) => {
+                    $("#btnCrearCuenta").html("Guardar");
+                    $("#btnCrearCuenta").attr("disabled", false);
+                    if (response.data.resultado == 1) {
+                        $("#modalRegistroColOrg").modal("hide");
+                        alertify.success('Registro exitoso!')
 
-                    var datosLogin = {
-                        email: colaborador.emailUsuario,
-                        idGoogle: colaborador.tokenGoogle,
-                        pass:colaborador.claveUsuario
-                    };
+                        var datosLogin = {
+                            email: colaborador.emailUsuario,
+                            idGoogle: colaborador.tokenGoogle,
+                            pass: colaborador.claveUsuario
+                        };
 
-                    login(datosLogin);
-                }
-                else{
-                    $("#modalRegistroColOrg").modal("hide");
-                    alertify.error(response.data.message)
-                    console.log(response.data.message);
-                    // $("#msjResultadoRegistro").html("Algo fallo, intentalo mas tarde");
-                    // $("#modalResultadoRegistro").modal("show");
-                }
-            });
+                        login(datosLogin);
+                    } else {
+                        $("#modalRegistroColOrg").modal("hide");
+                        alertify.error(response.data.message)
+                        console.log(response.data.message);
+                    }
+                });
         })
 }
 
@@ -348,71 +304,68 @@ function agregarPaginacionListaOrganizaciones(){
 
 
 //MOSTRAR EL MODAL DE REGISTRO COMO ORGANIZACION
-function mostrarRegistrarseComoOrganizacion(){
+function mostrarRegistrarseComoOrganizacion() {
     mostrarComo('organizacion')
 }
 
 //MOSTRAR EL MODAL DE REGISTRO COMO COLABORADOR
-function mostrarRegistrarseComoColaborador(){
+function mostrarRegistrarseComoColaborador() {
     mostrarComo('colaborador')
 }
 
 //TRAER TODAS LAS ORGANIZACIONES
-function getOrganizaciones(){
+function getOrganizaciones() {
 
     $("#filtroActual").val("");
-    $("#valorFiltroActual").val(""); 
+    $("#valorFiltroActual").val("");
 
     cargarOrgPaginacion();
-    
 }
 
 //TRAER LA ORGANIZACION DEL LINK
-function traerOrganizacion(idOrganizacion, idNecesidad){
+function traerOrganizacion(idOrganizacion, idNecesidad) {
     fetch(`/traerOrganizacion/${idOrganizacion}/${idNecesidad}`)
         .then(response => response.json())
         .then(data => {
             let organizaciones = data.organizaciones;
             // console.log( organizaciones );
-            llenarOrganizaciones( organizaciones );
+            llenarOrganizaciones(organizaciones);
         })
 }
 
 //CARGAR LAS ORGANIZACIONES EN LA LISTA
-function llenarOrganizaciones( organizaciones ){
+function llenarOrganizaciones(organizaciones) {
     var divOrganizaciones = $('.listaOrganizaciones');
-    if(parseInt($("#cantidadRegistros").val()) == 0)
-    {
+    if (parseInt($("#cantidadRegistros").val()) == 0) {
         // Borro los marcadores del mapa
-        $(".leaflet-marker-icon").remove(); $(".leaflet-popup").remove();
+        $(".leaflet-marker-icon").remove();
+        $(".leaflet-popup").remove();
         $(".leaflet-pane.leaflet-shadow-pane").remove();
 
-        
+
         divOrganizaciones.html('');
     }
     //SI NO HAY ORGANIZACIONES CON NO LAS CARGO
-    if( organizaciones.length < 1){
-        if(parseInt($("#cantidadRegistros").val()) == 0)
-    {
-        divOrganizaciones.html(
-            `<div class="alert alert-danger" role="alert">
+    if (organizaciones.length < 1) {
+        if (parseInt($("#cantidadRegistros").val()) == 0) {
+            divOrganizaciones.html(
+                `<div class="alert alert-danger" role="alert">
                 No se encontraron resultados
             </div>`
-        );
-    }
-    }
-    else{
+            );
+        }
+    } else {
 
         moment.locale('es');
         organizaciones.forEach(org => {
 
-            if(org.necesidades.length>0){
+            if (org.necesidades.length > 0) {
                 let cardOrganizacion = `
                 <div class="card cardOrganizacion cardOrganizacion${org.idUsuario} shadow-sm my-2" style="display: block; opacity: 1;">
                     <div class="card-header d-flex flex-row px-2 justify-content-star detalleOrganizacion align-items-center">
                         <img class="rounded-circle imgPerfilOrg" src="${org.urlFotoPerfilUsuario || 'assets/img/imgUserProfile.png'}" alt="Avatar de la org ${org.razonSocial}">
                         <div id="card-org-name" class="ml-2">
-                            <a href="ver-organizacion/${org.idUsuario}">${org.razonSocial}</a>
+                            <a href="/ver-organizacion/${org.idUsuario}">${org.razonSocial}</a>
                             <a href="#">${org.nombreTipoOrganizacion}</a>
                         </div>
                     </div>
@@ -424,8 +377,8 @@ function llenarOrganizaciones( organizaciones ){
                     </div>
                 </div>`
 
-                divOrganizaciones.append( cardOrganizacion );
-                org.necesidades.forEach( need => {
+                divOrganizaciones.append(cardOrganizacion);
+                org.necesidades.forEach(need => {
 
                     $category = need.nombreCategoria.split(' ')[0].toLowerCase();
                     $diffDate = moment(need.fechaCreacionNecesidad, "YYYY-MM-DD HH:mm:ss").startOf('day').fromNow();
@@ -443,7 +396,7 @@ function llenarOrganizaciones( organizaciones ){
                         </div>
                     `);
 
-                    $(`.btnDetalleOrg${need.idNecesidad}`).on('click', function(){
+                    $(`.btnDetalleOrg${need.idNecesidad}`).on('click', function () {
                         cargarDatosModalDetalleNecesidad(need);
                     })
                 })
@@ -456,8 +409,8 @@ function llenarOrganizaciones( organizaciones ){
 }
 
 //CARGAR LAS NECESIDADES EN EL MODAL
-function cargarDatosModalDetalleNecesidad( necesidad ){
-        $('.detalleNecesidadModal').html(
+function cargarDatosModalDetalleNecesidad(necesidad) {
+    $('.detalleNecesidadModal').html(
         `<div class="card necesidad ${necesidad.nombreCategoria.toLowerCase()}">
             <div class="card-body">d
                 <div class="container-fluid">
@@ -478,25 +431,33 @@ function cargarDatosModalDetalleNecesidad( necesidad ){
 
 function listarCategoriasNecesidad() {
     fetch('/listarCategoriasNecesidad/')
-    .then(response => response.json())
-    .then(data => {
+        .then(response => response.json())
+        .then(data => {
 
-        var CategoriasNecesidad = data.CategoriasNecesidad;
-        llenarFiltrosDeCategoria(CategoriasNecesidad);
-    })
-    .catch(error => console.log(error));
+            var CategoriasNecesidad = data.CategoriasNecesidad;
+            llenarFiltrosDeCategoria(CategoriasNecesidad);
+        })
+        .catch(error => console.log(error));
 }
 
 
-function llenarFiltrosDeCategoria(CategoriasNecesidad){
+function llenarFiltrosDeCategoria(CategoriasNecesidad) {
 
     var FiltersFragent = document.createDocumentFragment();
+    let btnCateogoryTemplate =
+        `<button class="dropdown-item" title="Todas" type="button">
+                <span>Todas</span>
+            </button>`
+
+    let dropdwonItem = document.createRange().createContextualFragment(btnCateogoryTemplate);
+    FiltersFragent.appendChild(dropdwonItem);
+
     CategoriasNecesidad.forEach(category => {
 
-        if(category.activo){
+        if (category.activo) {
 
             let btnCateogoryTemplate =
-            `<button class="dropdown-item" title="${category.nombreCategoria}" type="button">
+                `<button class="dropdown-item" title="${category.nombreCategoria}" type="button">
                 <span>${category.nombreCategoria}</span>
             </button>`
 
@@ -508,28 +469,27 @@ function llenarFiltrosDeCategoria(CategoriasNecesidad){
     document.querySelector('#filtrosCategoria').appendChild(FiltersFragent);
 
     //Evento click para los filtros por categoria
-    $('#filtrosCategoria button').on('click', function(e)
-    {
+    $('#filtrosCategoria button').on('click', function (e) {
         $("#cantidadRegistros").val(0);
         let target = e.target; // where was the click?
-    let filtroBusqueda = target.title;
-    if (filtroBusqueda === '') {
-        filtroBusqueda = target.parentElement.title
-    }
-    $("#filtroActual").val("categoria");
-    $("#valorFiltroActual").val(filtroBusqueda); 
-    $('#filtrosCategoria button').attr('disabled', true);
-    cargarOrgPaginacion();
+        let filtroBusqueda = target.title;
+        if (filtroBusqueda === '') {
+            filtroBusqueda = target.parentElement.title
+        }
+        $("#filtroActual").val("categoria");
+        $("#valorFiltroActual").val(filtroBusqueda);
+        $('#filtrosCategoria button').attr('disabled', true);
+        cargarOrgPaginacion();
     });
 }
 
-function capitalize(text){
+function capitalize(text) {
 
     let FirstLetterCap = text[0].toUpperCase();
-    return FirstLetterCap+text.slice(1);
+    return FirstLetterCap + text.slice(1);
 }
 
-function cargarCarousel(){
+function cargarCarousel() {
     $("#carouselNotif").html(`
     <div class = "d-flex d-flex align-items-center row rounded m-auto border" style = "width:100%;height:100%;">
         <div class="m-auto row">
@@ -542,25 +502,22 @@ function cargarCarousel(){
     `)
 
     axios.post("/cargarNotificacionesCarousel")
-    .then((response)=>{
-        if(response.data.result){
-            let notificaciones = response.data.notificaciones;
-            if(!notificaciones == ''){
-                console.log("Carousel notif");
-                console.log(notificaciones);
-                mostrarNotificacionesCarousel(notificaciones);
+        .then((response) => {
+            if (response.data.result) {
+                let notificaciones = response.data.notificaciones;
+                if (!notificaciones == '') {
+                    mostrarNotificacionesCarousel(notificaciones);
+                }
+            } else {
+                console.log('Carousel notif result ' + response.data.result + " msj: " + response.data.message);
             }
-        }else{
-             console.log('Carousel notif result '+response.data.result+ " msj: "+response.data.message);
-        }
 
-    })
+        })
 
 }
 
-function mostrarNotificacionesCarousel(notificaciones){
+function mostrarNotificacionesCarousel(notificaciones) {
 
-    // $("#carouselNotif").empty();
     $("#carouselNotif").html(`
         <div id="carouselNoticias" class="carousel slide h-100" data-ride="carousel">
             <div class="carousel-inner h-100" id="carouselInnerNotif">
@@ -580,27 +537,26 @@ function mostrarNotificacionesCarousel(notificaciones){
     let cont = 0;
     let active = 'active';
 
+    // console.log(notificaciones);
+
     notificaciones.forEach(notificacion => {
 
         //INDIFERENTE PARA CUALQUIER NOTIFICACION
         let fecha = new Date(notificacion.fechaNotificacion).toLocaleDateString('es-AR')
         let img;
-        if( notificacion.idMensaje == 7 ){
+        if (notificacion.idMensaje == 7) {
             img = notificacion.receptor[0].urlFotoPerfilUsuario;
-        }
-        else{
+        } else {
             img = notificacion.emisor[0].urlFotoPerfilUsuario;
         }
         let cardNotificacion;
 
-        if(cont > 0){
+        if (cont > 0) {
             active = '';
         }
 
-
-
         //NOTIFICACIONES EXCLUSIVAS PARA CUANDO ES POR UNA NECESIDAD
-        if( notificacion.idMensaje == 1 ){
+        if (notificacion.idMensaje == 1) {
             let nombreCategoria = notificacion.tipoNecesidad;
             let necesidad = notificacion.necesidad;
             necesidad["nombreCategoria"] = nombreCategoria;
@@ -630,14 +586,14 @@ function mostrarNotificacionesCarousel(notificaciones){
             </div>`
         }
         //NOTIFICACIONES EXCLUSIVAS PARA CUANDO UNA ORGANIZACION CALIFICA UNA AYUDA
-        else if(notificacion.idMensaje == 2){
+        else if (notificacion.idMensaje == 2) {
             let nombreCategoria = notificacion.tipoNecesidad;
             let necesidad = notificacion.necesidad;
             let trato = notificacion.tratoRecibido;
 
             necesidad["nombreCategoria"] = nombreCategoria;
-            if(trato === 'Bueno') trato ='Buena';
-            if(trato === 'Malo') trato = 'Mala';
+            if (trato === 'Bueno') trato = 'Buena';
+            if (trato === 'Malo') trato = 'Mala';
 
             cardNotificacion = `
             <div class="carousel-item ${active} h-100">
@@ -663,7 +619,7 @@ function mostrarNotificacionesCarousel(notificaciones){
             </div>`
         }
         // NOTIFICACIONES EXCLUSIVAS PARA CUANDO ES UNA SUSCRIPCION
-        else if(notificacion.idMensaje == 3){
+        else if (notificacion.idMensaje == 3) {
             cardNotificacion = `
             <div class="carousel-item ${active} h-100">
                 <div class="container border w-100 h-100 d-flex alig-items-center">
@@ -687,7 +643,7 @@ function mostrarNotificacionesCarousel(notificaciones){
             </div>`
         }
         // NOTIFICACIONES EXCLUSIVAS PARA CUANDO UNA ORGANIZACION CREA UNA NECESIDAD
-        else if(notificacion.idMensaje == 8){
+        else if (notificacion.idMensaje == 8) {
             let nombreCategoria = notificacion.tipoNecesidad;
             let necesidad = notificacion.necesidad;
             necesidad["nombreCategoria"] = nombreCategoria;
@@ -715,7 +671,7 @@ function mostrarNotificacionesCarousel(notificaciones){
             </div>`
         }
         //NOTIFICACIONES EXCLUSIVAS PARA CUANDO UN COLABORADOR CALIFICA UNA ORGANIZACION
-        else if(notificacion.idMensaje == 6){
+        else if (notificacion.idMensaje == 6) {
             let trato = notificacion.tratoRecibido;
 
             cardNotificacion = `
@@ -740,10 +696,7 @@ function mostrarNotificacionesCarousel(notificaciones){
                     </div>
                 </div>
             </div>`
-        }
-
-        else if(notificacion.idMensaje == 7){
-            let trato = notificacion.tratoRecibido;
+        } else if (notificacion.idMensaje == 7) {
 
             cardNotificacion = `
             <div class="carousel-item ${active} h-100">
@@ -773,17 +726,11 @@ function mostrarNotificacionesCarousel(notificaciones){
         $("#carouselInnerNotif").append(cardNotificacion);
         cont++;
 
-        if( notificacion.idMensaje == 1 || notificacion.idMensaje == 5 || notificacion.idMensaje == 6){
+        if (notificacion.idMensaje == 1 || notificacion.idMensaje == 5 || notificacion.idMensaje == 2 || notificacion.idMensaje == 8) {
             let necesidad = notificacion.necesidad;
-            $(`.notificacionVerNecesidad${notificacion.idNotificacion}`).on('click',function(){
-                // if(notificacion.idReceptor ==  )
-                //     cargarDatosModalDetalleNecesidad(necesidad, "organizacion");
-                // else
-                    cargarDatosModalDetalleNecesidad(necesidad);
-
+            $(`.notificacionVerNecesidad${notificacion.idNotificacion}`).on('click', function () {
+                cargarDatosModalDetalleNecesidad(necesidad);
             })
         }
-
     })
-
 }

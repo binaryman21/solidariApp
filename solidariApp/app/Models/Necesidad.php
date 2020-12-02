@@ -31,9 +31,9 @@ class Necesidad extends Model
         ->where("necesidad.estadoNecesidad",'<>',3)
         ->join('categoriaNecesidad', 'categoriaNecesidad.idCategoria', '=', 'necesidad.idCategoriaNecesidad')
         ->join('estadoNecesidad', 'estadoNecesidad.idEstadoNecesidad', '=', 'necesidad.estadoNecesidad')    
-        ->orderBy('categoriaNecesidad.idPrioridad', 'ASC')
         ->orderBy('necesidad.estadoNecesidad', 'ASC')
         ->orderBy('fechaLimiteNecesidad', 'ASC')
+        ->orderBy('categoriaNecesidad.idPrioridad', 'ASC')
         ->take(3)
         ->get();
     }
@@ -87,7 +87,9 @@ class Necesidad extends Model
             ->join('categoriaNecesidad', 'categoriaNecesidad.idCategoria', '=', 'necesidad.idCategoriaNecesidad')    
             ->join('estadoNecesidad', 'estadoNecesidad.idEstadoNecesidad', '=', 'necesidad.estadoNecesidad')    
             // ->withCount('colaboraciones')
+            ->orderBy('necesidad.estadoNecesidad', 'ASC')
             ->orderBy('fechaLimiteNecesidad', 'ASC')
+            ->orderBy('categoriaNecesidad.idPrioridad', 'ASC')
             ->get();
     }
 
