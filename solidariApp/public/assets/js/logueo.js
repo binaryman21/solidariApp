@@ -115,7 +115,7 @@ function mostrarInterfazSesionIniciada(usuario)
     $("#btnIngresar").hide();
     $("#dropDownUsuario").show();
     $("#botonesRegistro").hide();
-    $("#imgPerfil").attr("src",'/'+usuario.urlFotoPerfilUsuario);
+    $("#imgPerfil").attr("src",usuario.urlFotoPerfilUsuario);
     // $("#mapa").removeClass("mapa");
     // $("#mapa").addClass("mapaExtendido");
     $("#btnVerMiPerfil").attr("href", `/cuenta-${usuario.rol.nombreRol}/perfil`);

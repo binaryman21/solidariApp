@@ -562,6 +562,8 @@ function mostrarNotificacionesCarousel(notificaciones) {
     let cont = 0;
     let active = 'active';
 
+    console.log( notificaciones );
+
     notificaciones.forEach(notificacion => {
 
         //INDIFERENTE PARA CUALQUIER NOTIFICACION
@@ -752,7 +754,7 @@ function mostrarNotificacionesCarousel(notificaciones) {
         $("#carouselInnerNotif").append(cardNotificacion);
         cont++;
 
-        if (notificacion.idMensaje == 1 || notificacion.idMensaje == 5 || notificacion.idMensaje == 2) {
+        if (notificacion.idMensaje == 1 || notificacion.idMensaje == 5 || notificacion.idMensaje == 2 || notificacion.idMensaje == 8)  {
             let necesidad = notificacion.necesidad;
             $(`.notificacionVerNecesidad${notificacion.idNotificacion}`).on('click', function () {
                 // if(notificacion.idReceptor ==  )
