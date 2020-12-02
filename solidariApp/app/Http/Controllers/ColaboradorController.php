@@ -237,12 +237,35 @@ class ColaboradorController extends Controller
     public function getColaborador($idUsuario){
         try{
             $colaborador = Colaborador::getColaborador($idUsuario);
-            if( $colaborador ){
+            if (session_status() == PHP_SESSION_NONE)
+            {
+                session_start();
+            }
+            if( $colaborador  && UsuarioController::tienePermisoPara("verDatosContacto")){
                 return response()->json([
                     'resultado' => 1,
                     'colaborador'=> $colaborador,
                     'domicilios' => Domicilio::listarDomiciliosUsuario($idUsuario),
-                    'telefonos' => Telefono::listarTelefonosUsuario($idUsuario)
+                    'telefonos' => Telefono::listarTelefonosUsuario($idUsuario),
+                    'verContacto' => true
+                ]);
+            }
+            else if($colaborador && isset($_SESSION['usuario'])  && $idUsuario == $_SESSION["usuario"]->idUsuario)
+            {
+                return response()->json([
+                    'resultado' => 1,
+                    'colaborador'=> $colaborador,
+                    'domicilios' => Domicilio::listarDomiciliosUsuario($idUsuario),
+                    'telefonos' => Telefono::listarTelefonosUsuario($idUsuario),
+                    'verContacto' => true
+                ]);  
+            }
+            else if($colaborador)
+            {
+                return response()->json([
+                    'resultado' => 1,
+                    'colaborador'=> $colaborador,
+                    'verContacto' => false
                 ]);
             }
             else{
