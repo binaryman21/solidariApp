@@ -23,7 +23,7 @@ class Organizacion extends Model
     public static function getOrganizaciones( $datosFiltros )
     {
         $desde = $datosFiltros->desde;
-        $hasta = $datosFiltros->hasta;
+        $hasta = 4;
 
         return Organizacion::join('usuario', 'organizacion.idUsuario', '=', 'usuario.idUsuario')
             ->join('tipoOrganizacion', 'tipoOrganizacion.idTipoOrganizacion', '=', 'organizacion.idTipoOrganizacion')    
@@ -33,8 +33,8 @@ class Organizacion extends Model
                 $query->select('necesidad.idUsuario')
                 ->from('necesidad');
             })
-            // ->skip( $desde )
-            // ->take( $hasta )
+            ->skip( $desde )
+            ->take( $hasta )
             ->get();
     }
 
@@ -51,7 +51,7 @@ class Organizacion extends Model
     public static function buscarOrganizacionesPorUbicacion( $datosFiltros )
     {
         $desde = $datosFiltros->desde;
-        $hasta = $datosFiltros->hasta;
+        $hasta = 4;
         $ubicacion = $datosFiltros->filtro;
         return Organizacion::join('usuario', 'organizacion.idUsuario', '=', 'usuario.idUsuario')
             ->join('tipoOrganizacion', 'tipoOrganizacion.idTipoOrganizacion', '=', 'organizacion.idTipoOrganizacion')    
@@ -66,8 +66,8 @@ class Organizacion extends Model
                 $query->select('necesidad.idUsuario')
                 ->from('necesidad');
             })
-            // ->skip( $desde )
-            // ->take( $hasta )
+            ->skip( $desde )
+            ->take( $hasta )
             ->get();
     }
 }
