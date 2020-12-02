@@ -6,10 +6,7 @@ isLoggedIn({
 $(document).ready(function () {
     $("#cantidadRegistros").val(0);
 
-
     $(".scrollpane").scroll(eventoScroll);
-
-
 
     if ($('#necesidadOculta').text() == '' && $('#organizacionOculta').text() == '') {
         getOrganizaciones();
@@ -18,19 +15,11 @@ $(document).ready(function () {
         let idNecesidad = $('#necesidadOculta').text();
         traerOrganizacion(idOrganizacion, idNecesidad);
     }
-    // $(function() {
-    $(document).on('click', '.alert-close', function () {
-        $(this).parent().hide();
-    })
-    //  });
 
     listarProvincias(1);
     listarTiposOrganizaciones();
     listarCategoriasNecesidad();
     cargarCarousel();
-
-
-
 
     // EVENTOS
     $(document).on('click', '.alert-close', function () {
@@ -102,10 +91,8 @@ function cargarOrgPaginacion() {
         hasta: parseInt($("#cantidadRegistros").val()) + 4,
         filtro: $("#valorFiltroActual").val(),
         tipoFiltro: $("#filtroActual").val()
-
     }
     JSON.stringify(datosFiltros);
-    // console.log( datosFiltros );
 
     axios.post("/buscarOrganizacionesPaginacion", datosFiltros)
         .then((response) => {
@@ -134,7 +121,7 @@ function eventoScroll() {
     var $this = $(this);
     var $results = $("#results");
     // console.log($this.scrollTop());
-    var cargando = false;
+    // var cargando = false;
     if (($this.scrollTop() >= $results.height() - $this.height() - 10)) {
         $this.unbind("scroll");
         $results.append(`<div class="spinner-border text-primary" id = "spinner1" role="status">
@@ -195,14 +182,10 @@ function registrarOrganizacion() {
             }
             axios.post("/registrarOrganizacion", JSON.stringify(organizacion))
                 .then((response) => {
-                    // console.log('registrando..');
-                    // alert(response.data.message);
                     $("#btnCrearCuenta").html("Guardar");
                     $("#btnCrearCuenta").attr("disabled", false);
                     if (response.data.resultado == 1) {
                         $("#modalRegistroColOrg").modal("hide");
-                        // $("#msjResultadoRegistro").html("Registro exitoso!");
-                        // $("#modalResultadoRegistro").modal("show");
                         alertify.success('Registro exitoso!')
 
                         let datosLogin = {
@@ -214,8 +197,6 @@ function registrarOrganizacion() {
                     } else {
                         $("#modalRegistroColOrg").modal("hide");
                         alertify.error(response.data.message)
-                        // $("#msjResultadoRegistro").html("Algo fallo, intentalo mas tarde");
-                        // $("#modalResultadoRegistro").modal("show");
                     }
                 });
 
@@ -274,12 +255,9 @@ function registrarColaborador() {
                 .then((response) => {
                     $("#btnCrearCuenta").html("Guardar");
                     $("#btnCrearCuenta").attr("disabled", false);
-                    // alert(response.data.message);
                     if (response.data.resultado == 1) {
                         $("#modalRegistroColOrg").modal("hide");
                         alertify.success('Registro exitoso!')
-                        // $("#msjResultadoRegistro").html("Registro exitoso!");
-                        // $("#modalResultadoRegistro").modal("show");
 
                         var datosLogin = {
                             email: colaborador.emailUsuario,
@@ -292,8 +270,6 @@ function registrarColaborador() {
                         $("#modalRegistroColOrg").modal("hide");
                         alertify.error(response.data.message)
                         console.log(response.data.message);
-                        // $("#msjResultadoRegistro").html("Algo fallo, intentalo mas tarde");
-                        // $("#modalResultadoRegistro").modal("show");
                     }
                 });
         })
@@ -469,13 +445,13 @@ function llenarFiltrosDeCategoria(CategoriasNecesidad) {
 
     var FiltersFragent = document.createDocumentFragment();
     let btnCateogoryTemplate =
-                `<button class="dropdown-item" title="Todas" type="button">
+        `<button class="dropdown-item" title="Todas" type="button">
                 <span>Todas</span>
             </button>`
 
-            let dropdwonItem = document.createRange().createContextualFragment(btnCateogoryTemplate);
-            FiltersFragent.appendChild(dropdwonItem);
-    
+    let dropdwonItem = document.createRange().createContextualFragment(btnCateogoryTemplate);
+    FiltersFragent.appendChild(dropdwonItem);
+
     CategoriasNecesidad.forEach(category => {
 
         if (category.activo) {
@@ -542,7 +518,6 @@ function cargarCarousel() {
 
 function mostrarNotificacionesCarousel(notificaciones) {
 
-    // $("#carouselNotif").empty();
     $("#carouselNotif").html(`
         <div id="carouselNoticias" class="carousel slide h-100" data-ride="carousel">
             <div class="carousel-inner h-100" id="carouselInnerNotif">
@@ -562,7 +537,7 @@ function mostrarNotificacionesCarousel(notificaciones) {
     let cont = 0;
     let active = 'active';
 
-    console.log( notificaciones );
+    // console.log(notificaciones);
 
     notificaciones.forEach(notificacion => {
 
@@ -579,8 +554,6 @@ function mostrarNotificacionesCarousel(notificaciones) {
         if (cont > 0) {
             active = '';
         }
-
-
 
         //NOTIFICACIONES EXCLUSIVAS PARA CUANDO ES POR UNA NECESIDAD
         if (notificacion.idMensaje == 1) {
@@ -724,7 +697,6 @@ function mostrarNotificacionesCarousel(notificaciones) {
                 </div>
             </div>`
         } else if (notificacion.idMensaje == 7) {
-            let trato = notificacion.tratoRecibido;
 
             cardNotificacion = `
             <div class="carousel-item ${active} h-100">
@@ -754,17 +726,11 @@ function mostrarNotificacionesCarousel(notificaciones) {
         $("#carouselInnerNotif").append(cardNotificacion);
         cont++;
 
-        if (notificacion.idMensaje == 1 || notificacion.idMensaje == 5 || notificacion.idMensaje == 2 || notificacion.idMensaje == 8)  {
+        if (notificacion.idMensaje == 1 || notificacion.idMensaje == 5 || notificacion.idMensaje == 2 || notificacion.idMensaje == 8) {
             let necesidad = notificacion.necesidad;
             $(`.notificacionVerNecesidad${notificacion.idNotificacion}`).on('click', function () {
-                // if(notificacion.idReceptor ==  )
-                //     cargarDatosModalDetalleNecesidad(necesidad, "organizacion");
-                // else
                 cargarDatosModalDetalleNecesidad(necesidad);
-
             })
         }
-
     })
-
 }

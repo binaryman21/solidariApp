@@ -40,6 +40,7 @@ function getLocation() {
   }
 
   function cargarOrgEnMapa( organizacion ){
+    console.log( organizacion );
       markers[organizacion.idUsuario] =  new L.marker([organizacion.latitud, organizacion.longitud], {id: organizacion.idUsuario}).addTo(map)
       .bindPopup( organizacion.razonSocial )
       .openPopup();
