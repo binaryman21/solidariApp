@@ -11,11 +11,14 @@ function cargarNotificaciones(usuario){
             //console.log(noLeidas);
             // console.log(notificaciones);
 
-            if(!notificaciones == ''){
+            if(!notificaciones.length == 0){
                 mostrarNotificaciones(notificaciones,noLeidas)
+            }else{
+                $("#spinnerNotif").remove();
             }
         }else{
-             console.log('result '+response.data.result+ " msj: "+response.data.message);
+
+            console.log('result '+response.data.result+ " msj: "+response.data.message);
         }
 
     })
@@ -111,6 +114,8 @@ function mostrarNotificaciones(notificaciones,noLeidas){
             let trato = notificacion.tratoRecibido;
 
             necesidad["nombreCategoria"] = nombreCategoria;
+            if (trato === 'Bueno') trato = 'Buena';
+            if (trato === 'Malo') trato = 'Mala';
 
             cardNotificacion = `
             <div class="container border-top sombra  p-2">
@@ -199,7 +204,7 @@ function mostrarNotificaciones(notificaciones,noLeidas){
                             </div>
                             <a class="font-weight-bold text-dark text-decoration-none notificacionEmisor${notificacion.idNotificacion} " href="/ver-colaborador/${notificacion.idEmisor}">${nombre}</a>
                             <div class="d-flex flex-wrap">
-                            <p>${msj} como ${trato}</p><br>
+                            <p>${msj} como "${trato}"</p><br>
                             <a class="font-weight-bold text-dark text-decoration-none notificacionVerNecesidad${notificacion.idNotificacion}" href="/ver-organizacion/${notificacion.idReceptor}">¿Quieres ver tus calificaciones?</a>
                             </div>
                         </div>
