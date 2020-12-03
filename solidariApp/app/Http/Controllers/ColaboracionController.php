@@ -54,7 +54,7 @@ class ColaboracionController extends Controller
             {
                 return response()->json([
                     'resultado' => 0,
-                    'message' => 'No estas logueado'
+                    'message' => 'notLoggedIn'
                 ]);
             }
 

@@ -10,17 +10,25 @@ function getColaborador(idUsuario){
 
     axios.get("/getColaborador/"+idUsuario)
     .then(response =>{
-
+        console.log(response.data);
         var colaborador = response.data.colaborador;
-        let contacto = {
-
-            correo: colaborador.emailUsuario,
-            telefonos: response.data.telefonos,
-            domicilios: response.data.domicilios
-        };
-
+       
+        
         cargarDatosPerfil(colaborador);
-        agregarContacto(contacto);
+        if(response.data.verContacto)
+        {
+            let contacto = {
+
+                correo: colaborador.emailUsuario,
+                telefonos: response.data.telefonos,
+                domicilios: response.data.domicilios
+            };
+            agregarContacto(contacto);
+        }
+        else
+        {
+            $("#btn-contacto").addClass("d-none");
+        }
         cargarInsignias(idUsuario);
         listarColaboraciones(idUsuario );
         cargarComentariosColaborador(idUsuario);
