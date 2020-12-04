@@ -20,7 +20,7 @@
     <div id="organizacionOculta" class="d-none">{{$idOrganizacion}}</div>
     <div class="container-fluid px-sm-3 px-lg-5">
         <div class="row bg-white rounded justify-content-lg-center pb-3">
-            <div class="col-xs-12 col-sm-4 col-lg-3 p-sm-1 p-md-2 mr-n3" style = "height:100%;">
+            <div id="panelIzquierdo" class="col-xs-12 col-sm-4 col-lg-3 p-sm-1 p-md-2 mr-n3">
                 <div class="input-group my-2 mt-3 mt-lg-2">
                     <input class="form-control border-secondary border-right-0" type="text" id="campoBuscarPorTexto" placeholder="¿Con qué querés colaborar?">
                     <div class="input-group-append">
@@ -36,11 +36,11 @@
                         <button class="btn btn-outline-secondary border-secondary border-left-0" id="btnBuscarNeccesidades" type="button"><i class="fa fa-search fa-xs"></i></button>
                     </div>
                 </div>
-                <div class = "card scrollpane border-0 overflow-auto" style = "height:650px;">
-                    <div class = "card listaOrganizaciones border-0" id= "results" ></div>
+                <div class = "scrollpane overflow-auto">
+                    <div class = "listaOrganizaciones" id= "results" ></div>
                 </div>
             </div>
-            <div class="col mr-n2">
+            <div id="panelDerecho" class="col mr-n2">
                 <div class="row px-2 pt-3 justify-content-between align-items-center">
                     <div class="col-12 col-lg-5">
                         <h6 class="mb-0">Mapa de las organizaciones</h6>

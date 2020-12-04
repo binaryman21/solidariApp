@@ -6,6 +6,13 @@ isLoggedIn({
 $(document).ready(function () {
     $("#cantidadRegistros").val(0);
 
+    $("#panelIzquierdo").height($("#panelDerecho").height());
+    
+    $(window).resize(function()
+    {
+        $("#panelIzquierdo").height($("#panelDerecho").height());
+    });
+
     $(".scrollpane").scroll(eventoScroll);
 
     if ($('#necesidadOculta').text() == '' && $('#organizacionOculta').text() == '') {
@@ -101,7 +108,7 @@ function cargarOrgPaginacion() {
                 llenarOrganizaciones(organizaciones);
                 let cantidadRegistros = parseInt($("#cantidadRegistros").val());
                 $("#cantidadRegistros").val(cantidadRegistros + 4);
-                $("#spinner1").remove();
+                $(".listaOrganizacionesLoading").remove();
 
                 if (organizaciones.length > 0) {
                     $(".scrollpane").scroll(eventoScroll);
@@ -122,10 +129,9 @@ function eventoScroll() {
     var $results = $("#results");
     // console.log($this.scrollTop());
     // var cargando = false;
-    if (($this.scrollTop() >= $results.height() - $this.height() - 10)) {
+    if (($this.scrollTop() >= $results.height() - $this.height() - 300)) {
         $this.unbind("scroll");
-        $results.append(`<div class="spinner-border text-primary" id = "spinner1" role="status">
-        <span class="sr-only">Loading...</span> </div>`);
+        $results.append(`<div class="listaOrganizacionesLoading"></div>`);
         cargarOrgPaginacion();
     }
 }

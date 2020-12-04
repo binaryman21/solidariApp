@@ -26,7 +26,7 @@
                     <div class="usuarios list-group" id="listadoColaboraciones" data-lastshowed="0"></div>
                     <div class="d-none" id="whenNoResults">
                       <img src="/assets/img/SinNecesidadesCumplidas.svg">
-                      <p>No hay resultados para la busqueda</p>
+                      <p class="text-center text-muted my-4">No hay resultados para la busqueda</p>
                     </div>
                     <div id="navUsuarios"></div>
                 </div>

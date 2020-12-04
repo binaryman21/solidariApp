@@ -19,7 +19,7 @@ function cargarDatosModalDetalleNecesidad( necesidad, modo = "colaborador")
                     <p>Estado: ${necesidad.descripcionEstado}</p>
                 </div>
             </div>
-            <button type="button" class="btn btnColaborar btn-block btn-outline-primary mt-4" data-toggle="modal" data-target="#modalColaborar" id = "btnColaborar"><i class="far fa-handshake"></i>COLABORAR</button>
+            <button type="button" class="btn btnColaborar btn-block btn-outline-primary mt-4" data-toggle="modal" data-target="#modalColaborar" id = "btnColaborar"><i class="far fa-handshake mr-3"></i>COLABORAR</button>
     </div>`);
     if(modo === "organizacion")
     {
@@ -123,8 +123,8 @@ function getColaboraciones(necesidad, modo = "colaborador")
                                 <button class="btn dropdown ml-4 px-0 text-muted" type="button" id="OptionsCol-forID-${colaboracion.idUsuario}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     <i class="fas fa-ellipsis-v fa-xs"></i>
                                 </button>
-                                <div class="dropdown-menu dropdown-menu-right shadow-sm mt-n4" aria-labelledby="OptionsCol-forID-${colaboracion.idUsuario}" data-parent="#accordionExample">
-                                    <a class="dropdown-item" href= "#" class = "d-none" data-toggle="modal" data-target="#modalCalificar" id = "btnCalificar${colaboracion.idColaboracion}">Calificar</a>
+                                <div id="orgOptionsFor${colaboracion.idColaboracion}" class="d-none dropdown-menu dropdown-menu-right shadow-sm mt-n4" aria-labelledby="OptionsCol-forID-${colaboracion.idUsuario}" data-parent="#accordionExample">
+                                    <a class="dropdown-item" href= "#"  data-toggle="modal" data-target="#modalCalificar" id = "btnCalificar${colaboracion.idColaboracion}">Calificar</a>
                                 </div>
                             </div>
                         </div>
@@ -139,12 +139,19 @@ function getColaboraciones(necesidad, modo = "colaborador")
                     {
                         if(colaboracion.estadoColaboracion == 0)
                         {
-                            $("#btnCalificar"+colaboracion.idColaboracion).removeClass("d-none");
-                            $("#btnCalificar"+colaboracion.idColaboracion).click(function(){
+                            $(`#OptionsCol-forID-${colaboracion.idUsuario}`).removeClass("d-none");
+                            $(`#orgOptionsFor${colaboracion.idColaboracion}`).removeClass("d-none");
+                            $(`#btnCalificar${colaboracion.idColaboracion}`).click(function(){
                                 $("#modalDetalleNecesidad").modal("hide");
                                 configModalCalificar(1,colaboracion,necesidad);
                             });
                         }
+                    }
+                    else{
+
+                        $(`#OptionsCol-forID-${colaboracion.idUsuario}`).remove();
+                        $(`#orgOptionsFor${colaboracion.idColaboracion}`).remove();
+                        $(`#btnCalificar${colaboracion.idColaboracion}`).remove();
                     }
                 });
 
@@ -172,11 +179,13 @@ function buscarColaboradoresEnNecesidad(){
 
     let findingText = $('#inputBuscarColaboraciones input').val().toLowerCase();
     const usuarios = $('.usuario');
+    const noResultsMessage =  $("#whenNoResults");
 
     //Filtro los colaboradores que coinciden con el texto de busqueda
     if(findingText == ""){
 
         usuarios.show();
+        noResultsMessage.addClass('d-none');
     }
     else{
 
@@ -184,9 +193,9 @@ function buscarColaboradoresEnNecesidad(){
         //obtengo la cantidad de usuarios que han sido encontrados y mostrados como resultado
         
         let resultados = usuarios.filter((i, usuario) => $(usuario).data('name').includes(findingText)).show().length;
-        if(!resultados){
-        }
-
+        
+        if(!resultados) noResultsMessage.removeClass('d-none');
+        else noResultsMessage.addClass('d-none');
     }
     agregarPaginacionUsuarios();
 }

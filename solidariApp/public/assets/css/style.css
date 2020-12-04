@@ -420,8 +420,100 @@ div#filtrosCategoria:empty {
             0px 152px;
     }
 }
+/* #panelDerecho{
 
-div.listaOrganizaciones:empty {
+    height: fit-content;
+} */
+
+.scrollpane{
+    
+    overflow-y: scroll !important;
+    height: calc(100% - 75px);
+}
+
+div.listaOrganizacionesLoading:empty{
+
+    margin-top: 20px;
+    width: 100%;
+    height: 320px;
+    /* change height to see repeat-y behavior */
+    --card-height: 320px;
+    --card-header-color: rgb(0 0 0 / 4%);
+    --card-body-color: rgb(0 0 0 / 0.01);
+    --card-action-color: rgb(191 191 191 / 13%);
+    --card-text-color: #e6e6e6;
+    --card-text-secondary-color: #f3f3f3;
+
+    background-image:
+        radial-gradient(circle 20px at 30px 30px, var(--card-text-color) 99%, #ffffff61 0),
+        linear-gradient(100deg, rgba(255, 255, 255, 0), rgb(255 255 255 / 16%) 50%, rgba(255, 255, 255, 0) 80%),
+        linear-gradient(var(--card-text-color) 13px, transparent 0),
+        /*card-org-name*/
+        linear-gradient(var(--card-text-color) 10px, transparent 0),
+        /*card-org-type*/
+        linear-gradient(var(--card-text-color) 12px, transparent 0),
+        /*card-need-category*/
+        linear-gradient(var(--card-text-secondary-color) 25px, transparent 0),
+        /*card-need-description*/
+        linear-gradient(var(--card-text-color) 12px, transparent 0),
+        /*card-need-category*/
+        linear-gradient(var(--card-text-secondary-color) 25px, transparent 0),
+        /*card-need-description*/
+        repeating-linear-gradient(var(--card-header-color), var(--card-header-color) 60px,
+            var(--card-body-color), var(--card-body-color)60px,
+            var(--card-body-color), var(--card-body-color) 135px,
+            var(--card-action-color), var(--card-action-color) 135px,
+            var(--card-action-color), var(--card-action-color) 160px,
+            var(--card-body-color), var(--card-body-color) 160px,
+            var(--card-body-color), var(--card-body-color) 235px,
+            var(--card-action-color), var(--card-action-color) 235px,
+            var(--card-action-color), var(--card-action-color) 260px,
+            var(--card-body-color), var(--card-body-color) 260px,
+            var(--card-body-color), var(--card-body-color) 300px,
+            transparent, transparent 10px,
+            transparent, transparent 640px);
+
+    background-repeat: repeat-y;
+
+    background-size:
+        100% var(--card-height),
+        /* circle */
+        50px var(--card-height),
+        /* highlight */
+        50% var(--card-height),
+        /*card-org-name*/
+        30% var(--card-height),
+        /*card-org-type*/
+        35% var(--card-height),
+        /*card-need-category*/
+        90% var(--card-height),
+        /*card-need-description*/
+        35% var(--card-height),
+        /*card-need-category*/
+        90% var(--card-height),
+        /*card-need-description*/
+        100% var(--card-height),
+        1px var(--card-height);
+
+    background-position:
+        5px 0,
+        /* circle */
+        0 0,
+        /* highlight */
+        70px 15px,
+        /*card-org-name*/
+        70px 35px,
+        /*card-org-type*/
+        15px 75px,
+        15px 100px,
+        15px 175px,
+        15px 200px,
+        5px 320px;
+
+    animation: shine-card-org 1s infinite;
+}
+
+div.listaOrganizaciones:empty{
 
     margin-top: 20px;
     width: 100%;
@@ -520,7 +612,7 @@ div.listaOrganizaciones:empty {
     }
 }
 
-div[id^="trato-"]:empty {
+div[id^="trato-"]:empty, #listadoColaboraciones:empty {
 
     margin-top: 10px;
     width: 100%;
