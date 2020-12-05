@@ -30,7 +30,7 @@ class Necesidad extends Model
         return Necesidad::where("idUsuario",$idUsuario)
         ->where("necesidad.estadoNecesidad",'<>',3)
         ->join('categoriaNecesidad', 'categoriaNecesidad.idCategoria', '=', 'necesidad.idCategoriaNecesidad')
-        ->join('estadoNecesidad', 'estadoNecesidad.idEstadoNecesidad', '=', 'necesidad.estadoNecesidad')    
+        ->join('estadoNecesidad', 'estadoNecesidad.idEstadoNecesidad', '=', 'necesidad.estadoNecesidad')
         ->orderBy('necesidad.estadoNecesidad', 'ASC')
         ->orderBy('fechaLimiteNecesidad', 'ASC')
         ->orderBy('categoriaNecesidad.idPrioridad', 'ASC')
