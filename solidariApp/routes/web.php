@@ -24,6 +24,10 @@ Route::get('/', function(){
     return view('UIPrincipal',compact('idNecesidad', 'idOrganizacion'));
 })->name('UIPrincipal');
 
+Route::get('/acerca', function(){
+    return view('UIAcercaDe');
+})->name('UIPrincipal');
+
 //PERFIL DEL COLABORADOR
 Route::get('/cuenta-colaborador/perfil', function()
 {

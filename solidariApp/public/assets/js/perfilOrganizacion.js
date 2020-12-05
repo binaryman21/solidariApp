@@ -362,6 +362,8 @@ function crearCardNecesidad(necesidad, vistaVisitante) {
 
     $("#necesidad" + necesidad.idNecesidad).append(cardNecesidad);
 
+    console.log( necesidad );
+
     if (necesidad.cantidadNecesidad == 0) {
         $("#cantidadSolicitada" + necesidad.idNecesidad).html("Sin limite de cantidad");
     }

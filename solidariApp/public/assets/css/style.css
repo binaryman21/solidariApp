@@ -965,3 +965,17 @@ a.active[href="javascript:void(0);"] {
     background-color: rgb(162 159 159 / 8%);
 
 }
+
+.fotoAcercaDe {
+    height: 50px;
+}
+
+.textoCard{
+    display: flex;
+    flex-direction: column;
+}
+
+.iconoAcercaDe{
+    font-size: 20px;
+    margin-right: 10px;
+}

@@ -80,7 +80,8 @@ class NecesidadController extends Controller
                     'resultado' => 1,
                     'message' => 'registro exitoso',
                     'id' => $necesidad->idNecesidad,
-                    'fecha' => $necesidad->fechaCreacionNecesidad
+                    'fecha' => $necesidad->fechaCreacionNecesidad,
+                    'idUsuario' => $_SESSION['usuario']->idUsuario
                 ]);
             }
             else

@@ -22,11 +22,12 @@ function registrarNecesidad(idUsuario)
         necesidad.descripcionEstado = "En proceso";
         necesidad.fechaCreacionNecesidad = response.data.fecha;
         desbloquearBoton($("#btnGuardarCambiosNecesidad"));
-        let divNecesidades = $('#necesidadesEnProceso');
-        const pag = $('#navNecesidadesEnProceso .active').html();
-        divNecesidades.prepend(`<div class="card need ${necesidad.nombreCategoria.toLowerCase()} ${necesidad.descripcionEstado.replace(/\s+/g, "")}" id="necesidad${necesidad.idNecesidad}"></div>`);
-        crearCardNecesidad(necesidad, 0);
-        agregarPaginacionNecesidades();
+        //let divNecesidades = $('#necesidadesEnProceso');
+        //const pag = $('#navNecesidadesEnProceso .active').html();
+        //divNecesidades.prepend(`<div class="card need ${necesidad.nombreCategoria.toLowerCase()} ${necesidad.descripcionEstado.replace(/\s+/g, "")}" id="necesidad${necesidad.idNecesidad}"></div>`);
+        //crearCardNecesidad(necesidad, 0);
+        //agregarPaginacionNecesidades();
+        cargarNecesidades( response.data.idUsuario );
         limpiarValidaciones($("#inpFechaLimite"),  $("#errorFechaLimite") );
         limpiarValidaciones($("#slctCategoria"), $("#errorCategoria"));
         limpiarValidaciones($("#inpCantidad"), $("#errorCantidad"));
@@ -35,7 +36,7 @@ function registrarNecesidad(idUsuario)
         $("#slctCategoria").val('');
         $("#inpCantidad").val('');
         $("#txtDescripcion").val('');
-        $('#navNecesidadesEnProceso a:contains('+pag+')').trigger('click');
+        //$('#navNecesidadesEnProceso a:contains('+pag+')').trigger('click');
         alertify.success('Necesidad creada');
     });
 }
