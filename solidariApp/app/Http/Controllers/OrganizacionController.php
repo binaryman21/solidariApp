@@ -282,7 +282,7 @@ class OrganizacionController extends Controller
             }
             
             $organizaciones = $organizacionesConNecesidad;
-            // $organizaciones = array_slice($organizaciones, $datosFiltros->desde, 4);
+            $organizaciones = array_slice($organizaciones, $datosFiltros->desde, 4);
             return json_encode([
                 'resultado' => 1,
                 'organizaciones' => $organizaciones

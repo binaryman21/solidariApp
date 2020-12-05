@@ -33,8 +33,8 @@ class Organizacion extends Model
                 $query->select('necesidad.idUsuario')
                 ->from('necesidad');
             })
-            ->skip( $desde )
-            ->take( $hasta )
+            // ->skip( $desde )
+            // ->take( $hasta )
             ->get();
     }
 
@@ -66,8 +66,8 @@ class Organizacion extends Model
                 $query->select('necesidad.idUsuario')
                 ->from('necesidad');
             })
-            ->skip( $desde )
-            ->take( $hasta )
+            // ->skip( $desde )
+            // ->take( $hasta )
             ->get();
     }
 }

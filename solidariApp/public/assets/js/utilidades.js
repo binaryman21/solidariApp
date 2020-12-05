@@ -166,7 +166,7 @@ function agregarPaginacionUsuarios() {
     $('#navUsuarios').html('');
 
     let usuario = $('.usuario').not('.d-none');
-    let filasMostradas = 5;
+    let filasMostradas = 3;
     let filasTotales = usuario.length;
     if (filasTotales > filasMostradas) {
         let numPaginas = filasTotales / filasMostradas;

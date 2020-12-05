@@ -52,6 +52,7 @@ function registrarColaboracion(necesidad)
             $("#tituloAlert").html("Gracias!");
             $("#mensajeAlert").html(response.data.message);
             $("#alertDetalleNecesidad").show();
+            $("#alertDetalleNecesidad").removeClass('d-none')
             getColaboraciones(necesidad);
             // console.log(idNecesidad);
             crearNotificacionColaboracion(necesidad);
@@ -69,9 +70,10 @@ function registrarColaboracion(necesidad)
             {
                 $("#alertDetalleNecesidad").addClass("alert-danger");
                 $("#alertDetalleNecesidad").removeClass("alert-success");
-                $("#tituloAlert").html("Error");
+                $("#tituloAlert").text("Error");
                 $("#mensajeAlert").html(response.data.message);
-                $("#alertDetalleNecesidad").show();
+                $("#alertDetalleNecesidad").show()
+                $("#alertDetalleNecesidad").removeClass('d-none')
             }
 
             //alert(response.data.message);
@@ -159,7 +161,7 @@ function getColaboraciones(necesidad, modo = "colaborador")
             }
             else
             {
-                $("#listadoColaboraciones").html("");
+                $("#listadoColaboraciones").html('<img src="assets/img/SinNecesidadesCumplidas.svg">');
                 $('#navUsuarios').html('');
                 if(modo == "colaborador")
                 {
